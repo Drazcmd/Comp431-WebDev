@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>In class excercise: Validated pizza order form!</title>
+</head>
+<body>
+	<form id="Pizza Order" method="" action="#">	
+		<p>Name: <input type="text" name="name"></p>
+		<p>Address: (#### Street Name, no abbreviations) 
+			<input type="text" name="Address" pattern="\d{4}(\s[a-z]+)+">
+		</p>
+		<p>Phone Number: (123-123-1234) 
+			<input type="text" name="Phone Number" pattern="\d{3}-\d{3}-\d{4}">
+		</p>
+		<p>Pizza Size</p>
+		<p>Pizza Toppings</p>
+		<input type="submit" value ="Place Order">
+	</form>
+</body>
+</html>
