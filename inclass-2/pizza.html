@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>In class excercise: Validated pizza order form!</title>
+</head>
+<body>
+
+	<img src="eskipaper_yummy_pizza.jpg"
+ 	alt="Yummy Pizza photo"
+ 	style="width:256;height:128px;">
+
+	<form id="Pizza Order" method="" action="#">	
+		<p> Name: (First Last)
+		 	<input type="text" name="name" 
+		 	pattern="([a-zA-Z]+)(\s?)([a-zA-Z]+)" required>
+		</p>
+		<p> Address: (#### Street Name, no abbreviations) 
+			<input type="text" name="Address" pattern="\d{4}(\s[a-zA-Z]+)+" required>
+		</p>
+
+		<p> Phone Number: (123-123-1234) 
+			<input type="text" name="Phone Number" pattern="\d{3}-\d{3}-\d{4}" required>
+		</p>
+
+		<p> Pizza Size 
+			<input type="radio" name="size" value="small" required> Small
+			<input type="radio" name="size" value="medium" required> Medium
+			<input type="radio" name="size" value="large" required> Large
+		</p>
+
+		<p> Pizza Toppings
+ 			<input type="checkbox" name="Toppings1" value="Sausage"> Sausage
+ 			<input type="checkbox" name="Toppings2" value="Pepperoni"> Pepperoni
+ 			<input type="checkbox" name="Toppings3" value="Olives"> Olives
+ 			<input type="checkbox" name="Toppings4" value="Anchovies"> Anchovies 
+ 			<input type="checkbox" name="Toppings5" value="Onions"> Onions
+
+		</p>
+		<input type="submit" value="Place Order">
+
+		<!-- TODO: Place order, clear order, radio-button size selection, check boxes toppings selection, validatation of the stuff-->
+	</form>
+</body>
+</html>
