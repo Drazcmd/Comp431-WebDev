@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>HW1: Simple landing page</title>
+	<link rel="stylesheet" href="simplestyles.css">
+</head>
+<body>
+	<form id="Login" method="" action="#">	
+		<p> Account Name (one word no spaces): 
+		 	<input type="text" name="username" 
+		 	pattern="([a-zA-Z]+)" required>
+		</p>
+		<p> Display Name (optional):
+		 	<input type="text" name="dispname" 
+		 	pattern="([a-zA-Z]+)"> <!--not required--> 
+		</p>
+
+
+		<p> Email Address (e.g. Aa1@amail.aa):
+		 	<input type="text" name="email" 
+		 	pattern="([a-zA-Z0-9]+)(\x40)([a-z]+)(\x2E)([a-z]+)"
+		 	required> <!-- \x40 is ASCII hex for "@", \x2E is ASCII hex for "."-->
+		</p>
+		<p> Phone Number (e.g. 123-123-1234):
+			<input type="text" name="phonenum" pattern="\d{3}-\d{3}-\d{4}" required> 
+		</p>
+		<p> Date of birth (MM/DD/YYYY):
+			<input type="text" name="dob" 
+			pattern="(\d{2})(/)(\d{2})(/)(\d{4})" required>
+		</p>
+		<p> Zip code(e.g. 77777): 
+			<input type="text" name="zip" pattern="\d{5}" required>
+		</p>
+
+		<p> Password: 
+			<input type="password" name="password" required>
+		</p>
+		<p> Password Confirmation: 
+			<input type="password" name="passwordcnf" required>
+		</p>
+
+		<input type="submit" value="Submit Registration Form">
+		<!--For now sends a GET request as specified. I assume once
+		we get a backend up this should change to be a POST request?-->
+	</form>
+</body>
+</html>
