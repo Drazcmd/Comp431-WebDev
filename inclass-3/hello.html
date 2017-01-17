@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <title>Hello HTML!</title>
+    <meta charset="utf-8">
+	<meta name="author" content="Clayton Drazner (cmd11). Original hello.html page came from https://www.clear.rice.edu/comp431/sample/hello.html"> 
+	<link rel="stylesheet" href="simplestyles.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<!-- TODO: Add 5 second alert, add countdown clock, page redirection, pause countdown button, resume countdown button -->
+
+<body>
+<table border="1">
+	<tr><td>Athenian</td><td>Owl</td></tr>
+	<tr><td colspan="2"><img src="http://explore.rice.edu/uploadedImages/Explore/Welcome_to_Rice/riceacademicseal1.jpg"></td></tr>
+</table>
+
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+
+<ul>
+	<li><a href="http://www.rice.edu">Rice</a></li>
+	<li><a href="http://www.chron.com">Houston Chronicle</a></li>
+	<li><a href="http://www.twitter.com">Twitter</a></li>
+	<li><a href="http://www.twosigma.com">TwoSigma</a></li>
+</ul>
+
+<textarea id="textInsert" rows="10" cols="50">
+
+
+ --- Enter your message here :) --- 
+
+
+</textarea>
+
+<button type="button" onclick="clearForm()"> Clear Form </button>
+</body>
+
+<script> 
+
+function clearForm(){
+    var textArea = document.getElementById("textInsert")
+    textArea.value = ""
+}
+</script>
+</html>
