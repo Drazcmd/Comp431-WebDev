@@ -7,13 +7,33 @@
 	<link rel="stylesheet" href="simplestyles.css">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
+
+<script>
+function submitForm(){
+	//Hopefully this isn't a security vulnerabiltiy somehow!
+	pswvalue = document.getElementById("password").value 
+	cnfvalue = document.getElementById("passwordcnf").value
+	if (pswvalue === cnfvalue) {
+		console.log("password and confirmation match")
+		return true
+	}
+	console.log("password and confirmation don't match")
+	return false
+}
+function clearForms(){
+	document.getElementById("userid").value = ""
+	document.getElementById("dispid").value = ""
+	document.getElementById("email").value = ""
+	document.getElementById("phonenum").value = ""
+	document.getElementById("dob").value = ""
+	document.getElementById("zip").value = ""
+	document.getElementById("password").value = ""
+	document.getElementById("passwordcnf").value = ""
+}
+</script>
+
+
 <body>
-	<script>
-	//Check password and password confirmation match
-	//TODO	
-	</script>
-
-
 	<form id="Login" method="" action="#">	
 		<p> Account Name (one word no spaces): 
 		 	<input type="text" id="userid" 
@@ -47,7 +67,7 @@
 			<input type="password" id="passwordcnf" required>
 		</p>
 
-		<input type="submit" value="Submit Registration Form">
+		<input type="submit" onclick = "return submitForm()" value="Submit Registration Form">
 		<button type="button" onclick="clearForms()"> Clear Forms </button>
 
 
@@ -55,17 +75,5 @@
 		we get a backend up this should change to be a POST request?-->
 	</form>
 
-<script> 
-function clearForms(){
-	document.getElementById("userid").value = ""
-	document.getElementById("dispid").value = ""
-	document.getElementById("email").value = ""
-	document.getElementById("phonenum").value = ""
-	document.getElementById("dob").value = ""
-	document.getElementById("zip").value = ""
-	document.getElementById("password").value = ""
-	document.getElementById("passwordcnf").value = ""
-}
-</script>
 </body>
 </html>
