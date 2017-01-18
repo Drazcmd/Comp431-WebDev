@@ -8,9 +8,11 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
-<!-- TODO: Add 5 second alert, add countdown clock, page redirection, pause countdown button, resume countdown button -->
 
 <body onload="setTimeout(warnUser, 1000)">
+<span id="indicator"></span>
+<button type="button" onclick="stopCoundownClock()"> Stop Countdown</button>
+<button type="button" onclick="resumeCountdownClock()"> Resume Countdown </button>
 <table border="1">
 	<tr><td>Athenian</td><td>Owl</td></tr>
 	<tr><td colspan="2"><img src="http://explore.rice.edu/uploadedImages/Explore/Welcome_to_Rice/riceacademicseal1.jpg"></td></tr>
@@ -33,20 +35,17 @@
 
 
 </textarea>
-<span id="indicator"></span>
 <button type="button" onclick="clearForm()"> Clear Form </button>
-<button type="button" onclick="stopCoundownClock()"> Stop Countdown</button>
-<button type="button" onclick="resumeCountdownClock()"> Resume Countdown </button>
 </body>
 
-<script> 
 
+<script> 
 function clearForm(){
     var textArea = document.getElementById("textInsert")
     textArea.value = ""
 }
 function warnUser(){
-	alert("the page will redirect when the counter reaches 0 (The counter is down at the bottom, next to the buttons!)")
+	alert("the page will redirect when the counter reaches 0")
 	startCountdownClock()
 }
 
