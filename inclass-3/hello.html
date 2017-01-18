@@ -15,7 +15,6 @@
 	<tr><td>Athenian</td><td>Owl</td></tr>
 	<tr><td colspan="2"><img src="http://explore.rice.edu/uploadedImages/Explore/Welcome_to_Rice/riceacademicseal1.jpg"></td></tr>
 </table>
-<span id="indicator"></span>
 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
@@ -34,7 +33,10 @@
 
 
 </textarea>
+<span id="indicator"></span>
 <button type="button" onclick="clearForm()"> Clear Form </button>
+<button type="button" onclick="stopCoundownClock()"> Stop Countdown</button>
+<button type="button" onclick="resumeCountdownClock()"> Resume Countdown </button>
 </body>
 
 <script> 
@@ -44,8 +46,16 @@ function clearForm(){
     textArea.value = ""
 }
 function warnUser(){
-	alert("WARNING - we will redirect when the counter directly underneath the Athenia Owl reaches 0!")
+	alert("the page will redirect when the counter reaches 0 (The counter is down at the bottom, next to the buttons!)")
 	startCountdownClock()
+}
+
+var countdown_interval;
+function startCountdownClock(){
+	var indicator = document.getElementById("indicator")
+	indicator.innerHTML = 15
+	countdown_interval = setInterval(updateIndicator, 1000, indicator)
+	console.log(interval_id)
 }
 function updateIndicator(indicator){
 	var timeRemaining = parseInt(indicator.innerHTML, 10)
@@ -54,10 +64,11 @@ function updateIndicator(indicator){
 		window.location.assign("http://www.clear.rice.edu/comp431/sample/hello.html")
 	}
 }
-function startCountdownClock(){
-	var indicator = document.getElementById("indicator")
-	indicator.innerHTML = 15
-	setInterval(updateIndicator, 1000, indicator)
+function stopCoundownClock(){
+	clearInterval(countdown_interval)
+}
+function resumeCountdownClock(){
+	countdown_interval = setInterval(updateIndicator, 1000, indicator)
 }
 </script>
 </html>
