@@ -10,7 +10,7 @@
 
 <!-- TODO: Add 5 second alert, add countdown clock, page redirection, pause countdown button, resume countdown button -->
 
-<body>
+<body onload="setTimeout(warnUser, 5000)">
 <table border="1">
 	<tr><td>Athenian</td><td>Owl</td></tr>
 	<tr><td colspan="2"><img src="http://explore.rice.edu/uploadedImages/Explore/Welcome_to_Rice/riceacademicseal1.jpg"></td></tr>
@@ -43,6 +43,9 @@
 function clearForm(){
     var textArea = document.getElementById("textInsert")
     textArea.value = ""
+}
+function warnUser()){
+	alert("WARNING - we will redirect when the counter reaches 0!")
 }
 </script>
 </html>
