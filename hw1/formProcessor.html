@@ -16,33 +16,32 @@
 </body>
 <script>
 function readFromGET(){
-	console.log("locaction is", location)
-	console.log("parameters are", location.search)
+	//Render timestamp
 	var timestamp = parseInt(location.search.split("?timestamp=")[1])
-	console.log("look", location.search.split("&"))
-	console.log("0", location.search.split("&")[0])
-	console.log("1", location.search.split("&")[1])
-	console.log("2", location.search.split("&")[2])
-	console.log("3", location.search.split("&")[3])
-	console.log("4", location.search.split("&")[4])
-	console.log("5", location.search.split("&")[5])
-	console.log("6", location.search.split("&")[6])
-	console.log("6", location.search.split("&")[7])
-	console.log("6", location.search.split("&")[8])
 	var timestampDate = new Date(timestamp)
-	console.log(timestampDate)
 	document.getElementById("timestampHolder").innerHTML = "The form sent here says it was loaded at the following date: " + timestampDate
+	console.log("Timestamp is: ", timestampDate)
 
-	var accntname = location.search.split("&")[1]
-	var dispid = location.search.split("&")[2]
-	var email = location.search.split("&")[3]
-	var phonenum = location.search.split("&")[4]
-	var dob = location.search.split("&")[5]
-	var zip = location.search.split("&")[6]
-	var password = location.search.split("&")[7]
-	var passwordcnf = location.search.split("&")[8]
+	//Various rows
+	var r1 = location.search.split("&")[1].split("=")
+	var r2 = location.search.split("&")[2].split("=")
+	var r3 = location.search.split("&")[3].split("=")
+	var r4 = location.search.split("&")[4].split("=")
+	var r5 = location.search.split("&")[5].split("=")
+	var r6 = location.search.split("&")[6].split("=")
+	var r7 = location.search.split("&")[7].split("=")
+	var r8 = location.search.split("&")[8].split("=")
+	var tableRows = [["Query Keys:", "Query Values:"], r1,r2,r3,r4,r5,r6,r7,r8]
+	console.log(tableRows)
 
+	//Add in the <tr> and <td> needed to make the table
+	tableHtml = tableRows.map(function (row) {
+		return "<tr><td>" + row[0] + "</td><td>" + row[1] + "</td></tr>"
+	})
 
+	//to prevent commas from showing up, must convert to string
+	tableHtmlString = tableHtml.join("\n")
+	document.getElementById("table").innerHTML = tableHtmlString
 }
 </script>
 </html>
