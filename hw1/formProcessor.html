@@ -3,19 +3,21 @@
 <head>
 	<meta name="author" content="Clayton Drazner (cmd11)"> 
 </head>
-<body onload="logParams()">
+<body onload="readFromGET()">
+	<p id="timestampHolder"> </p>
 	<!-- TODO: 
 	Extract query parameter from location and display key-value pairs in a two-column table	
     Render hidden timestamp as human readable datetime
     -->
 </body>
 <script>
-function logParams(){
+function readFromGET(){
 	console.log("locaction is", location)
 	console.log("parameters are", location.search)
 	var timestamp = parseInt(location.search.split("?timestamp=")[1])
 	var timestampDate = new Date(timestamp)
 	console.log(timestampDate)
+	document.getElementById("timestampHolder").innerHTML = "The form sent here says it was loaded at the following date: " + timestampDate
 }
 </script>
 </html>
