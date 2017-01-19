@@ -10,18 +10,24 @@
 
 <script>
 function submitForm(){
-	//Hopefully this isn't a security vulnerabiltiy somehow!
+	//Check password and confirmation match
+	//Hopefully doing it like this isn't a security vulnerabiltiy!
 	pswvalue = document.getElementById("password").value 
 	cnfvalue = document.getElementById("passwordcnf").value
 	if (pswvalue === cnfvalue) {
 		console.log("password and confirmation match")
-		return true
+	} else {
+		console.log("password and confirmation don't match")
+		alert("Warning - password and password confirmation fields must match!")
+		return false
 	}
-	console.log("password and confirmation don't match")
-	return false
+
+	//Check dob is valid and under 18
+	//TODO - still need to do this
+	return true
 }
 function clearForms(){
-	document.getElementById("userid").value = ""
+	document.getElementById("accntname").value = ""
 	document.getElementById("dispid").value = ""
 	document.getElementById("email").value = ""
 	document.getElementById("phonenum").value = ""
@@ -30,18 +36,24 @@ function clearForms(){
 	document.getElementById("password").value = ""
 	document.getElementById("passwordcnf").value = ""
 }
+function makeTimestamp(){
+	var milisecs_since_epoch = new Date().getTime()
+	document.getElementById("timestamp").value = milisecs_since_epoch
+	console.log(document.getElementById("timestamp").value)
+}
 </script>
 
 
-<body>
-	<form id="Login" method="" action="#">	
-		<p> Account Name (one word no spaces): 
-		 	<input type="text" id="userid" 
-		 	pattern="([a-zA-Z]+)" required>
+<body onload="makeTimestamp()">
+	<form id="Login" method="get" action="formProcessor.html">	
+		<input type="hidden" name="timestamp" id="timestamp" value="">
+		<p> Account Name (Can only be upper or lower case letters and numbers, and cannot start with a number): 
+		 	<input type="text" id="accntname" 
+		 	pattern="([a-zA-Z])([a-zA-Z0-9])+" required>
 		</p>
-		<p> Display Name (optional):
+		<p> Display Name (Optional, and can only be upper or lower case letters or numbers):
 		 	<input type="text" id="dispid" 
-		 	pattern="([a-zA-Z]+)"> <!--not required--> 
+		 	pattern="([a-zA-Z0-9]+)"> <!--not required--> 
 		</p>
 
 		<p> Email Address (e.g. Aa1@amail.aa):
@@ -74,6 +86,5 @@ function clearForms(){
 		<!--For now should send a GET request as specified. I assume once
 		we get a backend up this should change to be a POST request?-->
 	</form>
-
 </body>
 </html>
