@@ -22,7 +22,7 @@ function readFromGET(){
 	document.getElementById("timestampHolder").innerHTML = "The form sent here says it was loaded at the following date: " + timestampDate
 	console.log("Timestamp is: ", timestampDate)
 
-	//Various rows
+	//Various rows. TODO - do this without repeating work constantly :)
 	var r1 = location.search.split("&")[1].split("=")
 	var r2 = location.search.split("&")[2].split("=")
 	var r3 = location.search.split("&")[3].split("=")

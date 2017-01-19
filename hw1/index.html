@@ -9,23 +9,77 @@
 </head>
 
 <script>
-function submitForm(){
+function submitForm() {
+	//Check dob is valid and not under 18
+	if (!dobIsValid()) {
+		return false	
+	}
+	//Check the password matches the password confirmation
+	if (!passMatchesConf()) {
+		return false
+	}
+	return true
+}
+
+function dobIsValid() {
+	//Checks 'valid' both in terms of age (>18) and that it's not
+	//wildly out of bounds for what's considered 'reasonable'
+	var dob_values = document.getElementById("dob").value.split("/")
+	var month = parseInt(dob_values[0], 10)
+	var day = parseInt(dob_values[1], 10)
+	var year = parseInt(dob_values[2], 10)
+
+	//Additional simplistic dob checking to ensure it's 'reasonable':
+	//Check month is more or less reasonable
+	if (month < 1 || month > 12) {
+		alert("Date-of-birth month is invalid!")
+		return false
+	}
+	//Check day is more-or-less reasonable
+	if (day > 31 || day < 1) {
+		alert("Date-of-birth day is invalid!")
+		return false
+	}
+	//Check year is more-or-less reasonable	
+	if (year < 1850 || year > 2050) {
+		alert("date-of-birth year is invalid!")
+		return false
+	}
+	var reasonable_dob = new Date(year, month - 1, day - 1)
+	console.log(reasonable_dob)
+
+	//Now, check dob isn't too young 
+	//Calculate the cutoff date (18 years ago, going by days only)
+	var current_date = new Date()
+	var cutoff_date = new Date(
+		current_date.getFullYear() - 18,
+		current_date.getMonth(),
+		current_date.getDate()
+	)
+	console.log(reasonable_dob.getTime())
+	console.log(reasonable_dob)
+	console.log(cutoff_date)
+	if (reasonable_dob.getTime() > cutoff_date.getTime()) {
+		alert("Sorry, it seems you're not 18 yet!")
+		return false
+	} 
+	return true
+}
+function passMatchesConf() {
 	//Check password and confirmation match
 	//Hopefully doing it like this isn't a security vulnerabiltiy!
-	pswvalue = document.getElementById("password").value 
-	cnfvalue = document.getElementById("passwordcnf").value
+	var pswvalue = document.getElementById("password").value 
+	var cnfvalue = document.getElementById("passwordcnf").value
 	if (pswvalue === cnfvalue) {
 		console.log("password and confirmation match")
 	} else {
 		console.log("password and confirmation don't match")
-		alert("Warning - password and password confirmation fields must match!")
+		alert("Your password and password confirmation fields don't match!")
 		return false
 	}
-
-	//Check dob is valid and under 18
-	//TODO - still need to do this
 	return true
 }
+
 function clearForms(){
 	document.getElementById("accntname").value = ""
 	document.getElementById("dispid").value = ""
@@ -66,7 +120,7 @@ function makeTimestamp(){
 		<p> Phone Number (e.g. 123-123-1234):
 			<input type="text" name="phonenum" id="phonenum" pattern="\d{3}-\d{3}-\d{4}" required> 
 		</p>
-		<p> Date of birth (MM/DD/YYYY):
+		<p> Date of birth (MM/DD/YYYY, e.g. january 1st 2000 is 01/01/2000):
 			<input type="text" name="dob" id="dob" 
 			pattern="(\d{2})(/)(\d{2})(/)(\d{4})" required>
 		</p>
