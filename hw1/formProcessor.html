@@ -5,19 +5,44 @@
 </head>
 <body onload="readFromGET()">
 	<p id="timestampHolder"> </p>
-	<!-- TODO: 
-	Extract query parameter from location and display key-value pairs in a two-column table	
-    Render hidden timestamp as human readable datetime
-    -->
+	<table border="1" id="table">
+		<tr><td></td><td></td></tr>
+		<tr><td></td><td></td></tr>
+		<tr><td></td><td></td></tr>
+		<tr><td></td><td></td></tr>
+		<tr><td></td><td></td></tr>
+		<tr><td></td><td></td></tr>
+	</table>
 </body>
 <script>
 function readFromGET(){
 	console.log("locaction is", location)
 	console.log("parameters are", location.search)
 	var timestamp = parseInt(location.search.split("?timestamp=")[1])
+	console.log("look", location.search.split("&"))
+	console.log("0", location.search.split("&")[0])
+	console.log("1", location.search.split("&")[1])
+	console.log("2", location.search.split("&")[2])
+	console.log("3", location.search.split("&")[3])
+	console.log("4", location.search.split("&")[4])
+	console.log("5", location.search.split("&")[5])
+	console.log("6", location.search.split("&")[6])
+	console.log("6", location.search.split("&")[7])
+	console.log("6", location.search.split("&")[8])
 	var timestampDate = new Date(timestamp)
 	console.log(timestampDate)
 	document.getElementById("timestampHolder").innerHTML = "The form sent here says it was loaded at the following date: " + timestampDate
+
+	var accntname = location.search.split("&")[1]
+	var dispid = location.search.split("&")[2]
+	var email = location.search.split("&")[3]
+	var phonenum = location.search.split("&")[4]
+	var dob = location.search.split("&")[5]
+	var zip = location.search.split("&")[6]
+	var password = location.search.split("&")[7]
+	var passwordcnf = location.search.split("&")[8]
+
+
 }
 </script>
 </html>
