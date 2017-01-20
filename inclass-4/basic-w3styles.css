@@ -1,0 +1,27 @@
+.button {
+    background-color: green;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+body{
+	background-color: black;
+}
+/* Unfortunately I couldn't figure out how to actually only color the specific
+section of the background I want. Oh well, it at least is readable:
+VIVA LA CONTRAST REVOLUCION!!! (google contrast rebellion :p) */
+.paragraph{ 
+    color: white;
+    text-align: left;
+    padding: 15px 32px;
+ }
+.navelem {
+	background-color: orange;
+    color: black;
+    font-size: 32px;
+    border-collapse: collapse;
+}
