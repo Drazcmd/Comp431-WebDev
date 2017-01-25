@@ -21,13 +21,21 @@ function disableAvoid() {
 	theButton.removeEventListener("mouseover", avoidMouse)
 }
 
-//TODO - how on earth did the prof get it to move in two dimensions
-//randomly like that??? So confused. Thought I'd be able to use the
-//position arg to move it, but that doesn't seem to be working
+//TODO - figure out a non-mutational way to do this!
+var position_index = 0
+var position_styles = [
+	"position:absolute; left:80px; top:40px",
+	"position:absolute; left:200px; top:200px",
+	"position:absolute; left:30px; top:100px",
+	"position:absolute; left:300px; top:300px",
+	"position:absolute; left:0px; top:0px"
+]
 function avoidMouse(){
 	var theButton = document.getElementById("movingButton")
-	console.log("TODO - avoid the mouse")
-	theButton.style.position = "1000px"
+	position_index = position_index + 1
+	position_index = position_index % 5
+	console.log("avoiding the mouse")
+	theButton.style = position_styles[position_index]
 }
 function gameWon(){
 	var theButton = document.getElementById("movingButton")
