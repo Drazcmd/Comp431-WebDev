@@ -1,19 +1,15 @@
 function setupButton() {
-	console.log("sup")
 	var theButton = document.getElementById("movingButton")
 
-	//Event handler lasts for just enough time so it doesn't cause errors
-	//when resetGame() tries to remove it - can't actually event fire off.
+	//This instance of the reset Game event handler lasts for just enough time
+	//so its absence doesn't cause errors when resetGame() tries to remove it
+	//- can't actually event fire off.
 	theButton.addEventListener("click", resetGame)
 	resetGame()
 }
 
 //TODO - make it only do so when specifically just the shift key
 //is pressed down	
-//TODO - Can't figure out how to deal with two conflicting problems:
-//to pass in an arg, function basically has to be anonymous. But, it
-//the function is anonymous, can't remove the event listener -_-
-
 function enableAvoid() {
 	var theButton = document.getElementById("movingButton")
 	console.log("avoiding re-enabled")
@@ -25,9 +21,13 @@ function disableAvoid() {
 	theButton.removeEventListener("mouseover", avoidMouse)
 }
 
+//TODO - how on earth did the prof get it to move in two dimensions
+//randomly like that??? So confused. Thought I'd be able to use the
+//position arg to move it, but that doesn't seem to be working
 function avoidMouse(){
 	var theButton = document.getElementById("movingButton")
 	console.log("TODO - avoid the mouse")
+	theButton.style.position = "1000px"
 }
 function gameWon(){
 	var theButton = document.getElementById("movingButton")
@@ -49,8 +49,11 @@ function resetGame(){
 	theButton.removeEventListener("click", resetGame)
 	theButton.addEventListener("click", gameWon)
 	theButton.innerHTML = " Click Me "
+
+	//Enable the keydown-keyup behavior now that the game's restarted
 	document.body.addEventListener("keydown", disableAvoid)
 	document.body.addEventListener("keyup", enableAvoid)
 	enableAvoid()
+	theButton.style.position = "0px"
 	console.log(theButton)
 }
