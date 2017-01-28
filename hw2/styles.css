@@ -19,6 +19,8 @@ th {
 tr:hover {
 	background-color: lightgray
 }
+
+/*Literally just for inline paragraphs :p*/
 .inlinep{
   display: inline;
 }

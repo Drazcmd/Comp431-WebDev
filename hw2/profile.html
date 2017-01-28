@@ -12,33 +12,32 @@
 	<a href = "main.html"> CLICK ME TO RETURN TO POST FEED</a>
 	<p> HELLO WORLD! HERE THERE BE PROFILE DRAGONS!</p>
 		<p class="inlinep"> DisplayName:
-		 	<input type="text" name="dispname" id="dispname" 
+		 	<input type="text" name="displayname" id="displayname" 
 		 	pattern="([a-zA-Z])([a-zA-Z0-9])*" required>
-		 	<p id="dispDisplayname" class="inlinep"> DaBest </p>
+		 	<p id="dispdisplayname" class="inlinep"> DaBest </p>
 		</p>
 
 		<p class="inlinep"> Email Address:
 		 	<input type="text" name="email" id="email" 
-		 	pattern="([a-zA-Z0-9]+)(\x40)([a-z]+)(\x2E)([a-z]+)"
 		 	required> <!-- \x40 is ASCII hex for "@", \x2E is ASCII hex for "."-->
-		 	<p id="dispEmail" class="inlinep"> Aa1@email.com </p>
+		 	<p id="dispemail" class="inlinep"> Aa1@email.com </p>
 		</p>
 		<p class="inlinep"> Phone Number:
-			<input type="text" name="phonenum" id="phonenum" pattern="\d{3}-\d{3}-\d{4}" required> 
-		 	<p id="dispPhonenum" class="inlinep">214-777-7777 </p>
+			<input type="text" name="phonenum" id="phonenum" required> 
+		 	<p id="dispphonenum" class="inlinep">214-777-7777 </p>
 		</p>
 		<p class="inlinep"> Zip code:
-			<input type="text" name="zip" id="zip" pattern="\d{5}" required>
-		 	<p id="dispZip" class="inlinep"> 77777 </p>
+			<input type="text" name="zip" id="zip"  required>
+		 	<p id="dispzip" class="inlinep"> 77777 </p>
 		</p>
 
 		<p class="inlinep"> Password: 
 			<input type="password" name="password" id="password" required>
-		 	<p id="dispPassword" class="inlinep"> hunter7 :) </p>
+		 	<p id="disppassword" class="inlinep"> hunter7 :) </p>
 		</p>
 		<p class="inlinep"> Password Confirmation: 
 			<input type="password" name="passwordcnf" id="passwordcnf" required>
-		 	<p id="dispPasswordcnf" class="inlinep"> hunter7 :) </p>
+		 	<p id="disppasswordcnf" class="inlinep"> hunter7 :) </p>
 		</p>
 
 		<button type="button" onclick = "helloWorld()"> Update Profile? </button>
