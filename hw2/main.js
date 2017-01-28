@@ -9,16 +9,18 @@ var imgCardIds = [
 
 function showNextImages(card_images_arr){
 	var is_relevant_image = function (image, index){
-		if (image.hidden){
-			//Either this image is hidden...
+		if (!(image.hidden)){
+			//Want it back either if this image is not hidden...
+			console.log("I'm not hidden!", index)
 			return true
 		} else {
-			//or the previous image is hidden
+			//or the previous image is not hidden
 			var num_images = card_images_arr.length
 			//(Normal js modulo handles negative numbers poorly)
-			var prev_image = card_images_arr[(index - 1 + num_images) % num_images]
-			console.log(prev_image)
-			return prev_image.hidden	
+			var prev_image_index = (index - 1 + num_images) % (num_images)
+			console.log("currently", index)
+			console.log("prev", prev_image_index, !(card_images_arr[prev_image_index].hidden))
+			return !(card_images_arr[prev_image_index].hidden)
 		}
 	}
 
@@ -31,11 +33,13 @@ function showNextImages(card_images_arr){
 	var flip_hidden = function (image){
 		if (image.hidden){
 			image.hidden = false
-		} else {
+		} else if (!(image.hidden)) {
 			image.hidden = true	
+		} else {
+			console.log("WEIRDNESS")
 		}
 	}
-	card_images_arr.forEach(flip_hidden)				
+	relevant_images.forEach(flip_hidden)				
 }
 
 function createImageCards(){
@@ -53,7 +57,7 @@ function createImageCards(){
 
 		// (Assignment specified the images must change
 		// at a random interval between 0 and 5 seconds)
-		setInterval(update_this_card, Math.floor(10000 * Math.random()))
+		setInterval(update_this_card, Math.floor(5000 * Math.random()))
 	})
 }
 
