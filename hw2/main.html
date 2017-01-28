@@ -1,34 +1,48 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>hw2</title>
+	<title>HW2 Main: Posts Feed </title>
+    <meta charset"utf-8">
+	<meta name="author" content="Clayton Drazner (cmd11)"> 
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="styles.css">
+	<script src="main.js"></script>
 </head>
-<body>
+<body onload="createImageCards()">
 <table>
 	<tr>
-		<th> The other rows change color on mouseover! </th>
-		<th> I should've used bootstrap? Bah, humbug! </th>
+		<th> Posts are highlighted mouseover! </th>
+		<th> <a href = "profile.html"> CLICK ME TO GO TO USER PAGE </a> </th>
 	</tr>
 	<tr>
-		<td> hello world! </td>
-		<td> hello world! </td>
-	</tr>
-	<tr>
-		<td>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vestibulum cursus justo congue posuere. Sed ac congue libero. In eget elit vehicula, mattis tortor at, lacinia augue. Quisque 
+		<td id="imgcard1"> 
+		<img src="https://newevolutiondesigns.com/images/freebies/cool-wallpaper-1.jpg" width="350em" height="225em">
+		<img src="https://img2.minebook.me/gallery/63696_20120817_115548.png" width="350em" height="225em" hidden>		
+		<img src="http://assets1.bigthink.com/system/idea_thumbnails/60927/size_1024/rss_boaty_mcboatface.jpg?1462724237" width="350em" height="225em" hidden>		
 		</td>
+
 		<td>
-		Morbi nec condimentum leo. Nullam vel porttitor nunc, id varius ligula. Nullam eu felis lacinia, lobortis mauris et, convallis nisl. Phasellus sit amet dui luctus, dictum nulla vitae, 
-		</td>
+		Morbi rhoncus imperdiet urna, laoreet accumsan eros pretium sit amet. Etiam vel sagittis ligula, a maximus nulla. Donec vitae laoreet metus. Venenatis quis dapibus ut, iaculis vitae ante. Maecenas vel sapien ut orci laoreet laoreet id eu leo.
+		 </td>
 	</tr>
 	<tr>
 		<td>
-		HI!	
+		Sadly the best I got from google's "dragon mcdragonface" was a bunch of minecraft images :(
+		</td>
+		<td id="imgcard2"> 
+		<img src="https://img2.minebook.me/gallery/63696_20120817_115548.png" width="350em" height="225em">		
+		<img src="https://mericans.files.wordpress.com/2013/01/patriotism_by_jerryalton-d5opptb.png" width="350em" height="225em" hidden>		
+		<img src="https://www.google.com/search?q=dragon+mc+dragonface&safe=off&espv=2&biw=720&bih=822&source=lnms&tbm=isch&sa=X&ved=0ahUKEwjBos3H2ePRAhWjj1QKHT9pAKEQ_AUIBigB#imgrc=ZpwQ8kFvlz2hPM%3A" width="350em" height="225em" hidden>		
+		</td>
+	</tr>
+	<tr>
+		<td id="imgcard3">
+		<img src="http://i.imgur.com/qPTJJBJ.jpg" width="350em" height="225em">		
+		<img src="http://cdn.acidcow.com/pics/20140221/american_gallery_02.jpg" width="350em" height="225em" hidden>		
+		<img src="http://cdn0.dailydot.com/uploaded/images/original/2016/8/11/Screen_Shot_2016-08-11_at_4.07.06_PM.png" width="350em" height="225em" hidden>		
  		</td>
 		<td>
-		HOLA
-		</td>
+		Curabitur quam tortor, dictum a ex in, ullamcorper ornare ligula. Vestibulum ipsum arcu, rutrum nec augue eget, viverra accumsan purus. Proin varius turpis lorem, vel ullamcorper ligula efficitur sed. Praesent velit dui, venenatis non blandit a, laoreet eget purus. Integer id fringilla velit. Duis fringilla lacus rutrum venenatis vehicula. In tempus nulla nec libero lacinia varius.		</td>
 	</tr>
 	<tr>
 		<td> 
@@ -39,48 +53,17 @@
 		</td>
 	</tr>
 	<tr>
-		<td> 
-		HI!	
+		<td id="imgcard4"> 
+		<img src="https://image-gr.s3.envato.com/files/200866001/1.jpg" width="350em" height="225em">		
+		<img src="http://independentpoliticalreport.com/wp-content/uploads/2017/01/690_oak_3d_2017_half_2016.jpg" width="350em" height="225em" hidden>		
+		<img src="https://static.vecteezy.com/system/resources/previews/000/106/443/original/vector-shiny-blue-happy-new-year-2017-card.jpg" width="350em" height="225em" hidden>
+ 		</td>
 		</td>
-		<td>
-		hello world! 
+		<td id="imgcard5"> 
+		<img src="https://s-media-cache-ak0.pinimg.com/originals/c4/95/16/c495164337a29a5a8e7ad79c2b39918f.jpg" width="275em" height="225em">		
+		<img src="http://www.quickmeme.com/img/8f/8ffa3613769909735fd576afd792156273ea9b96531bb5721a17f50ce4b0b48c.jpg" width="350em" height="225em" hidden>		
+		<img src="https://s-media-cache-ak0.pinimg.com/originals/6f/09/0f/6f090fb546f4ccf1e3e8f8799237734f.jpg" width="350em" height="225em" hidden>
 		</td>
-	<tr>
-		<td> 
-		HI!	
-		</td>
-		<td>
-		hello world! 
-		</td>
-	</tr>
-	<tr>
-		<td> 
-		Mauris imperdiet ultricies metus non facilisis. Phasellus ut elit fringilla, pharetra tortor eu, lobortis odio. Donec blandit tempor nisi, vitae sodales nibh blandit eu. Nullam consequat ligula sem, sit amet semper elit tempus vel. Fusce feugiat in eros eleifend tristique. Duis porttitor consectetur turpis. Pellentesque ac nunc id nunc bibendum tincidunt. Nam rhoncus turpis diam, nec vehicula ligula interdum sit amet. Sed dapibus nulla id odio elementum cursus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Maecenas urna est, tristique nec metus id, mattis euismod ligula. Nunc hendrerit dui nisl, ac varius erat interdum quis.	
-		</td>
-		<td>
-		Curabitur consectetur aliquam sem pharetra tempor. Maecenas nulla arcu, viverra blandit vulputate a, mollis vel leo. Duis consequat rhoncus molestie. Phasellus in nunc ut ipsum malesuada finibus in in tortor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. In hac habitasse platea dictumst. Donec sit amet dapibus arcu. Vestibulum eros erat, hendrerit ac elementum eu, laoreet in turpis. Ut et est ac augue dapibus elementum. Vivamus sed purus odio.
-
- 
-		</td>
-	</tr>
-	</tr>
-	<tr>
-		<td> 
-		HI!	
-		</td>
-		<td>
-		hello world! 
-		</td>
-	</tr>
-	<tr>
-		<td> 
-		Curabitur sed enim ut tortor lobortis faucibus eu quis mi. Nam eu laoreet erat, imperdiet ultricies nisl. Nulla ornare quis leo eu tristique. Proin in sapien a mauris aliquam pharetra. Vestibulum eget leo ac velit porttitor feugiat. Nunc scelerisque sodales dui ut auctor. Curabitur quam tortor, dictum a ex in, ullamcorper ornare ligula. Vestibulum ipsum arcu, rutrum nec augue eget, viverra accumsan purus. Proin varius turpis lorem, vel ullamcorper ligula efficitur sed. Praesent velit dui, venenatis non blandit a, laoreet eget purus. Integer id fringilla velit. Duis fringilla lacus rutrum venenatis vehicula. In tempus nulla nec libero lacinia varius.
-		</td>
-		<td>
-		Morbi rhoncus imperdiet urna, laoreet accumsan eros pretium sit amet. Etiam vel sagittis ligula, a maximus nulla. Donec vitae laoreet metus. Morbi quis sapien et ex dictum molestie eget eu odio. In fringilla consectetur lectus et tincidunt. Maecenas dignissim odio eu dolor fermentum viverra tincidunt eu nulla. Maecenas sem elit, sagittis id placerat eu, rutrum nec dolor. Nulla varius metus a magna sagittis, volutpat consectetur elit sodales. Aenean nec lorem condimentum felis ultricies sagittis. Vestibulum tristique libero quis porttitor euismod. Fusce nec interdum dui, nec imperdiet diam. Morbi tristique nisl arcu, et pulvinar dui commodo quis. Nunc risus neque, accumsan et laoreet ut, dignissim a tellus. Pellentesque gravida mauris sit amet metus efficitur, non maximus erat tempor. Mauris felis ligula, venenatis quis dapibus ut, iaculis vitae ante. Maecenas vel sapien ut orci laoreet laoreet id eu leo.
-
-		</td>
-	</tr>
 </table>
 </body>
 </html>
