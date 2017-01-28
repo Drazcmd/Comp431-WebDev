@@ -32,6 +32,10 @@ function helloWorld(){
 	// but I don't that I actually *had* to do so 
 	var message_box = document.getElementById("alertUserLocation")
 	message_box.innerHTML = ""
+	var send_message = function(message_string) {
+		console.log("SUP")
+		message_box.innerHTML = message_box.innerHTML + "<p>" + message_string + "</p>"
+	}
 
 	var fields_with_input = dom_ids.filter(function(id) {
 		if (document.getElementById(id).value) {
@@ -44,10 +48,12 @@ function helloWorld(){
 		console.log(id)
 		console.log(pattern)
 		if (pattern.test(document.getElementById(id).value)){
-			document.getElementById(getOutputId(id)).innerHTML = document.getElementById(id).value
-			message_box.innerHTML = message_box.innerHTML + " <p> " + 
-									" SUCCESS: Updated " + id + "to be "
-									+ document.getElementById(id).value
+			var new_value = document.getElementById(id).value
+			document.getElementById(getOutputId(id)).innerHTML = new_value
+			send_message(" SUCCESS: Updated " + id + "to be " + new_value)
+			//Assignment requires that we clear the input when it's accepted by our regex,
+			//but only AFTER we have messaged the user
+			document.getElementById(id).value = ""
 		} else {
 			invalid_inputs.push(id)
 			console.log(id, "failed!")
