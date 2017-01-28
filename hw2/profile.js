@@ -12,12 +12,20 @@ var dom_ids = [
 	"passwordcnf",
 ]
 var fieldRules = {
-	"displayname" : "([a-zA-Z0-9]*)",
+	"displayname" : "([a-zA-Z0-9]+)",
 	"email" : "([a-zA-Z0-9]+)(\x40)([a-z]+)(\x2E)([a-z]+)",
-	"phonenum" : "\d{3}-\d{3}-\d{4}",
-	"zip" : "\d{5}",
+	"phonenum" : "[0-9]{3}-[0-9]{3}-[0-9]{4}",
+	"zip" : "[0-9]{5}",
 	"password" :".*" ,
 	"passwordcnf" :".*"
+}
+var acceptable_inputs = {
+	"displayname" : "Any string of numbers or letters or spaces (but not only spaces!)",
+	"email" : "youremailaddress@gmail.com",
+	"phonenum" : "3 numbers, a hyphen, 3 more numbers, a hypher, 4 numbers",
+	"zip" : " Five numbers",
+	"password" :"Anything you want! Must match passwordcnf" ,
+	"passwordcnf" :"Anything you want! Must match password"
 }
 /*
 For example, looking at the id "email" we dislpay the hardcoded value 
@@ -61,10 +69,9 @@ function helloWorld(){
 	})
 
 	invalid_inputs.forEach(function(id) {
-		message_box.innerHTML = message_box.innerHTML + " <p> " + 
-								"ERROR: "  + id + " cannot be " +
-								 document.getElementById(id).value + " </p> "
-		 						
+		send_message("ERROR: "  + id + " cannot be " + document.getElementById(id).value)
+		send_message("A valid entry for " + id +
+		 			 " is along the lines of this: " + acceptable_inputs[id])
 	})
 
 	return true
