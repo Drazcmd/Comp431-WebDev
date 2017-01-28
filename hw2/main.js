@@ -73,10 +73,13 @@ function createImageCards(){
 				interval_button.addEventListener("click", launch_intervals)
 	 			clearInterval(interval_control)
 			}
+			interval_button.removeEventListener("click", launch_intervals)
 			interval_button.addEventListener("click", pause_interval)
 
 		}
+		//This event listener is only there so that launch_intervals
+		//can remove it on its first call 
+		//interval_button.addEventListener("click", launch_intervals)
 		launch_intervals()
 	})
-
 }
