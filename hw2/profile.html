@@ -6,7 +6,7 @@
 	<meta name="author" content="Clayton Drazner (cmd11)"> 
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="styles.css">
-	<script src="main.js"></script>
+	<script src="profile.js"></script>
 </head>
 <body>
 	<a href = "main.html"> CLICK ME TO RETURN TO POST FEED</a>
@@ -23,9 +23,9 @@
 		 	required> <!-- \x40 is ASCII hex for "@", \x2E is ASCII hex for "."-->
 		 	<p id="dispEmail" class="inlinep"> Aa1@email.com </p>
 		</p>
-		<p> Phone Number:
+		<p class="inlinep"> Phone Number:
 			<input type="text" name="phonenum" id="phonenum" pattern="\d{3}-\d{3}-\d{4}" required> 
-		 	<p id="dispPhonenum"> </p>
+		 	<p id="dispPhonenum" class="inlinep">214-777-7777 </p>
 		</p>
 		<p class="inlinep"> Zip code:
 			<input type="text" name="zip" id="zip" pattern="\d{5}" required>
@@ -41,10 +41,9 @@
 		 	<p id="dispPasswordcnf" class="inlinep"> hunter7 :) </p>
 		</p>
 
-		<input type="submit" onclick = "return true" value="Update Profile?">
+		<button type="button" onclick = "helloWorld()"> Update Profile? </button>
 		<div id="alertUserLocation">
 		I'll let you know about any changes down here :)
 		</div>
-
 </body>
 </html>
