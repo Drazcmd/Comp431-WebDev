@@ -41,7 +41,6 @@ function helloWorld(){
 	var message_box = document.getElementById("alertUserLocation")
 	message_box.innerHTML = ""
 	var send_message = function(message_string) {
-		console.log("SUP")
 		message_box.innerHTML = message_box.innerHTML + "<p>" + message_string + "</p>"
 	}
 
@@ -53,9 +52,21 @@ function helloWorld(){
 	var invalid_inputs = []
 	fields_with_input.forEach(function(id) {
 		var pattern = new RegExp(fieldRules[id])
-		console.log(id)
-		console.log(pattern)
 		if (pattern.test(document.getElementById(id).value)){
+			// Had to special case password and password cnf unforutnately
+			if (id == "password") {
+				var password_value = document.getElementById(id).value
+				var passwordcnf_value = document.getElementById("passwordcnf").value
+				if (password_value != passwordcnf_value) {
+					invalid_inputs.push(id)	
+					invalid_inputs.push("passwordcnf")	
+					return
+				}
+			} else if (id == "passwordcnf") {
+				//Took care of password stuff already; no need to do anything here
+				return
+			}
+			//This block does get executed with password if password == passwordcnf!
 			var new_value = document.getElementById(id).value
 			document.getElementById(getOutputId(id)).innerHTML = new_value
 			send_message(" SUCCESS: Updated " + id + "to be " + new_value)
@@ -64,11 +75,14 @@ function helloWorld(){
 			document.getElementById(id).value = ""
 		} else {
 			invalid_inputs.push(id)
-			console.log(id, "failed!")
 		}
 	})
 
 	invalid_inputs.forEach(function(id) {
+		if (!id) {
+			return
+		}
+		console.log(id)
 		send_message("ERROR: "  + id + " cannot be " + document.getElementById(id).value)
 		send_message("A valid entry for " + id +
 		 			 " is along the lines of this: " + acceptable_inputs[id])
