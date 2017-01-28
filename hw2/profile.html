@@ -10,35 +10,41 @@
 </head>
 <body>
 	<a href = "main.html"> CLICK ME TO RETURN TO POST FEED</a>
-	<div id="alertUserLocation">
-	I'll let you know about any errors or problems up here :)
-	</div>
 	<p> HELLO WORLD! HERE THERE BE PROFILE DRAGONS!</p>
-		<p> DisplayName (Can only be upper or lower case letters and numbers, and cannot start with a number): 
-		 	<input type="text" name="accntname" id="accntname" 
+		<p class="inlinep"> DisplayName:
+		 	<input type="text" name="dispname" id="dispname" 
 		 	pattern="([a-zA-Z])([a-zA-Z0-9])*" required>
+		 	<p id="dispDisplayname" class="inlinep"> DaBest </p>
 		</p>
 
-		<p> Email Address (e.g. Aa1@amail.aa):
+		<p class="inlinep"> Email Address:
 		 	<input type="text" name="email" id="email" 
 		 	pattern="([a-zA-Z0-9]+)(\x40)([a-z]+)(\x2E)([a-z]+)"
 		 	required> <!-- \x40 is ASCII hex for "@", \x2E is ASCII hex for "."-->
+		 	<p id="dispEmail" class="inlinep"> Aa1@email.com </p>
 		</p>
-		<p> Phone Number (e.g. 123-123-1234):
+		<p> Phone Number:
 			<input type="text" name="phonenum" id="phonenum" pattern="\d{3}-\d{3}-\d{4}" required> 
+		 	<p id="dispPhonenum"> </p>
 		</p>
-		<p> Zip code(e.g. 77777): 
+		<p class="inlinep"> Zip code:
 			<input type="text" name="zip" id="zip" pattern="\d{5}" required>
+		 	<p id="dispZip" class="inlinep"> 77777 </p>
 		</p>
 
-		<p> Password: 
+		<p class="inlinep"> Password: 
 			<input type="password" name="password" id="password" required>
+		 	<p id="dispPassword" class="inlinep"> hunter7 :) </p>
 		</p>
-		<p> Password Confirmation: 
+		<p class="inlinep"> Password Confirmation: 
 			<input type="password" name="passwordcnf" id="passwordcnf" required>
+		 	<p id="dispPasswordcnf" class="inlinep"> hunter7 :) </p>
 		</p>
 
-		<input type="submit" onclick = "return submitForm()" value="Submit Registration Form">
-		<button type="button" onclick="clearForms()"> Clear Forms </button>
+		<input type="submit" onclick = "return true" value="Update Profile?">
+		<div id="alertUserLocation">
+		I'll let you know about any changes down here :)
+		</div>
+
 </body>
 </html>

@@ -19,3 +19,6 @@ th {
 tr:hover {
 	background-color: lightgray
 }
+.inlinep{
+  display: inline;
+}
