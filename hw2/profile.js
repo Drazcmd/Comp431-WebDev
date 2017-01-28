@@ -62,8 +62,6 @@ function helloWorld(){
 					invalid_inputs.push("passwordcnf")	
 					return
 				}
-				document.getElementById(id).value = ""
-				document.getElementById("passwordcnf").value = ""
 			} else if (id == "passwordcnf") {
 				//Took care of password stuff already; no need to do anything here
 				return
@@ -75,6 +73,10 @@ function helloWorld(){
 			//Assignment requires that we clear the input when it's accepted by our regex,
 			//but only AFTER we have messaged the user
 			document.getElementById(id).value = ""
+		
+			if (id == "password"){
+				document.getElementById("passwordcnf").value = ""
+			}
 		} else {
 			invalid_inputs.push(id)
 		}
