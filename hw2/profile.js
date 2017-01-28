@@ -62,6 +62,8 @@ function helloWorld(){
 					invalid_inputs.push("passwordcnf")	
 					return
 				}
+				document.getElementById(id).value = ""
+				document.getElementById("passwordcnf").value = ""
 			} else if (id == "passwordcnf") {
 				//Took care of password stuff already; no need to do anything here
 				return
