@@ -32,6 +32,14 @@
 (function(exports) {
 
     'use strict'
+	function map_articles(articles) {
+		// Actually doesn't use 'map', but it works like one :)
+		var output_object = {}
+		articles.forEach(function(article) {
+			output_object[article["_id"]] = article["text"].split(" ").length
+	    })
+	    return output_object
+    }
 
     function countWords(url) {
         // IMPLEMENT ME
@@ -49,12 +57,7 @@
             	console.log(res["articles"].map(function(article) {
             		return article["text"]
             	}))
-            	var output_object = {}
-            	res["articles"].forEach(function (article) {
-            		output_object[article["_id"]] = article["text"]
-            	})
-            	console.log(output_object)
-            	return output_object
+            	return map_articles(res["articles"])
             })
     }
 
@@ -63,7 +66,8 @@
         return countWords(url)
             .then(res => {
                 console.log('this is inside countWordsSafe')
-                throw new Error('There was a problem...')
+                console.log(res)
+                return res
             })
             .catch(err => {
                 console.error(`Error inside countWordsSafe: ${err.message}`);
