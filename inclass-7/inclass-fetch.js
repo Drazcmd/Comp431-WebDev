@@ -42,7 +42,6 @@
     }
 
     function countWords(url) {
-        // IMPLEMENT ME
         return fetch(url)
             .then(res => {
             	//console.log(res.json())
@@ -52,21 +51,22 @@
                 return res.json()
             })
             .then(res => {
+            	/*
             	console.log(res)	
             	console.log(res["articles"][0])	
             	console.log(res["articles"].map(function(article) {
             		return article["text"]
             	}))
+            	*/
             	return map_articles(res["articles"])
             })
     }
 
     function countWordsSafe(url) {
-        // IMPLEMENT ME
         return countWords(url)
             .then(res => {
-                console.log('this is inside countWordsSafe')
-                console.log(res)
+                //console.log('this is inside countWordsSafe')
+                //console.log(res)
                 return res
             })
             .catch(err => {
@@ -78,7 +78,11 @@
     function getLargest(url) {
         // IMPLEMENT ME
         return countWords(url)
-            .then(res => 5)
+            .then(res => {
+            	console.log(res)
+            	let maxId = Object.keys(res).reduce((a, x) => res[x] > res[a] ? x : a)
+            	return maxId
+            })
     }
 
     exports.inclass = {
