@@ -32,25 +32,18 @@
 (function(exports) {
 
     'use strict'
-	function map_articles(articles) {
-		// Actually doesn't use 'map', but it works like one :)
-		var output_object = {}
-		articles.forEach(function(article) {
-			output_object[article["_id"]] = article["text"].split(" ").length
-	    })
-	    return output_object
-    }
 
     function countWords(url) {
         return fetch(url)
             .then(res => {
             	//console.log(res.json())
-                // return an object { articleId: wordCount }
-                //Can't actually access stuff in the .json since it returns a
-                //promise, until you get to the next .then
+            	//Note that res.json() returns a PROMISE, not the json itself.
+                //Therefore, you can't actually access stuff in the .json
+                //until you get to the next .then
                 return res.json()
             })
             .then(res => {
+            	//NOW res is the actual json (assuming no errors)
             	/*
             	console.log(res)	
             	console.log(res["articles"][0])	
@@ -58,14 +51,19 @@
             		return article["text"]
             	}))
             	*/
-            	return map_articles(res["articles"])
-            })
+				var output_object = {}
+				res["articles"].forEach(function(article) {
+					output_object[article["_id"]] = article["text"].split(" ").length
+	    			return output_object
+	    		})
+            	return output_object
+           })
     }
 
     function countWordsSafe(url) {
         return countWords(url)
             .then(res => {
-                //console.log('this is inside countWordsSafe')
+            	//Res is the {id: wordcount, ...} object from countWords()
                 //console.log(res)
                 return res
             })
@@ -76,11 +74,11 @@
     }
 
     function getLargest(url) {
-        // IMPLEMENT ME
         return countWords(url)
             .then(res => {
-            	console.log(res)
-            	let maxId = Object.keys(res).reduce((a, x) => res[x] > res[a] ? x : a)
+            	//Res is the {id: wordcount, ...} object from countWords()
+            	//console.log(res)
+            	let maxId = Object.keys(res).reduce((a, x) => res[x] >= res[a] ? x : a)
             	return maxId
             })
     }
