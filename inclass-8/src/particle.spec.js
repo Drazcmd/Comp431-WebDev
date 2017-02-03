@@ -51,7 +51,7 @@ describe('Particle Functionality', () => {
         // canvas = { width, height }
         const canvas = {width:10, height:10}
 
-        const p1 =  particle({ position: [1, -0.5]})
+        const p1 =  particle({ position: [1, -0.5], acceleration: [0, 0]})
         const { position } = update(p1, 1.0, canvas) 
         expect(position).to.be.ok
         expect(position).to.eql([1.0, 0.0])
@@ -59,15 +59,15 @@ describe('Particle Functionality', () => {
         //We can only get away with doing the shorthand {position} for accessing
         //the returned object.position once because we don't allow mutation, and creating
         //it more than once in the same scope would cause a name conflict
-        const p2 =  particle({ position: [1, 10.5]})
+        const p2 =  particle({ position: [1, 10.5], acceleration: [0, 0]})
         const p2state = update(p2, 1.0, canvas) 
         expect(p2state.position).is.ok.and.to.eql([1.0, 10.0])
 
-        const p3 = particle({ position: [-0.5, 1]})
+        const p3 = particle({ position: [-0.5, 1], acceleration: [0, 0]})
         const p3state = update(p3, 1.0, canvas) 
         expect(p3state.position).is.ok.and.to.eql([0.0, 1.0])
 
-        const p4 =  particle({ position: [10.5, 1]})
+        const p4 =  particle({ position: [10.5, 1], acceleration: [0, 0]})
         const p4state = update(p4, 1.0, canvas) 
         expect(p4state.position).is.ok.and.to.eql([0.0, 1.0])
 
