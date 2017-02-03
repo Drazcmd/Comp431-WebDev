@@ -12,8 +12,17 @@ const particle = ({
 }
 
 const update = ({acceleration, velocity, position, mass}, delta, canvas) => {
-	// IMPLEMENT ME
-    return { mass, acceleration, velocity, position }
+    let naive_position = position.forEach(function (dimension, index) {
+        //apply velocity changes
+        return dimension + (delta  * velocity[index])
+    })
+    const updated_particle = particle({
+        acceleration:acceleration,
+        position:naive_position,
+        velocity:velocity,
+        mass:mass
+    })
+    return updated_particle
 }
 
 export default particle
