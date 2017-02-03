@@ -25,17 +25,18 @@ const update = ({acceleration, velocity, position, mass}, delta, canvas) => {
         let accel_piece = (1.0/2.0) * acceleration[index] * delta * delta;
 
         let calculation_result = dimension + veloc_piece + accel_piece
-        return calculation_result
-        /*
-        //Ensure it stays in bound 
+
+        //Otherwise, ensure it stays in bound 
         if (calculation_result < 0) {
-            return 0
-        } else if (calculation_result > canvas[index]) {
-            return canvas[index]
+            return 0;
+        } else if (!canvas) {
+            //If we don't get the canvas, can't do bound checking on the large end
+            return calculation_result     
         } else {
-            return calculation_result 
-        }*/
-        
+            //We know for sure we have a canvas, and it could be out of bounds on that end
+            let boundry = (index==0 ? canvas["width"] : canvas["height"])
+            return (calculation_result <= boundry ? calculation_result : boundry)
+        }
     })
     velocity = velocity.map(function (dimension, index) {
         //apply velocity and acceleration changes
