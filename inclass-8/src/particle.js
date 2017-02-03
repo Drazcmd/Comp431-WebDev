@@ -12,16 +12,26 @@ const particle = ({
 }
 
 const update = ({acceleration, velocity, position, mass}, delta, canvas) => {
-    let naive_position = position.forEach(function (dimension, index) {
+    const naive_position = position.map(function (dimension, index) {
         //apply velocity changes
         return dimension + (delta  * velocity[index])
     })
+    /* Why doesn't this work?
     const updated_particle = particle({
-        acceleration:acceleration,
-        position:naive_position,
-        velocity:velocity,
-        mass:mass
+        acceleration,
+        naive_position,
+        velocity,
+        mass
     })
+    //updated_particle.position = naive_position
+    */
+    var updated_particle = particle({
+        acceleration,
+        position,
+        velocity,
+        mass
+    })
+    updated_particle.position = naive_position
     return updated_particle
 }
 
