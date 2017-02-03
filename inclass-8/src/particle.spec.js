@@ -7,9 +7,14 @@ describe('Particle Functionality', () => {
         const p = particle({})
         expect(p).to.be.ok
         expect(p.missingAttribute).to.not.be.ok
+
         // IMPLEMENT ME:
         //   check position, velocity, acceleration, mass
         //   these should all be numbers or arrays of numbers
+        expect(p.position).to.be.ok.and.to.be.a('array')
+        expect(p.velocity).to.be.ok.and.to.be.a('array')
+        expect(p.acceleration).to.be.ok.and.to.be.a('array')
+        expect(p.mass).to.be.ok.and.to.be.a('number')
     })
     it('should update the position by the velocity', () => {
         const p = particle({ position: [1, 1], velocity: [0.5, -0.5] })
@@ -29,6 +34,7 @@ describe('Particle Functionality', () => {
         const p = particle({ position: [1, 1], velocity: [1, 1], acceleration:[0.5, -0.5] })
         const {position, velocity, acceleration} = update(p, 2.0)
         expect(position).to.be.ok
+        expect(acceleration).to.be.ok
         expect(acceleration).to.eql([0.5, -0.5])
         expect(velocity).to.eql([2.0, 0.0])
     })
@@ -56,18 +62,15 @@ describe('Particle Functionality', () => {
         //it more than once in the same scope would cause a name conflict
         const p2 =  particle({ position: [1, 10.5]})
         const p2state = update(p2, 1.0, canvas) 
-        expect(p2state.position).is.ok
-        expect(p2state.position).to.eql([1.0, 10.0])
+        expect(p2state.position).is.ok.and.to.eql([1.0, 10.0])
 
         const p3 = particle({ position: [-0.5, 1]})
         const p3state = update(p3, 1.0, canvas) 
-        expect(p3state.position).is.ok
-        expect(p3state.position).to.eql([0.0, 1.0])
+        expect(p3state.position).is.ok.and.to.eql([0.0, 1.0])
 
         const p4 =  particle({ position: [10.5, 1]})
         const p4state = update(p4, 1.0, canvas) 
-        expect(p4state.position).is.ok
-        expect(p4state.position).to.eql([0.0, 1.0])
+        expect(p4state.position).is.ok.and.to.eql([0.0, 1.0])
 
 
         expect()
