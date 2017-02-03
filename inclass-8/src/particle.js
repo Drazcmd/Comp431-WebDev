@@ -26,16 +26,21 @@ const update = ({acceleration, velocity, position, mass}, delta, canvas) => {
 
         let calculation_result = dimension + veloc_piece + accel_piece
 
-        //Otherwise, ensure it stays in bound 
-        if (calculation_result < 0) {
-            return 0;
-        } else if (!canvas) {
-            //If we don't get the canvas, can't do bound checking on the large end
+        if (!canvas) {
+            //If we don't get the canvas, can't do bound checking on the large end nor
+            //can we wrap around on the small end. So I'm just gonna let it go out of bounds
             return calculation_result     
         } else {
-            //We know for sure we have a canvas, and it could be out of bounds on that end
+            //We know for sure we have a canvas, and it could be out of bounds on either end
             let boundry = (index==0 ? canvas["width"] : canvas["height"])
-            return (calculation_result <= boundry ? calculation_result : boundry)
+            if (calculation_result < 0) {
+                return boundry + calculation_result
+            }
+            else if (calculation_result > boundry){
+                return calculation_result - boundry 
+            } else {
+                return calculation_result
+            }
         }
     })
     velocity = velocity.map(function (dimension, index) {
