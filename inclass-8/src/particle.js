@@ -12,6 +12,10 @@ const particle = ({
 }
 
 const update = ({acceleration, velocity, position, mass}, delta, canvas) => {
+    //Shadowing. Can't figure out a way to do this non-mutationally - trying to
+    //pass anything not named "position" into the constructor is a recipe for disaster
+    //due to how the constructor is written. And I'm assuming we shouldn't be editing
+    //the constructor code...
     position = position.map(function (dimension, index) {
         //apply velocity changes
         return dimension + (delta  * velocity[index])
