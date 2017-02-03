@@ -17,8 +17,18 @@ const update = ({acceleration, velocity, position, mass}, delta, canvas) => {
     //due to how the constructor is written. And I'm assuming we shouldn't be editing
     //the constructor code...
     position = position.map(function (dimension, index) {
-        //apply velocity changes
-        return dimension + (delta  * velocity[index])
+        //apply velocity and acceleration changes
+        //for the v_i * t part
+        let veloc_piece = delta * velocity[index];
+
+        //for the 1/2 * a * t^2 part
+        let accel_piece = (1.0/2.0) * acceleration[index] * delta * delta;
+
+        return dimension + veloc_piece + accel_piece
+    })
+    velocity = velocity.map(function (dimension, index) {
+        //apply velocity and acceleration changes
+        return dimension + (acceleration[index] * delta)
     })
     const updated_particle = particle({
         acceleration,

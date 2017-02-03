@@ -34,8 +34,7 @@ describe('Particle Functionality', () => {
         const p = particle({ position: [1, 1], velocity: [1, 1], acceleration:[0.5, -0.5] })
         const {position, velocity, acceleration} = update(p, 2.0)
         expect(position).to.be.ok
-        expect(acceleration).to.be.ok
-        expect(acceleration).to.eql([0.5, -0.5])
+        expect(acceleration).to.be.ok.and.to.eql([0.5, -0.5])
         expect(velocity).to.eql([2.0, 0.0])
     })
 
