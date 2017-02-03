@@ -2,7 +2,7 @@ import { expect } from 'chai'
 import particle, { update } from './particle'
 
 describe('Particle Functionality', () => {
-/*
+
     it('should have default values', () => {
         const p = particle({})
         expect(p).to.be.ok
@@ -32,7 +32,7 @@ describe('Particle Functionality', () => {
         expect(acceleration).to.eql([0.5, -0.5])
         expect(velocity).to.eql([2.0, 0.0])
     })
-*/
+
     it('particles should wrap around the world', () => {
         // IMPLEMENT ME:
         
