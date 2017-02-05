@@ -8,10 +8,14 @@ body {
 
 canvas {
   border:0.6em solid #000000;
+  position: relative;
   /*
   width: 25em;
   height:30em;
   */
   width: 400px;
   height: 550px
+}
+.resources {
+  visibility: hidden; 
 }

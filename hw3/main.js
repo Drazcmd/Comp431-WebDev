@@ -9,8 +9,8 @@ var createGame = function(canvas) {
     let c = canvas.getContext("2d");
    	let shipImg = document.getElementById("spaceShip");
 
-   	//Adjusted y by hand to just look nice - it stays constant
-   	let ship = {canvasX: 0, canvasY: 20}
+   	//Adjusted values by hand to just look nice - only x changes
+   	let ship = {canvasX: 0, canvasY: 20, width: 35, hight:15}
 
 	//Click and your spaceship will shoot!
 	let click = function(event) {
@@ -30,26 +30,21 @@ var createGame = function(canvas) {
 
 	// Moves towards the x coordinate of cursor (y stays the same)
 	var shipFollowsCursor = function(event) {
-   		let bounds = canvas.getBoundingClientRect();
    		//Canvas coordinate movement scales differently from the
    		//mouse coordinate movement unfortunately :/
-   		console.log(bounds)
 		console.log("Go ship!");
 		var drawShip = function(event) {
-			//clear current ship position
+			//current ship position is at ship.canvasX
+			//TODO - clear image	
 
-			//if ship is farther than a set amount from the mouse, start
-			//moving it closer to the mouse (slowly!)
-			let cutoff = 3
-			if ((event.clientX - bounds.left + cutoff) > ship.canvasX) {
-				ship.canvasX = ship.canvasX + 1;
-			} else if ((event.clientX - bounds.left - cutoff) < ship.canvasX) {
-				ship.canvasX = ship.canvasX - 1;
-			} else {
-				//TODO - nothing?
-				console.log("Don't need to update yet")	
-			}
-			c.drawImage(shipImg, ship.canvasX, 135, 35, 15);
+			//The canvas scaling doesn't match up with the browser scaling -_-
+			const rescale = 0.7
+			//We want the ship's center to be near the mouse, but the 
+			//drawImage draws from the top left corner. This nudges it a little
+			const recenter = ship.width / 3
+
+			ship.canvasX = (rescale * event.clientX) - canvas.offsetLeft - recenter;
+			c.drawImage(shipImg, ship.canvasX, 135, ship.width, ship.hight);
 			console.log("hi");
 		} 
 		canvas.addEventListener("mousemove", drawShip, false);
