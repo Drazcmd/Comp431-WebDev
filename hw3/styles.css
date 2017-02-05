@@ -1,0 +1,17 @@
+body {
+	/* See piazza @7 private post*/
+    margin: 1em auto;
+    max-width: 40em;
+    padding: 0.62em;
+    font: 1.2em/1.62em sans-serif;
+}
+
+canvas {
+  border:0.6em solid #000000;
+  /*
+  width: 25em;
+  height:30em;
+  */
+  width: 400px;
+  height: 550px
+}
