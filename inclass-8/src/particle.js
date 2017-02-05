@@ -16,7 +16,7 @@ const update = ({acceleration, velocity, position, mass}, delta, canvas) => {
     //pass anything not named "position" into the constructor is a recipe for disaster
     //due to how the constructor is written. And I'm assuming we shouldn't be editing
     //the constructor code...
-    position = position.map(function (dimension, index) {
+    let new_position = position.map(function (dimension, index) {
         //apply velocity and acceleration changes
         //for the v_i * t part
         let veloc_piece = delta * velocity[index];
@@ -43,14 +43,14 @@ const update = ({acceleration, velocity, position, mass}, delta, canvas) => {
             }
         }
     })
-    velocity = velocity.map(function (dimension, index) {
+    let new_velocity = velocity.map(function (dimension, index) {
         //apply velocity and acceleration changes
         return dimension + (acceleration[index] * delta)
     })
     const updated_particle = particle({
         acceleration,
-        position,
-        velocity,
+        position: new_position,
+        velocity: new_velocity,
         mass
     })
     return updated_particle
