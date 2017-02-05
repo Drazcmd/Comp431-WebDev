@@ -39,11 +39,13 @@ var createGame = function(canvas) {
 
 			//The canvas scaling doesn't match up with the browser scaling -_-
 			const rescale = 0.7
+			let scaledClientX = rescale * event.clientX
+
 			//We want the ship's center to be near the mouse, but the 
 			//drawImage draws from the top left corner. This nudges it a little
-			const recenter = ship.width / 3
+			let recenter = ship.width / 3
 
-			ship.canvasX = (rescale * event.clientX) - canvas.offsetLeft - recenter;
+			ship.canvasX = scaledClientX - canvas.offsetLeft - recenter;
 			c.drawImage(shipImg, ship.canvasX, 135, ship.width, ship.hight);
 			console.log("hi");
 		} 
