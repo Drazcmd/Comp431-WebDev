@@ -7,7 +7,10 @@
 */
 var createGame = function(canvas) { 
     let c = canvas.getContext("2d");
-   	var ship = document.getElementById("spaceShip");
+   	let shipImg = document.getElementById("spaceShip");
+
+   	//Adjusted y by hand to just look nice - it stays constant
+   	let ship = {canvasX: 0, canvasY: 20}
 
 	//Click and your spaceship will shoot!
 	let click = function(event) {
@@ -27,11 +30,26 @@ var createGame = function(canvas) {
 
 	// Moves towards the x coordinate of cursor (y stays the same)
 	var shipFollowsCursor = function(event) {
-   		let canvasBoundaries = canvas.getBoundingClientRect();
-   		console.log(canvasBoundaries)
+   		let bounds = canvas.getBoundingClientRect();
+   		//Canvas coordinate movement scales differently from the
+   		//mouse coordinate movement unfortunately :/
+   		console.log(bounds)
 		console.log("Go ship!");
 		var drawShip = function(event) {
-			c.drawImage(ship, event.clientX - canvasBoundaries.left, 135, 35, 15);
+			//clear current ship position
+
+			//if ship is farther than a set amount from the mouse, start
+			//moving it closer to the mouse (slowly!)
+			let cutoff = 3
+			if ((event.clientX - bounds.left + cutoff) > ship.canvasX) {
+				ship.canvasX = ship.canvasX + 1;
+			} else if ((event.clientX - bounds.left - cutoff) < ship.canvasX) {
+				ship.canvasX = ship.canvasX - 1;
+			} else {
+				//TODO - nothing?
+				console.log("Don't need to update yet")	
+			}
+			c.drawImage(shipImg, ship.canvasX, 135, 35, 15);
 			console.log("hi");
 		} 
 		canvas.addEventListener("mousemove", drawShip, false);
