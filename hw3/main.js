@@ -28,43 +28,43 @@ var createGame = function(canvas) {
 		console.log("It's a new beginning!")
 	}
 
-	// Moves towards the x coordinate of cursor (y stays the same)
-	var shipFollowsCursor = function(event) {
-   		//Canvas coordinate movement scales differently from the
-   		//mouse coordinate movement unfortunately :/
+
+	// Ship tracks cursor's x coordinate (y stays the same)
+	var drawShip = function(event) {
+		//Goal of this is to clear the last drawn image of the ship
+		c.clearRect(ship.canvasX, ship.canvasY, ship.width, ship.hight)
+
+		//The canvas mouse coordinates doesn't increase by the same magnitude 
+		//s you move your mouse across the scaling -_-
+		const rescale = 0.7
+
+		//We want the ship's center to be near the mouse, but the 
+		//drawImage draws from the top left corner. This nudges it a little
+		let recenter = ship.width / 3
+
+		//Update the ships location
+		let scaledClientX = rescale * event.clientX
+		ship.canvasX = scaledClientX - canvas.offsetLeft - recenter;
+
+		//Now finally draw the ship at the new location
+		c.drawImage(shipImg, ship.canvasX, ship.canvasY, ship.width, ship.hight);
+	} 
+
+
+	var resumeGame = function(event) {
 		console.log("Go ship!");
-		var drawShip = function(event) {
-			//Goal of this is to clear the last drawn image of the ship
-			c.clearRect(ship.canvasX, ship.canvasY, ship.width, ship.hight)
-			c.clearRect(ship.canvasX, ship.canvasY, ship.width, ship.hight)
-
-			//The canvas scaling doesn't match up with the browser scaling -_-
-			const rescale = 0.7
-
-			//We want the ship's center to be near the mouse, but the 
-			//drawImage draws from the top left corner. This nudges it a little
-			let recenter = ship.width / 3
-
-			//Update the ships location
-			let scaledClientX = rescale * event.clientX
-			ship.canvasX = scaledClientX - canvas.offsetLeft - recenter;
-
-			//Now finally draw the ship at the new location
-			c.drawImage(shipImg, ship.canvasX, ship.canvasY, ship.width, ship.hight);
-			console.log("hi");
-		} 
 		canvas.addEventListener("mousemove", drawShip, false);
 	}
-	var shipStaysStill = function(event) {
+	var pauseGame = function(event) {
 		console.log("Stop ship!");
+		canvas.removeEventListener("mousemove", drawShip, false);
 	}
-
 
     return {
     	click: click,
     	nyanFire: nyanFire,
-    	shipFollowsCursor: shipFollowsCursor,
-    	shipStaysStill: shipStaysStill,
+    	resumeGame: resumeGame,
+    	pauseGame: pauseGame,
     	beginGame: beginGame
     }
 }
@@ -81,7 +81,7 @@ window.onload = function() {
     // of the functions we set up in createGame.
     var game = createGame(canvas);
     canvas.addEventListener("mousedown", game.click, false);
-    canvas.addEventListener("mouseenter", game.shipFollowsCursor, false);
-    canvas.addEventListener("mouseout", game.shipStaysStill, false);
+    canvas.addEventListener("mouseenter", game.resumeGame, false);
+    canvas.addEventListener("mouseout", game.pauseGame, false);
     game.beginGame()
 }
