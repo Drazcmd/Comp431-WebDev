@@ -10,7 +10,7 @@ var createGame = function(canvas) {
    	let shipImg = document.getElementById("spaceShip");
 
    	//Adjusted values by hand to just look nice - only x changes
-   	let ship = {canvasX: 0, canvasY: 20, width: 35, hight:15}
+   	let ship = {canvasX: 0, canvasY: 133, width: 35, hight:15}
 
 	//Click and your spaceship will shoot!
 	let click = function(event) {
@@ -34,19 +34,23 @@ var createGame = function(canvas) {
    		//mouse coordinate movement unfortunately :/
 		console.log("Go ship!");
 		var drawShip = function(event) {
-			//current ship position is at ship.canvasX
-			//TODO - clear image	
+			//Goal of this is to clear the last drawn image of the ship
+			c.clearRect(ship.canvasX, ship.canvasY, ship.width, ship.hight)
+			c.clearRect(ship.canvasX, ship.canvasY, ship.width, ship.hight)
 
 			//The canvas scaling doesn't match up with the browser scaling -_-
 			const rescale = 0.7
-			let scaledClientX = rescale * event.clientX
 
 			//We want the ship's center to be near the mouse, but the 
 			//drawImage draws from the top left corner. This nudges it a little
 			let recenter = ship.width / 3
 
+			//Update the ships location
+			let scaledClientX = rescale * event.clientX
 			ship.canvasX = scaledClientX - canvas.offsetLeft - recenter;
-			c.drawImage(shipImg, ship.canvasX, 135, ship.width, ship.hight);
+
+			//Now finally draw the ship at the new location
+			c.drawImage(shipImg, ship.canvasX, ship.canvasY, ship.width, ship.hight);
 			console.log("hi");
 		} 
 		canvas.addEventListener("mousemove", drawShip, false);
