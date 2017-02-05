@@ -7,17 +7,17 @@
 */
 var createGame = function(canvas) { 
     let c = canvas.getContext("2d");
-   	var ship = document.getElementById("spaceShip")
-
+   	var ship = document.getElementById("spaceShip");
 
 	//Click and your spaceship will shoot!
 	let click = function(event) {
-		console.log("I'm a firin' mah lasah!")
+		console.log("I'm a firin' mah lasah!");
 	}
 
 	//Enemy attacks
 	var nyanFire = function() {
-		console.log("NYANs ARE ATTACKING?")
+		console.log("NYANs ARE ATTACKING?");
+		console.log(ship);
 	}
 
 
@@ -27,13 +27,17 @@ var createGame = function(canvas) {
 
 	// Moves towards the x coordinate of cursor (y stays the same)
 	var shipFollowsCursor = function(event) {
-		console.log("Go ship!")
-		canvas.addEventListener("mousemove", function(event) {
-			console.log(event.clientX)
-		}, false)
+   		let canvasBoundaries = canvas.getBoundingClientRect();
+   		console.log(canvasBoundaries)
+		console.log("Go ship!");
+		var drawShip = function(event) {
+			c.drawImage(ship, event.clientX - canvasBoundaries.left, 135, 35, 15);
+			console.log("hi");
+		} 
+		canvas.addEventListener("mousemove", drawShip, false);
 	}
 	var shipStaysStill = function(event) {
-		console.log("Stop ship!")
+		console.log("Stop ship!");
 	}
 
 
@@ -56,9 +60,9 @@ window.onload = function() {
 
     // "game" is an object literal that uses closures to let us call any
     // of the functions we set up in createGame.
-    var game = createGame(canvas)
-    canvas.addEventListener("mousedown", game.click, false)
-    canvas.addEventListener("mouseenter", game.shipFollowsCursor, false)
-    canvas.addEventListener("mouseout", game.shipStaysStill, false)
+    var game = createGame(canvas);
+    canvas.addEventListener("mousedown", game.click, false);
+    canvas.addEventListener("mouseenter", game.shipFollowsCursor, false);
+    canvas.addEventListener("mouseout", game.shipStaysStill, false);
     game.beginGame()
 }
