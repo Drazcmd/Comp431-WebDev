@@ -54,10 +54,14 @@ var createGame = function(canvas) {
 	var resumeGame = function(event) {
 		console.log("Go ship!");
 		canvas.addEventListener("mousemove", drawShip, false);
+		document.getElementById("JazzNyanMusic").autoplay = true
+		console.log(document.getElementById("JazzNyanMusic"))
 	}
 	var pauseGame = function(event) {
 		console.log("Stop ship!");
 		canvas.removeEventListener("mousemove", drawShip, false);
+		document.getElementById("JazzNyanMusic").autoplay = false
+		console.log(document.getElementById("JazzNyanMusic"))
 	}
 
     return {
