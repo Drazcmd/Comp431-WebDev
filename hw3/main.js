@@ -19,8 +19,12 @@ var createGame = function(canvas) {
    	//Needed so I can play/pause sounds without knowing which audio 
    	//element is currently playing
 	let sounds = {
+		//To avoid hurting peoples' ears :)
+		normalVolume: 0.5,
+		quietVolume: 0.075,
 		background: document.getElementById(audioTrackIds[0])
 	}
+	sounds.background.volume = sounds.normalVolume;
 
     /*
     Odd syntax, but this actually is the best way to get back an iterable
@@ -28,36 +32,30 @@ var createGame = function(canvas) {
    	twice (given that we defined background to start as it by default)
    	*/
    	let songsIter = audioTrackIds.slice(1)[Symbol.iterator]();
-	var loadNextAudio = function() {
-		//Must pause currently playing audio first so as to avoid overlapping
-		sounds.background.pause();
 
-		//Decided to just keep playing last track if we go through them all
-		var nextTrackId = audioTrackIds[audioTrackIds.length - 1];
-		let nextElement = songsIter.next();
-		if (nextElement.value) {
-			nextTrackId = nextElement.value
-		} 
-
-		sounds.background = document.getElementById(nextTrackId)
-		//special casing because THIS PARTICULAR FILE IS REALLY LOUD
-		if (nextTrackId === "normalNyan"){
-			sounds.background.volume = 0.20
-		}
-		sounds.background.play()	
-	}
 
 	//Click and your spaceship will shoot!
 	let click = function(event) {
-		console.log("I'm a firin' mah lasah!");
+		shipFires()
+		//TODO - take next line out (just for testing)
+		increaseDifficulty()
+	}
+
+	var increaseDifficulty = function() {
+		console.log("Let's ramp it up!")
 		loadNextAudio()
 	}
+	
+	var shipFires = function() {
+		console.log("I'm a firin' mah lasah!");
+	}	
 
 	//Enemy attacks
 	var nyanFire = function() {
 		console.log("NYANs ARE ATTACKING?");
 		console.log(ship);
 	}
+
 
 
 	// Ship tracks cursor's x coordinate (y stays the same)
@@ -71,7 +69,7 @@ var createGame = function(canvas) {
 
 		//We want the ship's center to be near the mouse, but the 
 		//drawImage draws from the top left corner. This nudges it a little
-		let recenter = ship.width / 3
+		const recenter = ship.width / 3
 
 		//Update the ships location
 		let scaledClientX = rescale * event.clientX
@@ -81,6 +79,26 @@ var createGame = function(canvas) {
 		c.drawImage(shipImg, ship.canvasX, ship.canvasY, ship.width, ship.hight);
 	} 
 
+	var loadNextAudio = function() {
+		//Must pause currently playing audio first so as to avoid overlapping
+		sounds.background.pause();
+
+		//Decided to just keep playing last track if we go through them all
+		var nextTrackId = audioTrackIds[audioTrackIds.length - 1];
+		let nextElement = songsIter.next();
+		if (nextElement.value) {
+			nextTrackId = nextElement.value
+		} 
+
+		sounds.background = document.getElementById(nextTrackId)
+		sounds.background.volume = sounds.normalVolume;
+
+		//special casing a couple because THEY ARE REALLY LOUD
+		if (nextTrackId === "normalNyan"){
+			sounds.background.volume = sounds.quietVolume;
+		}
+		sounds.background.play()	
+	}
 
 	var beginGame = function(){
 		console.log("It's a new beginning!")	
