@@ -16,15 +16,23 @@ var createGame = function(canvas) {
    		"jazzNyan",
    		"normalNyan"
    	]
-   	//Needed so I can play/pause sounds without knowing which audio 
-   	//element is currently playing
+   	//Needed so I can play/pause/adjust the volume of sounds without 
+   	//knowing which audio element is currently playing
 	let sounds = {
-		//To avoid hurting peoples' ears :)
 		normalVolume: 0.5,
 		quietVolume: 0.075,
 		background: document.getElementById(audioTrackIds[0])
 	}
-	sounds.background.volume = sounds.normalVolume;
+
+	//Set the default volumes to avoid melting eardrums :p
+	audioTrackIds.forEach(function(trackId){
+		//special casing because this one is REALLY LOUD
+		if (trackId === "normalNyan"){
+			document.getElementById(trackId).volume = sounds.quietVolume
+		} else {
+			document.getElementById(trackId).volume = sounds.normalVolume
+		}
+	})
 
     /*
     Odd syntax, but this actually is the best way to get back an iterable
@@ -32,24 +40,49 @@ var createGame = function(canvas) {
    	twice (given that we defined background to start as it by default)
    	*/
    	let songsIter = audioTrackIds.slice(1)[Symbol.iterator]();
-
-
-	//Click and your spaceship will shoot!
 	let click = function(event) {
 		shipFires()
 		//TODO - take next line out (just for testing)
 		increaseDifficulty()
 	}
 
+	var blockFiring = false
+	var shipFires = function() {
+		if (blockFiring) {
+			return
+		}
+		//width and height decided by hand to look 'good'
+		let shipLaser = {
+			canvasX: ship.canvasX, canvasY: ship.canvasY,
+		 	width: 3, height: 9, laserRefreshRate: 7 
+		}
+		console.log(blockFiring)
+		blockFiring = true
+		var moveShipFire = function(fireCoordinates) {
+			if (shipLaser.canvasY == 0){
+				//(canvasY is 0 at the top of the canvas)
+				clearInterval(moveShipFire, shipLaser.laserRefreshRate);
+				blockFiring = false
+			}
+
+			shipLaser.canvasY -= 1;
+			c.beginPath();
+			c.lineWidth = shipLaser.width;
+			c.strokeStyle="green";
+			c.rect(
+				shipLaser.canvasX, shipLaser.canvasY,
+				shipLaser.width, shipLaser.height
+			);
+			c.stroke();
+		}
+		setInterval(moveShipFire, shipLaser.laserRefreshRate)
+	}	
+
+
 	var increaseDifficulty = function() {
 		console.log("Let's ramp it up!")
 		loadNextAudio()
 	}
-	
-	var shipFires = function() {
-		console.log("I'm a firin' mah lasah!");
-	}	
-
 	//Enemy attacks
 	var nyanFire = function() {
 		console.log("NYANs ARE ATTACKING?");
@@ -89,14 +122,7 @@ var createGame = function(canvas) {
 		if (nextElement.value) {
 			nextTrackId = nextElement.value
 		} 
-
 		sounds.background = document.getElementById(nextTrackId)
-		sounds.background.volume = sounds.normalVolume;
-
-		//special casing a couple because THEY ARE REALLY LOUD
-		if (nextTrackId === "normalNyan"){
-			sounds.background.volume = sounds.quietVolume;
-		}
 		sounds.background.play()	
 	}
 
