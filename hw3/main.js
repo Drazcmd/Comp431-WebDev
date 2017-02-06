@@ -7,15 +7,23 @@
 */
 var createGame = function(canvas) { 
     let c = canvas.getContext("2d");
-
    	let shipImg = document.getElementById("spaceShip");
+
    	//Adjusted values by hand to just look nice - only x changes
-   	let ship = {canvasX: 0, canvasY: 133, width: 35, hight:15}
+   	let ship = {canvasX: 0, canvasY: 133, width: 35, height:15}
+
+   	//We only allow player to have one laser firing, as is traditional
+   	let shipLaser = {
+   		canvasX: -1, canvasY: -1, chargingLaser: false,
+   		width: 1, height: 3, laserRefreshRate: 3
+   	}
+
    	//IDs needed to grab the HTML5 audio elements
    	let audioTrackIds = [
    		"jazzNyan",
    		"normalNyan"
    	]
+
    	//Needed so I can play/pause/adjust the volume of sounds without 
    	//knowing which audio element is currently playing
 	let sounds = {
@@ -40,44 +48,64 @@ var createGame = function(canvas) {
    	twice (given that we defined background to start as it by default)
    	*/
    	let songsIter = audioTrackIds.slice(1)[Symbol.iterator]();
-	let click = function(event) {
-		shipFires()
-		//TODO - take next line out (just for testing)
-		increaseDifficulty()
+	var click = function(event) {
+		if (!shipLaser.chargingLaser) {
+			shipFires()
+		} else {
+			console.log(shipLaser.chargingLaser)
+		}
 	}
 
-	var blockFiring = false
 	var shipFires = function() {
-		if (blockFiring) {
-			return
-		}
-		//width and height decided by hand to look 'good'
-		let shipLaser = {
-			canvasX: ship.canvasX, canvasY: ship.canvasY,
-		 	width: 3, height: 9, laserRefreshRate: 7 
-		}
-		console.log(blockFiring)
-		blockFiring = true
-		var moveShipFire = function(fireCoordinates) {
-			if (shipLaser.canvasY == 0){
-				//(canvasY is 0 at the top of the canvas)
-				clearInterval(moveShipFire, shipLaser.laserRefreshRate);
-				blockFiring = false
-			}
+		shipLaser.chargingLaser = true;
 
+		//width and height decided by hand to look 'good'
+		shipLaser.canvasX = ship.canvasX + ship.width / 2;
+		shipLaser.canvasY = ship.canvasY - ship.height / 2;
+		var moveShipFire = function() {
+			clearImage(shipLaser)
+
+			//Remember, -1 means upwards, +1 means downwards
 			shipLaser.canvasY -= 1;
+
+			//Draw the bullet itself
 			c.beginPath();
 			c.lineWidth = shipLaser.width;
-			c.strokeStyle="green";
+			c.strokeStyle = "green";
 			c.rect(
 				shipLaser.canvasX, shipLaser.canvasY,
 				shipLaser.width, shipLaser.height
 			);
 			c.stroke();
-		}
-		setInterval(moveShipFire, shipLaser.laserRefreshRate)
-	}	
 
+			//Check when we reach near the top of the canvas (y=0)
+			if (shipLaser.canvasY <= 1) {
+				clearInterval(laserInterval)
+				shipLaser.chargingLaser = false;
+				clearImage(shipLaser)
+			}
+
+		}
+		shipLaser.chargingLaser = true;
+		let laserInterval = setInterval(moveShipFire, shipLaser.laserRefreshRate)
+	}	
+	
+	//Needed to clear the last drawn image of things 
+	var clearImage = function({canvasX, canvasY, width, height}){
+		c.beginPath();
+		c.strokeWidth = width;
+		c.strokeStyle = "white";
+		/*
+		Note the constants that fudge the bounds of the rectangle; we can't
+		use what the drawn image's bounds are exactly due to canvas weirdness
+		that sometimes leaves behind pixels
+		*/
+		c.clearRect(
+			canvasX - 1, canvasY - 1,
+			width + 2, height + 2
+		);
+		c.stroke();
+	}
 
 	var increaseDifficulty = function() {
 		console.log("Let's ramp it up!")
@@ -93,8 +121,7 @@ var createGame = function(canvas) {
 
 	// Ship tracks cursor's x coordinate (y stays the same)
 	var drawShip = function(event) {
-		//Goal of this is to clear the last drawn image of the ship
-		c.clearRect(ship.canvasX, ship.canvasY, ship.width, ship.hight)
+		clearImage(ship)
 
 		//The canvas mouse coordinates doesn't increase by the same magnitude 
 		//s you move your mouse across the scaling -_-
@@ -105,11 +132,15 @@ var createGame = function(canvas) {
 		const recenter = ship.width / 3
 
 		//Update the ships location
-		let scaledClientX = rescale * event.clientX
+		let scaledClientX = rescale * event.clientX;
 		ship.canvasX = scaledClientX - canvas.offsetLeft - recenter;
 
 		//Now finally draw the ship at the new location
-		c.drawImage(shipImg, ship.canvasX, ship.canvasY, ship.width, ship.hight);
+		c.drawImage(
+			shipImg, 
+			ship.canvasX, ship.canvasY,
+			ship.width, ship.height
+		);
 	} 
 
 	var loadNextAudio = function() {
@@ -127,7 +158,7 @@ var createGame = function(canvas) {
 	}
 
 	var beginGame = function(){
-		console.log("It's a new beginning!")	
+		console.log("It's a new beginning!")
 	}
 	var resumeGame = function(event) {
 		console.log("Go ship!");
