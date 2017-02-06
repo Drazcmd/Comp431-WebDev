@@ -7,10 +7,42 @@
 */
 var createGame = function(canvas) { 
     let c = canvas.getContext("2d");
-   	let shipImg = document.getElementById("spaceShip");
 
+   	let shipImg = document.getElementById("spaceShip");
    	//Adjusted values by hand to just look nice - only x changes
    	let ship = {canvasX: 0, canvasY: 133, width: 35, hight:15}
+   	let gameState = {playing: false}
+   	//IDs needed to grab the HTML5 audio elements
+   	let audioTrackIds = [
+   		"jazzNyan",
+   		"normalNyan"
+   	]
+   	//Needed so I can play/pause sounds without knowing which audio 
+   	//element is currently playing
+	let sounds = {
+		background: document.getElementById(audioTrackIds[0])
+	}
+
+   	//Odd syntax, but this actually is the best way to get back an iterable
+   	//of an array's elements
+   	let songsIter = audioTrackIds[Symbol.iterator]();
+	var loadNextAudio = function() {
+		//Must pause currently playing audio first so as to avoid overlapping
+		if (gameState.playing) {
+			sounds.background.pause()
+		}
+		console.log(sounds)
+
+		let nextTrackId = songsIter.next().value
+		if (!nextTrackId) {
+			//Decided to just keep playing last track if we go through them all
+			nextTrackId = audioTrackIds[audioTrackIds.length - 1].value
+		}
+		sounds.background = document.getElementById(nextTrackId)
+		if (gameState.playing) {
+			sounds.background.play()	
+		}
+	}
 
 	//Click and your spaceship will shoot!
 	let click = function(event) {
@@ -26,6 +58,8 @@ var createGame = function(canvas) {
 
 	var beginGame = function(){
 		console.log("It's a new beginning!")
+		setTimeout(loadNextAudio, 3000)
+		setTimeout(loadNextAudio, 5000)
 	}
 
 
@@ -54,14 +88,14 @@ var createGame = function(canvas) {
 	var resumeGame = function(event) {
 		console.log("Go ship!");
 		canvas.addEventListener("mousemove", drawShip, false);
-		document.getElementById("JazzNyanMusic").autoplay = true
-		console.log(document.getElementById("JazzNyanMusic"))
+		sounds.background.play()
+		gameState.playing = true
 	}
 	var pauseGame = function(event) {
 		console.log("Stop ship!");
 		canvas.removeEventListener("mousemove", drawShip, false);
-		document.getElementById("JazzNyanMusic").autoplay = false
-		console.log(document.getElementById("JazzNyanMusic"))
+		sounds.background.pause()
+		gameState.playing = false
 	}
 
     return {
@@ -69,8 +103,9 @@ var createGame = function(canvas) {
     	nyanFire: nyanFire,
     	resumeGame: resumeGame,
     	pauseGame: pauseGame,
-    	beginGame: beginGame
-    }
+    	beginGame: beginGame,
+    	loadNextAudio: loadNextAudio
+   	}
 }
 
 
