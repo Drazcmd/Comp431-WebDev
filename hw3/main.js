@@ -8,9 +8,18 @@
 var createGame = function(canvas) { 
     let c = canvas.getContext("2d");
    	let shipImg = document.getElementById("spaceShip");
+   	let normalNyanImage = document.getElementById("normalNyanImage")
 
-   	//Adjusted values by hand to just look nice - only x changes
-   	let ship = {canvasX: 0, canvasY: 133, width: 35, height:15}
+   	//Adjusted values by hand to just look nice - only x changes, ship will
+   	//always be 10 pixels above the bottom of the canvas
+   	let ship = {
+   		canvasX: 0, canvasY: canvas.height - 10, width: 20, height:5
+   	}
+   	let cats = [
+   		{canvasX: 0, canvasY: 30, width: 70, height:35},
+   		{canvasX: 80, canvasY: 30, width: 70, height:35},
+   		{canvasX: 160, canvasY: 30, width: 70, height:35}
+   	]
 
    	//We only allow player to have one laser firing, as is traditional
    	let shipLaser = {
@@ -61,7 +70,7 @@ var createGame = function(canvas) {
 
 		//width and height decided by hand to look 'good'
 		shipLaser.canvasX = ship.canvasX + ship.width / 2;
-		shipLaser.canvasY = ship.canvasY - ship.height / 2;
+		shipLaser.canvasY = ship.canvasY - ship.height;
 		var moveShipFire = function() {
 			clearImage(shipLaser)
 
@@ -117,6 +126,14 @@ var createGame = function(canvas) {
 		console.log(ship);
 	}
 
+	var drawCat = function(cat){
+		clearImage(cat)	
+		//Now finally draw the ship at the new location
+		c.drawImage(
+			normalNyanImage, cat.canvasX, cat.canvasY,
+			cat.width, cat.height
+		);
+	}
 
 
 	// Ship tracks cursor's x coordinate (y stays the same)
@@ -125,7 +142,7 @@ var createGame = function(canvas) {
 
 		//The canvas mouse coordinates doesn't increase by the same magnitude 
 		//s you move your mouse across the scaling -_-
-		const rescale = 0.7
+		const rescale = 0.5
 
 		//We want the ship's center to be near the mouse, but the 
 		//drawImage draws from the top left corner. This nudges it a little
@@ -159,6 +176,12 @@ var createGame = function(canvas) {
 
 	var beginGame = function(){
 		console.log("It's a new beginning!")
+		cats.forEach(function (cat) {
+ 			setInterval(() => {
+ 				drawCat(cat);
+ 				cat.canvasY += 0.05;
+ 			}, 1);
+		})
 	}
 	var resumeGame = function(event) {
 		console.log("Go ship!");

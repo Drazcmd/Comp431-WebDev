@@ -11,8 +11,8 @@ canvas {
   height:30em;
   */
   border:0.6em solid #000000;
-  width: 400px;
-  height: 550px
+  width: 600px;
+  height: 700px
 }
 .resources {
   visibility: hidden; 
