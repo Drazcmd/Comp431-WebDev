@@ -11,7 +11,6 @@ var createGame = function(canvas) {
    	let shipImg = document.getElementById("spaceShip");
    	//Adjusted values by hand to just look nice - only x changes
    	let ship = {canvasX: 0, canvasY: 133, width: 35, hight:15}
-   	let gameState = {playing: false}
    	//IDs needed to grab the HTML5 audio elements
    	let audioTrackIds = [
    		"jazzNyan",
@@ -23,43 +22,41 @@ var createGame = function(canvas) {
 		background: document.getElementById(audioTrackIds[0])
 	}
 
-   	//Odd syntax, but this actually is the best way to get back an iterable
-   	//of an array's elements
-   	let songsIter = audioTrackIds[Symbol.iterator]();
+    /*
+    Odd syntax, but this actually is the best way to get back an iterable
+   	of an array's elements. We slice off the 0th index to avoid playing it
+   	twice (given that we defined background to start as it by default)
+   	*/
+   	let songsIter = audioTrackIds.slice(1)[Symbol.iterator]();
 	var loadNextAudio = function() {
 		//Must pause currently playing audio first so as to avoid overlapping
-		if (gameState.playing) {
-			sounds.background.pause()
-		}
-		console.log(sounds)
+		sounds.background.pause();
 
-		let nextTrackId = songsIter.next().value
-		if (!nextTrackId) {
-			//Decided to just keep playing last track if we go through them all
-			nextTrackId = audioTrackIds[audioTrackIds.length - 1].value
-		}
+		//Decided to just keep playing last track if we go through them all
+		var nextTrackId = audioTrackIds[audioTrackIds.length - 1];
+		let nextElement = songsIter.next();
+		if (nextElement.value) {
+			nextTrackId = nextElement.value
+		} 
+
 		sounds.background = document.getElementById(nextTrackId)
-		if (gameState.playing) {
-			sounds.background.play()	
+		//special casing because THIS PARTICULAR FILE IS REALLY LOUD
+		if (nextTrackId === "normalNyan"){
+			sounds.background.volume = 0.20
 		}
+		sounds.background.play()	
 	}
 
 	//Click and your spaceship will shoot!
 	let click = function(event) {
 		console.log("I'm a firin' mah lasah!");
+		loadNextAudio()
 	}
 
 	//Enemy attacks
 	var nyanFire = function() {
 		console.log("NYANs ARE ATTACKING?");
 		console.log(ship);
-	}
-
-
-	var beginGame = function(){
-		console.log("It's a new beginning!")
-		setTimeout(loadNextAudio, 3000)
-		setTimeout(loadNextAudio, 5000)
 	}
 
 
@@ -85,19 +82,19 @@ var createGame = function(canvas) {
 	} 
 
 
+	var beginGame = function(){
+		console.log("It's a new beginning!")	
+	}
 	var resumeGame = function(event) {
 		console.log("Go ship!");
 		canvas.addEventListener("mousemove", drawShip, false);
 		sounds.background.play()
-		gameState.playing = true
 	}
 	var pauseGame = function(event) {
 		console.log("Stop ship!");
 		canvas.removeEventListener("mousemove", drawShip, false);
 		sounds.background.pause()
-		gameState.playing = false
 	}
-
     return {
     	click: click,
     	nyanFire: nyanFire,
