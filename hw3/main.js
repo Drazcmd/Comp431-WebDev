@@ -10,6 +10,9 @@ var createGame = function(canvas) {
    	let shipImg = document.getElementById("spaceShip");
    	let normalNyanImage = document.getElementById("normalNyanImage")
 
+   	//Affects speed increases, choice of cat image used for cats, and music
+   	let difficultyLevel = 0
+
    	//Adjusted values by hand to just look nice - only x changes, ship will
    	//always be 10 pixels above the bottom of the canvas
    	let ship = {
@@ -19,9 +22,9 @@ var createGame = function(canvas) {
    	const LEFT = 0;
    	const RIGHT = 1;
    	let cats = [
-   		{canvasX: 10, canvasY: 30, width: 125, height:76, dir: LEFT},
-   		{canvasX: 90, canvasY: 30, width: 64, height:32, dir: LEFT},
-   		{canvasX: 170, canvasY: 30, width: 64, height:32, dir: LEFT},
+   		{canvasX: 10, canvasY: 30, width: 128, height:128, dir: LEFT},
+   		{canvasX: 150, canvasY: 30, width: 64, height:64, dir: LEFT},
+   		{canvasX: 300, canvasY: 30, width: 96, height:96, dir: LEFT}
    	]
 
    	//We only allow player to have one laser firing, as is traditional
