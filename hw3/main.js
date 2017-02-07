@@ -9,10 +9,16 @@ var createGame = function(canvas) {
     let c = canvas.getContext("2d");
    	let shipImg = document.getElementById("spaceShip");
    	let normalNyanImage = document.getElementById("normalNyanImage")
+   	let padding = 2
 
    	//Affects speed increases, choice of cat image used for cats, and music
    	let difficultyLevel = 0
 
+ 	let stats = {
+ 		"Attempted Shots While Charging Laser": 0,
+ 		"Fired Lasers": 0,
+ 		"Game Pause Count": 0
+ 	}
    	//Adjusted values by hand to just look nice - only x changes, ship will
    	//always be 10 pixels above the bottom of the canvas
    	let ship = {
@@ -64,14 +70,17 @@ var createGame = function(canvas) {
    	*/
    	let songsIter = audioTrackIds.slice(1)[Symbol.iterator]();
 	var click = function(event) {
+		Object.entries(stats).forEach((entry) => {console.log(entry)})
+		console.log("\n")
 		if (!shipLaser.chargingLaser) {
 			shipFires()
 		} else {
-			console.log(shipLaser.chargingLaser)
+			stats["Attempted Shots While Charging Laser"] += 1;
 		}
 	}
 
 	var shipFires = function() {
+ 		stats["Fired Lasers"] += 1
 		shipLaser.chargingLaser = true;
 
 		//So it shoots from center top of the ship
@@ -116,8 +125,8 @@ var createGame = function(canvas) {
 		that sometimes leaves behind pixels
 		*/
 		c.clearRect(
-			canvasX - 2, canvasY - 2,
-			width + 4, height + 4
+			canvasX - padding, canvasY - padding,
+			width + padding * 2, height + padding * 2
 		)
 		c.stroke();
 	}
@@ -146,17 +155,12 @@ var createGame = function(canvas) {
 	var drawShip = function(event) {
 		clearImage(ship)
 
-		//The canvas mouse coordinates doesn't increase by the same magnitude 
-		//s you move your mouse across the scaling -_-
-		const rescale = 1.0;
-
 		//We want the ship's center to be near the mouse, but the 
 		//drawImage draws from the top left corner. This nudges it a little
 		const recenter = ship.width / 2;
 
 		//Update the ships location
-		let scaledClientX = rescale * event.clientX;
-		ship.canvasX = scaledClientX - canvas.offsetLeft - recenter;
+		ship.canvasX = event.clientX - canvas.offsetLeft - recenter;
 
 		//Now finally draw the ship at the new location
 		c.drawImage(
@@ -213,13 +217,14 @@ var createGame = function(canvas) {
 		})
 	}
 	var resumeGame = function(event) {
-		console.log("Go ship!");
+		console.log("GAME RESUMED");
 		canvas.addEventListener("mousemove", drawShip, false);
 		sounds.background.play()
 		//cats.moveAgain()
 	}
 	var pauseGame = function(event) {
-		console.log("Stop ship!");
+		stats["Game Pause Count"] += 1;
+		console.log("GAME PAUSED");
 		canvas.removeEventListener("mousemove", drawShip, false);
 		sounds.background.pause()
 		//cats.stopMoving()
