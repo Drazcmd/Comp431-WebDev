@@ -28,9 +28,16 @@ var createGame = function(canvas) {
    	const LEFT = 0;
    	const RIGHT = 1;
    	let cats = [
-   		{canvasX: 10, canvasY: 30, width: 128, height:128, dir: LEFT},
-   		{canvasX: 150, canvasY: 30, width: 64, height:64, dir: LEFT},
-   		{canvasX: 300, canvasY: 30, width: 96, height:96, dir: LEFT}
+   	[
+	   		{canvasX: 10, canvasY: 30, width: 128, height:128, dir: LEFT},
+	   		{canvasX: 150, canvasY: 30, width: 64, height:64, dir: LEFT},
+	   		{canvasX: 300, canvasY: 30, width: 96, height:96, dir: LEFT}
+	   	],
+	   	[
+	   		{canvasX: 10, canvasY: 330, width: 128, height:128, dir: LEFT},
+	   		{canvasX: 150, canvasY: 330, width: 64, height:64, dir: LEFT},
+	   		{canvasX: 300, canvasY: 330, width: 96, height:96, dir: LEFT}
+	   	]
    	]
 
    	//We only allow player to have one laser firing, as is traditional
@@ -195,25 +202,27 @@ var createGame = function(canvas) {
     	// make a wrapper and return this entire thing
     	// then we can assign the returned interval to some object
     	// maybe some sort of 'moveable' thing? idk
-		let catsMoving = cats.map(function (cat) {
- 			return setInterval(() => {
-				clearImage(cat)	
- 				if (cat.canvasX <= 0){
- 					cat.canvasY += cat.height;
- 					cat.dir = Math.abs(cat.dir - 1);
- 					cat.canvasX = 10;
- 				} else if (cat.canvasX + cat.width >= canvas.width) {
- 					cat.canvasY += cat.height;
- 					cat.dir = Math.abs(cat.dir - 1);
- 					cat.canvasX = canvas.width - 10 - cat.width;
- 				}
- 				if (cat.dir == RIGHT){
- 					cat.canvasX += 0.1;
- 				} else {
- 					cat.canvasX -= 0.1;
- 				}
- 				drawCat(cat);
- 			}, 2);
+		let catsMoving = cats.map(function (row) {
+			row.map(function (cat) {
+	 			return setInterval(() => {
+					clearImage(cat)	
+	 				if (cat.canvasX <= 0){
+	 					cat.canvasY += cat.height;
+	 					cat.dir = Math.abs(cat.dir - 1);
+	 					cat.canvasX = 10;
+	 				} else if (cat.canvasX + cat.width >= canvas.width) {
+	 					cat.canvasY += cat.height;
+	 					cat.dir = Math.abs(cat.dir - 1);
+	 					cat.canvasX = canvas.width - 10 - cat.width;
+	 				}
+	 				if (cat.dir == RIGHT){
+	 					cat.canvasX += 0.1;
+	 				} else {
+	 					cat.canvasX -= 0.1;
+	 				}
+	 				drawCat(cat);
+	 			}, 2);
+			});
 		})
 	}
 	var resumeGame = function(event) {
