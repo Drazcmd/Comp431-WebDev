@@ -13,18 +13,21 @@ var createGame = function(canvas) {
    	//Adjusted values by hand to just look nice - only x changes, ship will
    	//always be 10 pixels above the bottom of the canvas
    	let ship = {
-   		canvasX: 0, canvasY: canvas.height - 10, width: 20, height:5
+   		canvasX: 0, canvasY: canvas.height - 20, width: 50, height:15
    	}
+   	//actual sprite size is ~ 420x210 I think
+   	const LEFT = 0;
+   	const RIGHT = 1;
    	let cats = [
-   		{canvasX: 0, canvasY: 30, width: 70, height:35},
-   		{canvasX: 80, canvasY: 30, width: 70, height:35},
-   		{canvasX: 160, canvasY: 30, width: 70, height:35}
+   		{canvasX: 10, canvasY: 30, width: 125, height:76, dir: LEFT},
+   		{canvasX: 90, canvasY: 30, width: 64, height:32, dir: LEFT},
+   		{canvasX: 170, canvasY: 30, width: 64, height:32, dir: LEFT},
    	]
 
    	//We only allow player to have one laser firing, as is traditional
    	let shipLaser = {
    		canvasX: -1, canvasY: -1, chargingLaser: false,
-   		width: 1, height: 3, laserRefreshRate: 3
+   		width: 2, height: 5, laserRefreshRate: 5, moveSpeed: 3
    	}
 
    	//IDs needed to grab the HTML5 audio elements
@@ -68,14 +71,14 @@ var createGame = function(canvas) {
 	var shipFires = function() {
 		shipLaser.chargingLaser = true;
 
-		//width and height decided by hand to look 'good'
+		//So it shoots from center top of the ship
 		shipLaser.canvasX = ship.canvasX + ship.width / 2;
 		shipLaser.canvasY = ship.canvasY - ship.height;
 		var moveShipFire = function() {
 			clearImage(shipLaser)
 
 			//Remember, -1 means upwards, +1 means downwards
-			shipLaser.canvasY -= 1;
+			shipLaser.canvasY -= shipLaser.moveSpeed;
 
 			//Draw the bullet itself
 			c.beginPath();
@@ -102,7 +105,7 @@ var createGame = function(canvas) {
 	//Needed to clear the last drawn image of things 
 	var clearImage = function({canvasX, canvasY, width, height}){
 		c.beginPath();
-		c.strokeWidth = width;
+		c.strokeWidth = width + 2;
 		c.strokeStyle = "white";
 		/*
 		Note the constants that fudge the bounds of the rectangle; we can't
@@ -110,9 +113,9 @@ var createGame = function(canvas) {
 		that sometimes leaves behind pixels
 		*/
 		c.clearRect(
-			canvasX - 1, canvasY - 1,
-			width + 2, height + 2
-		);
+			canvasX - 2, canvasY - 2,
+			width + 4, height + 4
+		)
 		c.stroke();
 	}
 
@@ -142,11 +145,11 @@ var createGame = function(canvas) {
 
 		//The canvas mouse coordinates doesn't increase by the same magnitude 
 		//s you move your mouse across the scaling -_-
-		const rescale = 0.5
+		const rescale = 1.0;
 
 		//We want the ship's center to be near the mouse, but the 
 		//drawImage draws from the top left corner. This nudges it a little
-		const recenter = ship.width / 3
+		const recenter = ship.width / 2;
 
 		//Update the ships location
 		let scaledClientX = rescale * event.clientX;
@@ -175,23 +178,48 @@ var createGame = function(canvas) {
 	}
 
 	var beginGame = function(){
+	    canvas.addEventListener("mousedown", click, false);
+	    canvas.addEventListener("mouseenter", resumeGame, false);
+	    canvas.addEventListener("mouseout", pauseGame, false);
+	   	resumeGame()
+	   	 
 		console.log("It's a new beginning!")
-		cats.forEach(function (cat) {
- 			setInterval(() => {
+    	canvas.removeEventListener("mousedown", beginGame, false);
+    	// make a wrapper and return this entire thing
+    	// then we can assign the returned interval to some object
+    	// maybe some sort of 'moveable' thing? idk
+		let catsMoving = cats.map(function (cat) {
+ 			return setInterval(() => {
+				clearImage(cat)	
+ 				if (cat.canvasX <= 0){
+ 					cat.canvasY += cat.height;
+ 					cat.dir = Math.abs(cat.dir - 1);
+ 					cat.canvasX = 10;
+ 				} else if (cat.canvasX + cat.width >= canvas.width) {
+ 					cat.canvasY += cat.height;
+ 					cat.dir = Math.abs(cat.dir - 1);
+ 					cat.canvasX = canvas.width - 10 - cat.width;
+ 				}
+ 				if (cat.dir == RIGHT){
+ 					cat.canvasX += 0.1;
+ 				} else {
+ 					cat.canvasX -= 0.1;
+ 				}
  				drawCat(cat);
- 				cat.canvasY += 0.05;
- 			}, 1);
+ 			}, 2);
 		})
 	}
 	var resumeGame = function(event) {
 		console.log("Go ship!");
 		canvas.addEventListener("mousemove", drawShip, false);
 		sounds.background.play()
+		//cats.moveAgain()
 	}
 	var pauseGame = function(event) {
 		console.log("Stop ship!");
 		canvas.removeEventListener("mousemove", drawShip, false);
 		sounds.background.pause()
+		//cats.stopMoving()
 	}
     return {
     	click: click,
@@ -211,11 +239,13 @@ window.onload = function() {
 	// so it can't actually 'do' anything atm.
     var canvas = document.getElementById("gameCanvas");
 
+    //This is the RESOLUTION, not the display size 
+    //(that's controld through the style)
+    canvas.width = "600";
+    canvas.height = "700";
+
     // "game" is an object literal that uses closures to let us call any
     // of the functions we set up in createGame.
     var game = createGame(canvas);
-    canvas.addEventListener("mousedown", game.click, false);
-    canvas.addEventListener("mouseenter", game.resumeGame, false);
-    canvas.addEventListener("mouseout", game.pauseGame, false);
-    game.beginGame()
+    canvas.addEventListener("mousedown", game.beginGame, false);
 }
