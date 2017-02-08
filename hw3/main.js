@@ -21,7 +21,7 @@ var createGame = function(canvas) {
    	}
 
    	let padding = 2;
-   	let baseMovementDown = 50.0;
+   	let baseMovementDown = 5.0;
 
    	var defaultCat = ({
    		canvasX = -1,
@@ -272,7 +272,6 @@ var createGame = function(canvas) {
 				   		//this helps make later calculations easier
 				   		baseVelocity: cat.baseVelocity * -1,
 					});
-					console.log("adjusted cat", adjustedCat);
 					return adjustedCat;
 				});
 			});
@@ -280,7 +279,6 @@ var createGame = function(canvas) {
 		if (mustMoveDown(catRows)) {
 			updatedCats = moveAllDown(updatedCats)
 		}
-		console.log("updated cats:", updatedCats)
 		//we can do the horizontal movement completely separately :)	
 		let updatedCats2 = updatedCats.map(row => {
 			return row.map(cat => {
@@ -288,10 +286,6 @@ var createGame = function(canvas) {
 				let newCanvasX = cat.canvasX + cat.baseVelocity +
 							difficultyValues.speedIncrease;
 
-				console.log(cat.canvasX, "canvas x")
-				console.log(newCanvasX, "new canvas x");
-				console.log(cat.baseVelocity, "base velocity")
-				console.log(difficultyValues.speedIncrease)
 				//Don't need to worry about hitting the sides since
 				//moveAllDown takes care of flipping the velocity
 				console.log(defaultCat({}), "default cat")	
@@ -304,7 +298,6 @@ var createGame = function(canvas) {
 				return movedCat;
 			});
 		});
-		console.log("updated again updated cats", updatedCats2)
 		return updatedCats2;
 	}
 
@@ -396,10 +389,6 @@ window.onload = function() {
     	putting in the catRows as a variable so that I can check if
     	the laser is colliding with anything
     	*/
-    	console.log(catRows)
-    	console.log(catRows[0])
-    	console.log(catRows[0][0])
-
 	    let updatedCatRows = game.updateCats(catRows)
 	    let updatedShipLaser = game.updateShipFire(shipLaser)
 
@@ -430,9 +419,11 @@ window.onload = function() {
 		c.lineWidth = shipLaser.width;
 		c.strokeStyle = "green";
 		c.rect(
-			shipLaser.canvasX, shipLaser.canvasY,
-			shipLaser.width, shipLaser.height
+			updatedShipLaser.canvasX, updatedShipLaser.canvasY,
+			updatedShipLaser.width, updatedShipLaser.height
 		);
 		c.stroke();
+		shipLaser = updatedShipLaser;
+		catRows = updatedCatRows;
     })
 }
