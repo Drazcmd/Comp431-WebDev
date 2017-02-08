@@ -11,12 +11,23 @@ var createGame = function(canvas) {
     }
    	let shipImg = document.getElementById("spaceShip");
    	let normalNyanImage = document.getElementById("normalNyanImage");
-   	let waitingToFire = false;
 
    	var processMouseClick = function(laser) {
-   		if (waitingToFire) {
-   			shipAttemptsFiring(laser, ship)
-   			waitingToFire = false
+   		if (ship.waitingToFire) {
+   			console.log("Tryin to fire!");
+   			ship.waitingToFire = false;
+   			return shipAttemptsFiring(laser)
+   		} else {
+   			return laser
+   		}
+   	}
+   	var click = function(event){
+   		console.log("clicked")
+   		if (ship.waitingToFire) {
+			stats["Attempted Shots While Charging Laser"] += 1;
+   		} else {
+   			console.log("now waiting to fire")
+   			ship.waitingToFire = true;
    		}
    	}
 
@@ -25,7 +36,9 @@ var createGame = function(canvas) {
 
    	//We will be getting events independantly of when we wish to draw
    	var updateClientX = function(event){
+   		console.log("update client x")
    		clientX = event.clientX;
+   		console.log(clientX)
    	}
 
    	//Plan to automatically switch images based on difficulty level
@@ -66,7 +79,7 @@ var createGame = function(canvas) {
    	var defaultLaser = function() {
    		return  { 
    			canvasX: -1, canvasY: -1, chargingLaser: false,
-   			width: 2, height: 5, laserRefreshRate: 5, moveSpeed: 3
+   			width: 2, height: 5, velocity: 5
    		}
    	}
 
@@ -83,7 +96,8 @@ var createGame = function(canvas) {
    	//Adjusted values by hand to just look nice - only x changes, ship will
    	//always be 10 pixels above the bottom of the canvas
    	let ship = {
-   		canvasX: canvas.width/2, canvasY: canvas.height - 20, width: 50, height:15
+   		canvasX: canvas.width/2, canvasY: canvas.height - 20, 
+   		width: 50, height:15, waitingToFire: false
    	}
 
    	//These IDs are needed to grab the HTML5 audio elements
@@ -150,7 +164,7 @@ var createGame = function(canvas) {
    	var updateLaserCat = function(laser, catRows) {
    		//update the result of the laser moving, first of all
    		let updatedLaser = defaultLaser();
-		updatedLaser.chargingLaser = true
+		updatedLaser.chargingLaser = laser.chargingLaser;
 		updatedLaser.canvasX = laser.canvasX;
 		updatedLaser.canvasY = laser.canvasY;
 		let laserBoundaries = getBoundaries(updatedLaser)
@@ -177,18 +191,23 @@ var createGame = function(canvas) {
    		return [finalizedLaser, updatedCatRows]
    	}
 
-   	var shipAttemptsFiring = function(laser, ship) {
+   	var shipAttemptsFiring = function(laser) {
+   		console.log("Attempting fire now...")
 		if (laser.chargingLaser) {
+			console.log("... but is still charging")
 			//can't give back a new laser - this laser's running atm
 			stats["Attempted Shots While Charging Laser"] += 1;
-			return laser
-		} else{
+			return laser;
+		} else {
+			console.log("and succeeded")
 			stats["Fired Lasers"] += 1;
 			//Looks nicer if we adjust where the laser shoots out from
 			//(remember, canvas places images by their top left corner)
 			let newLaser = defaultLaser();
 			newLaser.canvasX = ship.canvasX + ship.width / 2;
-			shipLaser.canvasY = ship.canvasY - ship.height;
+			newLaser.canvasY = ship.canvasY - ship.height;
+			newLaser.chargingLaser = true;
+			return newLaser;
 		}
 	}	
 	
@@ -322,6 +341,7 @@ var createGame = function(canvas) {
 		//catRows.stopMoving()
 	}
     return {
+    	click: click,
     	resumeGame: resumeGame,
     	pauseGame: pauseGame,
     	loadNextAudio: loadNextAudio,
@@ -375,7 +395,7 @@ window.onload = function() {
 	function beginGame(){
 	    canvas.addEventListener("mouseenter", game.resumeGame, false);
 	    canvas.addEventListener("mouseout", game.pauseGame, false);
-	    document.addEventListener("mousemove", game.updateClientX, false)
+	    canvas.addEventListener("mousemove", game.updateClientX, false)
 	    canvas.addEventListener("mousedown", game.click, false);
 	}
     beginGame()
@@ -387,9 +407,7 @@ window.onload = function() {
     	First I update the cats lcoations, then update the laser,
     	putting in the catRows as a variable so that I can check if
     	the laser is colliding with anything
-    	*/
-    	game.processMouseClick()
-    		
+    	*/    		
 	    let updatedCatRows = game.updateCats(catRows)
 	    let updatedShipLaser = game.updateShipFire(shipLaser)
 
@@ -399,7 +417,9 @@ window.onload = function() {
 	    );
 	    //Sadly js doesn't support easy unpacking like python :/
 	    updatedShipLaser = resultOfLaserCatCollisions[0]
+    	updatedShipLaser = game.processMouseClick(updatedShipLaser);
 	    updatedCatRows = resultOfLaserCatCollisions[1]
+
 
 	    //Now we can draw everything after we wipe the whole canvas :)
 	    c.fillStyle = "white"
