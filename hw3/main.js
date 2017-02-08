@@ -8,11 +8,13 @@
 var createGame = function(canvas) { 
     let c = canvas.getContext("2d");
    	let shipImg = document.getElementById("spaceShip");
-   	let normalNyanImage = document.getElementById("normalNyanImage")
-   	let padding = 2
+   	let normalNyanImage = document.getElementById("normalNyanImage");
+   	let padding = 2;
+   	let baseMovementDown = 50.0;
+   	let baseHorizontalSpeed = 1.0;
 
    	//Affects speed increases, choice of cat image used for cats, and music
-   	let difficultyLevel = 0
+   	let difficultyValues = {level: 0, speedIncrease: 0.0};
 
  	let stats = {
  		"Attempted Shots While Charging Laser": 0,
@@ -27,7 +29,7 @@ var createGame = function(canvas) {
    	//actual sprite size is ~ 420x210 I think
    	const LEFT = 0;
    	const RIGHT = 1;
-   	let cats = [
+   	let catRows = [
    	[
 	   		{canvasX: 10, canvasY: 30, width: 128, height:128, dir: LEFT},
 	   		{canvasX: 150, canvasY: 30, width: 64, height:64, dir: LEFT},
@@ -83,6 +85,7 @@ var createGame = function(canvas) {
 			shipFires()
 		} else {
 			stats["Attempted Shots While Charging Laser"] += 1;
+    		increaseDifficulty()
 		}
 	}
 
@@ -141,6 +144,8 @@ var createGame = function(canvas) {
 	var increaseDifficulty = function() {
 		console.log("Let's ramp it up!")
 		loadNextAudio()
+		difficultyValues.level += 1;
+		difficultyValues.speedIncrease += 1;
 	}
 	//Enemy attacks
 	var nyanFire = function() {
@@ -199,9 +204,11 @@ var createGame = function(canvas) {
 	   	 
 		console.log("It's a new beginning!")
     	canvas.removeEventListener("mousedown", beginGame, false);
+    	setInterval(moveCats, 10)
     	// make a wrapper and return this entire thing
     	// then we can assign the returned interval to some object
     	// maybe some sort of 'moveable' thing? idk
+    	/*
 		let catsMoving = cats.map(function (row) {
 			row.map(function (cat) {
 	 			return setInterval(() => {
@@ -224,19 +231,62 @@ var createGame = function(canvas) {
 	 			}, 2);
 			});
 		})
+		*/
 	}
+
+	var moveCats = function() {
+		let moveAllDown = function() {
+			catRows.forEach(row => {
+				row.forEach(cat => {
+					clearImage(cat)	
+					cat.canvasY += baseMovementDown
+	 				cat.dir = Math.abs(cat.dir - 1);
+				})
+			});
+		};
+		if (mustMoveDown()) {
+			moveAllDown()
+		}
+		catRows.forEach(row => {
+			row.forEach(cat => {
+				clearImage(cat)	
+				if (cat.dir == RIGHT){
+					cat.canvasX += baseHorizontalSpeed + 
+						difficultyValues.speedIncrease;
+				} else {
+					cat.canvasX -= (baseHorizontalSpeed +
+						difficultyValues.speedIncrease);
+				}
+				drawCat(cat);
+			});
+		});
+	}
+
+	//Need to move all rows down if any ship on any side reaches
+	//the boundaries of the canvas
+	var mustMoveDown = function() {
+		return catRows.some(row => {
+			//Works because canvasX is the leftmost point of the image
+			//Note I left out a '0' in the math (canvas x starts at 0)
+			let catFarLeft = row[0].canvasX - padding;
+			let catFarRight = row[row.length - 1].canvasX +
+			 				  row[row.length - 1].width + padding
+			return (catFarLeft <= 0 || catFarRight >= canvas.width)
+		});
+	};
+
 	var resumeGame = function(event) {
 		console.log("GAME RESUMED");
 		canvas.addEventListener("mousemove", drawShip, false);
 		sounds.background.play()
-		//cats.moveAgain()
+		//catRows.moveAgain()
 	}
 	var pauseGame = function(event) {
 		stats["Game Pause Count"] += 1;
 		console.log("GAME PAUSED");
 		canvas.removeEventListener("mousemove", drawShip, false);
 		sounds.background.pause()
-		//cats.stopMoving()
+		//catRows.stopMoving()
 	}
     return {
     	click: click,
@@ -244,7 +294,9 @@ var createGame = function(canvas) {
     	resumeGame: resumeGame,
     	pauseGame: pauseGame,
     	beginGame: beginGame,
-    	loadNextAudio: loadNextAudio
+    	loadNextAudio: loadNextAudio,
+		moveCats : moveCats,
+		increaseDifficulty: increaseDifficulty
    	}
 }
 
