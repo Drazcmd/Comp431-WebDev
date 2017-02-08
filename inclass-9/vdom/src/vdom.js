@@ -19,11 +19,23 @@ function createElement(node) {
 	// the node might have event listeners that need to be registered
 	// the node might have children that need to be created as well
 	let newNode = document.createElement(node.tag)
+    if (node.props) {
+        if (node.props.onClick){
+            let handler = node.props.onClick;
+            removeEventListener("click", handler)
+            newNode.addEventListener("click", function(event) {
+                console.log("clicked!");
+                console.log(handler);
+                handler(event);
+            }, false)
+            //node.removeEventListener("click", handler)
+        }
+    }
     if (node.children){
         node.children.forEach((child) => {
             newNode.appendChild(createElement(child))
         });
-    }    
+    } 
     return newNode
 }
 
