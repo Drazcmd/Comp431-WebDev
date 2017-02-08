@@ -38,7 +38,6 @@ var createGame = function(canvas) {
    	var updateClientX = function(event){
    		console.log("update client x")
    		clientX = event.clientX;
-   		console.log(clientX)
    	}
 
    	//Plan to automatically switch images based on difficulty level
@@ -78,8 +77,8 @@ var createGame = function(canvas) {
    	//Basically just used when our ship fires a laser
    	var defaultLaser = function() {
    		return  { 
-   			canvasX: -1, canvasY: -1, chargingLaser: false,
-   			width: 2, height: 5, velocity: 5
+   			canvasX: -1, canvasY: 1, chargingLaser: false,
+   			width: 2, height: 5, velocity: 3.0
    		}
    	}
 
@@ -155,8 +154,10 @@ var createGame = function(canvas) {
 		updatedLaser.canvasX = laser.canvasX;
 		if (laser.canvasY > 0) {
 			updatedLaser.canvasY = laser.canvasY - laser.velocity;
+			updatedLaser.chargingLaser = true;
+		} else {
+			updatedLaser.velocity = 0;
 		}
-		updatedLaser.chargingLaser = true;
 		return updatedLaser
    	}
 
@@ -180,9 +181,10 @@ var createGame = function(canvas) {
 		//lastly, if there was a collision, we still haven't updated
 		//the laser to the result of the collision
 		if (catRows.some(row => {
-			return row.some(cat => {
-				return collidedWithCat(laserBoundaries, cat)
-			})
+			return (row.some(cat => {
+				let catBoundaries = getBoundaries(cat)
+				return (collidedWithCat(laserBoundaries, catBoundaries));
+			}));
 		})) {
 			var finalizedLaser = defaultLaser();
 		} else {
@@ -205,7 +207,7 @@ var createGame = function(canvas) {
 			//(remember, canvas places images by their top left corner)
 			let newLaser = defaultLaser();
 			newLaser.canvasX = ship.canvasX + ship.width / 2;
-			newLaser.canvasY = ship.canvasY - ship.height;
+			newLaser.canvasY = ship.canvasY - ship.height / 2;
 			newLaser.chargingLaser = true;
 			return newLaser;
 		}
@@ -442,13 +444,14 @@ window.onload = function() {
 		//Looks different than other drawing code because this is
 		//not actually a sprite or pre-made image        
 		c.beginPath();
-		c.lineWidth = shipLaser.width;
+		c.lineWidth = updatedShipLaser.width;
 		c.strokeStyle = "green";
 		c.rect(
 			updatedShipLaser.canvasX, updatedShipLaser.canvasY,
 			updatedShipLaser.width, updatedShipLaser.height
 		);
 		c.stroke();
+
 		shipLaser = updatedShipLaser;
 		catRows = updatedCatRows;
     })
