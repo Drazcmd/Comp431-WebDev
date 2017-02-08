@@ -89,18 +89,19 @@ var createGame = function(canvas) {
 		}
 	}
 
-   	var collidedWithCat = function(shipOrShipLaser) {
-		var {leftBoundary, rightBoundary,
-		 topBoundary, botBoundary} = getBoundaries(shipOrShipLaser)
+   	var collisionOccurred = function(nonCatBoundaries) {
+   		//Save some cycles by computing ship/ship laser's boundaries once :)
    		 return catRows.some(function (row) {
    			return row.some(function (cat) {
-   				let catBoundaries = getBoundaries(cat);
-   				return !(leftBoundary > catBoundaries.rightBoundary ||
-   					rightBoundary < catBoundaries.leftBoundary ||
-   					topBoundary > catBoundaries.botBoundary ||
-   					botBoundary < catBoundaries.topBoundary)
+   				return collidedWithCat(getBoundaries(cat), nonCatBoundaries)
    			})
    		})
+   	}
+   	var collidedWithCat = function(nonCatBoundaries, catBoundaries) {
+		return !(nonCatBoundaries.leftBoundary > catBoundaries.rightBoundary ||
+			nonCatBoundaries.rightBoundary < catBoundaries.leftBoundary ||
+			nonCatBoundaries.topBoundary > catBoundaries.botBoundary ||
+			nonCatBoundaries.botBoundary < catBoundaries.topBoundary)
    	}
 
    	var getBoundaries = function(movingObject){
@@ -122,9 +123,19 @@ var createGame = function(canvas) {
 		shipLaser.canvasY = ship.canvasY - ship.height;
 		var moveShipFire = function() {
 			clearImage(shipLaser)
-			if (collidedWithCat(shipLaser)) {
-				console.log('woooooooo')
+			var didNotCollide = function(cat) {
+				console.log(cat)
+				console.log(shipLaser)
+				return !(collidedWithCat(getBoundaries(shipLaser), getBoundaries(cat)));
 			}
+			//something wrong right here I think
+			let newCatRows = catRows.map(row => {
+				console.log(row.filter(didNotCollide));
+				return (row.filter(didNotCollide));
+			});
+			console.log(catRows)
+			catRows = newCatRows;
+			console.log(catRows)
 
 			//Remember, -1 means upwards, +1 means downwards
 			shipLaser.canvasY -= shipLaser.moveSpeed;
@@ -265,6 +276,11 @@ var createGame = function(canvas) {
 	//the boundaries of the canvas
 	var mustMoveDown = function() {
 		return catRows.some(row => {
+			//Obviously, an empty row shouldn't be moving us down
+			if (row.length == 0){
+				return false
+			}
+
 			//Works because canvasX is the leftmost point of the image
 			//Note I left out a '0' in the math (canvas x starts at 0)
 			let catFarLeft = row[0].canvasX - padding;
