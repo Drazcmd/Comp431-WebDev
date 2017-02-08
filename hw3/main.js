@@ -31,7 +31,7 @@ var createGame = function(canvas) {
    	//Adjusted values by hand to just look nice - only x changes, ship will
    	//always be 10 pixels above the bottom of the canvas
    	let ship = {
-   		canvasX: 0, canvasY: canvas.height - 20, width: 50, height:15
+   		canvasX: canvas.width/2, canvasY: canvas.height - 20, width: 50, height:15
    	}
    	//actual sprite size is ~ 420x210 I think
    	const LEFT = 0;
@@ -84,7 +84,6 @@ var createGame = function(canvas) {
 			shipFires()
 		} else {
 			stats["Attempted Shots While Charging Laser"] += 1;
-    		increaseDifficulty()
 		}
 	}
 
@@ -194,10 +193,11 @@ var createGame = function(canvas) {
 		sounds.background.play()	
 	}
 
-	var beginGame = function(){
+	var beginGame = function(event){
 	    canvas.addEventListener("mousedown", click, false);
 	    canvas.addEventListener("mouseenter", resumeGame, false);
 	    canvas.addEventListener("mouseout", pauseGame, false);
+	    drawShip(event)
 	   	resumeGame()
 	   	 
 		console.log("It's a new beginning!")
@@ -288,4 +288,6 @@ window.onload = function() {
     // of the functions we set up in createGame.
     var game = createGame(canvas);
     canvas.addEventListener("mousedown", game.beginGame, false);
+    setTimeout(game.increaseDifficulty, 1000)
+    setTimeout(game.increaseDifficulty, 4000)
 }
