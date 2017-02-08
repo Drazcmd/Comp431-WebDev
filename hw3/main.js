@@ -130,14 +130,21 @@ var createGame = function(canvas) {
 			}
 			//something wrong right here I think
 			let newCatRows = catRows.map(row => {
-				console.log(row.filter(didNotCollide));
 				return (row.filter(didNotCollide));
 			});
-			console.log(catRows)
+			//gotta make sure old images don't stick around
+			catRows.forEach(row => {
+				row.forEach(cat => {
+					clearImage(cat)
+				})
+			})
 			catRows = newCatRows;
-			console.log(catRows)
+			catRows.forEach(row => {
+				row.forEach(cat => {
+					drawCat(cat)
+				})
+			})
 
-			//Remember, -1 means upwards, +1 means downwards
 			shipLaser.canvasY -= shipLaser.moveSpeed;
 			//Draw the bullet itself
 			c.beginPath();
