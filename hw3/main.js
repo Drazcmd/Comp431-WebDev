@@ -1,5 +1,7 @@
 'use strict';
 
+const random = (min=0, max=800) =>
+    Math.random() * (max - min) + min
 /*
 * This function will do canvas.getContext, in addition to all the
 * other game setup-y stuff, before returning an object that lets us
@@ -11,45 +13,56 @@ var createGame = function(canvas) {
    	let normalNyanImage = document.getElementById("normalNyanImage");
    	let padding = 2;
    	let baseMovementDown = 50.0;
-   	let baseHorizontalSpeed = 1.0;
-   	let rowStartingCanvasX = [10, 150, 300]
 
+   	var defaultCat = ({
+   		canvasX = -1,
+   		canvasY = -1,
+   		//No constant (non-jumps) vertical velocities - only horizontal
+   		baseVelocity = 1,
+   		width = 128,
+   		height = 128
+  	} = {}) => {
+  		return {canvasX, canvasY, baseVelocity, width, height}
+  	}
 
-   	var defaultCatRow = function(rowCanvasY) {
-   		return rowStartingCanvasX.map(defaultX => {
-   			return ({canvasY: rowCanvasY, canvasX: defaultX,
-   			 dir: LEFT, width: 128, height: 128 });
-   		})
+  	//I spaced these by hand to look decent
+   	let rowStartingCanvasX = [30, 180, 330]
+   	let rowStartingCanvasY = [30, 180, 330]
 
+   	var defaultCatRow = rowStartingCanvasY.map(startingY => {
+   		return rowStartingCanvasX.map(startingX => {
+   			return defaultCat({
+   				canvasX: startingX, 
+   				canvasY: startingY
+   			});
+   		});
+   	});
+
+   	//Basically just used when our ship fires a laser
+   	var defaultLaser = function() {
+   		return  { 
+   			canvasX: -1, canvasY: -1, chargingLaser: false,
+   			width: 2, height: 5, laserRefreshRate: 5, moveSpeed: 3
+   		}
    	}
+
    	//Affects speed increases, choice of cat image used for cats, and music
    	let difficultyValues = {level: 0, speedIncrease: 0.0};
 
+   	//We'll be storing these as browser cookies
  	let stats = {
  		"Attempted Shots While Charging Laser": 0,
  		"Fired Lasers": 0,
  		"Game Pause Count": 0
  	}
+
    	//Adjusted values by hand to just look nice - only x changes, ship will
    	//always be 10 pixels above the bottom of the canvas
    	let ship = {
    		canvasX: canvas.width/2, canvasY: canvas.height - 20, width: 50, height:15
    	}
-   	//actual sprite size is ~ 420x210 I think
-   	const LEFT = 0;
-   	const RIGHT = 1;
-   	var catRows = [
-   		defaultCatRow(30),
-   		defaultCatRow(175),
-   		defaultCatRow(300)
-   	]
-   	//We only allow player to have one laser firing, as is traditional
-   	var shipLaser = {
-   		canvasX: -1, canvasY: -1, chargingLaser: false,
-   		width: 2, height: 5, laserRefreshRate: 5, moveSpeed: 3
-   	}
 
-   	//IDs needed to grab the HTML5 audio elements
+   	//These IDs are needed to grab the HTML5 audio elements
    	let audioTrackIds = [
    		"jazzNyan",
    		"normalNyan"
@@ -63,9 +76,9 @@ var createGame = function(canvas) {
 		background: document.getElementById(audioTrackIds[0])
 	}
 
-	//Set the default volumes to avoid melting eardrums :p
+	//I'm setting the default volumes so I avoid melting eardrums :p
 	audioTrackIds.forEach(function(trackId){
-		//special casing because this one is REALLY LOUD
+		//special casing to further reduce because this one is REALLY LOUD
 		if (trackId === "normalNyan"){
 			document.getElementById(trackId).volume = sounds.quietVolume
 		} else {
@@ -91,7 +104,7 @@ var createGame = function(canvas) {
 
    	var collisionOccurred = function(nonCatBoundaries) {
    		//Save some cycles by computing ship/ship laser's boundaries once :)
-   		 return catRows.some(function (row) {
+   		return catRows.some(function (row) {
    			return row.some(function (cat) {
    				return collidedWithCat(getBoundaries(cat), nonCatBoundaries)
    			})
@@ -128,33 +141,13 @@ var createGame = function(canvas) {
 				console.log(shipLaser)
 				return !(collidedWithCat(getBoundaries(shipLaser), getBoundaries(cat)));
 			}
-			//something wrong right here I think
+
 			let newCatRows = catRows.map(row => {
 				return (row.filter(didNotCollide));
 			});
-			//gotta make sure old images don't stick around
-			catRows.forEach(row => {
-				row.forEach(cat => {
-					clearImage(cat)
-				})
-			})
-			catRows = newCatRows;
-			catRows.forEach(row => {
-				row.forEach(cat => {
-					drawCat(cat)
-				})
-			})
 
 			shipLaser.canvasY -= shipLaser.moveSpeed;
 			//Draw the bullet itself
-			c.beginPath();
-			c.lineWidth = shipLaser.width;
-			c.strokeStyle = "green";
-			c.rect(
-				shipLaser.canvasX, shipLaser.canvasY,
-				shipLaser.width, shipLaser.height
-			);
-			c.stroke();
 
 			//Check when we reach near the top of the canvas (y=0)
 			if (shipLaser.canvasY <= 1) {
@@ -247,34 +240,41 @@ var createGame = function(canvas) {
 	   	resumeGame()
 	   	 
 		console.log("It's a new beginning!")
-    	canvas.removeEventListener("mousedown", beginGame, false);
-    	setInterval(moveCats, 10)
+    	canvas.removeEventListener("mousedown", beginGame, false)	
 	}
 
-	var moveCats = function() {
-		let moveAllDown = function() {
-			catRows.forEach(row => {
-				row.forEach(cat => {
-					clearImage(cat)	
-					cat.canvasY += baseMovementDown
-	 				cat.dir = Math.abs(cat.dir - 1);
-				})
+	var updateCats = function() {
+		//If our update is a no-op, stays the same object
+		let updatedCats = catRows;
+		let moveAllDown = function(catRows) {
+			return catRows.map(row => {
+				return row.map(cat => {
+					return defaultCat({
+				   		canvasX: cat.canvasX,
+				   		canvasY: cat.canvasY + baseMovementDown,
+				   		//this helps make later calculations easier
+				   		baseVelocity: cat.baseVelocity * -1,
+					})
+				});
 			});
 		};
-		if (mustMoveDown()) {
-			moveAllDown()
+
+		if (mustMoveDown(catRows)) {
+			updatedCats = moveAllDown()
 		}
-		catRows.forEach(row => {
-			row.forEach(cat => {
-				clearImage(cat)	
-				if (cat.dir == RIGHT){
-					cat.canvasX += baseHorizontalSpeed + 
-						difficultyValues.speedIncrease;
-				} else {
-					cat.canvasX -= (baseHorizontalSpeed +
-						difficultyValues.speedIncrease);
-				}
-				drawCat(cat);
+
+		updatedCats = updatedCats.map(row => {
+			return row.map(cat => {
+				//second line allows for increasing difficulty on the fly :)
+				let newCanvasX = cat.canvasX + cat.baseVelocity +
+							difficultyValues.speedIncrease;
+				//Don't need to worry about hitting the sides since
+				//moveAllDown takes care of flipping the velocity
+				let movedCat = defaultCat({
+			   		canvasX: newCanvasX,
+			   		canvasY: cat.canvasY,
+			   		baseVelocity: cat.baseVelocity,
+				})
 			});
 		});
 	}
@@ -283,11 +283,11 @@ var createGame = function(canvas) {
 	//the boundaries of the canvas
 	var mustMoveDown = function() {
 		return catRows.some(row => {
-			//Obviously, an empty row shouldn't be moving us down
+			//Obviously, an empty row shouldn't be moving us down. This
+			//helps since we can now assume there's entries on the ends
 			if (row.length == 0){
 				return false
 			}
-
 			//Works because canvasX is the leftmost point of the image
 			//Note I left out a '0' in the math (canvas x starts at 0)
 			let catFarLeft = row[0].canvasX - padding;
@@ -312,19 +312,29 @@ var createGame = function(canvas) {
 	}
     return {
     	click: click,
-    	nyanFire: nyanFire,
     	resumeGame: resumeGame,
     	pauseGame: pauseGame,
     	beginGame: beginGame,
     	loadNextAudio: loadNextAudio,
-		moveCats : moveCats,
-		increaseDifficulty: increaseDifficulty
+		increaseDifficulty: increaseDifficulty,
+		defaultLaser: defaultLaser,
+		defaultCatRow: defaultCatRow,
+		updateCats: updateCats,
+		updateShipFire: updateShipFire
    	}
 }
 
+// More or less from provided in-class solution 
+const frameUpdate = (cb) => {
+    const rAF = (time) => {
+        requestAnimationFrame(rAF)
+        const diff = ~~(time - (rAF.lastTime || 0)) // ~~ is like floor
+        cb(diff)
+        rAF.lastTime = time
+    }
+    rAF() // go!
+}
 
-
-// More or less from provided in-class 6 solution 
 window.onload = function() {
 	// This is before we've called canvas.getContext,
 	// so it can't actually 'do' anything atm.
@@ -338,6 +348,51 @@ window.onload = function() {
     // "game" is an object literal that uses closures to let us call any
     // of the functions we set up in createGame.
     var game = createGame(canvas);
+   	let catRows = [
+   		game.defaultCatRow(30),
+   		game.defaultCatRow(175),
+   		game.defaultCatRow(300)
+   	]
+   	//We only allow player to have one laser firing, as is traditional,
+   	//which means there'd be no reason to make this an array (same for ships)
+   	let shipLaser = game.defaultLaser()
+
     canvas.addEventListener("mousedown", game.beginGame, false);
+    frameUpdate(() => {
+    	/*Basically all my view code (except for the spaceship)
+    	since no acceleration and basically constant velocities, 
+    	decided it'd just be easier to do away with the time variable
+
+    	First I update the cats lcoations, then update the laser,
+    	putting in the catRows as a variable so that I can check if
+    	the laser is colliding with anything
+    	*/
+	    catRows = game.updateCats(catRows)
+	    laser = game.updateShipFire(catRows)
+
+	    //Now we can draw everything after we wipe the whole canvas :)
+	    c.fillStyle = '#000'
+        c.fillRect(0, 0, canvas.width, canvas.height)
+
+        catRows.forEach(row => {
+        	row.forEach(cat => {
+				c.drawImage(
+					normalNyanImage, cat.canvasX, cat.canvasY,
+					cat.width, cat.height
+				);
+        	})
+        })
+		
+		//Looks different than other drawing code because this is
+		//not actually a sprite or pre-made image        
+		c.beginPath();
+		c.lineWidth = shipLaser.width;
+		c.strokeStyle = "green";
+		c.rect(
+			shipLaser.canvasX, shipLaser.canvasY,
+			shipLaser.width, shipLaser.height
+		);
+		c.stroke();
+    })
     setTimeout(game.increaseDifficulty, 4000)
 }
