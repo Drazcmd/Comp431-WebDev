@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 /*
 * This function will do canvas.getContext, in addition to all the
@@ -12,7 +12,18 @@ var createGame = function(canvas) {
    	let padding = 2;
    	let baseMovementDown = 50.0;
    	let baseHorizontalSpeed = 1.0;
+   	let rowStartingCanvasX = [10, 150, 300]
 
+   	var defaultCatRow = function(rowCanvasY) {
+   		console.log(rowStartingCanvasX)
+   		return rowStartingCanvasX.map(defaultX => {
+   			console.log(defaultX);
+   			console.log(rowCanvasY);
+   			console.log(({canvasY: rowCanvasY, canvasX: defaultX, dir: LEFT, width:128, height: 128 }));
+   			return ({canvasY: rowCanvasY, canvasX: defaultX, dir: LEFT, width:128, height: 128 });
+   		})
+
+   	}
    	//Affects speed increases, choice of cat image used for cats, and music
    	let difficultyValues = {level: 0, speedIncrease: 0.0};
 
@@ -30,18 +41,15 @@ var createGame = function(canvas) {
    	const LEFT = 0;
    	const RIGHT = 1;
    	let catRows = [
-   	[
-	   		{canvasX: 10, canvasY: 30, width: 128, height:128, dir: LEFT},
-	   		{canvasX: 150, canvasY: 30, width: 64, height:64, dir: LEFT},
-	   		{canvasX: 300, canvasY: 30, width: 96, height:96, dir: LEFT}
-	   	],
+   		defaultCatRow(30),
 	   	[
 	   		{canvasX: 10, canvasY: 330, width: 128, height:128, dir: LEFT},
 	   		{canvasX: 150, canvasY: 330, width: 64, height:64, dir: LEFT},
 	   		{canvasX: 300, canvasY: 330, width: 96, height:96, dir: LEFT}
 	   	]
    	]
-
+   	console.log(catRows)
+   	console.log(defaultCatRow(100))
    	//We only allow player to have one laser firing, as is traditional
    	let shipLaser = {
    		canvasX: -1, canvasY: -1, chargingLaser: false,
