@@ -1,7 +1,4 @@
 'use strict';
-
-const random = (min=0, max=800) =>
-    Math.random() * (max - min) + min
 /*
 * This function will do canvas.getContext, in addition to all the
 * other game setup-y stuff, before returning an object that lets us
@@ -15,28 +12,36 @@ var createGame = function(canvas) {
    	let shipImg = document.getElementById("spaceShip");
    	let normalNyanImage = document.getElementById("normalNyanImage");
 
+   	//looks nicer to start off in middle if we don't know mouse pos
+   	let clientX = canvas.width/2;
+
+   	//We will be getting events independantly of when we wish to draw
+   	var updateClientX = function(event){
+   		clientX = event.clientX;
+   	}
+
    	//Plan to automatically switch images based on difficulty level
    	var getCurrentNyanImage = function() {
    		return normalNyanImage;
    	}
 
    	let padding = 2;
-   	let baseMovementDown = 5.0;
+   	let baseMovementDown = 10.0;
 
    	var defaultCat = ({
    		canvasX = -1,
    		canvasY = -1,
    		//No constant (non-jumps) vertical velocities - only horizontal
    		baseVelocity = 1.5,
-   		width = 128,
-   		height = 128
-  	} = {}) => {
+   		width = 64,
+   		height = 64
+   	} = {}) => {
   		return {canvasX, canvasY, baseVelocity, width, height}
   	}
 
   	//I spaced these by hand to look decent
-   	let rowStartingCanvasY = [31, 181, 331, 510]
-   	let rowStartingCanvasX = [30, 180, 330]
+   	let rowStartingCanvasY = [31, 111, 191, 271]
+   	let rowStartingCanvasX = [30, 120, 210, 300, 390, 480]
 
    	var defaultCatRows = function() {
    		return rowStartingCanvasY.map(startingY => {
@@ -217,15 +222,13 @@ var createGame = function(canvas) {
 	}
 
 	// Ship tracks cursor's x coordinate (y stays the same)
-	var drawShip = function(event) {
-		clearImage(ship)
-
+	var drawShip = function() {
 		//We want the ship's center to be near the mouse, but the 
 		//drawImage draws from the top left corner. This nudges it a little
 		const recenter = ship.width / 2;
 
 		//Update the ships location
-		ship.canvasX = event.clientX - canvas.offsetLeft - recenter;
+		ship.canvasX = clientX - canvas.offsetLeft - recenter;
 
 		//Now finally draw the ship at the new location
 		c.drawImage(
@@ -253,7 +256,7 @@ var createGame = function(canvas) {
 	    canvas.addEventListener("mousedown", click, false);
 	    canvas.addEventListener("mouseenter", resumeGame, false);
 	    canvas.addEventListener("mouseout", pauseGame, false);
-	    drawShip(event)
+	    updateClientX(event)
 	   	resumeGame()
 	   	 
 		console.log("It's a new beginning!")
@@ -346,7 +349,9 @@ var createGame = function(canvas) {
 		updateShipFire: updateShipFire,
 		updateLaserCat: updateLaserCat,
 		getContext: getContext,
-		getCurrentNyanImage: getCurrentNyanImage
+		getCurrentNyanImage: getCurrentNyanImage,
+		updateClientX: updateClientX,
+		drawShip: drawShip
 	}
 }
 
@@ -391,6 +396,7 @@ window.onload = function() {
     	putting in the catRows as a variable so that I can check if
     	the laser is colliding with anything
     	*/
+
 	    let updatedCatRows = game.updateCats(catRows)
 	    let updatedShipLaser = game.updateShipFire(shipLaser)
 
@@ -406,6 +412,12 @@ window.onload = function() {
 	    //Now we can draw everything after we wipe the whole canvas :)
 	    c.fillStyle = "white"
         c.fillRect(0, 0, canvas.width, canvas.height)
+
+
+    	//We delegate to game to keep track of the mosue position
+    	//using events
+    	game.drawShip()
+
         updatedCatRows.forEach(row => {
         	row.forEach(cat => {
 				c.drawImage(
