@@ -9,8 +9,17 @@ const random = (min=0, max=800) =>
 */
 var createGame = function(canvas) { 
     let c = canvas.getContext("2d");
+    var getContext = function() {
+    	return c
+    }
    	let shipImg = document.getElementById("spaceShip");
    	let normalNyanImage = document.getElementById("normalNyanImage");
+
+   	//Plan to automatically switch images based on difficulty level
+   	var getCurrentNyanImage = function() {
+   		return normalNyanImage;
+   	}
+
    	let padding = 2;
    	let baseMovementDown = 50.0;
 
@@ -26,17 +35,19 @@ var createGame = function(canvas) {
   	}
 
   	//I spaced these by hand to look decent
+   	let rowStartingCanvasY = [31, 181, 331, 510]
    	let rowStartingCanvasX = [30, 180, 330]
-   	let rowStartingCanvasY = [30, 180, 330]
 
-   	var defaultCatRow = rowStartingCanvasY.map(startingY => {
-   		return rowStartingCanvasX.map(startingX => {
-   			return defaultCat({
-   				canvasX: startingX, 
-   				canvasY: startingY
-   			});
-   		});
-   	});
+   	var defaultCatRows = function() {
+   		return rowStartingCanvasY.map(startingY => {
+	   		return rowStartingCanvasX.map(startingX => {
+	   			return defaultCat({
+	   				canvasX: startingX, 
+	   				canvasY: startingY
+	   			});
+	   		});
+	   	});
+   	};
 
    	//Basically just used when our ship fires a laser
    	var defaultLaser = function() {
@@ -102,14 +113,6 @@ var createGame = function(canvas) {
 		}
 	}
 
-   	var collisionOccurred = function(nonCatBoundaries) {
-   		//Save some cycles by computing ship/ship laser's boundaries once :)
-   		return catRows.some(function (row) {
-   			return row.some(function (cat) {
-   				return collidedWithCat(getBoundaries(cat), nonCatBoundaries)
-   			})
-   		})
-   	}
    	var collidedWithCat = function(nonCatBoundaries, catBoundaries) {
 		return !(nonCatBoundaries.leftBoundary > catBoundaries.rightBoundary ||
 			nonCatBoundaries.rightBoundary < catBoundaries.leftBoundary ||
@@ -117,7 +120,7 @@ var createGame = function(canvas) {
 			nonCatBoundaries.botBoundary < catBoundaries.topBoundary)
    	}
 
-   	var getBoundaries = function(movingObject){
+   	var getBoundaries = function(movingObject) {
 		let leftBoundary = movingObject.canvasX;
 		let rightBoundary = movingObject.canvasX +
 		 					movingObject.width;
@@ -127,38 +130,59 @@ var createGame = function(canvas) {
 		return {leftBoundary, rightBoundary, topBoundary, botBoundary}
 
    	}
-	var shipFires = function() {
- 		stats["Fired Lasers"] += 1
-		shipLaser.chargingLaser = true;
 
-		//So it shoots from center top of the ship
-		shipLaser.canvasX = ship.canvasX + ship.width / 2;
-		shipLaser.canvasY = ship.canvasY - ship.height;
-		var moveShipFire = function() {
-			clearImage(shipLaser)
-			var didNotCollide = function(cat) {
-				console.log(cat)
-				console.log(shipLaser)
-				return !(collidedWithCat(getBoundaries(shipLaser), getBoundaries(cat)));
-			}
-
-			let newCatRows = catRows.map(row => {
-				return (row.filter(didNotCollide));
-			});
-
-			shipLaser.canvasY -= shipLaser.moveSpeed;
-			//Draw the bullet itself
-
-			//Check when we reach near the top of the canvas (y=0)
-			if (shipLaser.canvasY <= 1) {
-				clearInterval(laserInterval)
-				shipLaser.chargingLaser = false;
-				clearImage(shipLaser)
-			}
-
+   	var updateShipFire = function(laser) {
+   		//I don't handle collisions till after moving it
+		let updatedLaser = defaultLaser();
+		updatedLaser.canvasX = laser.canvasX;
+		if (laser.canvasY > 0) {
+			updatedLaser.canvasY = laser.canvasY - laser.velocity;
 		}
-		shipLaser.chargingLaser = true;
-		let laserInterval = setInterval(moveShipFire, shipLaser.laserRefreshRate)
+		updatedLaser.chargingLaser = true;
+		return updatedLaser
+   	}
+
+   	//AKA handler collisions between a laser and a cat
+   	var updateLaserCat = function(laser, catRows) {
+   		let updatedLaser = defaultLaser();
+		updatedLaser.chargingLaser = true
+		updatedLaser.canvasX = laser.canvasX;
+		updatedLaser.canvasY = laser.canvasY;
+		let updatedCatRows = []
+   		catRows.forEach(row => {
+   			console.log(row)
+   			updatedCatRows.push([])
+   			row.forEach(cat => {
+   				console.log(cat)
+   				console.log(laser)
+   				let laserBoundaries = getBoundaries(updatedLaser)
+   				let catBoundaries = getBoundaries(cat)
+				if (collidedWithCat(laserBoundaries, catBoundaries)){
+					console.log("Collision!")
+					//this means no other collisions will occur
+					updatedLaser = defaultLaser()
+				} else {
+					//Only include the cat if it didn't collide
+					updatedCatRows[updatedCatRows.length - 1].push(cat)
+				}
+   			});		
+   		});
+   		return [updatedLaser, updatedCatRows]
+   	}
+
+	var shipAttemptsFiring = function(laser, ship) {
+		if (laser.chargingLaser) {
+			//can't give back a new laser - this laser's running atm
+			stats["Attempted Shots While Charging Laser"] += 1;
+			return laser
+		} else{
+			stats["Fired Lasers"] += 1;
+			//Looks nicer if we adjust where the laser shoots out from
+			//(remember, canvas places images by their top left corner)
+			let newLaser = defaultLaser();
+			newLaser.canvasX = ship.canvasX + ship.width / 2;
+			shipLaser.canvasY = ship.canvasY - ship.height;
+		}
 	}	
 	
 	//Needed to clear the last drawn image of things 
@@ -188,16 +212,6 @@ var createGame = function(canvas) {
 	var nyanFire = function() {
 		console.log("NYANs ARE ATTACKING?");
 	}
-
-	var drawCat = function(cat){
-		clearImage(cat)	
-		//Now finally draw the ship at the new location
-		c.drawImage(
-			normalNyanImage, cat.canvasX, cat.canvasY,
-			cat.width, cat.height
-		);
-	}
-
 
 	// Ship tracks cursor's x coordinate (y stays the same)
 	var drawShip = function(event) {
@@ -243,31 +257,37 @@ var createGame = function(canvas) {
     	canvas.removeEventListener("mousedown", beginGame, false)	
 	}
 
-	var updateCats = function() {
+	var updateCats = function(catRows) {
 		//If our update is a no-op, stays the same object
 		let updatedCats = catRows;
-		let moveAllDown = function(catRows) {
+		var moveAllDown = function(catRows) {
 			return catRows.map(row => {
 				return row.map(cat => {
-					return defaultCat({
+					let adjustedCat = defaultCat({
 				   		canvasX: cat.canvasX,
 				   		canvasY: cat.canvasY + baseMovementDown,
 				   		//this helps make later calculations easier
 				   		baseVelocity: cat.baseVelocity * -1,
-					})
+					});
+					console.log("adjusted cat", adjustedCat);
+					return adjustedCat;
 				});
 			});
 		};
-
 		if (mustMoveDown(catRows)) {
-			updatedCats = moveAllDown()
+			updatedCats = moveAllDown(updatedCats)
 		}
-
-		updatedCats = updatedCats.map(row => {
+		console.log("updated cats:", updatedCats)
+		//we can do the horizontal movement completely separately :)	
+		let updatedCats2 = updatedCats.map(row => {
 			return row.map(cat => {
 				//second line allows for increasing difficulty on the fly :)
 				let newCanvasX = cat.canvasX + cat.baseVelocity +
 							difficultyValues.speedIncrease;
+				console.log(cat.canvasX)
+				console.log(cat.baseVelocity)
+				console.log(difficultyValues.speedIncrease)
+				console.log(newCanvasX);
 				//Don't need to worry about hitting the sides since
 				//moveAllDown takes care of flipping the velocity
 				let movedCat = defaultCat({
@@ -275,13 +295,17 @@ var createGame = function(canvas) {
 			   		canvasY: cat.canvasY,
 			   		baseVelocity: cat.baseVelocity,
 				})
+				console.log(movedCat);
+				return movedCat;
 			});
 		});
+		console.log("updated again updated cats", updatedCats2)
+		return updatedCats2;
 	}
 
 	//Need to move all rows down if any ship on any side reaches
 	//the boundaries of the canvas
-	var mustMoveDown = function() {
+	var mustMoveDown = function(catRows) {
 		return catRows.some(row => {
 			//Obviously, an empty row shouldn't be moving us down. This
 			//helps since we can now assume there's entries on the ends
@@ -318,13 +342,17 @@ var createGame = function(canvas) {
     	loadNextAudio: loadNextAudio,
 		increaseDifficulty: increaseDifficulty,
 		defaultLaser: defaultLaser,
-		defaultCatRow: defaultCatRow,
+		defaultCatRows: defaultCatRows,
 		updateCats: updateCats,
-		updateShipFire: updateShipFire
-   	}
+		updateShipFire: updateShipFire,
+		updateLaserCat: updateLaserCat,
+		getContext: getContext,
+		getCurrentNyanImage: getCurrentNyanImage
+	}
 }
 
 // More or less from provided in-class solution 
+
 const frameUpdate = (cb) => {
     const rAF = (time) => {
         requestAnimationFrame(rAF)
@@ -348,15 +376,12 @@ window.onload = function() {
     // "game" is an object literal that uses closures to let us call any
     // of the functions we set up in createGame.
     var game = createGame(canvas);
-   	let catRows = [
-   		game.defaultCatRow(30),
-   		game.defaultCatRow(175),
-   		game.defaultCatRow(300)
-   	]
+    let c = game.getContext()
+   	let catRows = game.defaultCatRows()
+   	
    	//We only allow player to have one laser firing, as is traditional,
    	//which means there'd be no reason to make this an array (same for ships)
    	let shipLaser = game.defaultLaser()
-
     canvas.addEventListener("mousedown", game.beginGame, false);
     frameUpdate(() => {
     	/*Basically all my view code (except for the spaceship)
@@ -367,14 +392,26 @@ window.onload = function() {
     	putting in the catRows as a variable so that I can check if
     	the laser is colliding with anything
     	*/
-	    catRows = game.updateCats(catRows)
-	    laser = game.updateShipFire(catRows)
+    	console.log(catRows)
+    	console.log(catRows[0])
+    	console.log(catRows[0][0])
+
+	    let updatedCatRows = game.updateCats(catRows)
+	    let updatedShipLaser = game.updateShipFire(shipLaser)
+
+	    //Much easier to do this logic separately from the rest
+	    let resultOfLaserCatCollisions = game.updateLaserCat(
+	    	updatedShipLaser, updatedCatRows
+	    );
+	    console.log(resultOfLaserCatCollisions, "result of possible collisions")
+	    //Sadly js doesn't support easy unpacking like python :/
+	    updatedShipLaser = resultOfLaserCatCollisions[0]
+	    updatedCatRows = resultOfLaserCatCollisions[1]
 
 	    //Now we can draw everything after we wipe the whole canvas :)
-	    c.fillStyle = '#000'
+	    c.fillStyle = "white"
         c.fillRect(0, 0, canvas.width, canvas.height)
-
-        catRows.forEach(row => {
+        updatedCatRows.forEach(row => {
         	row.forEach(cat => {
 				c.drawImage(
 					normalNyanImage, cat.canvasX, cat.canvasY,
