@@ -9,8 +9,10 @@ var createGame = function(canvas) {
    	let normalNyanImage = document.getElementById("normalNyanImage");
 
   	//I spaced these by hand to look decent
-   	let rowStartingCanvasY = [31, 111, 191, 271]
-   	let rowStartingCanvasX = [30, 120, 210, 300, 390, 480]
+   	//let rowStartingCanvasY = [31, 111, 191, 271]
+   	//let rowStartingCanvasX = [30, 120, 210, 300, 390, 480]
+   	let rowStartingCanvasY = [31, 111]
+   	let rowStartingCanvasX = [30, 120]
    	let padding = 2;
    	let baseMovementDown = 10.0;
 
@@ -133,7 +135,6 @@ var createGame = function(canvas) {
    			console.log("now waiting to fire")
    			ship.waitingToFire = true;
    		}
-   		moveToNextRound()
    	}
 
    	var collidedWithCat = function(nonCatBoundaries, catBoundaries) {
@@ -319,7 +320,9 @@ var createGame = function(canvas) {
 	};
 
 	var allCatsDied = function(catRows) {
-		return false;
+		return catRows.every(row => {
+			return (row.length == 0 || row.every(cat => {!(cat)}))
+		});
 	}
 	var moveToNextRound = function(catRows) {
 		stats["Rounds Won"] += 1;
