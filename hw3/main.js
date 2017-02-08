@@ -1,9 +1,5 @@
 'use strict';
-/*
-* This function will do canvas.getContext, in addition to all the
-* other game setup-y stuff, before returning an object that lets us
-* call various subfunctions we create in here
-*/
+
 var createGame = function(canvas) { 
     let c = canvas.getContext("2d");
     var getContext = function() {
@@ -12,23 +8,25 @@ var createGame = function(canvas) {
    	let shipImg = document.getElementById("spaceShip");
    	let normalNyanImage = document.getElementById("normalNyanImage");
 
-   	var processMouseClick = function(laser) {
-   		if (ship.waitingToFire) {
-   			console.log("Tryin to fire!");
-   			ship.waitingToFire = false;
-   			return shipAttemptsFiring(laser)
-   		} else {
-   			return laser
-   		}
-   	}
-   	var click = function(event){
-   		console.log("clicked")
-   		if (ship.waitingToFire) {
-			stats["Attempted Shots While Charging Laser"] += 1;
-   		} else {
-   			console.log("now waiting to fire")
-   			ship.waitingToFire = true;
-   		}
+  	//I spaced these by hand to look decent
+   	let rowStartingCanvasY = [31, 111, 191, 271]
+   	let rowStartingCanvasX = [30, 120, 210, 300, 390, 480]
+   	let padding = 2;
+   	let baseMovementDown = 10.0;
+
+   	/* Only posisble to have one at a time, so I decided to just make
+   	the user's spaceship a static object that gets mutated as a result 
+   	of the mousemove events. Note that only the ship's X position changes 
+   	- the ship will always be 20 pixels above the bottom of the canvas
+   	(20 was chosen arbitrarily just because it looks nice that way)
+
+   	Also, we need width/height defined here rather than the CSS
+   	because it makes it a lot easier to draw the images on the canas
+   	and do collision detection/draw the laser it shoots out
+   	*/
+   	let ship = {
+   		canvasX: canvas.width/2, canvasY: canvas.height - 20, 
+   		width: 50, height:15, waitingToFire: false
    	}
 
    	//looks nicer to start off in middle if we don't know mouse pos
@@ -40,13 +38,28 @@ var createGame = function(canvas) {
    		clientX = event.clientX;
    	}
 
+   	//Affects speed increases, choice of cat image used for cats, 
+   	//and music. This will be a static object we mutate
+   	let difficultyValues = {level: 0, speedIncrease: 1.0};
+
+   	//We'll be storing these as browser cookies. Also static
+ 	let stats = {
+ 		"Attempted Shots While Charging Laser": 0,
+ 		"Fired Lasers": 0,
+ 		"Game Pause Count": 0,
+ 		"Rounds Won": 0
+ 	}
+
+   	//These IDs are needed to grab the HTML5 audio elements
+   	let audioTrackIds = [
+   		"jazzNyan",
+   		"normalNyan"
+   	]
+
    	//Plan to automatically switch images based on difficulty level
    	var getCurrentNyanImage = function() {
    		return normalNyanImage;
    	}
-
-   	let padding = 2;
-   	let baseMovementDown = 10.0;
 
    	var defaultCat = ({
    		canvasX = -1,
@@ -58,10 +71,6 @@ var createGame = function(canvas) {
    	} = {}) => {
   		return {canvasX, canvasY, baseVelocity, width, height}
   	}
-
-  	//I spaced these by hand to look decent
-   	let rowStartingCanvasY = [31, 111, 191, 271]
-   	let rowStartingCanvasX = [30, 120, 210, 300, 390, 480]
 
    	var defaultCatRows = function() {
    		return rowStartingCanvasY.map(startingY => {
@@ -81,29 +90,6 @@ var createGame = function(canvas) {
    			width: 2, height: 5, velocity: 3.0
    		}
    	}
-
-   	//Affects speed increases, choice of cat image used for cats, and music
-   	let difficultyValues = {level: 0, speedIncrease: 1.0};
-
-   	//We'll be storing these as browser cookies
- 	let stats = {
- 		"Attempted Shots While Charging Laser": 0,
- 		"Fired Lasers": 0,
- 		"Game Pause Count": 0
- 	}
-
-   	//Adjusted values by hand to just look nice - only x changes, ship will
-   	//always be 10 pixels above the bottom of the canvas
-   	let ship = {
-   		canvasX: canvas.width/2, canvasY: canvas.height - 20, 
-   		width: 50, height:15, waitingToFire: false
-   	}
-
-   	//These IDs are needed to grab the HTML5 audio elements
-   	let audioTrackIds = [
-   		"jazzNyan",
-   		"normalNyan"
-   	]
 
    	//Needed so I can play/pause/adjust the volume of sounds without 
    	//knowing which audio element is currently playing
@@ -129,6 +115,26 @@ var createGame = function(canvas) {
    	twice (given that we defined background to start as it by default)
    	*/
    	let songsIter = audioTrackIds.slice(1)[Symbol.iterator]();
+
+   	var processMouseClick = function(laser) {
+   		if (ship.waitingToFire) {
+   			console.log("Tryin to fire!");
+   			ship.waitingToFire = false;
+   			return shipAttemptsFiring(laser)
+   		} else {
+   			return laser
+   		}
+   	}
+   	var click = function(event){
+   		console.log("clicked")
+   		if (ship.waitingToFire) {
+			stats["Attempted Shots While Charging Laser"] += 1;
+   		} else {
+   			console.log("now waiting to fire")
+   			ship.waitingToFire = true;
+   		}
+   		moveToNextRound()
+   	}
 
    	var collidedWithCat = function(nonCatBoundaries, catBoundaries) {
 		return !(nonCatBoundaries.leftBoundary > catBoundaries.rightBoundary ||
@@ -213,23 +219,6 @@ var createGame = function(canvas) {
 		}
 	}	
 	
-	//Needed to clear the last drawn image of things 
-	var clearImage = function({canvasX, canvasY, width, height}){
-		c.beginPath();
-		c.strokeWidth = width + 2;
-		c.strokeStyle = "white";
-		/*
-		Note the constants that fudge the bounds of the rectangle; we can't
-		use what the drawn image's bounds are exactly due to canvas weirdness
-		that sometimes leaves behind pixels
-		*/
-		c.clearRect(
-			canvasX - padding, canvasY - padding,
-			width + padding * 2, height + padding * 2
-		)
-		c.stroke();
-	}
-
 	var increaseDifficulty = function() {
 		console.log("Let's ramp it up!")
 		loadNextAudio()
@@ -329,6 +318,20 @@ var createGame = function(canvas) {
 		});
 	};
 
+	var allCatsDied = function(catRows) {
+		return false;
+	}
+	var moveToNextRound = function(catRows) {
+		stats["Rounds Won"] += 1;
+		let displayedScore = document.getElementById("roundsWon");
+		console.log(displayedScore);
+		displayedScore.innerHTML = stats["Rounds Won"];
+		increaseDifficulty();
+		return defaultCatRows();
+	}
+
+	//These are both related to mouse events, so I decided to do
+	//them automatically independant of the standard frameupdate
 	var resumeGame = function(event) {
 		console.log("GAME RESUMED");
 		canvas.addEventListener("mousemove", drawShip, false);
@@ -357,19 +360,20 @@ var createGame = function(canvas) {
 		getCurrentNyanImage: getCurrentNyanImage,
 		updateClientX: updateClientX,
 		drawShip: drawShip,
-		processMouseClick: processMouseClick
+		processMouseClick: processMouseClick,
+		allCatsDied: allCatsDied,
+		moveToNextRound: moveToNextRound	
+
 	}
 }
 
 
 // More or less from provided in-class solution 
 
-const frameUpdate = (cb) => {
+const frameUpdate = (callback) => {
     const rAF = (time) => {
         requestAnimationFrame(rAF)
-        const diff = ~~(time - (rAF.lastTime || 0)) // ~~ is like floor
-        cb(diff)
-        rAF.lastTime = time
+        callback()
     }
     rAF() // go!
 }
@@ -402,34 +406,38 @@ window.onload = function() {
 	}
     beginGame()
     frameUpdate(() => {
-    	/*Basically all my view code (except for the spaceship)
-    	since no acceleration and basically constant velocities, 
-    	decided it'd just be easier to do away with the time variable
-
-    	First I update the cats lcoations, then update the laser,
-    	putting in the catRows as a variable so that I can check if
-    	the laser is colliding with anything
+    	/*
+    	The game automatically keeps track of the mouse position for pausing
+    	and ship position using events. However, everything else is updated
+    	in a functional manner - the game state's not getting mutated, so
+    	unless I manually call functions to update stuff it won't get updated
     	*/    		
 	    let updatedCatRows = game.updateCats(catRows)
 	    let updatedShipLaser = game.updateShipFire(shipLaser)
 
-	    //Much easier to do this logic separately from the rest
+	    /*
+	    Much easier to do this logic separately from the rest AFTER 
+	    they've already moved. Sadly js doesn't support easy unpacking 
+	    like python
+	    */
 	    let resultOfLaserCatCollisions = game.updateLaserCat(
 	    	updatedShipLaser, updatedCatRows
 	    );
-	    //Sadly js doesn't support easy unpacking like python :/
+
 	    updatedShipLaser = resultOfLaserCatCollisions[0]
     	updatedShipLaser = game.processMouseClick(updatedShipLaser);
 	    updatedCatRows = resultOfLaserCatCollisions[1]
 
+        /*Basically all my view code is below. I decided thatsince no
+		acceleration and basically constant velocities, it'd just be 
+		easier to do away with the time variable. 
 
-	    //Now we can draw everything after we wipe the whole canvas :)
+		(Note that clearing individual bits and then redrawing htem 
+		is more expensive than wiping the whole canvas and then 
+		redrawing each element)*/
 	    c.fillStyle = "white"
         c.fillRect(0, 0, canvas.width, canvas.height)
 
-
-    	//We delegate to game to keep track of the mosue position
-    	//using events
     	game.drawShip()
 
         updatedCatRows.forEach(row => {
@@ -454,5 +462,8 @@ window.onload = function() {
 
 		shipLaser = updatedShipLaser;
 		catRows = updatedCatRows;
+		if (game.allCatsDied(catRows)) {
+			catRows = game.moveToNextRound(catRows);
+		}
     })
 }
