@@ -14,9 +14,11 @@ var createGame = function(canvas) {
    	let baseHorizontalSpeed = 1.0;
    	let rowStartingCanvasX = [10, 150, 300]
 
+
    	var defaultCatRow = function(rowCanvasY) {
    		return rowStartingCanvasX.map(defaultX => {
-   			return ({canvasY: rowCanvasY, canvasX: defaultX, dir: LEFT, width:128, height: 128 });
+   			return ({canvasY: rowCanvasY, canvasX: defaultX,
+   			 dir: LEFT, width: 128, height: 128 });
    		})
 
    	}
@@ -36,13 +38,13 @@ var createGame = function(canvas) {
    	//actual sprite size is ~ 420x210 I think
    	const LEFT = 0;
    	const RIGHT = 1;
-   	let catRows = [
+   	var catRows = [
    		defaultCatRow(30),
    		defaultCatRow(175),
    		defaultCatRow(300)
    	]
    	//We only allow player to have one laser firing, as is traditional
-   	let shipLaser = {
+   	var shipLaser = {
    		canvasX: -1, canvasY: -1, chargingLaser: false,
    		width: 2, height: 5, laserRefreshRate: 5, moveSpeed: 3
    	}
@@ -87,6 +89,30 @@ var createGame = function(canvas) {
 		}
 	}
 
+   	var collidedWithCat = function(shipOrShipLaser) {
+		var {leftBoundary, rightBoundary,
+		 topBoundary, botBoundary} = getBoundaries(shipOrShipLaser)
+   		 return catRows.some(function (row) {
+   			return row.some(function (cat) {
+   				let catBoundaries = getBoundaries(cat);
+   				return !(leftBoundary > catBoundaries.rightBoundary ||
+   					rightBoundary < catBoundaries.leftBoundary ||
+   					topBoundary > catBoundaries.botBoundary ||
+   					botBoundary < catBoundaries.topBoundary)
+   			})
+   		})
+   	}
+
+   	var getBoundaries = function(movingObject){
+		let leftBoundary = movingObject.canvasX;
+		let rightBoundary = movingObject.canvasX +
+		 					movingObject.width;
+		let topBoundary = movingObject.canvasY;
+		let botBoundary = movingObject.canvasY +
+		 					movingObject.height;
+		return {leftBoundary, rightBoundary, topBoundary, botBoundary}
+
+   	}
 	var shipFires = function() {
  		stats["Fired Lasers"] += 1
 		shipLaser.chargingLaser = true;
@@ -96,10 +122,12 @@ var createGame = function(canvas) {
 		shipLaser.canvasY = ship.canvasY - ship.height;
 		var moveShipFire = function() {
 			clearImage(shipLaser)
+			if (collidedWithCat(shipLaser)) {
+				console.log('woooooooo')
+			}
 
 			//Remember, -1 means upwards, +1 means downwards
 			shipLaser.canvasY -= shipLaser.moveSpeed;
-
 			//Draw the bullet itself
 			c.beginPath();
 			c.lineWidth = shipLaser.width;
@@ -288,6 +316,5 @@ window.onload = function() {
     // of the functions we set up in createGame.
     var game = createGame(canvas);
     canvas.addEventListener("mousedown", game.beginGame, false);
-    setTimeout(game.increaseDifficulty, 1000)
     setTimeout(game.increaseDifficulty, 4000)
 }
