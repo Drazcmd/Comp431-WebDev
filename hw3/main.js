@@ -27,7 +27,7 @@ var createGame = function(canvas) {
    		canvasX = -1,
    		canvasY = -1,
    		//No constant (non-jumps) vertical velocities - only horizontal
-   		baseVelocity = 1,
+   		baseVelocity = 1.5,
    		width = 128,
    		height = 128
   	} = {}) => {
@@ -209,7 +209,7 @@ var createGame = function(canvas) {
 		console.log("Let's ramp it up!")
 		loadNextAudio()
 		difficultyValues.level += 1;
-		difficultyValues.speedIncrease += 1;
+		difficultyValues.speedIncrease += 0.333;
 	}
 	//Enemy attacks
 	var nyanFire = function() {
@@ -268,10 +268,10 @@ var createGame = function(canvas) {
 				return row.map(cat => {
 					let adjustedCat = defaultCat({
 						//want to make sure it doesn't double trigger on accident
-				   		canvasX: cat.canvasX - cat.baseVelocity * padding,
+				   		canvasX: cat.canvasX - (cat.baseVelocity * padding),
 				   		canvasY: cat.canvasY + baseMovementDown,
 				   		//this helps make later calculations easier
-				   		baseVelocity: cat.baseVelocity * -1,
+				   		baseVelocity: -1 * cat.baseVelocity 
 					});
 					return adjustedCat;
 				});
@@ -284,9 +284,10 @@ var createGame = function(canvas) {
 		let updatedCats2 = updatedCats.map(row => {
 			return row.map(cat => {
 				//second line allows for increasing difficulty on the fly :)
-				let newCanvasX = cat.canvasX + cat.baseVelocity +
-							difficultyValues.speedIncrease;
-
+				console.log(cat.canvasX)
+				let newCanvasX = cat.canvasX + (cat.baseVelocity *
+							difficultyValues.speedIncrease);
+				console.log(newCanvasX)
 				//Don't need to worry about hitting the sides since
 				//moveAllDown takes care of flipping the velocity
 				console.log(defaultCat({}), "default cat")	
