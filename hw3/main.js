@@ -267,7 +267,8 @@ var createGame = function(canvas) {
 			return catRows.map(row => {
 				return row.map(cat => {
 					let adjustedCat = defaultCat({
-				   		canvasX: cat.canvasX,
+						//want to make sure it doesn't double trigger on accident
+				   		canvasX: cat.canvasX - cat.baseVelocity * padding,
 				   		canvasY: cat.canvasY + baseMovementDown,
 				   		//this helps make later calculations easier
 				   		baseVelocity: cat.baseVelocity * -1,
