@@ -11,6 +11,14 @@ var createGame = function(canvas) {
     }
    	let shipImg = document.getElementById("spaceShip");
    	let normalNyanImage = document.getElementById("normalNyanImage");
+   	let waitingToFire = false;
+
+   	var processMouseClick = function(laser) {
+   		if (waitingToFire) {
+   			shipAttemptsFiring(laser, ship)
+   			waitingToFire = false
+   		}
+   	}
 
    	//looks nicer to start off in middle if we don't know mouse pos
    	let clientX = canvas.width/2;
@@ -108,15 +116,6 @@ var createGame = function(canvas) {
    	twice (given that we defined background to start as it by default)
    	*/
    	let songsIter = audioTrackIds.slice(1)[Symbol.iterator]();
-	var click = function(event) {
-		Object.entries(stats).forEach((entry) => {console.log(entry)})
-		console.log("\n")
-		if (!shipLaser.chargingLaser) {
-			shipFires()
-		} else {
-			stats["Attempted Shots While Charging Laser"] += 1;
-		}
-	}
 
    	var collidedWithCat = function(nonCatBoundaries, catBoundaries) {
 		return !(nonCatBoundaries.leftBoundary > catBoundaries.rightBoundary ||
@@ -178,7 +177,7 @@ var createGame = function(canvas) {
    		return [finalizedLaser, updatedCatRows]
    	}
 
-	var shipAttemptsFiring = function(laser, ship) {
+   	var shipAttemptsFiring = function(laser, ship) {
 		if (laser.chargingLaser) {
 			//can't give back a new laser - this laser's running atm
 			stats["Attempted Shots While Charging Laser"] += 1;
@@ -252,17 +251,6 @@ var createGame = function(canvas) {
 		sounds.background.play()	
 	}
 
-	var beginGame = function(event){
-	    canvas.addEventListener("mousedown", click, false);
-	    canvas.addEventListener("mouseenter", resumeGame, false);
-	    canvas.addEventListener("mouseout", pauseGame, false);
-	    updateClientX(event)
-	   	resumeGame()
-	   	 
-		console.log("It's a new beginning!")
-    	canvas.removeEventListener("mousedown", beginGame, false)	
-	}
-
 	var updateCats = function(catRows) {
 		//If our update is a no-op, stays the same object
 		let updatedCats = catRows;
@@ -287,19 +275,15 @@ var createGame = function(canvas) {
 		let updatedCats2 = updatedCats.map(row => {
 			return row.map(cat => {
 				//second line allows for increasing difficulty on the fly :)
-				console.log(cat.canvasX)
 				let newCanvasX = cat.canvasX + (cat.baseVelocity *
 							difficultyValues.speedIncrease);
-				console.log(newCanvasX)
 				//Don't need to worry about hitting the sides since
 				//moveAllDown takes care of flipping the velocity
-				console.log(defaultCat({}), "default cat")	
 				let movedCat = defaultCat({
 			   		canvasX: newCanvasX,
 			   		canvasY: cat.canvasY,
 			   		baseVelocity: cat.baseVelocity,
 				})
-				console.log("moved cat", movedCat);
 				return movedCat;
 			});
 		});
@@ -338,7 +322,6 @@ var createGame = function(canvas) {
 		//catRows.stopMoving()
 	}
     return {
-    	click: click,
     	resumeGame: resumeGame,
     	pauseGame: pauseGame,
     	loadNextAudio: loadNextAudio,
@@ -351,9 +334,11 @@ var createGame = function(canvas) {
 		getContext: getContext,
 		getCurrentNyanImage: getCurrentNyanImage,
 		updateClientX: updateClientX,
-		drawShip: drawShip
+		drawShip: drawShip,
+		processMouseClick: processMouseClick
 	}
 }
+
 
 // More or less from provided in-class solution 
 
@@ -386,7 +371,14 @@ window.onload = function() {
    	//We only allow player to have one laser firing, as is traditional,
    	//which means there'd be no reason to make this an array (same for ships)
    	let shipLaser = game.defaultLaser()
-    canvas.addEventListener("mouseover", game.beginGame, false);
+
+	function beginGame(){
+	    canvas.addEventListener("mouseenter", game.resumeGame, false);
+	    canvas.addEventListener("mouseout", game.pauseGame, false);
+	    document.addEventListener("mousemove", game.updateClientX, false)
+	    canvas.addEventListener("mousedown", game.click, false);
+	}
+    beginGame()
     frameUpdate(() => {
     	/*Basically all my view code (except for the spaceship)
     	since no acceleration and basically constant velocities, 
@@ -396,7 +388,8 @@ window.onload = function() {
     	putting in the catRows as a variable so that I can check if
     	the laser is colliding with anything
     	*/
-
+    	game.processMouseClick()
+    		
 	    let updatedCatRows = game.updateCats(catRows)
 	    let updatedShipLaser = game.updateShipFire(shipLaser)
 
@@ -404,7 +397,6 @@ window.onload = function() {
 	    let resultOfLaserCatCollisions = game.updateLaserCat(
 	    	updatedShipLaser, updatedCatRows
 	    );
-	    console.log(resultOfLaserCatCollisions, "result of possible collisions")
 	    //Sadly js doesn't support easy unpacking like python :/
 	    updatedShipLaser = resultOfLaserCatCollisions[0]
 	    updatedCatRows = resultOfLaserCatCollisions[1]
