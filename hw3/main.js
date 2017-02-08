@@ -58,7 +58,7 @@ var createGame = function(canvas) {
    	}
 
    	//Affects speed increases, choice of cat image used for cats, and music
-   	let difficultyValues = {level: 0, speedIncrease: 0.0};
+   	let difficultyValues = {level: 0, speedIncrease: 1.0};
 
    	//We'll be storing these as browser cookies
  	let stats = {
@@ -144,30 +144,33 @@ var createGame = function(canvas) {
 
    	//AKA handler collisions between a laser and a cat
    	var updateLaserCat = function(laser, catRows) {
+   		//update the result of the laser moving, first of all
    		let updatedLaser = defaultLaser();
 		updatedLaser.chargingLaser = true
 		updatedLaser.canvasX = laser.canvasX;
 		updatedLaser.canvasY = laser.canvasY;
-		let updatedCatRows = []
-   		catRows.forEach(row => {
-   			console.log(row)
-   			updatedCatRows.push([])
-   			row.forEach(cat => {
-   				console.log(cat)
-   				console.log(laser)
-   				let laserBoundaries = getBoundaries(updatedLaser)
-   				let catBoundaries = getBoundaries(cat)
-				if (collidedWithCat(laserBoundaries, catBoundaries)){
-					console.log("Collision!")
-					//this means no other collisions will occur
-					updatedLaser = defaultLaser()
-				} else {
-					//Only include the cat if it didn't collide
-					updatedCatRows[updatedCatRows.length - 1].push(cat)
-				}
-   			});		
+		let laserBoundaries = getBoundaries(updatedLaser)
+
+		var noCollision = function(cat){
+			let catBoundaries = getBoundaries(cat)
+			return !collidedWithCat(laserBoundaries, catBoundaries)
+		}
+		let updatedCatRows = catRows.map(row => {
+   			return row.filter(noCollision)
    		});
-   		return [updatedLaser, updatedCatRows]
+
+		//lastly, if there was a collision, we still haven't updated
+		//the laser to the result of the collision
+		if (catRows.some(row => {
+			return row.some(cat => {
+				return collidedWithCat(laserBoundaries, cat)
+			})
+		})) {
+			var finalizedLaser = defaultLaser();
+		} else {
+			var finalizedLaser = updatedLaser;
+		}	
+   		return [finalizedLaser, updatedCatRows]
    	}
 
 	var shipAttemptsFiring = function(laser, ship) {
@@ -284,18 +287,20 @@ var createGame = function(canvas) {
 				//second line allows for increasing difficulty on the fly :)
 				let newCanvasX = cat.canvasX + cat.baseVelocity +
 							difficultyValues.speedIncrease;
-				console.log(cat.canvasX)
-				console.log(cat.baseVelocity)
+
+				console.log(cat.canvasX, "canvas x")
+				console.log(newCanvasX, "new canvas x");
+				console.log(cat.baseVelocity, "base velocity")
 				console.log(difficultyValues.speedIncrease)
-				console.log(newCanvasX);
 				//Don't need to worry about hitting the sides since
 				//moveAllDown takes care of flipping the velocity
+				console.log(defaultCat({}), "default cat")	
 				let movedCat = defaultCat({
 			   		canvasX: newCanvasX,
 			   		canvasY: cat.canvasY,
 			   		baseVelocity: cat.baseVelocity,
 				})
-				console.log(movedCat);
+				console.log("moved cat", movedCat);
 				return movedCat;
 			});
 		});
@@ -338,7 +343,6 @@ var createGame = function(canvas) {
     	click: click,
     	resumeGame: resumeGame,
     	pauseGame: pauseGame,
-    	beginGame: beginGame,
     	loadNextAudio: loadNextAudio,
 		increaseDifficulty: increaseDifficulty,
 		defaultLaser: defaultLaser,
@@ -382,7 +386,7 @@ window.onload = function() {
    	//We only allow player to have one laser firing, as is traditional,
    	//which means there'd be no reason to make this an array (same for ships)
    	let shipLaser = game.defaultLaser()
-    canvas.addEventListener("mousedown", game.beginGame, false);
+    canvas.addEventListener("mouseover", game.beginGame, false);
     frameUpdate(() => {
     	/*Basically all my view code (except for the spaceship)
     	since no acceleration and basically constant velocities, 
@@ -431,5 +435,4 @@ window.onload = function() {
 		);
 		c.stroke();
     })
-    setTimeout(game.increaseDifficulty, 4000)
 }
