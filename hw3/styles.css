@@ -1,8 +1,14 @@
+html {
+  background: url("Background2.jpg") center fixed no-repeat;
+  background-size: cover;
+}
+
 body {
 	 /* See piazza @7 private post*/
     max-width: 40em;
     padding: 0.62em;
     font: 1.2em/1.62em sans-serif;
+    color: red;
 }
 
 canvas {
@@ -14,6 +20,8 @@ canvas {
   width: 600px;
   height: 700px;
 }
+
 .resources {
   visibility: hidden; 
 }
+

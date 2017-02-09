@@ -5,6 +5,7 @@ var createGame = function(canvas) {
     var getContext = function() {
     	return c
     }
+    let gamePaused = true;
    	let shipImg = document.getElementById("spaceShip");
    	let normalNyanImage = document.getElementById("normalNyanImage");
 
@@ -89,7 +90,7 @@ var createGame = function(canvas) {
    	var defaultLaser = function() {
    		return  { 
    			canvasX: -1, canvasY: 1, chargingLaser: false,
-   			width: 2, height: 5, velocity: 3.0
+   			width: 2, height: 5, velocity: 10.0
    		}
    	}
 
@@ -156,6 +157,9 @@ var createGame = function(canvas) {
    	}
 
    	var updateShipFire = function(laser) {
+   		if (gamePaused) {
+   			return laser;
+   		}
    		//I don't handle collisions till after moving it
 		let updatedLaser = defaultLaser();
 		updatedLaser.canvasX = laser.canvasX;
@@ -263,6 +267,9 @@ var createGame = function(canvas) {
 	}
 
 	var updateCats = function(catRows) {
+		if (gamePaused) {
+			return catRows
+		}
 		//If our update is a no-op, stays the same object
 		let updatedCats = catRows;
 		var moveAllDown = function(catRows) {
@@ -271,7 +278,8 @@ var createGame = function(canvas) {
 					let adjustedCat = defaultCat({
 						//want to make sure it doesn't double trigger on accident
 				   		canvasX: cat.canvasX - (cat.baseVelocity * padding),
-				   		canvasY: cat.canvasY + baseMovementDown,
+				   		canvasY: (cat.canvasY + 
+				   			baseMovementDown * difficultyValues.speedIncrease),
 				   		//this helps make later calculations easier
 				   		baseVelocity: -1 * cat.baseVelocity 
 					});
@@ -304,6 +312,9 @@ var createGame = function(canvas) {
 	//Need to move all rows down if any ship on any side reaches
 	//the boundaries of the canvas
 	var mustMoveDown = function(catRows) {
+		if (gamePaused) {
+			return catRows
+		}
 		return catRows.some(row => {
 			//Obviously, an empty row shouldn't be moving us down. This
 			//helps since we can now assume there's entries on the ends
@@ -336,17 +347,17 @@ var createGame = function(canvas) {
 	//These are both related to mouse events, so I decided to do
 	//them automatically independant of the standard frameupdate
 	var resumeGame = function(event) {
+		gamePaused = false;
 		console.log("GAME RESUMED");
 		canvas.addEventListener("mousemove", drawShip, false);
 		sounds.background.play()
-		//catRows.moveAgain()
 	}
 	var pauseGame = function(event) {
+		gamePaused = true;
 		stats["Game Pause Count"] += 1;
 		console.log("GAME PAUSED");
 		canvas.removeEventListener("mousemove", drawShip, false);
 		sounds.background.pause()
-		//catRows.stopMoving()
 	}
     return {
     	click: click,
@@ -406,6 +417,7 @@ window.onload = function() {
 	    canvas.addEventListener("mouseout", game.pauseGame, false);
 	    canvas.addEventListener("mousemove", game.updateClientX, false)
 	    canvas.addEventListener("mousedown", game.click, false);
+	    game.resumeGame()
 	}
     beginGame()
     frameUpdate(() => {
