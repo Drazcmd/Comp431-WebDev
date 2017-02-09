@@ -1,5 +1,6 @@
 html {
-  background: url("Background2.jpg") center fixed no-repeat;
+  /*background: url("resources/Background1.jpg") center fixed no-repeat; */
+  background: url("resources/Background2.jpg") center fixed no-repeat;
   background-size: cover;
 }
 
@@ -24,4 +25,3 @@ canvas {
 .resources {
   visibility: hidden; 
 }
-

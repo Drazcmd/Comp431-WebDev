@@ -7,11 +7,21 @@ var createGame = function(canvas) {
     }
     let gamePaused = true;
    	let shipImg = document.getElementById("spaceShip");
-   	let normalNyanImage = document.getElementById("normalNyanImage");
+   	let nyanImageIds = [
+   		"jazzNyanImage",
+   		"jacksonNyanImage",
+   		"americaNyanImage",
+   		"normalNyanImage",
+   		"tacNaynImage"
+   	];
+   	//Affects speed increases, choice of cat image used for cats, 
+   	//and music. This will be a static object we mutate
+   	let difficultyValues = {level: 0, speedIncrease: 1.0};
+
 
   	//I spaced these by hand to look decent
    	let rowStartingCanvasY = [31, 111, 191, 271]
-   	let rowStartingCanvasX = [30, 120, 210, 300, 390]
+   	let rowStartingCanvasX = [30, 150, 270, 390]
    	let padding = 2;
    	let baseMovementDown = 10.0;
 
@@ -38,10 +48,6 @@ var createGame = function(canvas) {
    		clientX = event.clientX;
    	}
 
-   	//Affects speed increases, choice of cat image used for cats, 
-   	//and music. This will be a static object we mutate
-   	let difficultyValues = {level: 0, speedIncrease: 1.0};
-
    	//We'll be storing these as browser cookies. Also static
  	let stats = {
  		"Attempted Shots While Charging Laser": 0,
@@ -49,16 +55,27 @@ var createGame = function(canvas) {
  		"Game Pause Count": 0,
  		"Rounds Won": 0
  	}
+ 	var getStats = function() {
+ 		return stats;
+ 	}
 
    	//These IDs are needed to grab the HTML5 audio elements
    	let audioTrackIds = [
-   		"jazzNyan",
-   		"normalNyan"
+   		"jazzSong",
+   		"jackson5Song",
+   		"americaSong",
+   		"normalSong",
+   		"tacNaynSong"
    	]
 
-   	//Plan to automatically switch images based on difficulty level
+   	//Lets us automatically switch images based on difficulty level
    	var getCurrentNyanImage = function() {
-   		return normalNyanImage;
+   		//Reason is that the difficulty level can go higher than the
+   		//number of images we have available
+   		let safeImageIndex = Math.min(
+   			difficultyValues.level, nyanImageIds.length - 1
+   		)
+   		return document.getElementById(nyanImageIds[safeImageIndex]) 
    	}
 
    	var defaultCat = ({
@@ -66,8 +83,8 @@ var createGame = function(canvas) {
    		canvasY = -1,
    		//No constant (non-jumps) vertical velocities - only horizontal
    		baseVelocity = 1.5,
-   		width = 64,
-   		height = 64
+   		width = 72,
+   		height = 48
    	} = {}) => {
   		return {canvasX, canvasY, baseVelocity, width, height}
   	}
@@ -95,14 +112,14 @@ var createGame = function(canvas) {
    	//knowing which audio element is currently playing
 	let sounds = {
 		normalVolume: 0.5,
-		quietVolume: 0.075,
+		quietVolume: 0.070,
 		background: document.getElementById(audioTrackIds[0])
 	}
 
 	//I'm setting the default volumes so I avoid melting eardrums :p
 	audioTrackIds.forEach(function(trackId){
-		//special casing to further reduce because this one is REALLY LOUD
-		if (trackId === "normalNyan"){
+		//special casing to further reduce because these 2 are REALLY LOUD
+		if (trackId === "normalSong" || trackId === "tacNaynSong"){
 			document.getElementById(trackId).volume = sounds.quietVolume
 		} else {
 			document.getElementById(trackId).volume = sounds.normalVolume
@@ -323,7 +340,6 @@ var createGame = function(canvas) {
 	var moveToNextRound = function(catRows) {
 		stats["Rounds Won"] += 1;
 		let displayedScore = document.getElementById("roundsWon");
-		console.log(displayedScore);
 		displayedScore.innerHTML = stats["Rounds Won"];
 		increaseDifficulty();
 		return defaultCatRows();
@@ -359,8 +375,8 @@ var createGame = function(canvas) {
 		drawShip: drawShip,
 		processMouseClick: processMouseClick,
 		allCatsDied: allCatsDied,
-		moveToNextRound: moveToNextRound	
-
+		moveToNextRound: moveToNextRound,
+		getStats: getStats
 	}
 }
 
@@ -441,7 +457,7 @@ window.onload = function() {
         updatedCatRows.forEach(row => {
         	row.forEach(cat => {
 				c.drawImage(
-					normalNyanImage, cat.canvasX, cat.canvasY,
+					game.getCurrentNyanImage(), cat.canvasX, cat.canvasY,
 					cat.width, cat.height
 				);
         	})
@@ -465,3 +481,5 @@ window.onload = function() {
 		}
     })
 }
+
+

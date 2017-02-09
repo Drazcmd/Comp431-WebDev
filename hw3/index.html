@@ -4,23 +4,51 @@
 	<title>HW3 Main: Space Nyan-vaders</title>
     <meta charset"utf-8">
 	<meta name="author" content="Clayton Drazner (cmd11)"> 
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="viewport" 
+	content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="styles.css">
 	<script src="main.js"></script>
 </head>
 <body>
 	<div>Rounds Won: <span id="roundsWon">0</span></div>
-	<audio id="jazzNyan" loop controls>
-		<source src="jazz.mp3" type="audio/mp3">
-	</audio>
-	<audio id="normalNyan" loop controls>
-		<source src="nyan.mp3" type="audio/mp3">
-	</audio>
+	<div>Stats: <div id="displayStats"></div></div>
 	<canvas id="gameCanvas"></canvas>
-	<img id="spaceShip" src="SpaceShip.png" class="resources">
-	<!--<img id="normalNyanImage" src="NyanCat.png" class="resources"> -->
 
-<img id="normalNyanImage" src="http://vignette2.wikia.nocookie.net/nyancat/images/d/dd/Tacnayn.gif/revision/latest/scale-to-width-down/200?cb=20130110063433" alt="Tacnayn">
+	<!-- Using hidden HTML5 audios to control song playing -->
+	<audio id="jazzSong" loop controls hidden>
+		<source src="resources/songs/jazz.mp3" type="audio/mp3">
+	</audio>
+	<audio id="jackson5Song" loop controls hidden>
+		<source src="resources/songs/j5.mp3" type="audio/mp3">
+	</audio>
+	<audio id="americaSong" loop controls hidden>
+		<source src="resources/songs/america.mp3" type="audio/mp3">
+	</audio>
+	<audio id="normalSong" loop controls hidden>
+		<source src="resources/songs/nyan.mp3" type="audio/mp3">
+	</audio>
+	<audio id="tacNaynSong" loop controls hidden>
+		<source src="resources/songs/tacnayn.mp3" type="audio/mp3">
+	</audio>
+
+
+	<!-- Loads various sprites I'll be drawing on canvas later -->
+	<img id="spaceShip" src="resources/sprites/SpaceShip.png" 
+	class="resources">
+	<img id="jazzNyanImage" src="resources/sprites/JazzNyan.png" 
+	class="resources">
+	<img id="jacksonNyanImage" src="resources/sprites/JacksonNyan.png" 
+	class="resources">
+	<img id="americaNyanImage" src="resources/sprites/AmericaNyan.png" 
+	class="resources">
+	<img id="normalNyanImage" src="resources/sprites/NyanCat.png" 
+	class="resources">
+	<img id="tacNaynImage" src="resources/sprites/TacNayn.png" 
+	class="resources">
+
+
+	<!-- Bonus gif for if you scroll down :) -->
+	<img src="resources/TacNaynGif.gif" alt="Tacnayn">
 </body>
 </html>
 
