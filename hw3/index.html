@@ -10,9 +10,19 @@
 	<script src="main.js"></script>
 </head>
 <body>
-	<div>Rounds Won: <span id="roundsWon">0</span></div>
-	<div>Stats: <div id="displayStats"></div></div>
+	<!--Technically a stat too, but as our score it must be separate-->
+	<div>CURRENT SCORE (rounds won): 
+		<span id="roundsWon"> 0 </span>
+	</div>
+	<div>Prior Score (rounds won last game): 
+		<span id="priorScore"> 0 </span>
+	</div>
+
 	<canvas id="gameCanvas"></canvas>
+
+	<div>Current Stats: <div id="statsDisplay"> </div></div>
+	<br>
+	<div>Previous Game's Stats: <div id="priorStatsDisplay"> </div></div>
 
 	<!-- Using hidden HTML5 audios to control song playing -->
 	<audio id="jazzSong" loop controls hidden>

@@ -50,11 +50,13 @@ var createGame = function(canvas) {
 
    	//We'll be storing these as browser cookies. Also static
  	let stats = {
- 		"Attempted Shots While Charging Laser": 0,
- 		"Fired Lasers": 0,
- 		"Game Pause Count": 0,
- 		"Rounds Won": 0
+ 		"RoundsWon": 0,
+ 		"FiredLasers": 0,
+ 		"AttemptedShotsWhileChargingLaser": 0,
+ 		"GamePauseCount": 0,
+ 		"MostRoundsWon" : 0
  	}
+
  	var getStats = function() {
  		return stats;
  	}
@@ -143,7 +145,7 @@ var createGame = function(canvas) {
    	}
    	var click = function(event){
    		if (ship.waitingToFire) {
-			stats["Attempted Shots While Charging Laser"] += 1;
+			stats["AttemptedShotsWhileChargingLaser"] += 1;
    		} else {
    			ship.waitingToFire = true;
    		}
@@ -218,10 +220,10 @@ var createGame = function(canvas) {
    	var shipAttemptsFiring = function(laser) {
 		if (laser.chargingLaser) {
 			//can't give back a new laser - this laser's running atm
-			stats["Attempted Shots While Charging Laser"] += 1;
+			stats["AttemptedShotsWhileChargingLaser"] += 1;
 			return laser;
 		} else {
-			stats["Fired Lasers"] += 1;
+			stats["FiredLasers"] += 1;
 			//Looks nicer if we adjust where the laser shoots out from
 			//(remember, canvas places images by their top left corner)
 			let newLaser = defaultLaser();
@@ -338,9 +340,13 @@ var createGame = function(canvas) {
 		});
 	}
 	var moveToNextRound = function(catRows) {
-		stats["Rounds Won"] += 1;
+		stats["RoundsWon"] += 1;
+		stats["MostRoundsWon"] = Math.max(
+			stats["RoundsWon"], stats["MostRoundsWon"]
+		);
+
 		let displayedScore = document.getElementById("roundsWon");
-		displayedScore.innerHTML = stats["Rounds Won"];
+		displayedScore.innerHTML = stats["RoundsWon"];
 		increaseDifficulty();
 		return defaultCatRows();
 	}
@@ -354,7 +360,7 @@ var createGame = function(canvas) {
 	}
 	var pauseGame = function(event) {
 		gamePaused = true;
-		stats["Game Pause Count"] += 1;
+		stats["GamePauseCount"] += 1;
 		canvas.removeEventListener("mousemove", drawShip, false);
 		sounds.background.pause()
 	}
@@ -405,6 +411,27 @@ window.onload = function() {
     // of the functions we set up in createGame.
     var game = createGame(canvas);
     let c = game.getContext()
+
+    //Show the previous game's score if there is a cookie of it
+	Object.keys(game.getStats()).forEach(keyStr => {
+		let previousCookieVal = getCookie(keyStr);
+		if (previousCookieVal == "") {
+			//this would mean there was no previous log of this stat
+			return;
+		}
+
+		//This one alone goes up at the top
+		if (keyStr === "RoundsWon"){
+			//Unlike the other stats, this is a special div just for the value
+			let priorScoreDisplay = document.getElementById("priorScore");
+			priorScoreDisplay.innerHTML = previousCookieVal;
+		} else {
+			let statStr = keyStr + ": " + previousCookieVal + "\n";
+			let displayArea = document.getElementById("priorStatsDisplay");
+			displayArea.innerHTML += statStr;
+		}
+	});
+
    	let catRows = game.defaultCatRows()
    	
    	//We only allow player to have one laser firing, as is traditional,
@@ -442,6 +469,13 @@ window.onload = function() {
     	updatedShipLaser = game.processMouseClick(updatedShipLaser);
 	    updatedCatRows = resultOfLaserCatCollisions[1]
 
+	    //Since now everything's been updated, I figured this would also
+	    //be the best time to store our stat/score cookie and display
+	    let currentStats = game.getStats()
+	    updateCookies(currentStats)
+	    updateStatDisplay(
+	    	currentStats, document.getElementById("statsDisplay")
+	    );
         /*Basically all my view code is below. I decided thatsince no
 		acceleration and basically constant velocities, it'd just be 
 		easier to do away with the time variable. 
@@ -479,7 +513,55 @@ window.onload = function() {
 		if (game.allCatsDied(catRows)) {
 			catRows = game.moveToNextRound(catRows);
 		}
+
     })
 }
 
+function updateStatDisplay(stats, displayArea){
+	displayArea.innerHTML = ""
+	Object.keys(stats).forEach(keyStr => {
+		//As the main score, this is the only stat we don't want to
+		//display here (because it's already displayed at the top)
+		if (keyStr === "RoundsWon") {
+			return;
+		}
+		let updatedStat =  keyStr + ": " +
+			stats[keyStr].toString() + "\n" + "<br>"; 
+ 		displayArea.innerHTML += updatedStat;
+	})
+}
 
+function updateCookies(stats){
+	Object.keys(stats).forEach(keyStr => {
+		//We have to do it this way because setting cookies with js is weird 
+		let currentCookieVal = getCookie(keyStr);
+		if (currentCookieVal === "") {
+			return
+		}
+		//As the main 'score', this value should only be updated if we
+		//actually do better than before
+		if (keyStr === "MostRoundsWon" &&
+		stats[keyStr] < currentCookieVal) {
+			return;
+		}
+			
+		let updatedCookie = keyStr + "=" + stats[keyStr].toString();
+		document.cookie = updatedCookie;
+	});
+}
+
+//From approved resource w3schools.com
+function getCookie(cname) {
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+    for(var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+}
