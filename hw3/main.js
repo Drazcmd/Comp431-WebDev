@@ -10,10 +10,8 @@ var createGame = function(canvas) {
    	let normalNyanImage = document.getElementById("normalNyanImage");
 
   	//I spaced these by hand to look decent
-   	//let rowStartingCanvasY = [31, 111, 191, 271]
-   	//let rowStartingCanvasX = [30, 120, 210, 300, 390, 480]
-   	let rowStartingCanvasY = [31, 111]
-   	let rowStartingCanvasX = [30, 120]
+   	let rowStartingCanvasY = [31, 111, 191, 271]
+   	let rowStartingCanvasX = [30, 120, 210, 300, 390]
    	let padding = 2;
    	let baseMovementDown = 10.0;
 
@@ -37,7 +35,6 @@ var createGame = function(canvas) {
 
    	//We will be getting events independantly of when we wish to draw
    	var updateClientX = function(event){
-   		console.log("update client x")
    		clientX = event.clientX;
    	}
 
@@ -121,7 +118,6 @@ var createGame = function(canvas) {
 
    	var processMouseClick = function(laser) {
    		if (ship.waitingToFire) {
-   			console.log("Tryin to fire!");
    			ship.waitingToFire = false;
    			return shipAttemptsFiring(laser)
    		} else {
@@ -129,11 +125,9 @@ var createGame = function(canvas) {
    		}
    	}
    	var click = function(event){
-   		console.log("clicked")
    		if (ship.waitingToFire) {
 			stats["Attempted Shots While Charging Laser"] += 1;
    		} else {
-   			console.log("now waiting to fire")
    			ship.waitingToFire = true;
    		}
    	}
@@ -205,14 +199,11 @@ var createGame = function(canvas) {
    	}
 
    	var shipAttemptsFiring = function(laser) {
-   		console.log("Attempting fire now...")
 		if (laser.chargingLaser) {
-			console.log("... but is still charging")
 			//can't give back a new laser - this laser's running atm
 			stats["Attempted Shots While Charging Laser"] += 1;
 			return laser;
 		} else {
-			console.log("and succeeded")
 			stats["Fired Lasers"] += 1;
 			//Looks nicer if we adjust where the laser shoots out from
 			//(remember, canvas places images by their top left corner)
@@ -225,16 +216,10 @@ var createGame = function(canvas) {
 	}	
 	
 	var increaseDifficulty = function() {
-		console.log("Let's ramp it up!")
 		loadNextAudio()
 		difficultyValues.level += 1;
 		difficultyValues.speedIncrease += 0.333;
 	}
-	//Enemy attacks
-	var nyanFire = function() {
-		console.log("NYANs ARE ATTACKING?");
-	}
-
 	// Ship tracks cursor's x coordinate (y stays the same)
 	var drawShip = function() {
 		//We want the ship's center to be near the mouse, but the 
@@ -348,14 +333,12 @@ var createGame = function(canvas) {
 	//them automatically independant of the standard frameupdate
 	var resumeGame = function(event) {
 		gamePaused = false;
-		console.log("GAME RESUMED");
 		canvas.addEventListener("mousemove", drawShip, false);
 		sounds.background.play()
 	}
 	var pauseGame = function(event) {
 		gamePaused = true;
 		stats["Game Pause Count"] += 1;
-		console.log("GAME PAUSED");
 		canvas.removeEventListener("mousemove", drawShip, false);
 		sounds.background.pause()
 	}
