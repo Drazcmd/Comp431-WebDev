@@ -163,11 +163,11 @@ var createGame = function(canvas) {
    		//I don't handle collisions till after moving it
 		let updatedLaser = defaultLaser();
 		updatedLaser.canvasX = laser.canvasX;
-		if (laser.canvasY > 0) {
+		if (laser.canvasY >= 0) {
 			updatedLaser.canvasY = laser.canvasY - laser.velocity;
-			updatedLaser.chargingLaser = true;
+			updatedLaser.chargingLaser = laser.chargingLaser;
 		} else {
-			updatedLaser.velocity = 0;
+			updatedLaser.chargingLaser = false;
 		}
 		return updatedLaser
    	}
