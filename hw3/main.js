@@ -426,9 +426,19 @@ window.onload = function() {
 			let priorScoreDisplay = document.getElementById("priorScore");
 			priorScoreDisplay.innerHTML = previousCookieVal;
 		} else {
-			let statStr = keyStr + ": " + previousCookieVal + "\n";
+			let statStr = keyStr + ": " +
+				previousCookieVal + "\n" + "<br>"; 
 			let displayArea = document.getElementById("priorStatsDisplay");
 			displayArea.innerHTML += statStr;
+
+			//This one value needs to carry over between games!
+			if (keyStr == "MostRoundsWon"){
+				game.getStats()["MostRoundsWon"] = previousCookieVal;
+				/*
+			    updateStatDisplay(
+			    	game.getStats(), document.getElementById("statsDisplay")
+			    ); */
+			}
 		}
 	});
 
@@ -472,7 +482,7 @@ window.onload = function() {
 	    //Since now everything's been updated, I figured this would also
 	    //be the best time to store our stat/score cookie and display
 	    let currentStats = game.getStats()
-	    updateCookies(currentStats)
+	    updateCookies(currentStats);
 	    updateStatDisplay(
 	    	currentStats, document.getElementById("statsDisplay")
 	    );
@@ -535,12 +545,10 @@ function updateCookies(stats){
 	Object.keys(stats).forEach(keyStr => {
 		//We have to do it this way because setting cookies with js is weird 
 		let currentCookieVal = getCookie(keyStr);
-		if (currentCookieVal === "") {
-			return
-		}
+
 		//As the main 'score', this value should only be updated if we
 		//actually do better than before
-		if (keyStr === "MostRoundsWon" &&
+		if (currentCookieVal != "" && keyStr === "MostRoundsWon" &&
 		stats[keyStr] < currentCookieVal) {
 			return;
 		}
