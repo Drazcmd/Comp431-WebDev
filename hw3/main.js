@@ -434,10 +434,6 @@ window.onload = function() {
 			//This one value needs to carry over between games!
 			if (keyStr == "MostRoundsWon"){
 				game.getStats()["MostRoundsWon"] = previousCookieVal;
-				/*
-			    updateStatDisplay(
-			    	game.getStats(), document.getElementById("statsDisplay")
-			    ); */
 			}
 		}
 	});
