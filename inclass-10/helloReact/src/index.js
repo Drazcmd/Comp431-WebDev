@@ -22,8 +22,12 @@ class ToDoItem extends React.Component {
     }
 
     render() { return (
-        <li>
-        {this.props.text}
+        //currently broken, need to fix
+        <li id="task"> 
+            <i className="check glyphicon glyphicon-check" > </i>
+            <span contentEditable="return true" done="return false"></span>
+            <i className="destroy glyphicon glyphicon-remove" > </i>
+        }
         </li>
         /*
         h("li", { id: `task${_taskId++}`}, [
@@ -46,16 +50,25 @@ class ToDos extends React.Component {
                 {id:1, text:"Another item" }
             ]
         }
+        // This binding is necessary to make `this` work in the callback
+        // See https://facebook.github.io/react/docs/handling-events.html
+        this.addTodo = this.addTodo.bind(this)
+        this.inputNode = null
     }
 
     addTodo() {
-        // IMPLEMENT ME!
-        const text = 'add another item'
-        this.setState({ todoItems: [
+        //Two issues: 'this' wasn't bound, and we needed to be able
+        //to access the input text field as if it was some element of 'this'.
+        //We did the latter by using a magical ref thingy: the (node) => ... thing
+        console.log(this.textNode)
+        this.setState({ 
+            todoItems: [
                 ...this.state.todoItems, 
-                {id:this.nextId++, text}
+                {id:this.nextId++, text:this.inputNode.value}
             ]
         })
+        this.render()
+        console.log(this)
     }
 
     removeTodo(removeId) {
@@ -64,35 +77,22 @@ class ToDos extends React.Component {
         })
     }
 
+    toggleDone(toggleId) {
+        console.log(toggleId)
+    }
+
     render() { return (
-        /*
         <div>
-            <ul className="todo">
-                <ToDoItem key="1" text="Test Item" remove={() => this.removeTodo(1) } />
-            </ul>
-        </div>
-        */
-        // Hint: <input ... ref={ (node) => this.... = node } />
-        /*
-        h("div", { },
-            h("input", { id: "newTODO", type: "text", placeholder: "To Do"}),
-            h("button", { onClick: addItem }, "Add Item"),
-            h("span", { className: "submit" }, [
-                h("a", { href: "https://webdev-rice.herokuapp.com",
-                     target: "_blank" }, "Submit your exercise"),
-            ]),
-            h("ul", { className: "todo" }, listItems)
-        )
-        */
-        <div>
-        <input id="newTODO" type="text" placeholder="To Do">
-        </input>
+            <input id="newTODO" type="text" placeholder="To Do" 
+            ref={(node) => this.inputNode = node}
+            />
             <button onClick={this.addTodo}>Add Item</button>
             <span className="submit">
                 <a href="https://webdev-rice.herokuapp.com" target="_blank">
                 Submit Your excercise!
                 </a>
             </span>
+            <ul className="todo">listItems </ul>
         </div>
     )}
 }
