@@ -21,13 +21,18 @@ class ToDoItem extends React.Component {
         }
     }
 
-    render() { return (
+    render() { 
+        console.log(this.state)
+        console.log(this.props)
+        console.log(this.props.text)
+        //since we can't do this.props.key?
+        console.log(this.props.id)
+    return (
         //currently broken, need to fix
-        <li id="task"> 
-            <i className="check glyphicon glyphicon-check" > </i>
-            <span contentEditable="return true" done="return false"></span>
-            <i className="destroy glyphicon glyphicon-remove" > </i>
-        }
+        <li id={this.props.id}>
+            <i className="check glyphicon glyphicon-check" onClick={() => this.props.toggleDone()}></i>
+            <span> {this.props.text} </span>
+            <i className="destroy glyphicon glyphicon-remove" onClick={() => this.props.remove()}> </i>
         </li>
         /*
         h("li", { id: `task${_taskId++}`}, [
@@ -60,25 +65,26 @@ class ToDos extends React.Component {
         //Two issues: 'this' wasn't bound, and we needed to be able
         //to access the input text field as if it was some element of 'this'.
         //We did the latter by using a magical ref thingy: the (node) => ... thing
-        console.log(this.textNode)
+        console.log(this.inputNode)
+        console.log(this.inputNode.value)
         this.setState({ 
             todoItems: [
                 ...this.state.todoItems, 
                 {id:this.nextId++, text:this.inputNode.value}
             ]
         })
-        this.render()
-        console.log(this)
+        console.log(this.state.todoItems)
     }
 
     removeTodo(removeId) {
+        console.log("Not sure how to remove, but I'm calling removeTodo with id", removeId)
         this.setState({ 
             todoItems: this.state.todoItems.filter(({id, text}) => id != removeId)
         })
     }
 
     toggleDone(toggleId) {
-        console.log(toggleId)
+        console.log("Not sure how to toggle, but I'm calling a toggle function with this id:", toggleId)
     }
 
     render() { return (
@@ -93,6 +99,10 @@ class ToDos extends React.Component {
                 </a>
             </span>
             <ul className="todo">listItems </ul>
+            <ul className="todo">
+                <ToDoItem key={1} id={1} text="Test Item" remove={() => this.removeTodo(1)} toggleDone={()=> this.toggleDone(1)} />
+            </ul>
+
         </div>
     )}
 }
