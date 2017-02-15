@@ -87,7 +87,7 @@ class ToDos extends React.Component {
         <div>
         <input id="newTODO" type="text" placeholder="To Do">
         </input>
-            <button onClick=    ></button>
+            <button onClick={this.addTodo}>Add Item</button>
             <span className="submit">
                 <a href="https://webdev-rice.herokuapp.com" target="_blank">
                 Submit Your excercise!
