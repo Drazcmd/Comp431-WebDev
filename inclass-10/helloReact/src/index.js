@@ -31,7 +31,7 @@ class ToDoItem extends React.Component {
         //currently broken, need to fix
         <li id={this.props.id}>
             <i className="check glyphicon glyphicon-check" onClick={() => this.props.toggleDone()}></i>
-            <span> {this.props.text} </span>
+            <span> {typeof(this.props.text) === "string" ? this.props.text : ""} </span>
             <i className="destroy glyphicon glyphicon-remove" onClick={() => this.props.remove()}> </i>
         </li>
         /*
@@ -103,6 +103,9 @@ class ToDos extends React.Component {
                 <ToDoItem key={1} id={1} text="Test Item" remove={() => this.removeTodo(1)} toggleDone={()=> this.toggleDone(1)} />
             </ul>
 
+            <ul className="todo">
+                <ToDoItem key={1} id={1} text={988 /*blank if we're error ccking correctly*/} remove={() => this.removeTodo(1)} toggleDone={()=> this.toggleDone(1)} />
+            </ul>
         </div>
     )}
 }
