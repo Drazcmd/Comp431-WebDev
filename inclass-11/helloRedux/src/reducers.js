@@ -40,7 +40,6 @@ const Reducer = (state =  {
 				nextId: state.nextId,
 				todoItems: state.todoItems,
 			})
-			return 
 		case 'TOGGLE_TODO':
 			console.log("action.type:", action.type)
 			console.log("action.text:", action.text)
@@ -48,9 +47,8 @@ const Reducer = (state =  {
 			console.log("state.nextId:", state.nextId)
 			console.log("output: ", {
 				nextId: state.nextId,
-
-			}
-			return
+				todoItems: state.todoItems
+			})
 		default: 
 			return state
 	}
