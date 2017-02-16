@@ -25,31 +25,32 @@ const Reducer = (state =  {
 }, action) => {
 	switch(action.type) {
 		case 'ADD_TODO':
-			/*
+			// IMPLEMENT ME - done :)
+			return {
+				nextId: state.nextId + 1,
+				todoItems: [...state.todoItems, {id: state.nextId, text: action.text, done: false}]
+			}
+		case 'REMOVE_TODO':
+			//Maybe only do nextId: state.nextId - 1 if it's the last state?
 			console.log("action.type:", action.type)
 			console.log("action.text:", action.text)
 			console.log("state.todoItems:", state.todoItems)
 			console.log("state.nextId:", state.nextId)
 			console.log("output: ", {
-				nextId: state.nextId + 1,
-				todoItems: [...state.todoItems, {id: state.nextId, text: action.text, done: false}]
+				nextId: state.nextId,
+				todoItems: state.todoItems,
 			})
-			*/
-			return {
-				nextId: state.nextId + 1,
-				todoItems: [...state.todoItems, {id: state.nextId, text: action.text, done: false}]
-			}
-			// IMPLEMENT ME
-			/*
-			return {
-				nextId:state.nextId + 1.
-				[...state.todoItems, {id:state.nextId, text:action.text}]
-			}
-			*/
-		case 'REMOVE_TODO':
-			// IMPLEMENT ME
+			return 
 		case 'TOGGLE_TODO':
-			// IMPLEMENT ME
+			console.log("action.type:", action.type)
+			console.log("action.text:", action.text)
+			console.log("state.todoItems:", state.todoItems)
+			console.log("state.nextId:", state.nextId)
+			console.log("output: ", {
+				nextId: state.nextId,
+
+			}
+			return
 		default: 
 			return state
 	}
