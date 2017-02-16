@@ -44,7 +44,7 @@ const Reducer = (state =  {
 					return {
 						id: todoItem.id,
 						text: todoItem.text,
-						done: todoItem.id == action.id ? todoItem.done : !todoItem.done
+						done: todoItem.id != action.id ? todoItem.done : !todoItem.done
 					}
 				})
 			}
