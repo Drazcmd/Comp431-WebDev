@@ -40,6 +40,12 @@ const Reducer = (state =  {
 				nextId: state.nextId,
 				todoItems: state.todoItems,
 			})
+			return {
+				nextId: state.nextId,
+				todoItems: state.todoItems.filter(todoItem => {
+					return todoItem.id != action.id
+				})
+			}
 		case 'TOGGLE_TODO':
 			console.log("action.type:", action.type)
 			console.log("action.id we want to flip", action.id)
