@@ -38,11 +38,7 @@ const Reducer = (state =  {
 				})
 			}
 		case 'TOGGLE_TODO':
-			console.log("action.type:", action.type)
-			console.log("action.id we want to flip", action.id)
-			console.log("state.todoItems:", state.todoItems)
-			console.log("state.nextId:", state.nextId)
-			console.log("output: ", {
+			return {
 				nextId: state.nextId,
 				todoItems: state.todoItems.map(todoItem => {
 					return {
@@ -51,7 +47,7 @@ const Reducer = (state =  {
 						done: todoItem.id == action.id ? todoItem.done : !todoItem.done
 					}
 				})
-			})
+			}
 		default: 
 			return state
 	}
