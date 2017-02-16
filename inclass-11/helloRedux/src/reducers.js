@@ -25,7 +25,6 @@ const Reducer = (state =  {
 }, action) => {
 	switch(action.type) {
 		case 'ADD_TODO':
-			// IMPLEMENT ME - done :)
 			return {
 				nextId: state.nextId + 1,
 				todoItems: [...state.todoItems, {id: state.nextId, text: action.text, done: false}]
@@ -40,13 +39,11 @@ const Reducer = (state =  {
 		case 'TOGGLE_TODO':
 			return {
 				nextId: state.nextId,
-				todoItems: state.todoItems.map(todoItem => {
-					return {
-						id: todoItem.id,
-						text: todoItem.text,
-						done: todoItem.id != action.id ? todoItem.done : !todoItem.done
-					}
-				})
+				todoItems: state.todoItems.map(todoItem => ({
+					id: todoItem.id,
+					text: todoItem.text,
+					done: todoItem.id != action.id ? todoItem.done : !todoItem.done
+				}))
 			}
 		default: 
 			return state
