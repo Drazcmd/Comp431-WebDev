@@ -33,7 +33,7 @@ const Reducer = (state =  {
 		case 'REMOVE_TODO':
 			//Maybe only do nextId: state.nextId - 1 if it's the last state?
 			console.log("action.type:", action.type)
-			console.log("action.text:", action.text)
+			console.log("action.id we want to remove", action.text)
 			console.log("state.todoItems:", state.todoItems)
 			console.log("state.nextId:", state.nextId)
 			console.log("output: ", {
@@ -42,7 +42,7 @@ const Reducer = (state =  {
 			})
 		case 'TOGGLE_TODO':
 			console.log("action.type:", action.type)
-			console.log("action.text:", action.text)
+			console.log("action.id we want to flip", action.id)
 			console.log("state.todoItems:", state.todoItems)
 			console.log("state.nextId:", state.nextId)
 			console.log("output: ", {
