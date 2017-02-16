@@ -31,15 +31,6 @@ const Reducer = (state =  {
 				todoItems: [...state.todoItems, {id: state.nextId, text: action.text, done: false}]
 			}
 		case 'REMOVE_TODO':
-			//Maybe only do nextId: state.nextId - 1 if it's the last state?
-			console.log("action.type:", action.type)
-			console.log("action.id we want to remove", action.text)
-			console.log("state.todoItems:", state.todoItems)
-			console.log("state.nextId:", state.nextId)
-			console.log("output: ", {
-				nextId: state.nextId,
-				todoItems: state.todoItems,
-			})
 			return {
 				nextId: state.nextId,
 				todoItems: state.todoItems.filter(todoItem => {
@@ -53,7 +44,13 @@ const Reducer = (state =  {
 			console.log("state.nextId:", state.nextId)
 			console.log("output: ", {
 				nextId: state.nextId,
-				todoItems: state.todoItems
+				todoItems: state.todoItems.map(todoItem => {
+					return {
+						id: todoItem.id,
+						text: todoItem.text,
+						done: todoItem.id == action.id ? todoItem.done : !todoItem.done
+					}
+				})
 			})
 		default: 
 			return state
