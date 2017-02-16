@@ -25,6 +25,7 @@ const Reducer = (state =  {
 }, action) => {
 	switch(action.type) {
 		case 'ADD_TODO':
+			/*
 			console.log("action.type:", action.type)
 			console.log("action.text:", action.text)
 			console.log("state.todoItems:", state.todoItems)
@@ -33,6 +34,11 @@ const Reducer = (state =  {
 				nextId: state.nextId + 1,
 				todoItems: [...state.todoItems, {id: state.nextId, text: action.text, done: false}]
 			})
+			*/
+			return {
+				nextId: state.nextId + 1,
+				todoItems: [...state.todoItems, {id: state.nextId, text: action.text, done: false}]
+			}
 			// IMPLEMENT ME
 			/*
 			return {
