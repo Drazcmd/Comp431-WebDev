@@ -34,7 +34,7 @@ describe('Validate ToDoItem', () => {
         // assert there is no child with classname 'completed'
         const todoWrapper = TestUtils.renderIntoDocument(
             <div>
-            <ToDoItem id={3} done={false}/>
+            <ToDoItem id={3} text={"blah"} done={false}/>
             </div>
         )
         const todo = todoWrapper.children[0]        
@@ -49,10 +49,19 @@ describe('Validate ToDoItem', () => {
     })
 
     it('should toggle completed when clicked', () => {
-        let toggled = false
         // use TestUtils.renderIntoDocument
         // when the checkbox is clicked via TestUtils.Simulate.click()
         // we expect the variable toggled to be true
+        let toggled = false
+        const todoWrapper = TestUtils.renderIntoDocument(
+            <div>
+            <ToDoItem id={1} text={'hello mah world'} done={false}/>
+            </div>
+        )
+        const todo = todoWrapper.children[0]
+        console.log("props",todo.props)
+        TestUtils.Simulate.click(todoWrapper)
+        console.log(toggled)
     })
 
     it('should remove an item when clicked', () => {
