@@ -27,7 +27,7 @@ describe('Validate ToDoItem', () => {
         console.log(todoWrapper.children)
         const todo = todoWrapper.children[0]        
         expect(todo.children).to.have.length(3)
-        expect(todo.innerHTML).to.equal("hello mah world!")
+        expect(todo.children[1].innerHTML).to.equal("hello mah world")
     })
 
     it('should display a single ToDo with no classname', () => {
