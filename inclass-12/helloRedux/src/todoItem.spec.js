@@ -23,8 +23,6 @@ describe('Validate ToDoItem', () => {
             <ToDoItem id={1} text={'hello mah world'} done={false}/>
             </div>
         )
-        console.log(todoWrapper)
-        console.log(todoWrapper.children)
         const todo = todoWrapper.children[0]        
         expect(todo.children).to.have.length(3)
         expect(todo.children[1].innerHTML).to.equal("hello mah world")
@@ -34,6 +32,20 @@ describe('Validate ToDoItem', () => {
         // use TestUtils.renderIntoDocument
         // findDOMNode and assert 3 children of the ToDoItem element
         // assert there is no child with classname 'completed'
+        const todoWrapper = TestUtils.renderIntoDocument(
+            <div>
+            <ToDoItem id={3} done={false}/>
+            </div>
+        )
+        const todo = todoWrapper.children[0]        
+        expect(todo.children).to.have.length(3)
+
+        //Needed to turn the htmlcollection into an array (want .forEach)
+        const todoChildArr = Array.prototype.slice.call(todo.children)
+        todoChildArr.forEach((child) => {
+            //console.log(child.className)
+            expect(child.className).to.not.equal("completed")
+        })
     })
 
     it('should toggle completed when clicked', () => {
