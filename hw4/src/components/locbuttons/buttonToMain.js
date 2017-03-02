@@ -3,10 +3,12 @@ import { connect } from 'react-redux'
 import { main } from '../Main/main'
 import { updateLocation } from '../../actions'
 
-export const ButtonToMain = ({ navigate }) => {
-
+console.log(connect)
+console.log(updateLocation)
+export const ButtonToMain = ({ location, navigate }) => {
+	console.log(location)
 	console.log(navigate)
-	
+
 	return (
 		<span>
 		<button onClick = { navigate }> 'CLICK  MAIN PAGE' </button>
@@ -15,13 +17,15 @@ export const ButtonToMain = ({ navigate }) => {
 }
 
 ButtonToMain.propTypes = {
+    location: PropTypes.string.isRequired
 }
 
 export default connect(
-    null,
+    (state) => ({location: state.location }),
     (dispatch) => {
     	console.log("main page")
     	return {
+    		//navigate: () => console.log("dispatch")
     		navigate: () => dispatch(updateLocation('MAIN_PAGE'))
     	}
     }

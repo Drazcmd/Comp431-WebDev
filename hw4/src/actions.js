@@ -22,5 +22,5 @@ proper term.
 In Redux action creators simply return an action:
 */
 export const updateLocation = (new_location) => {
-	return { type: LOCATION_CHANGE, location: new_location}
+	return { type: ActionTypes.LOCATION_CHANGE, location: new_location}
 }
