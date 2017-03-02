@@ -1,15 +1,11 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
-import ButtonToLanding from '../locbuttons/buttonToLanding'
-import ButtonToMain from '../locbuttons/buttonToMain'
+import NavButton from '../buttons/navButton'
 export const Landing = ({ }, { }) => {
-	let redirectLocation = "MAIN_PAGE"
-
 	return (
 		<span>
 		<b>'HELLO Landing!'</b>
-		<ButtonToLanding />
-		<ButtonToMain redirectLocation={redirectLocation} />
+		<NavButton redirectLocation={"MAIN_PAGE"} />
 		</span>
 	)
 
