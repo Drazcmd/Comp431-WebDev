@@ -1,11 +1,11 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { main } from '../Main/main'
 import { updateLocation } from '../../actions'
 
 console.log(connect)
 console.log(updateLocation)
-export const ButtonToMain = ({ location, navigate }) => {
+export const ButtonToMain = ({ redirectLocation, navigate }) => {
+
 	console.log(location)
 	console.log(navigate)
 
@@ -17,23 +17,18 @@ export const ButtonToMain = ({ location, navigate }) => {
 }
 
 ButtonToMain.propTypes = {
-    location: PropTypes.string.isRequired
+	redirectLocation: PropTypes.string.isRequired
 }
 
 export default connect(
-    (state) => ({location: state.location }),
-    (dispatch) => {
+	(state, ownProps) => { 
+		return { redirectLocation: ownProps.redirectLocation }
+	}, (dispatch, ownProps) => {
     	console.log("main page")
     	return {
     		//navigate: () => console.log("dispatch")
-    		navigate: () => dispatch(updateLocation('MAIN_PAGE'))
+    		navigate: (redirectLocation) => dispatch(updateLocation(ownProps.redirectLocation))
     	}
     }
 
-  //   ({ navigate: () => {
-  //   		console.log("sup!")
-  //   		)
-
-		// }
-  //   })
 )(ButtonToMain)

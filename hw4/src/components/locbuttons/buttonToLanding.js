@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { landing } from '../Landing/landing'
 import { updateLocation } from '../../actions'
+import landing from '../Landing/landing'
 
 export const ButtonToLanding = ({ navigate }) => {
 	return (

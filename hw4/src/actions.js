@@ -4,7 +4,7 @@ export const LANDING_PAGE = 'LANDING_PAGE'
 export const ERROR = 'ERROR'
 
 export const ActionTypes = {
-    LOCATION_CHANGE: 'LOCATION_CHANGE',
+    LOCATION_CHANGE: 'LOCATION_CHANGE'
 }
 
 /* 

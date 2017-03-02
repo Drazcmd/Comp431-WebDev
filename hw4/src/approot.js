@@ -1,9 +1,9 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 
-import { Main } from './components/Main/main'
-import { Profile } from './components/Profile/profile'
-import { Landing } from './components/Landing/landing'
+import Main from './components/Main/main'
+import Profile from './components/Profile/profile'
+import Landing from './components/Landing/landing'
 
 export const AppRoot = ({ location, update }) => {
     /*
@@ -61,5 +61,5 @@ Dispatch lets us dispatch
 */
 export default connect(
     (state) => ({ location: state.location }),
-    (dispatch) => ({ update: (location) => dispatch(updateLocation(location)) })
+    (dispatch) => ({ })
 )(AppRoot)

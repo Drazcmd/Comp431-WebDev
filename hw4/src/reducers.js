@@ -12,7 +12,7 @@ const Reducer = (state = {
             return 
             */
         default:
-            console.log("NOPE!")
+            console.log("action:", action.Type)
             return state
     }
 }
