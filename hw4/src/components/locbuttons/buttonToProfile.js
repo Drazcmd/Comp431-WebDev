@@ -1,20 +1,22 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
+import { profile } from '../Profile/profile'
+
 //import { updateLocation } from './actions'
 
-export const Main = ({ }, { }) => {
+export const ButtonToProfile = ({ }, { }) => {
 	return (
 		<span>
-		<b>"HELLO MAIN"</b>
+		<b>'HELLO Landing!'</b>
 		</span>
 	)
 
 }
 
-Main.propTypes = {
+ButtonToProfile.propTypes = {
 }
 
 export default connect(
     (state) => ({ }),
     (dispatch) => ({ })
-)(Main)
+)(ButtonToProfile)

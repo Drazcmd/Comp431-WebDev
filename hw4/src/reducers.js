@@ -5,6 +5,7 @@ const Reducer = (state = {
 }, action) => {
     switch (action.type) {
         case Actions.LOCATION_CHANGE:
+            console.log("Location change action's reducer")
             return { ...state, location: action.new_location}
             /*
         case Actions.USER_CHANGE:

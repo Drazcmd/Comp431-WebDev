@@ -1,11 +1,9 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 
-import { updateLocation } from './actions'
-
-//import { Profile } from './src/components/Profile'
 import { Main } from './components/Main/main'
-//import { Landing } from './src/components/Landing'
+import { Profile } from './components/Profile/profile'
+import { Landing } from './components/Landing/landing'
 
 export const AppRoot = ({ location, update }) => {
     /*
@@ -21,18 +19,18 @@ export const AppRoot = ({ location, update }) => {
     //is actually the current location state. Cool huh? 
 
     //three if-statement stuff goes here
+    console.log(location)
     if (location == 'MAIN_PAGE') {
         return (<Main />)
-    } else {
-        return (<Main />)
-    }
-
-    /*
-     else if (location == PROFILE_PAGE) {
+    } else if (location == 'PROFILE_PAGE') {
         return (<Profile />)
-    } else {
+    } else if (location == 'LANDING_PAGE') {
         return (<Landing />)
-    */
+    } else {
+        //Although currently set return landing, I wanted to separate
+        //this sitation out - it's really an erroneous situation!
+        return (<Landing />)
+    }
 }
 
 AppRoot.propTypes = {
