@@ -4,8 +4,7 @@ import { updateLocation } from '../../actions'
 
 console.log(connect)
 console.log(updateLocation)
-export const ButtonToMain = ({ redirectLocation, navigate }) => {
-
+export const ButtonToMain = ({ navigate }) => {
 	console.log(location)
 	console.log(navigate)
 
@@ -21,9 +20,8 @@ ButtonToMain.propTypes = {
 }
 
 export default connect(
-	(state, ownProps) => { 
-		return { redirectLocation: ownProps.redirectLocation }
-	}, (dispatch, ownProps) => {
+	(state) => {return { }},
+	(dispatch, ownProps) => {
     	console.log("main page")
     	return {
     		//navigate: () => console.log("dispatch")
