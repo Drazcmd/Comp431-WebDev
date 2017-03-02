@@ -6,6 +6,7 @@ export const Landing = ({ }, { }) => {
 		<span>
 		<b>'HELLO Landing!'</b>
 		<NavButton redirectLocation={"MAIN_PAGE"} />
+		<NavButton redirectLocation={"PROFILE_PAGE"} />
 		</span>
 	)
 

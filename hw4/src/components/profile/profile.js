@@ -1,12 +1,13 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
-
-//import { updateLocation } from './actions'
+import NavButton from '../buttons/navButton'
 
 export const Profile = ({ }, { }) => {
 	return (
 		<span>
-		<b>"HELLO Profile"</b>
+		<b>'Your profile awaits:'</b>
+		<NavButton redirectLocation={"LANDING_PAGE"} />
+		<NavButton redirectLocation={"MAIN_PAGE"} />
 		</span>
 	)
 
