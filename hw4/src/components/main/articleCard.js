@@ -1,11 +1,11 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { Button } from 'react-bootstrap';
-import { Well } from 'react-bootstrap';
+import { Button, Well, ListGroupItem } from 'react-bootstrap';
 
 export const ArticleCard = ({ displayText, displayImage, postComment, editArticle }) => {
 	const articleImage = displayImage ? ( <img src={displayImage}/> ) : (<div />);
 	return (
+		<ListGroupItem>
 		<Well>
 		{ articleImage }
 		<div> { displayText } </div>
@@ -13,6 +13,7 @@ export const ArticleCard = ({ displayText, displayImage, postComment, editArticl
 		<Button bsSize="small" onClick = { postComment }> { "Post Comment" }  </Button>
 		<Button bsSize="small" onClick = { editArticle }> { "Edit Article" }  </Button>
 		</Well>
+		</ListGroupItem>
 	)
 // input type="text" defaultValue={"Comment Here "} />
 }

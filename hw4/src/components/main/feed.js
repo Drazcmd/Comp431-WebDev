@@ -1,15 +1,15 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import ArticleCard from './articleCard'
-
+import { ListGroup, ListGroupItem } from 'react-bootstrap'
 export const Feed = ({ articles }, { }) => {
 	return (
-		<span>
 
 		//TODO: get it filtering. Will require I start using the hidden
 		//articles state list like he suggests - then I can just do a filter
 		//on a map of the articles page, where the map functions creates one
 		//of these
+		<ListGroup>
 		<b>'FEED ME HERE'</b>
 		<ArticleCard articleJSON={ articles[0] }/>
 		<br /> <br />
@@ -26,7 +26,7 @@ export const Feed = ({ articles }, { }) => {
 		<ArticleCard articleJSON={ articles[6] }/>
 		<br /> <br />
 		<ArticleCard articleJSON={ articles[7] }/>
-		</span>
+		</ListGroup>
 	)
 }
 
