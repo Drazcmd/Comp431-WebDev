@@ -1,16 +1,18 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
+import { Button } from 'react-bootstrap';
+import { Well } from 'react-bootstrap';
 
 export const ArticleCard = ({ displayText, displayImage, postComment, editArticle }) => {
 	const articleImage = displayImage ? ( <img src={displayImage}/> ) : (<div />);
 	return (
-		<span>
+		<Well>
 		{ articleImage }
 		<div> { displayText } </div>
 		<input type="text" defaultValue={"Comment: "} /> 
-		<button onClick = { postComment }> { "Post Comment" }  </button>
-		<button onClick = { editArticle }> { "Edit Article" }  </button>
-		</span>
+		<Button bsSize="small" onClick = { postComment }> { "Post Comment" }  </Button>
+		<Button bsSize="small" onClick = { editArticle }> { "Edit Article" }  </Button>
+		</Well>
 	)
 // input type="text" defaultValue={"Comment Here "} />
 }
