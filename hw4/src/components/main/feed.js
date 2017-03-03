@@ -5,7 +5,11 @@ import ArticleCard from './articleCard'
 export const Feed = ({ articles }, { }) => {
 	return (
 		<span>
-		//TODO:
+
+		//TODO: get it filtering. Will require I start using the hidden
+		//articles state list like he suggests - then I can just do a filter
+		//on a map of the articles page, where the map functions creates one
+		//of these
 		<b>'FEED ME HERE'</b>
 		<ArticleCard articleJSON={ articles[0] }/>
 		<br /> <br />
