@@ -1,8 +1,7 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 
-export const Article = ({ displayText, displayImage, postComment }) => {
-	console.log(displayImage)
+export const Article = ({ displayText, displayImage, postComment, editArticle }) => {
 	const articleImage = displayImage ? ( <img src={displayImage}/> ) : (<div />);
 	return (
 		<span>
@@ -10,6 +9,7 @@ export const Article = ({ displayText, displayImage, postComment }) => {
 		<div> { displayText } </div>
 		<input type="text" defaultValue={"Comment: "} /> 
 		<button onClick = { postComment }> { "Post Comment" }  </button>
+		<button onClick = { editArticle }> { "Edit Article" }  </button>
 		</span>
 	)
 // input type="text" defaultValue={"Comment Here "} />
@@ -21,10 +21,6 @@ Article.propTypes = {
 
 export default connect(
 	(state, ownProps) => {
-		console.log(ownProps)
-		console.log(ownProps.articleJSON)
-		console.log(ownProps.articleJSON.text)
-		console.log(ownProps.articleJSON.img)
 		return { 
 			//image link might be null
 			displayText: ownProps.articleJSON.text,
@@ -34,7 +30,8 @@ export default connect(
 	(dispatch) => {
     	return {
     		//Currently button does nothing!
-    		postComment: () => ({})
+    		postComment: () => ({}),
+    		editArticle: () => ({})
     	}
     }
 )(Article)
