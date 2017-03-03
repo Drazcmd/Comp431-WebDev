@@ -2,12 +2,10 @@ import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 
 export const Article = ({ displayText, displayImage, postComment }) => {
-	console.log(displayText)
 	console.log(displayImage)
-	const articleImage = displayImage ? ( <div> { displayImage } </div> ) : (<div />);
+	const articleImage = displayImage ? ( <img src={displayImage}/> ) : (<div />);
 	return (
 		<span>
-		<b>'Article here! '</b>
 		{ articleImage }
 		<div> { displayText } </div>
 		<input type="text" defaultValue={"Comment: "} /> 
