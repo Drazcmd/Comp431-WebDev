@@ -1,7 +1,9 @@
 import { ActionTypes } from './actions'
+const initialItems = require('./data/articles.json')
 
 const Reducer = (state = {
     location: 'LANDING_PAGE',
+    articles: initialItems.articles
 }, action) => {
     switch (action.type) {
         case ActionTypes.LOCATION_CHANGE:

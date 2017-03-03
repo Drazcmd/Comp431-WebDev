@@ -9,11 +9,9 @@ export const Landing = ({ }, { }) => {
 		<span>
 		<b>'HELLO Landing!'</b>
 		</span>
-		<br /> 
-		<br /> 
+		<br /> <br /> <br />
 		<Registration />
-		<br /> 
-		<br /> 
+		<br /> <br /> <br />
 		<Login />
 		</div>
 
