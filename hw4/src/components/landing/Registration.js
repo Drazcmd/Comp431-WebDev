@@ -1,17 +1,24 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import NavButton from '../navigation/navButton'
+import { FormGroup, FormControl, ControlLabel } from 'react-bootstrap'
 export const Registration = ({ }, { }) => {
 	return (
 		<div>
 		<b>'Register Directly Below:'</b>
-		<h4>
-		<input type="text" defaultValue={"First Name"} /> 
-		<input type="text" defaultValue={"Last Name"} /> 
-		<input type="text" defaultValue={"Username"} /> 
-		<input type="text" defaultValue={"Password"} /> 
-		<input type="text" defaultValue={"Confirm Password"} /> 
-		</h4>
+		<FormGroup 
+		  controlId="Registration"
+		  >
+		  <ControlLabel> First Name</ControlLabel>
+		  <FormControl 
+		  	type="text"
+		  	placeholder="Enter Text Here"
+		  />
+		  <ControlLabel> Last Name</ControlLabel>
+		  <ControlLabel> Username Name</ControlLabel>
+		  <ControlLabel> Password rst Name</ControlLabel>
+		</FormGroup>
+
 		<NavButton redirectLocation={"MAIN_PAGE"} text={"Create New Account!"}/>
 		</div>
 
