@@ -49,6 +49,7 @@ function server(req, res) {
                 res.end(JSON.stringify(payload))
                 break;
             }
+            res.setHeader('Content-Type', 'application/json')
             res.statusCode = 200
             res.end(JSON.stringify(payload))
             break;
@@ -98,7 +99,7 @@ function server(req, res) {
         default: {
             payload = "TODO - error somewhere????"
             res.setHeader('Content-Type', 'application/json')
-            res.statusCode = 200
+            res.statusCode = 404
             res.end(JSON.stringify(payload))
             break;
         }
