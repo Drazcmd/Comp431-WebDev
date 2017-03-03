@@ -5,8 +5,8 @@ import NavBar from '../navigation/navBar'
 export const Profile = ({ }, { }) => {
 	return (
 		<span>
-		<b>'Your profile awaits:'</b>
 		<NavBar />
+		<b>'Your profile awaits:'</b>
 		</span>
 	)
 

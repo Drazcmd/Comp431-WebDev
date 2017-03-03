@@ -5,8 +5,8 @@ import NavBar from '../navigation/navBar'
 export const Main = ({ }, { }) => {
 	return (
 		<span>
-		<b>'HELLO MAIN!'</b>
 		<NavBar />
+		<b>'HELLO MAIN!'</b>
 		</span>
 	)
 

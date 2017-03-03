@@ -5,11 +5,11 @@ export const NavBar = ({ }) => {
 	//Like real facebook, should be able to refresh main page or profile by
 	//clicking on the navigation button (when logged in)
 	return (
-		<span>
+		<h3>
 		<NavButton redirectLocation={"MAIN_PAGE"} text={"Main Page"}/>
 		<NavButton redirectLocation={"LANDING_PAGE"} text={"Log out"} />
 		<NavButton redirectLocation={"PROFILE_PAGE"} text={"Profile"} />
-		</span>
+		</h3>
 	)
 }
 
