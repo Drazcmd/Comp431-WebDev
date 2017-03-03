@@ -2,9 +2,9 @@ import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 
 export const Article = ({ displayText, displayImage, postComment }) => {
-	const articleImage = displayImage ? 
-		//(<Article imageLink={image} />) : (<div style={"display:none"} />)
-		({displayImage}) : (<div />);
+	console.log(displayText)
+	console.log(displayImage)
+	const articleImage = displayImage ? ( <div> { displayImage } </div> ) : (<div />);
 	return (
 		<span>
 		<b>'Article here! '</b>
@@ -24,11 +24,13 @@ Article.propTypes = {
 export default connect(
 	(state, ownProps) => {
 		console.log(ownProps)
-		console.log(ownProps.displayText)
+		console.log(ownProps.articleJSON)
+		console.log(ownProps.articleJSON.text)
+		console.log(ownProps.articleJSON.img)
 		return { 
 			//image link might be null
-			displayText: ownProps.displayText,
-			displayImage: ownProps.displayImage 
+			displayText: ownProps.articleJSON.text,
+			displayImage: ownProps.articleJSON.img
 		} 
 	},
 	(dispatch) => {

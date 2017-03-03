@@ -6,21 +6,21 @@ export const Feed = ({ articles }, { }) => {
 	return (
 		<span>
 		<b>'FEED ME HERE'</b>
-		<Article displayText={ articles[0].text }/>
+		<Article articleJSON={ articles[0] }/>
 		<br /> <br />
-		<Article displayText={ articles[1].text }/>
+		<Article articleJSON={ articles[1] }/>
 		<br /> <br />
-		<Article displayText={ articles[2].text }/>
+		<Article articleJSON={ articles[2] }/>
 		<br /> <br />
-		<Article displayText={ articles[3].text }/>
+		<Article articleJSON={ articles[3] }/>
 		<br /> <br />
-		<Article displayText={ articles[4].text }/>
+		<Article articleJSON={ articles[4] }/>
 		<br /> <br />
-		<Article displayText={ articles[5].text }/>
+		<Article articleJSON={ articles[5] }/>
 		<br /> <br />
-		<Article displayText={ articles[6].text }/>
+		<Article articleJSON={ articles[6] }/>
 		<br /> <br />
-		<Article displayText={ articles[7].text }/>
+		<Article articleJSON={ articles[7] }/>
 
 		</span>
 	)
