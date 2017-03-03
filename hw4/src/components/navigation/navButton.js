@@ -4,26 +4,24 @@ import { updateLocation } from '../../actions'
 
 console.log(connect)
 console.log(updateLocation)
-export const NavButton = ({ redirectLocation, navigate }) => {
-	console.log(location)
-	console.log(navigate)
+export const NavButton = ({ displayText, navigate }) => {
 	return (
 		<span>
-		<button onClick = { navigate }> 'NAVIGATE TO ' {redirectLocation}  </button>
+		<button onClick = { navigate }> { displayText }  </button>
 		</span>
 	)
 }
 
 NavButton.propTypes = {
-	redirectLocation: PropTypes.string.isRequired
+	redirectLocation: PropTypes.string.isRequired,
+	displayText: PropTypes.string.isRequired
 }
 
 export default connect(
 	(state, ownProps) => {
-		return { redirectLocation: ownProps.redirectLocation } 
+		return { displayText: ownProps.text } 
 	},
 	(dispatch, ownProps) => {
-    	console.log("nav button")
     	return {
     		navigate: (redirectLocation) => dispatch(updateLocation(ownProps.redirectLocation))
     	}

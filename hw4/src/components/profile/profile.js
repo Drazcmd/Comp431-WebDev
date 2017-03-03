@@ -1,13 +1,12 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
-import NavButton from '../buttons/navButton'
+import NavBar from '../navigation/navBar'
 
 export const Profile = ({ }, { }) => {
 	return (
 		<span>
 		<b>'Your profile awaits:'</b>
-		<NavButton redirectLocation={"LANDING_PAGE"} />
-		<NavButton redirectLocation={"MAIN_PAGE"} />
+		<NavBar />
 		</span>
 	)
 
