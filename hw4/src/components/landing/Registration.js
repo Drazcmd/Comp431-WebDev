@@ -15,8 +15,20 @@ export const Registration = ({ }, { }) => {
 		  	placeholder="Enter Text Here"
 		  />
 		  <ControlLabel> Last Name</ControlLabel>
-		  <ControlLabel> Username Name</ControlLabel>
-		  <ControlLabel> Password rst Name</ControlLabel>
+		  <FormControl 
+		  	type="text"
+		  	placeholder="Enter Text Here"
+		  />
+		  <ControlLabel> Username </ControlLabel>
+		  <FormControl 
+		  	type="text"
+		  	placeholder="Enter Text Here"
+		  />
+		  <ControlLabel> Password </ControlLabel>
+		  <FormControl 
+		  	type="text"
+		  	placeholder="Enter Text Here"
+		  />
 		</FormGroup>
 
 		<NavButton redirectLocation={"MAIN_PAGE"} text={"Create New Account!"}/>
