@@ -38,12 +38,10 @@ function server(req, res) {
     switch (req.method) {
         case "GET": { 
             if (req.url == "/") {
-                console.log("got get empty right!")
                 payload = { 'hello': 'world' }
             } else if (req.url == "/articles") {
                 payload = articleHolder
             } else {
-                console.log("wrong get!")
                 res.setHeader('Content-Type', 'application/json')
                 res.statusCode = 402
                 res.end(JSON.stringify(payload))
@@ -73,7 +71,6 @@ function server(req, res) {
                 res.end(JSON.stringify(payload))
                 break;
             } 
-            console.log("invalid post!")
             res.statusCode = 402
             res.setHeader('Content-Type', 'application/json')
             res.end(JSON.stringify(payload))
@@ -81,14 +78,12 @@ function server(req, res) {
         }
         case "PUT": {
             if (req.url == "/logout") {
-                console.log("got put right!")
                 payload = "OK"
                 res.setHeader('Content-Type', 'application/json')
                 res.statusCode = 200
                 res.end(JSON.stringify(payload))
                 break
             } else {
-                console.log("put failed")
                 payload = "LOGOUT FAILED"
                 res.setHeader('Content-Type', 'application/json')
                 res.statusCode = 402;
