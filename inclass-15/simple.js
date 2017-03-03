@@ -44,8 +44,11 @@ function server(req, res) {
                 payload = articleHolder
             } else {
                 console.log("wrong get!")
+                res.setHeader('Content-Type', 'application/json')
+                res.statusCode = 402
+                res.end(JSON.stringify(payload))
+                break;
             }
-            res.setHeader('Content-Type', 'application/json')
             res.statusCode = 200
             res.end(JSON.stringify(payload))
             break;
@@ -55,43 +58,42 @@ function server(req, res) {
                 const params = req.body.split("&")
                 const username = params[0].split("=")
                 const password = params[1].split("=")
-                console.log(username)
-                console.log(password)
-                if (username[0]=="username" && password[0]=="password") {
-                    if (username[1] && password[1]) {
-                        console.log("got post right")
-                        payload = {
-                            'username': username[1],
-                            'result' : 'success'
-                        }
+                if (username[0]=="username" && username[1]) {
+                    payload = (password[0] == "password" && password[1]) ? {
+                        'username': username[1],
+                        'result' : 'success'
+                    } : {
+                        'username': username[1],
+                        'result' : 'failure'
                     }
                 }
-            } else {
-                console.log("wrong post!")
-                console.log(req.body)
-                console.log(req.body.username)
-                console.log(req.body.password)
-            }
-            res.setHeader('Content-Type', 'application/json')
-            res.statusCode = 200
-            res.end(JSON.stringify(payload))
-            break;
-        }
-        case "PUT":{
-            if (req.url = "logout") {
-                console.log("got put right!")
-                payload = "OK"
-            } else {
-                console.log("put failed")
-                payload = "NOPE! TODO - errror return"
                 res.setHeader('Content-Type', 'application/json')
                 res.statusCode = 200
                 res.end(JSON.stringify(payload))
-            }
+                break;
+            } 
+            console.log("invalid post!")
+            res.statusCode = 402
             res.setHeader('Content-Type', 'application/json')
-            res.statusCode = 200
             res.end(JSON.stringify(payload))
             break;
+        }
+        case "PUT": {
+            if (req.url == "/logout") {
+                console.log("got put right!")
+                payload = "OK"
+                res.setHeader('Content-Type', 'application/json')
+                res.statusCode = 200
+                res.end(JSON.stringify(payload))
+                break
+            } else {
+                console.log("put failed")
+                payload = "LOGOUT FAILED"
+                res.setHeader('Content-Type', 'application/json')
+                res.statusCode = 402;
+                res.end(JSON.stringify(payload))
+                break;
+            }
         }
         default: {
             payload = "TODO - error somewhere????"
