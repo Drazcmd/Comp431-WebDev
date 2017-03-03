@@ -1,13 +1,14 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { updateLocation } from '../../actions'
+import { Button } from 'react-bootstrap';
 
 console.log(connect)
 console.log(updateLocation)
 export const NavButton = ({ displayText, navigate }) => {
 	return (
 		<span>
-		<button onClick = { navigate }> { displayText }  </button>
+		<Button bsStyle="primary" onClick = { navigate }> { displayText }  </Button>
 		</span>
 	)
 }
