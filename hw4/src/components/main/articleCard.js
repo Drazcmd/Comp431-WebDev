@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 
-export const Article = ({ displayText, displayImage, postComment, editArticle }) => {
+export const ArticleCard = ({ displayText, displayImage, postComment, editArticle }) => {
 	const articleImage = displayImage ? ( <img src={displayImage}/> ) : (<div />);
 	return (
 		<span>
@@ -15,7 +15,7 @@ export const Article = ({ displayText, displayImage, postComment, editArticle })
 // input type="text" defaultValue={"Comment Here "} />
 }
 
-Article.propTypes = {
+ArticleCard.propTypes = {
 	displayText: PropTypes.string.isRequired
 }
 
@@ -34,4 +34,4 @@ export default connect(
     		editArticle: () => ({})
     	}
     }
-)(Article)
+)(ArticleCard)
