@@ -1,13 +1,18 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import NavBar from '../navigation/navBar'
+import { Grid, Row, Col } from 'react-bootstrap'
 
 export const Profile = ({ }, { }) => {
 	return (
-		<span>
-		<NavBar />
-		<b>'Your profile awaits:'</b>
-		</span>
+		<Grid>
+		<Row>
+			<NavBar />
+		</Row>
+		<Row>
+			<b>'Your profile awaits:'</b>
+		</Row>
+		</Grid>
 	)
 
 }

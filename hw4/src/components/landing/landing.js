@@ -3,17 +3,19 @@ import { connect } from 'react-redux'
 import NavButton from '../navigation/navButton'
 import Registration from './registration'
 import Login from './login'
+import { Grid, Row, Col } from 'react-bootstrap'
+
 export const Landing = ({ }, { }) => {
 	return (
-		<div>
-		<span>
-		<b>'HELLO Landing!'</b>
-		</span>
-		<br /> <br /> <br />
-		<Registration />
-		<br /> <br /> <br />
-		<Login />
-		</div>
+	 	<Grid>
+	  	  <Row>
+			<b>'HELLO Landing!'</b>
+		  </Row>
+		  <Row>
+			<Col md={5}> <Registration /> </Col>
+			<Col md={5}> <Login /> </Col>
+		  </Row>
+	  </Grid>
 
 
 	)
