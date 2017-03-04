@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
-export const UserStatus = ({ status }) => {
+export const PersonalStatus = ({ status }) => {
 	//Like real facebook, should be able to refresh main page or profile by
 	//clicking on the navigation button (when logged in)
 	return (
@@ -8,7 +8,7 @@ export const UserStatus = ({ status }) => {
 	)
 }
 
-UserStatus.propTypes = {
+PersonalStatus.propTypes = {
 }
 
 export default connect(
@@ -18,4 +18,4 @@ export default connect(
 		}
 	},
 	(dispatch) => ({ })
-)(UserStatus)
+)(PersonalStatus)

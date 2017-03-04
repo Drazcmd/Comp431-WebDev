@@ -28,7 +28,7 @@ export const Feed = ({ articles, visibleArticleIDs }, { }) => {
 		<b>'FEED ME HERE'</b>
 		{
 			sortedDisplayedArticles.map((article, index) => (
-			<ArticleCard articleJSON={ article } key={ index } />
+				<ArticleCard articleJSON={ article } key={ index } />
 			))
 		}
 		</ListGroup>

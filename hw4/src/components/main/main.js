@@ -3,8 +3,8 @@ import { connect } from 'react-redux'
 import NavBar from '../navigation/navBar'
 import Feed from './feed'
 import WriteArticleBox from './writeArticleBox'
-import UserStatus from './userStatus'
-import Following from './following'
+import PersonalStatus from './personalStatus'
+import FollowSideBar from './Sidebar/followSideBar'
 import { Grid, Row, Col } from 'react-bootstrap'
 
 export const Main = ({ profileImgSrc }) => {
@@ -21,14 +21,14 @@ export const Main = ({ profileImgSrc }) => {
 		 	<img height={ profileImgHeight }
 		 	 width={ profileImgWidth } src={ profileImgSrc } />
 		 	</Col>
-		 	<Col md={5}> <UserStatus /> </Col> 
+		 	<Col md={5}> <PersonalStatus /> </Col> 
 		  </Row>
 
 		  <br /> <br /> <br />
 
 		  <Row> 
 		 	<Col md={7}> <Feed /> </Col>
-		 	<Col md={3}> <Following /> </Col>
+		 	<Col md={3}> <FollowSideBar/> </Col>
 		  </Row>
 		  
 		  <Row>
@@ -36,17 +36,12 @@ export const Main = ({ profileImgSrc }) => {
 		 	<div />
 		  </Row>
 //TODO:
-//Profile picture somewhere
-//User status headline (prominently idsplayed)
-//Sort articles
-//New article area
 //Public new article
 //clear new artile area
-//upload image (open file picker)
 //search bar filters by author and text, but not article id or article date
 //Sidebar with at least 3 followed users
 //List of users being followed
-	//List has for each user profile pic, display/account names, status headlines
+	//List has for each user profile pic, display//account names, status headlines
 	//These can all be hardcoded, only need like 3 of each	
 	 	</Grid>
 	)

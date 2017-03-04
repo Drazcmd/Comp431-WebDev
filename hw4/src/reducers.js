@@ -11,7 +11,7 @@ const Reducer = (state = {
     ],
     writeArticleView: 'Write an article here',
     temporaryArticles: '',
-    userStatus: 'Feeling Good!!',
+    personalStatus: 'Feeling Good!!',
     //TODO - refactor these to json file
     profileImg: 'http://www.metalsucks.net/wp-content/uploads/2017/01/obama-smiling.jpg',
     trumpImg: "http://static6.businessinsider.com/image/55918b77ecad04a3465a0a63/nbc-fires-donald-trump-after-he-calls-mexicans-rapists-and-drug-runners.jpg",

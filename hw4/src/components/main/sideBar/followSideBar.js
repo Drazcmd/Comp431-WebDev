@@ -1,12 +1,9 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
-import NavBar from '../navigation/navBar'
-import Feed from './feed'
-import WriteArticleBox from './writeArticleBox'
-import UserStatus from './userStatus'
 import { Grid, Row, Col } from 'react-bootstrap'
-
-export const Following = ({ trumpImg, billImg, hillImg}) => {
+import NewFollowers from './NewFollowers'
+import Followee from './Followee'
+export const followSideBar = ({ trumpImg, billImg, hillImg}) => {
 	const profileImgWidth="100"
 	const profileImgHeight="75"
 	return (
@@ -28,28 +25,21 @@ export const Following = ({ trumpImg, billImg, hillImg}) => {
 		  
 		  <Row>
 		 	<div> Follow new people here! </div>
-		 	<WriteArticleBox />
+		 	<NewFollowers/ >
 		  </Row>
-//TODO:
-//Profile picture somewhere
-//User status headline (prominently idsplayed)
-//Sort articles
-//New article area
-//Public new article
-//clear new artile area
-//upload image (open file picker)
-//search bar filters by author and text, but not article id or article date
-//Sidebar with at least 3 followed users
-//List of users being followed
-	//List has for each user profile pic, display/account names, status headlines
-	//These can all be hardcoded, only need like 3 of each	
+
+		  <Row>
+		  	<Followee />
+		  </Row>
 	 	</Grid>
 	)
 }
 
-Following.propTypes = {
+followSideBar.propTypes = {
+	trumpImg: PropTypes.string.isRequired,
+	billImg: PropTypes.string.isRequired,
+	hillImg: PropTypes.string.isRequired,
 }
-
 export default connect(
     (state) => ({ 
     	trumpImg: state.profileImg,
@@ -57,4 +47,4 @@ export default connect(
     	hillImg: state.hillImg
     }),
     (dispatch) => ({ })
-)(Following)
+)(followSideBar)
