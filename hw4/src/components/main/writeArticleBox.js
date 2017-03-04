@@ -3,26 +3,29 @@ import { connect } from 'react-redux'
 import { Button, Well, ListGroupItem } from 'react-bootstrap';
 import { FormGroup, FormControl, ControlLabel } from 'react-bootstrap'
 import { addArticle, clearWriteView } from '../../actions'
- 
 export const WriteArticleBox = ({
-	writeArticleView, temporaryArticles, postArticle, clearArticle
+	writeArticleView, temporaryArticles, postArticle
 }) => {
 	return (
 		<ListGroupItem> <Well>
-		<FormGroup>
-		  <ControlLabel> Upload article text! </ControlLabel>
-		  <FormControl type="text" placeholder={ writeArticleView } />
+		<form> <FormGroup controlId="writeArticleForm">
 		  <ControlLabel> Upload a file! </ControlLabel>
 		  <FormControl type="file" />
-		</FormGroup>
 
-		<Button bsSize="small" onClick={ postArticle }> 
+		  <ControlLabel> Upload article text! </ControlLabel>
+		  <FormControl
+		   type="text" placeholder={ writeArticleView } 
+		   onSubmit={ postArticle }
+		   />
+
+		  <Button bsSize="small" type="submit" > 
 		  {"Post Article!"}
-		</Button>
+		  </Button>
 
-		<Button bsSize="small" onClick={ clearArticle }>
+		  <Button bsSize="small" type="reset" >
 		  { "Clear Article!" }
-		</Button>
+		  </Button>
+		</FormGroup> </form>
 		</Well> </ListGroupItem>
 	)
 }
@@ -44,8 +47,10 @@ export default connect(
  		//dispatch(addArticle) and
  		//dispatch(clearArticleView) aren't working :(
  		return {
- 			postArticle: () => ({}),
- 			clearArticle: () => ({})
+ 			postArticle: (articleText) => {
+ 				console.log(articleText);
+ 				return null;
+ 			}
  		}
  	}
 )(WriteArticleBox)

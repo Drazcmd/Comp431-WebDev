@@ -29,6 +29,7 @@ export const Main = ({ }) => {
 		  
 		  <Row>
 		 	<div> ADD/EDIT/POST NEW ARTICLE HERE!!! </div>
+		 	<WriteArticleBox />
 		  </Row>
 //TODO:
 //Publish new article
