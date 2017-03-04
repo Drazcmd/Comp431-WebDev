@@ -1,12 +1,12 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import NavButton from '../navigation/navButton'
-import { FormGroup, FormControl, ControlLabel } from 'react-bootstrap'
+import { FormGroup, FormControl, ControlLabel, Well } from 'react-bootstrap'
 export const Login = ({ }, { }) => {
 	return (
 
-		<div>
-		<b>'Login Directly Below:'</b>
+		<Well>
+		<h4>LOGIN: </h4>
 		<FormGroup 
 		  controlId="Login"
 		  >
@@ -23,7 +23,7 @@ export const Login = ({ }, { }) => {
 		</FormGroup>
 
 		<NavButton redirectLocation={"MAIN_PAGE"} text={"Login!"}/>
-		</div>
+		</Well>
 
 	)
 

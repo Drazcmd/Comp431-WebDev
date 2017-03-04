@@ -1,11 +1,11 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import NavButton from '../navigation/navButton'
-import { FormGroup, FormControl, ControlLabel } from 'react-bootstrap'
+import { Well, FormGroup, FormControl, ControlLabel } from 'react-bootstrap'
 export const Registration = ({ }, { }) => {
 	return (
-		<div>
-		<b>'Register Directly Below:'</b>
+		<Well>
+		<h4>REGISTER A NEW ACCOUNT: </h4>
 		<FormGroup 
 		  controlId="Registration"
 		  >
@@ -32,7 +32,7 @@ export const Registration = ({ }, { }) => {
 		</FormGroup>
 
 		<NavButton redirectLocation={"MAIN_PAGE"} text={"Create New Account!"}/>
-		</div>
+		</Well>
 
 	)
 

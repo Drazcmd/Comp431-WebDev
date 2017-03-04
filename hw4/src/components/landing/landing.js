@@ -7,9 +7,6 @@ import { Grid, Row, Col } from 'react-bootstrap'
 export const Landing = ({ }, { }) => {
 	return (
 	 	<Grid>
-	  	  <Row>
-			<b>'HELLO Landing!'</b>
-		  </Row>
 		  <Row>
 			<Col md={5}> <Registration /> </Col>
 			<Col md={5}> <Login /> </Col>
