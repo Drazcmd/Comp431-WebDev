@@ -1,6 +1,5 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
-import NavButton from '../navigation/navButton'
 import Registration from './registration'
 import Login from './login'
 import { Grid, Row, Col } from 'react-bootstrap'

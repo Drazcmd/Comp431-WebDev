@@ -6,7 +6,9 @@ import WriteArticleBox from './writeArticleBox'
 import UserStatus from './userStatus'
 import { Grid, Row, Col } from 'react-bootstrap'
 
-export const Main = ({ }, { }) => {
+export const Main = ({ profileImgSrc }) => {
+	const profileImgWidth="100"
+	const profileImgHeight="75"
 	return (
 	  	<Grid>
 		  <Row>
@@ -14,7 +16,10 @@ export const Main = ({ }, { }) => {
 		  </Row>
 
 		  <Row> 
-		 	<Col md={5}> Pcitre goes here! </Col> 
+		 	<Col md={5}> 
+		 	<img height={ profileImgHeight }
+		 	 width={ profileImgWidth } src={ profileImgSrc } />
+		 	</Col>
 		 	<Col md={5}> <UserStatus /> </Col> 
 		  </Row>
 
@@ -50,6 +55,8 @@ Main.propTypes = {
 }
 
 export default connect(
-    (state) => ({ }),
+    (state) => ({ 
+    	profileImgSrc: state.profileImg,
+    }),
     (dispatch) => ({ })
 )(Main)

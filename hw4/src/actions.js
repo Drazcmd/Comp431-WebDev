@@ -35,7 +35,7 @@ export const showArticle = (articleID) => {
 	return { type: ActionTypes.SHOW_ARTICLE, articleID }
 }
 export const addArticle = () => {
-	return { type: ActionTypes.ADD_ARTICLE}
+	return { type: ActionTypes.ADD_ARTICLE }
 }
 export const clearWriteView = () => {
 	return { type: ActionTypes.CLEAR_WRITE_VIEW}

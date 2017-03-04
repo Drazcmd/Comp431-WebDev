@@ -9,8 +9,10 @@ const Reducer = (state = {
         3833265, 2858421, 3675962, 5423165,
         4242601, 2683634, 3744656, 3124181
     ],
-    writeArticleView: "Write an article here",
-    temporaryArticles: ""
+    writeArticleView: 'Write an article here',
+    temporaryArticles: '',
+    userStatus: 'Feeling Good!!',
+    profileImg: 'http://www.metalsucks.net/wp-content/uploads/2017/01/obama-smiling.jpg'
 }, action) => {
     switch (action.type) {
         case ActionTypes.LOCATION_CHANGE:
@@ -33,9 +35,9 @@ const Reducer = (state = {
             console.log("Add (non-persitantly) an article")
             return {
                 ...state, writeArticleView: "",
-                temporaryArticles: action.article
+                temporaryArticles: state.writeArticleView
             }
-            
+
         case ActionTypes.CLEAR_WRITE_VIEW:
             //Note - clears the writing area, not the temp articel
             return {

@@ -5,20 +5,22 @@ import { FormGroup, FormControl, ControlLabel } from 'react-bootstrap'
 import { addArticle, clearWriteView } from '../../actions'
  
 export const WriteArticleBox = ({
-	writeView, temporaryArticles, postArticle, clearArticle
+	writeArticleView, temporaryArticles, postArticle, clearArticle
 }) => {
 	return (
 		<ListGroupItem> <Well>
 		<FormGroup>
-		  <ControlLabel />
-		  <FormControl type="text" placeholder= { writeView } />
+		  <ControlLabel> Upload article text! </ControlLabel>
+		  <FormControl type="text" placeholder={ writeArticleView } />
+		  <ControlLabel> Upload a file! </ControlLabel>
+		  <FormControl type="file" />
 		</FormGroup>
 
-		<Button bsSize="small" onClick = { postArticle }> 
+		<Button bsSize="small" onClick={ postArticle }> 
 		  {"Post Article!"}
 		</Button>
 
-		<Button bsSize="small" onClick = { clearArticle }>
+		<Button bsSize="small" onClick={ clearArticle }>
 		  { "Clear Article!" }
 		</Button>
 		</Well> </ListGroupItem>
@@ -26,23 +28,24 @@ export const WriteArticleBox = ({
 }
 
 WriteArticleBox.propTypes = {
-	writeView: PropTypes.string.is.Required
+	writeArticleView: PropTypes.string.isRequired
 }
 
 export default connect(
-	(state) => ({
-		writeView: state.writeArticleView,
-		//These will get cleared wheneer we naviage away
-		//(Non-persistant)
-		temporaryArticle: state.temporaryArticles
-	}),
-
-	(dispatch) => {
-		postArticle: () => ({dispatch(addArticle)}),
-		clearArticle: () => ({
-			dispatch(clearWriteView())
-		})
-    }
-		//Currently buttons do nothing!
-		//Not clear submitted temporary ones - clear the writing view
+	(state) => {
+		return {
+			writeArticleView: state.writeArticleView,
+			//These will get cleared wheneer we naviage away
+			//(Non-persistant)
+			temporaryArticle: state.temporaryArticles
+		}
+	},
+ 	(dispatch) => {
+ 		//dispatch(addArticle) and
+ 		//dispatch(clearArticleView) aren't working :(
+ 		return {
+ 			postArticle: () => ({}),
+ 			clearArticle: () => ({})
+ 		}
+ 	}
 )(WriteArticleBox)
