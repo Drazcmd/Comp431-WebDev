@@ -23,7 +23,7 @@ export const WriteArticleBox = ({
 	}	
 	function _postArticle(e){
 		postArticle({
-			id: nextArticleID,
+			_id: nextArticleID,
 			//accessing e.target.value here wouldn't work!
 			text: writeView, 
 			img: null,

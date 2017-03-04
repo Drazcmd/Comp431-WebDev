@@ -42,7 +42,7 @@ const Reducer = (state = {
                 articles:
                     state.articles.concat(action.newArticle),
                 visibleArticleIDs: 
-                    state.visibleArticleIDs.concat(action.newArticle.id)
+                    state.visibleArticleIDs.concat(action.newArticle._id)
             }
         default:
             console.log("action:", action.Type)
