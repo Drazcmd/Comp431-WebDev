@@ -3,48 +3,38 @@ import { connect } from 'react-redux'
 import { Grid, Row, Col } from 'react-bootstrap'
 import NewFollowers from './NewFollowers'
 import Followee from './Followee'
-export const followSideBar = ({ trumpImg, billImg, hillImg}) => {
+export const followSideBar = ({ trump, bill, hill}) => {
 	const profileImgWidth="100"
 	const profileImgHeight="75"
 	return (
 	  	<Grid>
 		  <Row>
-		 	<img height={ profileImgHeight }
-		 	 width={ profileImgWidth } src={ trumpImg } />
+		  	<Followee data={ trump } />
 		  </Row>
 
 		  <Row> 
-		 	<img height={ profileImgHeight }
-		 	 width={ profileImgWidth } src={ hillImg } />
+		  	<Followee data={ bill } />
 		  </Row>
 
 		  <Row> 
-		 	<img height={ profileImgHeight }
-		 	 width={ profileImgWidth } src={ billImg } />
+		  	<Followee data={ hill }/>
 		  </Row>
 		  
 		  <Row>
 		 	<div> Follow new people here! </div>
 		 	<NewFollowers/ >
 		  </Row>
-
-		  <Row>
-		  	<Followee />
-		  </Row>
 	 	</Grid>
 	)
 }
 
 followSideBar.propTypes = {
-	trumpImg: PropTypes.string.isRequired,
-	billImg: PropTypes.string.isRequired,
-	hillImg: PropTypes.string.isRequired,
 }
 export default connect(
     (state) => ({ 
-    	trumpImg: state.trump.img,
-    	billImg: state.bill.img,
-    	hillImg: state.hill.img
+    	trump: state.trump,
+    	bill: state.bill,
+    	hill: state.hill
     }),
     (dispatch) => ({ })
 )(followSideBar)

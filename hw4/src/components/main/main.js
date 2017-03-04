@@ -36,13 +36,10 @@ export const Main = ({ profileImgSrc }) => {
 		 	<div />
 		  </Row>
 //TODO:
-//Public new article
+//Publish new article
 //clear new artile area
 //search bar filters by author and text, but not article id or article date
-//Sidebar with at least 3 followed users
-//List of users being followed
-	//List has for each user profile pic, display//account names, status headlines
-	//These can all be hardcoded, only need like 3 of each	
+//Update//add to the sidebar
 	 	</Grid>
 	)
 }
