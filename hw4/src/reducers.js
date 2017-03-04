@@ -1,5 +1,8 @@
 import { ActionTypes } from './actions'
 const initialItems = require('./data/articles.json')
+const peopleData = require('./data/allUsers.json')
+const personalData = peopleData.personalProfile
+const otherUsers = peopleData.otherUsers
 
 const Reducer = (state = {
     location: 'LANDING_PAGE',
@@ -14,9 +17,9 @@ const Reducer = (state = {
     personalStatus: 'Feeling Good!!',
     //TODO - refactor these to json file
     profileImg: 'http://www.metalsucks.net/wp-content/uploads/2017/01/obama-smiling.jpg',
-    trumpImg: "http://static6.businessinsider.com/image/55918b77ecad04a3465a0a63/nbc-fires-donald-trump-after-he-calls-mexicans-rapists-and-drug-runners.jpg",
-    billImg: "http://media.vanityfair.com/photos/5707c9081b83b2c22f99f140/master/pass/t-bill-clinton-the-comeback-id-july-2008.jpg",
-    hillImg: "https://img.buzzfeed.com/buzzfeed-static/static/2016-08/11/15/asset/buzzfeed-prod-fastlane01/sub-buzz-2984-1470945284-1.png?resize=625:352"
+    trump: otherUsers[0],
+    hill: otherUsers[1],
+    bill: otherUsers[2]
 }, action) => {
     switch (action.type) {
         case ActionTypes.LOCATION_CHANGE:

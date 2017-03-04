@@ -42,9 +42,9 @@ followSideBar.propTypes = {
 }
 export default connect(
     (state) => ({ 
-    	trumpImg: state.profileImg,
-    	billImg: state.billImg,
-    	hillImg: state.hillImg
+    	trumpImg: state.trump.img,
+    	billImg: state.bill.img,
+    	hillImg: state.hill.img
     }),
     (dispatch) => ({ })
 )(followSideBar)
