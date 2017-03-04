@@ -6,7 +6,9 @@ export const ERROR = 'ERROR'
 export const ActionTypes = {
     LOCATION_CHANGE: 'LOCATION_CHANGE',
     HIDE_ARTICLE: 'HIDE_ARTICLE',
-    SHOW_ARTICLE: 'SHOW_ARTICLE'
+    SHOW_ARTICLE: 'SHOW_ARTICLE',
+    ADD_ARTICLE: 'ADD_ARTICLE',
+    CLEAR_WRITE_VIEW: 'CLEAR_WRITE_VIEW'
 }
 
 /* 
@@ -31,4 +33,10 @@ export const hideArticle = (articleID) => {
 }
 export const showArticle = (articleID) => {
 	return { type: ActionTypes.SHOW_ARTICLE, articleID }
+}
+export const addArticle = () => {
+	return { type: ActionTypes.ADD_ARTICLE}
+}
+export const clearWriteView = () => {
+	return { type: ActionTypes.CLEAR_WRITE_VIEW}
 }

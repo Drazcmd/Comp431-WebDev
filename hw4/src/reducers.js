@@ -8,7 +8,9 @@ const Reducer = (state = {
     visibleArticleIDs: [
         3833265, 2858421, 3675962, 5423165,
         4242601, 2683634, 3744656, 3124181
-    ]
+    ],
+    writeArticleView: "Write an article here",
+    temporaryArticles: ""
 }, action) => {
     switch (action.type) {
         case ActionTypes.LOCATION_CHANGE:
@@ -26,7 +28,35 @@ const Reducer = (state = {
         case ActionTypes.SHOW_ARTICLE:
             console.log("Showing an article")
             return 
+
+        case ActionTypes.ADD_ARTICLE:
+            console.log("Add (non-persitantly) an article")
+            return {
+                ...state, writeArticleView: "",
+                temporaryArticles: action.article
+            }
             
+        case ActionTypes.CLEAR_WRITE_VIEW:
+            //Note - clears the writing area, not the temp articel
+            return {
+                ...state, writeArticleView: ""
+            }
+        /* 
+        Replace with this to start making added articles persit 
+        case ActionTypes.SUBMIT_ARTICLE:
+            console.log("actually adding an article")
+            //Concat doesn't mutate, it's functional :)
+            return {
+                ...state,
+                articles: articles.Concat(action.article),
+                visibleArticleIDs: visibleArticleIDs.Concat(
+                    action.article._id
+                ),
+                writeArticleView
+            }
+        */
+
+
         default:
             console.log("action:", action.Type)
             return state
