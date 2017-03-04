@@ -13,11 +13,13 @@ export const Main = ({ }) => {
 		  <Row>
 		 	<NavBar />
 		  </Row>
-
 		  <br />
-		  
 		  <Row> 
 		  	<MiniProfile />
+		  </Row>
+		  <br />
+		  <Row>
+		 	<WriteArticleBox />
 		  </Row>
 
 		  <br /> <br /> <br />
@@ -27,10 +29,6 @@ export const Main = ({ }) => {
 		 	<Col md={3}> <FollowSideBar/> </Col>
 		  </Row>
 		  
-		  <Row>
-		 	<div> ADD/EDIT/POST NEW ARTICLE HERE!!! </div>
-		 	<WriteArticleBox />
-		  </Row>
 //TODO:
 //Publish new article
 //clear new artile area

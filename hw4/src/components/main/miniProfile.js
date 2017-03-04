@@ -1,11 +1,24 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { Well, Grid, Row, Col } from 'react-bootstrap'
+import { Button, FormGroup, FormControl, ControlLabel } from 'react-bootstrap'
+import { updateStatus } from '../../actions'
 //This component is the picture, status, and name of the 
 //currently logged in user that appears on the main page
-export const MiniProfile = ({ profileName, profileStatus, profileImgSrc}) => {
+export const MiniProfile = ({ 
+	profileName, profileStatus, profileImgSrc, updateStatus
+}) => {
 	const profileImgWidth="200"
 	const profileImgHeight="133"
+	let writeView = ""
+	function _onChange(e){
+		writeView = e.target.value
+		console.log(writeView)
+	}
+	function _updateStatus(e){
+		console.log("writeview:", writeView)
+		updateStatus(writeView)
+	}
 	return (
 		<Well>
 		<Col>
@@ -17,6 +30,22 @@ export const MiniProfile = ({ profileName, profileStatus, profileImgSrc}) => {
 		 	<h3> { profileName }, your current status is: </h3>
 			<h2> '{ profileStatus }' </h2>
 			</span>
+
+			<form> <FormGroup controlId="writeStatusForm">
+		  <ControlLabel> Update your status? </ControlLabel>
+		  <FormControl
+		   type="text" placeholder={ "Write status here.." }
+		   onChange={ _onChange }
+		   />
+		  <br />
+		  <Button bsStyle="success" onClick={_updateStatus}>
+		  {"Update Status"}
+		  </Button>
+
+		  <Button type="reset" >
+		  { "Clear text" }
+		  </Button>
+		  </FormGroup> </form>
 		</Col>
 		</Well>
 	)
@@ -31,5 +60,9 @@ export default connect(
     	profileStatus: state.profileData.status,
     	profileImgSrc: state.profileData.img
     }),
-	(dispatch) => ({ })
+	(dispatch) => {
+		return {
+			updateStatus: (newStatus) => dispatch(updateStatus(newStatus))
+		}
+	}
 )(MiniProfile)

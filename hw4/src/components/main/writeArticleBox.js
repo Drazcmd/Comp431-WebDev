@@ -29,27 +29,28 @@ export const WriteArticleBox = ({
 			img: null,
 			comments:[],
 			author: profileName,
-			date: Date.now()
+			date: new Date().toISOString()
 		})
 	}
 	return (
-		<ListGroupItem> <Well>
+		<ListGroupItem> <Well bsSize="small">
 		<form> <FormGroup controlId="writeArticleForm">
-		  <ControlLabel> Upload a file! </ControlLabel>
+		  <ControlLabel> Upload an image: </ControlLabel>
 		  <FormControl type="file" />
+		  <br /> <br />
 
-		  <ControlLabel> Upload article text! </ControlLabel>
+		  <ControlLabel> Write an article: </ControlLabel>
 		  <FormControl
 		   type="text" placeholder={ "Write article here..." }
 		   onChange={ _onChange }
 		   />
-
-		  <Button bsSize="small" onClick={ _postArticle }> 
-		  {"Post Article!"}
+		  <br />
+		  <Button bsStyle="success" onClick={ _postArticle } >
+		  {"Post text as article!"}
 		  </Button>
 
-		  <Button bsSize="small" type="reset" >
-		  { "Clear Article!" }
+		  <Button type="reset" >
+		  { "Clear text" }
 		  </Button>
 		</FormGroup> </form>
 		</Well> </ListGroupItem>

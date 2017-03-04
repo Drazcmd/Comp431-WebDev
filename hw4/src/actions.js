@@ -8,7 +8,8 @@ export const ActionTypes = {
     HIDE_ARTICLE: 'HIDE_ARTICLE',
     SHOW_ARTICLE: 'SHOW_ARTICLE',
     ADD_ARTICLE: 'ADD_ARTICLE',
-    CLEAR_WRITE_VIEW: 'CLEAR_WRITE_VIEW'
+    CLEAR_WRITE_VIEW: 'CLEAR_WRITE_VIEW',
+    UPDATE_STATUS: 'UPDATE_STATUS'
 }
 
 /* 
@@ -37,7 +38,6 @@ export const showArticle = (articleID) => {
 export const addArticle = (newArticle) => {
 	return { type: ActionTypes.ADD_ARTICLE, newArticle }
 }
-/*
-export const clearWriteView = () => {
-	return { type: ActionTypes.CLEAR_WRITE_VIEW}
-}*/
+export const updateStatus = (newStatus) => {
+	return { type: ActionTypes.UPDATE_STATUS, newStatus }
+}

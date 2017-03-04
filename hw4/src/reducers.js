@@ -22,7 +22,6 @@ const Reducer = (state = {
         case ActionTypes.LOCATION_CHANGE:
             console.log("Location change action's reducer")
             return { ...state, location: action.location}
-
         case ActionTypes.HIDE_ARTICLE:
             console.log("hiding an article", action.articleID)
             return { ...state, visibleArticleIDs: 
@@ -30,11 +29,9 @@ const Reducer = (state = {
                     id => id != action.articleID
                 )
             }
-
         case ActionTypes.SHOW_ARTICLE:
             console.log("Showing an article")
             return 
-
         case ActionTypes.ADD_ARTICLE:
             //These will be non-persitant on refresh as required")
             return {
@@ -44,6 +41,15 @@ const Reducer = (state = {
                 visibleArticleIDs: 
                     state.visibleArticleIDs.concat(action.newArticle._id)
             }
+        case ActionTypes.UPDATE_STATUS:
+            console.log("new status:", action.new_status)
+            console.log("old status", state.profileData.status)
+            return {
+                ...state, profileData: {
+                    ...state.profileData, status: action.new_status
+                }
+            }
+
         default:
             console.log("action:", action.Type)
             return state
