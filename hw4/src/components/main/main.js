@@ -2,27 +2,33 @@ import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import NavBar from '../navigation/navBar'
 import Feed from './feed'
+import WriteArticleBox from './writeArticleBox'
 import UserStatus from './userStatus'
 import { Grid, Row, Col } from 'react-bootstrap'
 
 export const Main = ({ }, { }) => {
 	return (
-	  <Grid>
-		<Row>
-		  <NavBar />
-		</Row>
-		<Row> 
-		  <Col md={5}> Pcitre goes here! </Col> 
-		  <Col md={5}> <UserStatus /> </Col> 
+	  	<Grid>
+		  <Row>
+		 	<NavBar />
 		  </Row>
-		<br /> <br /> <br />
-		<Row> 
-		  <Col md={7}> <Feed /> </Col>
-		  <Col md={3}> <div> People following go here!  </div> </Col>
-		</Row>
-		<Row>
-		  <div> ADD/EDIT/POST NEW ARTICLE HERE!!! </div>
-		</Row>
+
+		  <Row> 
+		 	<Col md={5}> Pcitre goes here! </Col> 
+		 	<Col md={5}> <UserStatus /> </Col> 
+		  </Row>
+
+		  <br /> <br /> <br />
+
+		  <Row> 
+		 	<Col md={7}> <Feed /> </Col>
+		 	<Col md={3}> <div> People following go here!  </div> </Col>
+		  </Row>
+		  
+		  <Row>
+		 	<div> ADD/EDIT/POST NEW ARTICLE HERE!!! </div>
+		 	<WriteArticleBox />
+		  </Row>
 //TODO:
 //Profile picture somewhere
 //User status headline (prominently idsplayed)
@@ -36,7 +42,7 @@ export const Main = ({ }, { }) => {
 //List of users being followed
 	//List has for each user profile pic, display/account names, status headlines
 	//These can all be hardcoded, only need like 3 of each	
-	  </Grid>
+	 	</Grid>
 	)
 }
 

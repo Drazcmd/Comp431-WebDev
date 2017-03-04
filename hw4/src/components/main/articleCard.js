@@ -8,8 +8,7 @@ export const ArticleCard = ({text, image,
 }) => {
 	const articleImage = image ? ( <img src={image}/> ) : (<div />);
 	return (
-		<ListGroupItem>
-		<Well>
+		<ListGroupItem> <Well>
 		<div> { author, timestamp } </div>
 		{ image }
 		<div> { text } </div>
@@ -21,8 +20,7 @@ export const ArticleCard = ({text, image,
 
 		<Button bsSize="small" onClick = { postComment }> { "Post Comment" }  </Button>
 		<Button bsSize="small" onClick = { editArticle }> { "Edit Article" }  </Button>
-		</Well>
-		</ListGroupItem>
+		</Well> </ListGroupItem>
 	)
 // input type="text" defaultValue={"Comment Here "} />
 }
