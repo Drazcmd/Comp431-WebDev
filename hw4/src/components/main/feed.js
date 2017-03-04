@@ -2,39 +2,39 @@ import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import ArticleCard from './articleCard'
 import { ListGroup, ListGroupItem } from 'react-bootstrap'
-export const Feed = ({ articles }, { }) => {
+export const Feed = ({ articles, visibleArticleIDs }, { }) => {
+		//Reducing (not mapping) because some ids might not be in the list
+		const displayedArticles = visibleArticleIDs.reduce((acc, id) => {
+			//O(n^2), but since there shouldn't be that many on the page at
+			//once (it'd  probably have to be >>> 500 to be an issue).
+			const searchResult = articles.filter(
+				(article) => {return article._id === id}
+			)
+			return searchResult.length>0 ? acc.concat(searchResult) : acc
+			console.log(searchResult)
+		}, [])
+		console.log(displayedArticles)
 	return (
-
-		//TODO: get it filtering. Will require I start using the hidden
-		//articles state list like he suggests - then I can just do a filter
-		//on a map of the articles page, where the map functions creates one
-		//of these
 		<ListGroup>
 		<b>'FEED ME HERE'</b>
-		<ArticleCard articleJSON={ articles[0] }/>
-		<br /> <br />
-		<ArticleCard articleJSON={ articles[1] }/>
-		<br /> <br />
-		<ArticleCard articleJSON={ articles[2] }/>
-		<br /> <br />
-		<ArticleCard articleJSON={ articles[3] }/>
-		<br /> <br />
-		<ArticleCard articleJSON={ articles[4] }/>
-		<br /> <br />
-		<ArticleCard articleJSON={ articles[5] }/>
-		<br /> <br />
-		<ArticleCard articleJSON={ articles[6] }/>
-		<br /> <br />
-		<ArticleCard articleJSON={ articles[7] }/>
+		{
+			displayedArticles.map((article, index) => (
+			<ArticleCard articleJSON={ article } key={ index } />
+		))}
+		<ArticleCard articleJSON={ articles[7] } />
 		</ListGroup>
 	)
 }
 
 Feed.propTypes = {
+
 }
 
 export default connect(
     (state) => {
-     	return ({ articles: state.articles })
+     	return ({
+     	 	articles: state.articles, 
+     		visibleArticleIDs: state.visibleArticleIDs 
+     	})
     }, (dispatch) => ({ })
 )(Feed)
