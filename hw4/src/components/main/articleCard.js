@@ -3,13 +3,16 @@ import { connect } from 'react-redux'
 import { Button, Well, ListGroupItem } from 'react-bootstrap';
 import { FormGroup, FormControl, ControlLabel } from 'react-bootstrap'
 
-export const ArticleCard = ({ displayText, displayImage, postComment, editArticle }) => {
-	const articleImage = displayImage ? ( <img src={displayImage}/> ) : (<div />);
+export const ArticleCard = ({text, image,
+	author, timestamp, postComment, editArticle
+}) => {
+	const articleImage = image ? ( <img src={image}/> ) : (<div />);
 	return (
 		<ListGroupItem>
 		<Well>
-		{ articleImage }
-		<div> { displayText } </div>
+		<div> { author, timestamp } </div>
+		{ image }
+		<div> { text } </div>
 
 		<FormGroup>
 		  <ControlLabel />
@@ -25,15 +28,18 @@ export const ArticleCard = ({ displayText, displayImage, postComment, editArticl
 }
 
 ArticleCard.propTypes = {
-	displayText: PropTypes.string.isRequired
+	text: PropTypes.string.isRequired,
+	author: PropTypes.string.isRequired
 }
 
 export default connect(
 	(state, ownProps) => {
 		return { 
 			//image link might be null
-			displayText: ownProps.articleJSON.text,
-			displayImage: ownProps.articleJSON.img
+			text: ownProps.articleJSON.text,
+			image: ownProps.articleJSON.img,
+			author: ownProps.articleJSON.author,
+			timestamp: ownProps.articleJSON.date
 		} 
 	},
 	(dispatch) => {
