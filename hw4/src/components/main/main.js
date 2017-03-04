@@ -3,25 +3,21 @@ import { connect } from 'react-redux'
 import NavBar from '../navigation/navBar'
 import Feed from './feed'
 import WriteArticleBox from './writeArticleBox'
-import PersonalStatus from './personalStatus'
+import MiniProfile from './miniProfile'
 import FollowSideBar from './Sidebar/followSideBar'
 import { Grid, Row, Col } from 'react-bootstrap'
 
-export const Main = ({ profileImgSrc }) => {
-	const profileImgWidth="100"
-	const profileImgHeight="75"
+export const Main = ({ }) => {
 	return (
 	  	<Grid>
 		  <Row>
 		 	<NavBar />
 		  </Row>
 
+		  <br />
+		  
 		  <Row> 
-		 	<Col md={5}> 
-		 	<img height={ profileImgHeight }
-		 	 width={ profileImgWidth } src={ profileImgSrc } />
-		 	</Col>
-		 	<Col md={5}> <PersonalStatus /> </Col> 
+		  	<MiniProfile />
 		  </Row>
 
 		  <br /> <br /> <br />
@@ -48,8 +44,6 @@ Main.propTypes = {
 }
 
 export default connect(
-    (state) => ({ 
-    	profileImgSrc: state.profileImg,
-    }),
+    (state) => ({ }),
     (dispatch) => ({ })
 )(Main)

@@ -1,11 +1,11 @@
 import { ActionTypes } from './actions'
 const initialItems = require('./data/articles.json')
-const peopleData = require('./data/allUsers.json')
-const personalData = peopleData.personalProfile
-const otherUsers = peopleData.otherUsers
+const otherUsers = require('./data/followees.json')
+const obama = require('./data/profile.json')
 
 const Reducer = (state = {
     location: 'LANDING_PAGE',
+    
     articles: initialItems.articles,
     // the one with id=5159532 shouldn't show up!
     visibleArticleIDs: [
@@ -14,12 +14,12 @@ const Reducer = (state = {
     ],
     writeArticleView: 'Write an article here',
     temporaryArticles: '',
-    personalStatus: 'Feeling Good!!',
-    //TODO - refactor to json file
-    profileImg: 'http://www.metalsucks.net/wp-content/uploads/2017/01/obama-smiling.jpg',
+
+    profileData: obama,
     trump: otherUsers[0],
     hill: otherUsers[1],
     bill: otherUsers[2]
+
 }, action) => {
     switch (action.type) {
         case ActionTypes.LOCATION_CHANGE:

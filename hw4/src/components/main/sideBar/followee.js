@@ -8,7 +8,7 @@ export const Followee = ({ name, status, imgSrc}) => {
 	const profileImgHeight="75"
 	return (
 		<Well>
-			<h4> {name}'s Status: {status} </h4>
+			<h4> {name}'s Status: '{status}' </h4>
 		 	<img height={ profileImgHeight }
 		 	 width={ profileImgWidth } src={ imgSrc } />
 		 	<Button bsSize="small"> Remove User </Button>
@@ -23,9 +23,9 @@ Followee.propTypes = {
 }
 export default connect(
     (state, ownProps) => ({ 
-    	imgSrc: ownProps.data.img,
     	name: ownProps.data.name,
-    	status: ownProps.data.status
+    	status: ownProps.data.status,
+    	imgSrc: ownProps.data.img
     }),
     (dispatch) => ({ })
 )(Followee)
