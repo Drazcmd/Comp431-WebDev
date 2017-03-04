@@ -1,13 +1,13 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { Grid, Row, Col } from 'react-bootstrap'
+import { Well, Grid, Row, Col } from 'react-bootstrap'
 //This component is the picture, status, and name of the 
 //currently logged in user that appears on the main page
 export const MiniProfile = ({ profileName, profileStatus, profileImgSrc}) => {
 	const profileImgWidth="200"
 	const profileImgHeight="133"
 	return (
-		<div>
+		<Well>
 		<Col>
 	 		<img height={ profileImgHeight }
 	 	 	width={ profileImgWidth } src={ profileImgSrc } />
@@ -18,7 +18,7 @@ export const MiniProfile = ({ profileName, profileStatus, profileImgSrc}) => {
 			<h2> '{ profileStatus }' </h2>
 			</span>
 		</Col>
-		</div>
+		</Well>
 	)
 }
 
