@@ -15,7 +15,7 @@ const Reducer = (state = {
     writeArticleView: 'Write an article here',
     temporaryArticles: '',
     personalStatus: 'Feeling Good!!',
-    //TODO - refactor these to json file
+    //TODO - refactor to json file
     profileImg: 'http://www.metalsucks.net/wp-content/uploads/2017/01/obama-smiling.jpg',
     trump: otherUsers[0],
     hill: otherUsers[1],

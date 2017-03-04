@@ -8,7 +8,7 @@ export const Followee = ({ name, status, imgSrc}) => {
 	const profileImgHeight="75"
 	return (
 		<Well>
-			<h4> {name}'s Status: " {status} </h4>
+			<h4> {name}'s Status: {status} </h4>
 		 	<img height={ profileImgHeight }
 		 	 width={ profileImgWidth } src={ imgSrc } />
 		 	<Button bsSize="small"> Remove User </Button>
