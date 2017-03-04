@@ -34,9 +34,10 @@ export const hideArticle = (articleID) => {
 export const showArticle = (articleID) => {
 	return { type: ActionTypes.SHOW_ARTICLE, articleID }
 }
-export const addArticle = () => {
+export const addArticle = (newArticle) => {
 	return { type: ActionTypes.ADD_ARTICLE }
 }
+/*
 export const clearWriteView = () => {
 	return { type: ActionTypes.CLEAR_WRITE_VIEW}
-}
+}*/

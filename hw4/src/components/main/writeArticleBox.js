@@ -2,9 +2,9 @@ import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { Button, Well, ListGroupItem } from 'react-bootstrap';
 import { FormGroup, FormControl, ControlLabel } from 'react-bootstrap'
-import { addArticle, clearWriteView } from '../../actions'
+import { addArticle } from '../../actions'
 export const WriteArticleBox = ({
-	temporaryArticles, postArticle
+	profileName, nextArticleId, postArticle
 }) => {
 
 	/* 
@@ -23,7 +23,13 @@ export const WriteArticleBox = ({
 	}	
 	function _postArticle(e){
 		//accessing e.target.value here wouldn't work!
-		postArticle(writeView)
+		postArticle({
+			_id: nextArticleId,
+			text: writeView, 
+			img: null,
+			comments:[],
+			author: profileName
+		})
 	}
 	return (
 		<ListGroupItem> <Well>
@@ -55,15 +61,13 @@ WriteArticleBox.propTypes = {
 export default connect(
 	(state) => {
 		return {
-			temporaryArticle: state.temporaryArticles
+			nextArticleId: state.articles.length,
+			profileName: state.profileData.name
 		}
 	},
  	(dispatch) => {
  		return {
- 			postArticle: (articleText) => {
- 				console.log(articleText);
- 				return null;
- 			}
- 		}
+			postArticle: (article) => dispatch(addArticle(article))
+		}
  	}
 )(WriteArticleBox)
