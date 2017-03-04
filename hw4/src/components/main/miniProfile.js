@@ -13,10 +13,8 @@ export const MiniProfile = ({
 	let writeView = ""
 	function _onChange(e){
 		writeView = e.target.value
-		console.log(writeView)
 	}
 	function _updateStatus(e){
-		console.log("writeview:", writeView)
 		updateStatus(writeView)
 	}
 	return (
@@ -27,25 +25,23 @@ export const MiniProfile = ({
 	 	</Col>
 	 	<Col>
 	 		<span>
-		 	<h3> { profileName }, your current status is: </h3>
-			<h2> '{ profileStatus }' </h2>
+		 	<h2> { profileName }, your current status is: '{ profileStatus }' </h2>
 			</span>
 
 			<form> <FormGroup controlId="writeStatusForm">
-		  <ControlLabel> Update your status? </ControlLabel>
-		  <FormControl
-		   type="text" placeholder={ "Write status here.." }
-		   onChange={ _onChange }
-		   />
-		  <br />
-		  <Button bsStyle="success" onClick={_updateStatus}>
-		  {"Update Status"}
-		  </Button>
-
-		  <Button type="reset" >
-		  { "Clear text" }
-		  </Button>
-		  </FormGroup> </form>
+			  <ControlLabel> Update your status? </ControlLabel>
+			  <FormControl
+			   type="text" placeholder={ "Write status here.." }
+			   onChange={ _onChange } />
+			  <br />
+			  <Button bsStyle="success" type="reset" 
+			  onClick={ _updateStatus } >
+			    {"Update Status"}
+			  </Button>
+			  <Button type="reset" >
+			    { "Clear text" }
+			  </Button>
+			</FormGroup> </form>
 		</Col>
 		</Well>
 	)

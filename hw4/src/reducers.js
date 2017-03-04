@@ -34,19 +34,20 @@ const Reducer = (state = {
             return 
         case ActionTypes.ADD_ARTICLE:
             //These will be non-persitant on refresh as required")
-            return {
+            return (action.newArticle.text && 
+              action.newArticle.text.length != 0) ? {
                 ...state,
                 articles:
                     state.articles.concat(action.newArticle),
                 visibleArticleIDs: 
                     state.visibleArticleIDs.concat(action.newArticle._id)
-            }
+            } : state
         case ActionTypes.UPDATE_STATUS:
-            console.log("new status:", action.new_status)
+            console.log("new status:", action.newStatus)
             console.log("old status", state.profileData.status)
             return {
                 ...state, profileData: {
-                    ...state.profileData, status: action.new_status
+                    ...state.profileData, status: action.newStatus
                 }
             }
 

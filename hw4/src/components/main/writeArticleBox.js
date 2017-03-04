@@ -37,20 +37,21 @@ export const WriteArticleBox = ({
 		<form> <FormGroup controlId="writeArticleForm">
 		  <ControlLabel> Upload an image: </ControlLabel>
 		  <FormControl type="file" />
-		  <br /> <br />
-
+		  <br />
 		  <ControlLabel> Write an article: </ControlLabel>
 		  <FormControl
 		   type="text" placeholder={ "Write article here..." }
 		   onChange={ _onChange }
 		   />
-		  <br />
-		  <Button bsStyle="success" onClick={ _postArticle } >
-		  {"Post text as article!"}
-		  </Button>
 
+		  <br />
+
+		  <Button bsStyle="success"
+		   type="reset" onClick={ _postArticle } >
+		    {"Post text as article!"}
+		  </Button>
 		  <Button type="reset" >
-		  { "Clear text" }
+		  	{ "Clear text" }
 		  </Button>
 		</FormGroup> </form>
 		</Well> </ListGroupItem>

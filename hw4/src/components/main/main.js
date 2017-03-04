@@ -13,6 +13,10 @@ export const Main = ({ }) => {
 		  <Row>
 		 	<NavBar />
 		  </Row>
+		  
+//TODO:
+//search bar filters by author and text, but not article id or article date
+//Allow adding/removing people on sidebar
 		  <br />
 		  <Row> 
 		  	<MiniProfile />
@@ -27,13 +31,7 @@ export const Main = ({ }) => {
 		  <Row> 
 		 	<Col md={7}> <Feed /> </Col>
 		 	<Col md={3}> <FollowSideBar/> </Col>
-		  </Row>
-		  
-//TODO:
-//Publish new article
-//clear new artile area
-//search bar filters by author and text, but not article id or article date
-//Update//add to the sidebar
+		  </Row>		  
 	 	</Grid>
 	)
 }
