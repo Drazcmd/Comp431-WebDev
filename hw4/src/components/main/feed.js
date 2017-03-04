@@ -36,7 +36,8 @@ export const Feed = ({ articles, visibleArticleIDs }, { }) => {
 }
 
 Feed.propTypes = {
-
+	articles: PropTypes.array.isRequired,
+	visibleArticleIDs: PropTypes.array.isRequired
 }
 
 export default connect(
