@@ -13,15 +13,14 @@ export const Feed = ({ articles, visibleArticleIDs }, { }) => {
 			return searchResult.length>0 ? acc.concat(searchResult) : acc
 			console.log(searchResult)
 		}, [])
-		console.log(displayedArticles)
 	return (
 		<ListGroup>
 		<b>'FEED ME HERE'</b>
 		{
 			displayedArticles.map((article, index) => (
 			<ArticleCard articleJSON={ article } key={ index } />
-		))}
-		<ArticleCard articleJSON={ articles[7] } />
+			))
+		}
 		</ListGroup>
 	)
 }

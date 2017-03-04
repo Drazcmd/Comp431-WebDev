@@ -4,7 +4,9 @@ export const LANDING_PAGE = 'LANDING_PAGE'
 export const ERROR = 'ERROR'
 
 export const ActionTypes = {
-    LOCATION_CHANGE: 'LOCATION_CHANGE'
+    LOCATION_CHANGE: 'LOCATION_CHANGE',
+    HIDE_ARTICLE: 'HIDE_ARTICLE',
+    SHOW_ARTICLE: 'SHOW_ARTICLE'
 }
 
 /* 
@@ -22,5 +24,11 @@ proper term.
 In Redux action creators simply return an action:
 */
 export const updateLocation = (new_location) => {
-	return { type: ActionTypes.LOCATION_CHANGE, location: new_location}
+	return { type: ActionTypes.LOCATION_CHANGE, location: new_location }
+}
+export const hideArticle = (articleID) => {
+	return { type: ActionTypes.HIDE_ARTICLE, articleID }
+}
+export const showArticle = (articleID) => {
+	return { type: ActionTypes.SHOW_ARTICLE, articleID }
 }
