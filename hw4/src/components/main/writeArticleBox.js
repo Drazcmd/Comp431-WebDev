@@ -3,24 +3,13 @@ import { connect } from 'react-redux'
 import { Button, Well, ListGroupItem } from 'react-bootstrap';
 import { FormGroup, FormControl, ControlLabel } from 'react-bootstrap'
 
-//Normally this would be bad. HOWEVER, we don't actually want to
-//be storing this state anywhere until actually submitted by the user
-function buildClearInput(formControlRef) {
-	//Note how this COMPOSES a funciton to clear said input,
-	//as opposed to clearing the form itself
-	return {
-		function(){ReactDOM.findDOMNode(formControlRef).value = "";}
-	} 
-}
-
 export const WriteArticleBox = ({ postArticle, clearArticle }) => {
 	return (
 		<ListGroupItem> <Well>
 		<FormGroup>
 		  <ControlLabel />
 		  <FormControl 
-		  	type="text" placeholder="Write Article Here" 
-		  	ref="writeNewArticle"
+		    type="text"placeholder="Write Article Here"
 		  />
 		</FormGroup>
 
@@ -29,10 +18,7 @@ export const WriteArticleBox = ({ postArticle, clearArticle }) => {
 		}
 		</Button>
 
-		<Button bsSize="small" onClick = {
-		  //Higher-order function-composition here
-		  buildClearInput("writeNewArticle")
-		}>
+		<Button bsSize="small" onClick = { clearArticle }>
 		  { "Clear Article!" }
 		</Button>
 		</Well> </ListGroupItem>
