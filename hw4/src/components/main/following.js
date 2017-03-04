@@ -4,36 +4,31 @@ import NavBar from '../navigation/navBar'
 import Feed from './feed'
 import WriteArticleBox from './writeArticleBox'
 import UserStatus from './userStatus'
-import Following from './following'
 import { Grid, Row, Col } from 'react-bootstrap'
 
-export const Main = ({ profileImgSrc }) => {
+export const Following = ({ trumpImg, billImg, hillImg}) => {
 	const profileImgWidth="100"
 	const profileImgHeight="75"
 	return (
 	  	<Grid>
 		  <Row>
-		 	<NavBar />
-		  </Row>
-
-		  <Row> 
-		 	<Col md={5}> 
 		 	<img height={ profileImgHeight }
-		 	 width={ profileImgWidth } src={ profileImgSrc } />
-		 	</Col>
-		 	<Col md={5}> <UserStatus /> </Col> 
+		 	 width={ profileImgWidth } src={ trumpImg } />
 		  </Row>
 
-		  <br /> <br /> <br />
+		  <Row> 
+		 	<img height={ profileImgHeight }
+		 	 width={ profileImgWidth } src={ hillImg } />
+		  </Row>
 
 		  <Row> 
-		 	<Col md={7}> <Feed /> </Col>
-		 	<Col md={3}> <Following /> </Col>
+		 	<img height={ profileImgHeight }
+		 	 width={ profileImgWidth } src={ billImg } />
 		  </Row>
 		  
 		  <Row>
-		 	<div> ADD/EDIT/POST NEW ARTICLE HERE!!! </div>
-		 	<div />
+		 	<div> Follow new people here! </div>
+		 	<WriteArticleBox />
 		  </Row>
 //TODO:
 //Profile picture somewhere
@@ -52,12 +47,14 @@ export const Main = ({ profileImgSrc }) => {
 	)
 }
 
-Main.propTypes = {
+Following.propTypes = {
 }
 
 export default connect(
     (state) => ({ 
-    	profileImgSrc: state.profileImg,
+    	trumpImg: state.profileImg,
+    	billImg: state.billImg,
+    	hillImg: state.hillImg
     }),
     (dispatch) => ({ })
-)(Main)
+)(Following)
