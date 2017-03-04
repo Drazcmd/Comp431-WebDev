@@ -36,14 +36,13 @@ const Reducer = (state = {
             return 
 
         case ActionTypes.ADD_ARTICLE:
-            console.log("Adding a (non-persitant on refresh) an article:", action.newArticle)
             //These will be non-persitant on refresh as required")
             return {
                 ...state,
                 articles:
-                    articles.Concat(action.newArticle),
-                visibleArticleIds: 
-                    visibleArticleIDs.Concat(action.newArticle.id)
+                    state.articles.concat(action.newArticle),
+                visibleArticleIDs: 
+                    state.visibleArticleIDs.concat(action.newArticle.id)
             }
         default:
             console.log("action:", action.Type)

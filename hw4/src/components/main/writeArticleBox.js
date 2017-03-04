@@ -4,9 +4,9 @@ import { Button, Well, ListGroupItem } from 'react-bootstrap';
 import { FormGroup, FormControl, ControlLabel } from 'react-bootstrap'
 import { addArticle } from '../../actions'
 export const WriteArticleBox = ({
-	profileName, nextArticleId, postArticle
+	profileName, nextArticleID, postArticle
 }) => {
-
+	console.log("NEXT ID:", nextArticleID)
 	/* 
 	Normally this wouldn't be what we'd do, but we need a way to dump the
 	temporary non-persitant writing over into our actual postArticle function.
@@ -22,13 +22,14 @@ export const WriteArticleBox = ({
 		writeView=e.target.value;
 	}	
 	function _postArticle(e){
-		//accessing e.target.value here wouldn't work!
 		postArticle({
-			_id: nextArticleId,
+			id: nextArticleID,
+			//accessing e.target.value here wouldn't work!
 			text: writeView, 
 			img: null,
 			comments:[],
-			author: profileName
+			author: profileName,
+			date: Date.now()
 		})
 	}
 	return (
@@ -61,7 +62,7 @@ WriteArticleBox.propTypes = {
 export default connect(
 	(state) => {
 		return {
-			nextArticleId: state.articles.length,
+			nextArticleID: state.articles.length,
 			profileName: state.profileData.name
 		}
 	},
