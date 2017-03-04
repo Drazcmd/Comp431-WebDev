@@ -12,21 +12,22 @@ export const Feed = ({ articles, visibleArticleIDs }, { }) => {
 			(article) => {return article._id === id}
 		)
 		return searchResult.length>0 ? acc.concat(searchResult) : acc
-		console.log(searchResult)
-	}, []).concat().sort((articleA, articleB) => {
-		console.log(articleA.date)
-		console.log(articleB.date)
-		console.log(
-			-1 * (Date.parse(articleA.date) - Date.parse(articleB.date))
-		)
-		//Arr.sort is a litle demented in js, but this should order it by date
-		return -1 * (Date.parse(articleA.date) - Date.parse(articleB.date))
+	}, [])
+
+	//Arr.sort is a litle demented in js - it directly mutates
+	//This is why I call .concat - to get us a fresh copy 
+	const sortedDisplayedArticles = displayedArticles.concat().sort(
+		(articleA, articleB) => {
+			return (-1 *
+				(Date.parse(articleA.date) - Date.parse(articleB.date))
+			)
 	})
+
 	return (
 		<ListGroup>
 		<b>'FEED ME HERE'</b>
 		{
-			displayedArticles.map((article, index) => (
+			sortedDisplayedArticles.map((article, index) => (
 			<ArticleCard articleJSON={ article } key={ index } />
 			))
 		}
