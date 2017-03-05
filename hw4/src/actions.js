@@ -44,7 +44,7 @@ export const updateStatus = (newStatus) => {
 	return { type: ActionTypes.UPDATE_STATUS, newStatus }
 }
 export const updateProfileData = (newData) => {
-    return { type: ActionTypes.UPDATE_STATUS, newData }
+    return { type: ActionTypes.UPDATE_PROFILE_DATA, newData }
 }
 export const updateShownArticles = (visibilityMode, filterStr) => {
 	return { 

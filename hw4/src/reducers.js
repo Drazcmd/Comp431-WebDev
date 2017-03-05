@@ -96,13 +96,17 @@ const Reducer = (state = {
             )}
         }
         case ActionTypes.UPDATE_PROFILE_DATA: {
-            new_data = action.new_data;
+            const new_data = action.newData;
+            console.log(new_data)
             return {
                 ...state,
-                name: new_data.name,
-                zip: new_data.zip,
-                email: new_data.email,
-                phoneNumber: new_data.phoneNumber
+                profileData: {
+                    ...state.profileData, 
+                    name: new_data.name,
+                    zip: new_data.zip,
+                    email: new_data.email,
+                    phoneNumber: new_data.phoneNumber
+                }
             }
         }
         default: {
