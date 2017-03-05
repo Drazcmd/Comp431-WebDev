@@ -13,8 +13,8 @@ export const VisModes = {
 export const ActionTypes = {
     LOCATION_CHANGE: 'LOCATION_CHANGE',
     ADD_ARTICLE: 'ADD_ARTICLE',
-    CLEAR_WRITE_VIEW: 'CLEAR_WRITE_VIEW',
     UPDATE_STATUS: 'UPDATE_STATUS',
+    UPDATE_PROFILE_DATA: 'UPDATE_PROFILE_DATA',
     UPDATE_SHOWN_ARTICLES: 'UPDATE_SHOWN_ARTICLES',
     REMOVE_FOLLOWEE: "REMOVE_FOLLOWEE",
     ADD_FOLLOWEE: "ADD_FOLLOWEE"
@@ -42,6 +42,9 @@ export const addArticle = (newArticle) => {
 }
 export const updateStatus = (newStatus) => {
 	return { type: ActionTypes.UPDATE_STATUS, newStatus }
+}
+export const updateProfileData = (newData) => {
+    return { type: ActionTypes.UPDATE_STATUS, newData }
 }
 export const updateShownArticles = (visibilityMode, filterStr) => {
 	return { 
