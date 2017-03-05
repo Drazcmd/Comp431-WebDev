@@ -4,10 +4,10 @@ export const LANDING_PAGE = 'LANDING_PAGE'
 export const ERROR = 'ERROR'
 
 export const VisModes = {
-    REFRESH : "REFRESH",
-    FIL_AUTH : "FILTER_BY_AUTHOR",
-    FIL_TEXT : "FILTER_BY_TEXT",
-    NO_FILTER : "NO_FILTER"
+    REFRESH : 'REFRESH',
+    FIL_AUTH : 'FILTER_BY_AUTHOR',
+    FIL_TEXT : 'FILTER_BY_TEXT',
+    NO_FILTER : 'NO_FILTER'
 }
 
 export const ActionTypes = {
@@ -15,7 +15,8 @@ export const ActionTypes = {
     ADD_ARTICLE: 'ADD_ARTICLE',
     CLEAR_WRITE_VIEW: 'CLEAR_WRITE_VIEW',
     UPDATE_STATUS: 'UPDATE_STATUS',
-    UPDATE_SHOWN_ARTICLES: 'UPDATE_SHOWN_ARTICLES'
+    UPDATE_SHOWN_ARTICLES: 'UPDATE_SHOWN_ARTICLES',
+    REMOVE_FOLLOWEE: "REMOVE_FOLLOWEE"
 }
 
 /* 
@@ -42,9 +43,11 @@ export const updateStatus = (newStatus) => {
 	return { type: ActionTypes.UPDATE_STATUS, newStatus }
 }
 export const updateShownArticles = (visibilityMode, filterStr) => {
-	console.log("in update shown articles", visibilityMode, filterStr)
 	return { 
 		type: ActionTypes.UPDATE_SHOWN_ARTICLES,
 	 	visibilityMode, filterStr
 	}
+}
+export const removeFollowee = (name) => {
+	return {type: ActionTypes.REMOVE_FOLLOWEE, name}
 }

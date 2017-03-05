@@ -9,9 +9,7 @@ const Reducer = (state = {
     visibilityMode: VisModes.NO_FILTER,
     filterStr: "",
     profileData: obama,
-    trump: otherUsers[0],
-    hill: otherUsers[1],
-    bill: otherUsers[2]
+    followees: otherUsers
 }, action) => {
     console.log(action, action.visibilityMode)
     console.log("in action:", action.type)
@@ -99,10 +97,20 @@ const Reducer = (state = {
                 }
             }
         }
+        case ActionTypes.REMOVE_FOLLOWEE: {
+            console.log("remove him", action.name)
+            return {...state, followees: state.followees.filter(
+                (followee) => {
+                    return !(followee.name === action.name)
+                }
+            )}
+        }
 
         default: {
             console.log("action:", action.Type)
-            return state
+            return {
+                ...state, 
+            }
         }
     }
 }
