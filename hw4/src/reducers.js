@@ -11,26 +11,19 @@ const Reducer = (state = {
     profileData: obama,
     followees: otherUsers
 }, action) => {
-    console.log(action, action.visibilityMode)
-    console.log("in action:", action.type)
-    console.log("vis mode", action.visibilityMode)
     switch (action.type) {
         case ActionTypes.LOCATION_CHANGE: {
-            console.log("Location change action's reducer")
             return { ...state, location: action.location}
         }
 
         case ActionTypes.UPDATE_SHOWN_ARTICLES: {
             //It's either a new mode or a direction to use the old
-            console.log("in vis mode", action.visibilityMode)
-            console.log(state.visibilityMode)
             let visibilityMode = VisModes.NO_FILTER
             let filterStr = state.filterStr
             if (action.visibilityMode != VisModes.REFRESH) {
                 visibilityMode = action.visibilityMode
                 filterStr = action.filterStr
             }
-            console.log('vis mode:', visibilityMode, filterStr)
 
             //NO_FILTER wants to show everything
             if (visibilityMode == VisModes.NO_FILTER) {
@@ -39,16 +32,10 @@ const Reducer = (state = {
                 }
             }
 
-            //Otherwise we'll be filtering it
-            console.log(visibilityMode, filterStr)
-            console.log(VisModes.FIL_AUTH)
-            console.log(visibilityMode === VisModes.FIL_AUTH) 
+            let filterFunc = () => articles.concat()
             //Ternary operator is being weird, not sure why.
             //This is identical in function to one though
-            let filterFunc = () => articles.concat()
-
             if (visibilityMode === VisModes.FIL_AUTH){
-                console.log("filtering by author", filterStr)
                 filterFunc = (articles) => {
                     //Only assume it's by author if explicitly so
                     return articles.filter(article => {
@@ -56,7 +43,6 @@ const Reducer = (state = {
                     })
                 }
             } else if (visibilityMode === VisModes.FIL_TEXT){
-                console.log("filtering by text", filterStr)
                 filterFunc = (articles) => {
                     //If it's not by author, we assume it's by text
                     //AKA, == VisModes.FIL_TEXT
@@ -65,12 +51,9 @@ const Reducer = (state = {
                     })
                 };
             } else {
-                console.log("No match! huh?")
+                ;
             }
-            console.log(state.articles)
-            console.log(filterFunc)
             const filteredArticles = filterFunc(state.articles);
-            console.log("filtered articles:", filteredArticles)
             return {
                 ...state, 
                 visibleArticles: filteredArticles
@@ -90,7 +73,6 @@ const Reducer = (state = {
         }
 
         case ActionTypes.UPDATE_STATUS: {
-            console.log("new status:", action.newStatus)
             return {
                 ...state, profileData: {
                     ...state.profileData, status: action.newStatus
@@ -98,7 +80,6 @@ const Reducer = (state = {
             }
         }
         case ActionTypes.REMOVE_FOLLOWEE: {
-            console.log("remove him", action.name)
             return {...state, followees: state.followees.filter(
                 (followee) => {
                     return !(followee.name === action.name)
@@ -106,7 +87,6 @@ const Reducer = (state = {
             )}
         }
         case ActionTypes.ADD_FOLLOWEE: {
-            console.log("add him", action.name)
             return {...state, followees: state.followees.concat(
                 {
                     name: action.name,
@@ -117,7 +97,6 @@ const Reducer = (state = {
         }
 
         default: {
-            console.log("action:", action.Type)
             return {
                 ...state, 
             }

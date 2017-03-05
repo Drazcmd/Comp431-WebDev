@@ -3,8 +3,6 @@ import { connect } from 'react-redux'
 import { updateLocation } from '../../actions'
 import { Button } from 'react-bootstrap';
 
-console.log(connect)
-console.log(updateLocation)
 export const NavButton = ({ displayText, navigate }) => {
 	return (
 		<span>
