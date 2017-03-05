@@ -6,19 +6,6 @@ import Profile from './components/Profile/profile'
 import Landing from './components/Landing/landing'
 
 export const AppRoot = ({ location, update }) => {
-    /*
-    Reason for the _ is to distinguish it from
-    the inputted function 'update.' On a side note,
-    the inputted update is defined down in the connect
-    area, and it's a lambda that takes the location and
-    then dispatches an updateLocation action (which itself
-    takes in location as an input) to our reducer.
-    */
-
-    //Remember, the 'state' IS the state! So the passed in locatio
-    //is actually the current location state. Cool huh? 
-
-    //three if-statement stuff goes here
     console.log(location)
     if (location == 'MAIN_PAGE') {
         return (<Main />)

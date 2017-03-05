@@ -14,10 +14,6 @@ export const Main = ({ }) => {
 		  <Row>
 		 	<NavBar />
 		  </Row>
-		  
-//TODO:
-//search bar filters by author and text, but not article id or article date
-//Allow adding/removing people on sidebar
 		  <br />
 		  <Row> 
 		  	<MiniProfile />

@@ -8,7 +8,7 @@ export const Landing = ({ }, { }) => {
 	return (
 	 	<Grid>
 	 	  <Row>
-	 	    <h5> ELECT-BOOK </h5>
+	 	    <h1> ELECT-BOOK </h1>
 	 	  </Row>
 		  <Row>
 			<Col md={5}> <Registration /> </Col>
