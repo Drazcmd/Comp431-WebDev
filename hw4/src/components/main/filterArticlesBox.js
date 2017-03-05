@@ -20,7 +20,6 @@ export const filterArticlesBox = ({
 		writeView=e.target.value;
 	}	
 	function _updateShownArticles(filterMode){
-		console.log("OY", filterMode, writeView)
 		filterArticles(filterMode, writeView)
 	}
 	const _NoFilter = () => {_updateShownArticles(VisModes.NO_FILTER)}
@@ -63,12 +62,10 @@ export default connect(
  	(dispatch) => {
  		return {
 			postArticle: (article) => {
-				console.log("posting an article!", VisModes.REFRESH, article)
 				dispatch(addArticle(article))
 				//Gotta refresh visible articles to see it
 			},
 			filterArticles: (mode, filterStr) => {
-				console.log("about to dispatch", mode, filterStr)
 				dispatch(updateShownArticles(
 					mode, filterStr
 				))

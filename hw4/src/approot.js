@@ -6,7 +6,6 @@ import Profile from './components/Profile/profile'
 import Landing from './components/Landing/landing'
 
 export const AppRoot = ({ location, update }) => {
-    console.log(location)
     if (location == 'MAIN_PAGE') {
         return (<Main />)
     } else if (location == 'PROFILE_PAGE') {

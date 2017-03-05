@@ -31,8 +31,6 @@ export const WriteArticleBox = ({
 			author: profileName,
 			date: new Date().toISOString()
 		})
-		console.log(filterArticles)
-		console.log(VisModes.REFRESH)
 		//This will use the previous filtering
 		filterArticles(VisModes.REFRESH, "")
 	}
@@ -75,7 +73,6 @@ export default connect(
  	(dispatch) => {
  		return {
 			postArticle: (article) => {
-				console.log("posting an article!", VisModes.REFRESH, article)
 				dispatch(addArticle(article))
 				//Gotta refresh visible articles to see it
 			},
