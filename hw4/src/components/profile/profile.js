@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import NavBar from '../navigation/navBar'
+import ProfileImgSection from './profileImgSection'
 import { Grid, Row, Col } from 'react-bootstrap'
 import { Button, FormGroup, FormControl,
  ControlLabel, Well } from 'react-bootstrap'
@@ -19,15 +20,7 @@ export const Profile = ({ profileData, updateProfileData }) => {
 			<NavBar />
 		</Row>
 		<br />
-		<Row> <Well>
-	 		<img height={ profileImgHeight }
-	 	 	width={ profileImgWidth } src={ profileData.img } />
-			<form> <FormGroup controlId="pictureUpdateForm">
-				<ControlLabel> Upload a new profile image: </ControlLabel>
-			 	<FormControl type="file" />
-			</FormGroup> </form>
-	 	</Well> </Row>
-
+		<ProfileImgSection />
 	 	<Row> <Well>
 	  	<b> Date of Birth: {profileData.dob} (Can't be updated) </b>
 	  	<br />
