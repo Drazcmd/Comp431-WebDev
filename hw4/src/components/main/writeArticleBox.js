@@ -2,9 +2,10 @@ import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { Button, Well, ListGroupItem } from 'react-bootstrap';
 import { FormGroup, FormControl, ControlLabel } from 'react-bootstrap'
-import { addArticle } from '../../actions'
+import { addArticle, updateShownArticles, VisModes } from '../../actions'
+
 export const WriteArticleBox = ({
-	profileName, nextArticleID, postArticle
+	profileName, nextArticleID, postArticle, filterArticles
 }) => {
 	console.log("NEXT ID:", nextArticleID)
 	/* 
@@ -31,6 +32,10 @@ export const WriteArticleBox = ({
 			author: profileName,
 			date: new Date().toISOString()
 		})
+		console.log(filterArticles)
+		console.log(VisModes.REFRESH)
+		//This will use the previous filtering
+		filterArticles(VisModes.REFRESH, "")
 	}
 	return (
 		<ListGroupItem> <Well bsSize="small">
@@ -70,7 +75,17 @@ export default connect(
 	},
  	(dispatch) => {
  		return {
-			postArticle: (article) => dispatch(addArticle(article))
+			postArticle: (article) => {
+				console.log("posting an article!", VisModes.REFRESH, article)
+				dispatch(addArticle(article))
+				//Gotta refresh visible articles to see it
+			},
+			filterArticles: (mode, filterStr) => {
+				dispatch(updateShownArticles(
+					mode, filterStr
+				))
+
+			}
 		}
  	}
 )(WriteArticleBox)
