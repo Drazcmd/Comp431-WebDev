@@ -105,6 +105,16 @@ const Reducer = (state = {
                 }
             )}
         }
+        case ActionTypes.ADD_FOLLOWEE: {
+            console.log("add him", action.name)
+            return {...state, followees: state.followees.concat(
+                {
+                    name: action.name,
+                    status: "Now struggling with a HARD CODE assignment...",
+                    img: "https://unsplash.it/200"
+                }
+            )}
+        }
 
         default: {
             console.log("action:", action.Type)

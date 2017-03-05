@@ -16,7 +16,8 @@ export const ActionTypes = {
     CLEAR_WRITE_VIEW: 'CLEAR_WRITE_VIEW',
     UPDATE_STATUS: 'UPDATE_STATUS',
     UPDATE_SHOWN_ARTICLES: 'UPDATE_SHOWN_ARTICLES',
-    REMOVE_FOLLOWEE: "REMOVE_FOLLOWEE"
+    REMOVE_FOLLOWEE: "REMOVE_FOLLOWEE",
+    ADD_FOLLOWEE: "ADD_FOLLOWEE"
 }
 
 /* 
@@ -50,4 +51,7 @@ export const updateShownArticles = (visibilityMode, filterStr) => {
 }
 export const removeFollowee = (name) => {
 	return {type: ActionTypes.REMOVE_FOLLOWEE, name}
+}
+export const addFollowee = (name) => {
+    return {type: ActionTypes.ADD_FOLLOWEE, name}
 }

@@ -9,9 +9,9 @@ export const followSideBar = ({ followees }) => {
 	return (
 	  	<Grid>
 		{
-			followees.map((followee) => (
-				<Row>
-				<Followee data={followee} />
+			followees.map((followee, index) => (
+				<Row key={index}>
+				<Followee data={followee} key={index} />
 				</Row>
 			))
 		}

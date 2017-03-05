@@ -7,7 +7,6 @@ import { addArticle, updateShownArticles, VisModes } from '../../actions'
 export const WriteArticleBox = ({
 	profileName, nextArticleID, postArticle, filterArticles
 }) => {
-	console.log("NEXT ID:", nextArticleID)
 	/* 
 	Normally this wouldn't be what we'd do, but we need a way to dump the
 	temporary non-persitant writing over into our actual postArticle function.
