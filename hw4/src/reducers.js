@@ -7,12 +7,13 @@ const Reducer = (state = {
     articles: initialItems.articles,
     visibleArticles: initialItems.articles,
     visibilityMode: VisModes.NO_FILTER,
+    filterStr: "",
     profileData: obama,
     trump: otherUsers[0],
     hill: otherUsers[1],
     bill: otherUsers[2]
 }, action) => {
-    console.log(action, action.visibilityMode, action.VisMode)
+    console.log(action, action.visibilityMode)
     console.log("in action:", action.type)
     console.log("vis mode", action.visibilityMode)
     switch (action.type) {
@@ -26,10 +27,12 @@ const Reducer = (state = {
             console.log("in vis mode", action.visibilityMode)
             console.log(state.visibilityMode)
             let visibilityMode = VisModes.NO_FILTER
+            let filterStr = state.filterStr
             if (action.visibilityMode != VisModes.REFRESH) {
                 visibilityMode = action.visibilityMode
+                filterStr = action.filterStr
             }
-            console.log('vis mode:', visibilityMode)
+            console.log('vis mode:', visibilityMode, filterStr)
 
             //NO_FILTER wants to show everything
             if (visibilityMode == VisModes.NO_FILTER) {
@@ -39,28 +42,37 @@ const Reducer = (state = {
             }
 
             //Otherwise we'll be filtering it
-            const filterStr = action.filterStr
-            console.log(visibilityMode)
+            console.log(visibilityMode, filterStr)
             console.log(VisModes.FIL_AUTH)
             console.log(visibilityMode === VisModes.FIL_AUTH) 
-            const filterFunc = visibilityMode === VisModes.FIL_AUTH ?
-                (articles) => {
+            //Ternary operator is being weird, not sure why.
+            //This is identical in function to one though
+            let filterFunc = () => articles.concat()
+
+            if (visibilityMode === VisModes.FIL_AUTH){
+                console.log("filtering by author", filterStr)
+                filterFunc = (articles) => {
                     //Only assume it's by author if explicitly so
-                    articles.filter(article => {
-                        article.author.includes(filterStr)
+                    return articles.filter(article => {
+                        return article.author.includes(filterStr)
                     })
-                } : 
-                (articles) => {
+                }
+            } else if (visibilityMode === VisModes.FIL_TEXT){
+                console.log("filtering by text", filterStr)
+                filterFunc = (articles) => {
                     //If it's not by author, we assume it's by text
                     //AKA, == VisModes.FIL_TEXT
-                    articles.filter(article => {
-                        article.text.includes(filterStr)
+                    return articles.filter(article => {
+                        return article.text.includes(filterStr)
                     })
                 };
+            } else {
+                console.log("No match! huh?")
+            }
             console.log(state.articles)
             console.log(filterFunc)
-            console.log(filteredArticles)
             const filteredArticles = filterFunc(state.articles);
+            console.log("filtered articles:", filteredArticles)
             return {
                 ...state, 
                 visibleArticles: filteredArticles

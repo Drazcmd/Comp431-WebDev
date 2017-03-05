@@ -4,6 +4,7 @@ import NavBar from '../navigation/navBar'
 import Feed from './feed'
 import WriteArticleBox from './writeArticleBox'
 import MiniProfile from './miniProfile'
+import FilterArticlesBox from './FilterArticlesBox'
 import FollowSideBar from './Sidebar/followSideBar'
 import { Grid, Row, Col } from 'react-bootstrap'
 
@@ -23,7 +24,8 @@ export const Main = ({ }) => {
 		  </Row>
 		  <br />
 		  <Row>
-		 	<WriteArticleBox />
+		 	<WriteArticleBox md={5}/>
+		 	<FilterArticlesBox md={5} />
 		  </Row>
 
 		  <br /> <br /> <br />
