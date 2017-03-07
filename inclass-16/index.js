@@ -6,7 +6,9 @@ const addArticle = (req, res) => {
      console.log('Payload received', req.body)    
      res.send(req.body)
 }
-/*
+
+const hello = (req, res) => res.send({ hello: 'world' })
+
 const staticArticles = [
     {
         id: 1,
@@ -25,11 +27,10 @@ const staticArticles = [
     }
 ]
 const articles = (req, res) => res.send({articles: staticArticles})
-*/
-const hello = (req, res) => res.send({ hello: 'world' })
 
 const app = express()
 app.use(bodyParser.json())
+app.get('/articles', articles)
 app.post('/article', addArticle)
 app.get('/', hello)
 
