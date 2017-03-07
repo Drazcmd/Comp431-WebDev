@@ -38,7 +38,7 @@ const addArticle = ((req, res) => {
      };
      */
      const id = articles[articles.length - 1].id + 1 
-     const next_article = Object.assign({ id }, req)
+     const next_article = Object.assign({ id }, req.body)
 
      console.log(next_article)
      articles = articles.concat(next_article)
