@@ -8,17 +8,17 @@ const initArticles = [
     {
         id: 1,
         author: "Clayton",
-        test: "My first article!"
+        text: "My first article!"
     },
     {
         id: 2,
         author: "Bob",
-        test: "My first article!"
+        text: "My first article!"
     },
     {
         id: 3,
         author: "Bill",
-        test: "My first article!"
+        text: "My first article!"
     }
 ]
 
@@ -30,19 +30,23 @@ const getArticles = (req, res) => {
     res.send({articles})
 }
 const addArticle = ((req, res) => {
-     console.log('Payload received', req.body)    
-     //unlike react-redux we don't have an object spread :'(
-     /*
-     const next_article = {
-            ...req.body, 
-     };
-     */
-     const id = articles[articles.length - 1].id + 1 
-     const next_article = Object.assign({ id }, req.body)
-
-     console.log(next_article)
-     articles = articles.concat(next_article)
-     res.send(id)
+    console.log('Payload received', req.body)    
+    //unlike react-redux we don't have an object spread :'(
+    /*
+    const next_article = {
+           ...req.body, 
+    };
+    */
+    const payload = req.body
+    const id = articles[articles.length - 1].id + 1 
+    const next_article = {
+        id,
+        text: payload.text,
+        author: payload.author
+    }
+    console.log(next_article)
+    articles = articles.concat(next_article)
+    res.send(next_article)
 })
 
 
