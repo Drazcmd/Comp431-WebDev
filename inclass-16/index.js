@@ -2,14 +2,9 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 
-const addArticle = (req, res) => {
-     console.log('Payload received', req.body)    
-     res.send(req.body)
-}
-
 const hello = (req, res) => res.send({ hello: 'world' })
 
-const staticArticles = [
+const initArticles = [
     {
         id: 1,
         author: "Clayton",
@@ -26,7 +21,21 @@ const staticArticles = [
         test: "My first article!"
     }
 ]
-const articles = (req, res) => res.send({articles: staticArticles})
+
+//.concat with no-args will (shallow I believe) copy 
+let articles = initArticles.concat()
+const getArticles = (req, res) => res.send({articles: articles})
+const addArticle = (req, res) => {
+     console.log('Payload received', req.body)    
+     const next_article = ((input_article) => ({
+        ...input_article,
+        id = initArticles[initArticles.length - 1].id + 1
+     }))
+     console.log(next_article(req.body))
+     res.send(next_article(req.body))
+}
+
+
 
 const app = express()
 app.use(bodyParser.json())
