@@ -12,34 +12,44 @@ const initArticles = [
     },
     {
         id: 2,
-        author: "Clayton",
+        author: "Bob",
         test: "My first article!"
     },
     {
         id: 3,
-        author: "Clayton",
+        author: "Bill",
         test: "My first article!"
     }
 ]
 
 //.concat with no-args will (shallow I believe) copy 
 let articles = initArticles.concat()
-const getArticles = (req, res) => res.send({articles: articles})
-const addArticle = (req, res) => {
-     console.log('Payload received', req.body)    
-     const next_article = ((input_article) => ({
-        ...input_article,
-        id = initArticles[initArticles.length - 1].id + 1
-     }))
-     console.log(next_article(req.body))
-     res.send(next_article(req.body))
+
+const getArticles = (req, res) => {
+    console.log(articles)
+    res.send({articles})
 }
+const addArticle = ((req, res) => {
+     console.log('Payload received', req.body)    
+     //unlike react-redux we don't have an object spread :'(
+     /*
+     const next_article = {
+            ...req.body, 
+     };
+     */
+     const id = articles[articles.length - 1].id + 1 
+     const next_article = Object.assign({ id }, req)
+
+     console.log(next_article)
+     articles = articles.concat(next_article)
+     res.send(id)
+})
 
 
 
 const app = express()
 app.use(bodyParser.json())
-app.get('/articles', articles)
+app.get('/articles', getArticles)
 app.post('/article', addArticle)
 app.get('/', hello)
 
