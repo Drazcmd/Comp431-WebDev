@@ -5,4 +5,12 @@ const index = (req, res) => {
 
 module.exports = app => {
      app.get('/', index)
+     app.get('/headlines/:user?', index)
+     app.get('/', index)
+     app.get('/email/:user?', index)
+     app.get('/', index)
+     app.get('/zipcode/:user?', index)
+     app.get('/', index)
+     app.get('/avatars/:user?', index)
+     app.get('/', index)
 }
