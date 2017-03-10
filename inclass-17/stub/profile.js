@@ -3,9 +3,8 @@ const index = (req, res) => {
      res.send({ hello: 'world' })
 }
 
-//Given it's a stub is this ok? Or should I be parsing for the 
-//user and actually using that instead? Not entirely sure how
-//much we need to implement for this, basically.
+//Not 100% sure this is ok, but I'm always using it as a backup for
+//if user isn't defined somewhere in the rquest. So I think it's ok?
 const user = 'me'
 
 const profile = {
