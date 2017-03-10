@@ -7,8 +7,8 @@ const profile = {
      headline: 'This is my headline!',
      email: 'foo@bar.com',
      zipcode: 12345,
+     user = 'Claytonic',
      avatar: 'https://upload.wikimedia.org/wikipedia/en/thumb/4/4e/DWLeebron.jpg/220px-DWLeebron.jpg',
-     user = "Claytonic"
 }
 
 const headlines = (req, res) => {  
@@ -24,15 +24,47 @@ const putHeadline = (req, res) => {
      res.send({username: req.user, headline: req.headline})
 }
 
+const email = (req, res) => {
+     if (!req.email) req.email = profile.email
+     if (!req.user) req.user = profile.user
+     res.send({username: req.user, email: req.email})
+}
+const putEmail = (req, res) => {
+     if (!req.email) req.email = profile.email
+     res.send({email: req.email}) 
+}
+
+const zipcode = (req, res) => {
+     if (!req.email) req.email = profile.email
+     if (!req.user) req.user = profile.user
+     res.send({username: req.user, email: req.email})
+}
+const putZipcode = (req, res) => {
+     if (!req.email) req.email = profile.email
+     res.send({email: req.email}) 
+}
+const email = (req, res) => {
+     if (!req.email) req.email = profile.email
+     if (!req.user) req.user = profile.user
+     res.send({username: req.user, email: req.email})
+}
+const putEmail = (req, res) => {
+     if (!req.email) req.email = profile.email
+     res.send({email: req.email}) 
+}
+
+
 module.exports = app => {
      app.get('/', index)
      app.get('/headlines/:user?', headlines)
      app.put('/headline', putHeadline)
-     app.get('/', index)
-     app.get('/email/:user?', index)
-     app.get('/', index)
+
+     app.get('/email/:user?', email)
+     app.put('/email', putEmail)
+
      app.get('/zipcode/:user?', index)
-     app.get('/', index)
+     app.put('/zipcode', index)
+
      app.get('/avatars/:user?', index)
-     app.get('/', index)
+     app.put('/avatar', index)
 }
