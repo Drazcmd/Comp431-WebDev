@@ -3,16 +3,18 @@ const index = (req, res) => {
      res.send({ hello: 'world' })
 }
 
+//Default user for if not specified
+const user = 'Claytonic'
+
 const profile = {
      headline: 'This is my headline!',
-     email: 'foo@bar.com',
+     email: 'cmd11@blah.com',
      zipcode: 12345,
-     user = 'Claytonic',
      avatar: 'https://upload.wikimedia.org/wikipedia/en/thumb/4/4e/DWLeebron.jpg/220px-DWLeebron.jpg',
 }
 
 const headlines = (req, res) => {  
-     if (!req.user) req.user = profile.user
+     if (!req.user) req.user = user
      res.send({ headlines: [ 
           { headline: profile.headline } 
      ]}) 
@@ -20,13 +22,13 @@ const headlines = (req, res) => {
 
 const putHeadline = (req, res) => {
      if (!req.headline) req.headline = profile.headline
-     if (!req.user) req.user = profile.user
+     if (!req.user) req.user = user
      res.send({username: req.user, headline: req.headline})
 }
 
 const email = (req, res) => {
      if (!req.email) req.email = profile.email
-     if (!req.user) req.user = profile.user
+     if (!req.user) req.user = user
      res.send({username: req.user, email: req.email})
 }
 const putEmail = (req, res) => {
@@ -35,23 +37,23 @@ const putEmail = (req, res) => {
 }
 
 const zipcode = (req, res) => {
-     if (!req.user) req.user = profile.user
-     res.send({username: profile.user, email: profile.email})
+     if (!req.user) req.user = user
+     res.send({username: user, email: profile.email})
 }
 const putZipcode = (req, res) => {
      if (!req.zipcode) req.zipcode = profile.zipcode
-     res.send({username: profile.user, zipcode: req.zipcode}) 
+     res.send({username: user, zipcode: req.zipcode}) 
 }
 const avatars  = (req, res) => {
      if (!req.email) req.email = profile.email
-     if (!req.user) req.user = profile.user
+     if (!req.user) req.user = user
      res.send({avatars: [
-          username: req.user, avatar: profile.avatar
+          { username: user, avatar: profile.avatar}
      ]})
      res.send({username: req.user, email: req.email})
 }
 const putAvatar = (req, res) => {
-     if (!req.user) req.user = profile.user
+     if (!req.user) req.user = user
      if (!req.avatar) req.avatar = profile.avatar
      res.send({username: req.user, avatar: req.avatar}) 
 }
