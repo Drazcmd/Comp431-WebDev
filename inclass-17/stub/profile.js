@@ -3,7 +3,9 @@ const index = (req, res) => {
      res.send({ hello: 'world' })
 }
 
-//Default user for if not specified
+//Given it's a stub is this ok? Or should I be parsing for the 
+//user and actually using that instead? Not entirely sure how
+//much we need to implement for this, basically.
 const user = 'me'
 
 const profile = {
