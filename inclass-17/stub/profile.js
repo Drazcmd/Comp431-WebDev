@@ -4,7 +4,7 @@ const index = (req, res) => {
 }
 
 //Default user for if not specified
-const user = 'Claytonic'
+const user = 'me'
 
 const profile = {
      headline: 'This is my headline!',
@@ -16,14 +16,14 @@ const profile = {
 const headlines = (req, res) => {  
      if (!req.user) req.user = user
      res.send({ headlines: [ 
-          { headline: profile.headline } 
+          { username: req.user, headline: profile.headline } 
      ]}) 
 }
 
 const putHeadline = (req, res) => {
-     if (!req.headline) req.headline = profile.headline
      if (!req.user) req.user = user
-     res.send({username: req.user, headline: req.headline})
+     if (!req.body.headline) req.headline = profile.headline
+     res.send({username: req.user, headline: req.body.headline})
 }
 
 const email = (req, res) => {
@@ -32,8 +32,8 @@ const email = (req, res) => {
      res.send({username: req.user, email: req.email})
 }
 const putEmail = (req, res) => {
-     if (!req.email) req.email = profile.email
-     res.send({email: req.email}) 
+     if (!req.user) req.user = user
+     res.send({username: req.user, email: req.body.email}) 
 }
 
 const zipcode = (req, res) => {
@@ -41,8 +41,8 @@ const zipcode = (req, res) => {
      res.send({username: user, email: profile.email})
 }
 const putZipcode = (req, res) => {
-     if (!req.zipcode) req.zipcode = profile.zipcode
-     res.send({username: user, zipcode: req.zipcode}) 
+     if (!req.user) req.user = user
+     res.send({username: req.user, zipcode: req.body.zipcode}) 
 }
 const avatars  = (req, res) => {
      if (!req.email) req.email = profile.email
@@ -54,8 +54,7 @@ const avatars  = (req, res) => {
 }
 const putAvatar = (req, res) => {
      if (!req.user) req.user = user
-     if (!req.avatar) req.avatar = profile.avatar
-     res.send({username: req.user, avatar: req.avatar}) 
+     res.send({username: req.user, avatar: req.body.avatar}) 
 }
 
 
