@@ -43,12 +43,12 @@ const putZipcode = (req, res) => {
      if (!req.email) req.email = profile.email
      res.send({email: req.email}) 
 }
-const email = (req, res) => {
+const avatars  = (req, res) => {
      if (!req.email) req.email = profile.email
      if (!req.user) req.user = profile.user
      res.send({username: req.user, email: req.email})
 }
-const putEmail = (req, res) => {
+const putAvatar = (req, res) => {
      if (!req.email) req.email = profile.email
      res.send({email: req.email}) 
 }
@@ -62,9 +62,9 @@ module.exports = app => {
      app.get('/email/:user?', email)
      app.put('/email', putEmail)
 
-     app.get('/zipcode/:user?', index)
-     app.put('/zipcode', index)
+     app.get('/zipcode/:user?', zipcode)
+     app.put('/zipcode', putZipcode)
 
-     app.get('/avatars/:user?', index)
-     app.put('/avatar', index)
+     app.get('/avatars/:user?', avatars)
+     app.put('/avatar', putAvatar)
 }
