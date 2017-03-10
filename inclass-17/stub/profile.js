@@ -50,9 +50,8 @@ const avatars  = (req, res) => {
      if (!req.email) req.email = profile.email
      if (!req.user) req.user = user
      res.send({avatars: [
-          { username: user, avatar: profile.avatar}
+          { username: req.user, avatar: profile.avatar}
      ]})
-     res.send({username: req.user, email: req.email})
 }
 const putAvatar = (req, res) => {
      if (!req.user) req.user = user
