@@ -35,22 +35,25 @@ const putEmail = (req, res) => {
 }
 
 const zipcode = (req, res) => {
-     if (!req.email) req.email = profile.email
      if (!req.user) req.user = profile.user
-     res.send({username: req.user, email: req.email})
+     res.send({username: profile.user, email: profile.email})
 }
 const putZipcode = (req, res) => {
-     if (!req.email) req.email = profile.email
-     res.send({email: req.email}) 
+     if (!req.zipcode) req.zipcode = profile.zipcode
+     res.send({username: profile.user, zipcode: req.zipcode}) 
 }
 const avatars  = (req, res) => {
      if (!req.email) req.email = profile.email
      if (!req.user) req.user = profile.user
+     res.send({avatars: [
+          username: req.user, avatar: profile.avatar
+     ]})
      res.send({username: req.user, email: req.email})
 }
 const putAvatar = (req, res) => {
-     if (!req.email) req.email = profile.email
-     res.send({email: req.email}) 
+     if (!req.user) req.user = profile.user
+     if (!req.avatar) req.avatar = profile.avatar
+     res.send({username: req.user, avatar: req.avatar}) 
 }
 
 
