@@ -37,8 +37,8 @@ const putEmail = (req, res) => {
 }
 
 const zipcode = (req, res) => {
-     if (!req.user) req.user = user
-     res.send({username: user, email: profile.email})
+     if (!req.body.username) req.body.username = user
+     res.send({username: req.body.username, zipcode: profile.zipcode})
 }
 const putZipcode = (req, res) => {
      if (!req.user) req.user = user
