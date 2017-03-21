@@ -61,8 +61,27 @@ describe('Validate Article functionality', () => {
  	}, 200)
 
 	it('should return an article with a specified id', (done) => {
+        let testArticle;
+        resource('GET', "articles").then(body=> {
 		// call GET /articles first to find an id, perhaps one at random
-		// then call GET /articles/id with the chosen id
+            expect(body.articles).to.be.ok;
+            expect(body.articles.length).to.be.at.least(1);
+
+            //rather than random I choose the one in the middle
+            testArticle = body.articles[Math.floor(body.articles.length / 2])];
+            expect(testArticle).to.be.ok
+            expect(testArticle.id).to.be.ok
+        }).then(done).catch(done)
+
+        // then call GET /articles/id with the chosen id
+        resource('GET', `articles/${testArticle.id}`).then(body=> {
+            expect(body.article).to.be.ok;
+            expect(body.article.id).to.be.ok;
+            expect(body.article.id).to.be.eql(testID);
+            expect body.article.text.to.be.ok; 
+            expect body.article.text.to.be.eql(testArticle.text); 
+        }).then(done).catch(done)
+
 		// validate that only one article is returned
 		done(new Error('Not implemented'))
 	}, 200)
