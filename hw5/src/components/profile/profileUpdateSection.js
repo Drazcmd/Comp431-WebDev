@@ -5,48 +5,38 @@ import { Row, Button, FormGroup, FormControl,
 import {updateProfileData} from '../../actions'
 
 export const ProfileUpdateSection = ({ profileData, updateProfileData }) => {
-	let liveData = {
-		name: profileData.name,
-		email: profileData.email,
-		phoneNumber: profileData.phoneNumber,
-		zip: profileData.zip
-	}
-	function _liveName (e) {
-		liveData.name=e.target.value;
-	}	
-	function _liveEmail(e) {
-		liveData.email=e.target.value;
-	}	
-	function _livePhoneNumber(e) {
-		liveData.phoneNumber=e.target.value;
-	}	
-	function _liveZip(e) {
-		liveData.zip=e.target.value;
-	}	
+	let _name, _email, _phoneNumber, _zip;
+	
 	const _updateProfileInfo = () => {
-		updateProfileData(liveData)
+		console.log(_name, _email, _name.value, _email.value)
+		updateProfileData({
+			name:_name ? _name.value : profileData.name,
+			email:_email ? _email.value : profileData.email,
+			phoneNumber: _phoneNumber ? _phoneNumber.value : profileData.email,
+			zip: _zip ? _zip.value : profileData.zip
+		})
 	}
 	return (
 		<Well>
 		<form> <FormGroup controlId="ProfileInfo">
 		  <ControlLabel> Name: {profileData.name} </ControlLabel>
 		  <FormControl type="text" placeholder="Update Name Here"
-		   onChange={ _liveName } />
+		   inputRef={name => {_name = name }} />
 
 		  <br/ >
 		  <ControlLabel> Email: {profileData.email} </ControlLabel>
 		  <FormControl type="text" placeholder="Update Email Here"
-		   onChange={ _liveEmail } />
+		   inputRef={email => {_email = email }} />
 
 		  <br/ >
 		  <ControlLabel> Phone Number: {profileData.phoneNumber} </ControlLabel>
 		  <FormControl type="text" placeholder="Update Phone Number Here"
-		   onChange={ _livePhoneNumber} />
+		   inputRef={phoneNumber => {_phoneNumber = phoneNumber }} />
 
 		  <br/ >
 		  <ControlLabel> Zip: {profileData.zip} </ControlLabel>
 		  <FormControl type="text" placeholder="Update Zipcode Here"
-		   onChange={ _liveZip} />
+		   inputRef={zip => {_zip = zip }} />
 		</FormGroup> </form>
 
 		<br/ > <br /> <br />
