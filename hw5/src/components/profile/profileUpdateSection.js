@@ -6,9 +6,7 @@ import {updateProfileData} from '../../actions'
 
 export const ProfileUpdateSection = ({ profileData, updateProfileData }) => {
 	let _name, _email, _phoneNumber, _zip;
-	
 	const _updateProfileInfo = () => {
-		console.log(_name, _email, _name.value, _email.value)
 		updateProfileData({
 			name:_name ? _name.value : profileData.name,
 			email:_email ? _email.value : profileData.email,

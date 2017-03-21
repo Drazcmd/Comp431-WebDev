@@ -1,7 +1,7 @@
 {
-  "name": "cmd11HW4",
+  "name": "cmd11HW5",
   "version": "1.0.0",
-  "description": "Clayton Drazner HW4 Frontend Repository",
+  "description": "Clayton Drazner HW5 Frontend App",
   "main": "./src/index.js",
   "scripts": {
     "clean": "rimraf dist/bundle.js*",
@@ -92,6 +92,7 @@
     "webpack-dev-server": "^1.14.1"
   },
   "dependencies": {
+    "mockery": "^2.0.0",
     "react-bootstrap": "^0.30.7"
   }
 }
