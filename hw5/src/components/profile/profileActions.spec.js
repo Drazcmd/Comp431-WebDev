@@ -62,7 +62,7 @@ it('should update the profile data all at once', (done) => {
         })
     })
 
-    // call our complex action with our mock of dispatch, which
+    //call our complex action with our mock of dispatch, which
     //will test our stuff using testFieldUpdate
     multiUpdateGenerator({
         'headline': headline, 'email': email, 'zipcode': zipcode
