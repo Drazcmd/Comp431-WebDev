@@ -2,7 +2,7 @@ import { expect } from 'chai'
 import mockery from 'mockery'
 import fetch, { mock } from 'mock-fetch'
 
-import { updateHeadline } from './miniProfileActions'
+import { updateEmail, updateHeadline } from './profileActions'
 
 const url = 'https://webdev-dummy.herokuapp.com'
 let Action, actions
@@ -43,27 +43,25 @@ const dispatch = function(complexAction) {
     return complexAction(testAction)
 }
 
-/**
-Note that fetching user's profile info is done both in the real profile
-file and in this 'mini' profile. However, actually updating the headline is
-only done in this 'mini' profile, and not done in the real profile. As such, I
-decided to split the 'validate profile actions' section into two separate
-sections - the mini profile's actions and the real profile's actiobns, with
-updating the status headline the only action in the mini profile's set of
-actions. but all the other profile actions
-*/
 it('should update the status message/headline', (done) => {
   // the result from the mocked AJAX call
     const username = 'sep1test'
-    const headline = 'A new headline!'
+    const email = 'bob@bobmail.com'
+    const zipcode = '20102'
 
-    mock(`${url}/headline`, {
+    mock(`${url}/email`, {
         method: 'PUT',
         headers: {'Content-Type':'application/json'},
-        json: { username, headline }
+        json: { username, email }
+    })
+    mock(`${url}/zipcode`, {
+        method: 'PUT',
+        headers: {'Content-Type':'application/json'},
+        json: { username, zipcode }
     })
 
     // call our complex action with our mock of dispatch
-    updateHeadline(headline)(dispatch)
+    updateEmail('does not matter')(dispatch)
+    updateZipcode('does not matter')(dispatch)
     done()
 })
