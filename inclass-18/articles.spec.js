@@ -74,6 +74,7 @@ describe('Validate Article functionality', () => {
         }).then(done).catch(done)
 
         // then call GET /articles/id with the chosen id
+		// validate that only one article is returned
         resource('GET', `articles/${testArticle.id}`).then(body=> {
             expect(body.article).to.be.ok;
             expect(body.article.id).to.be.ok;
@@ -82,7 +83,6 @@ describe('Validate Article functionality', () => {
             expect body.article.text.to.be.eql(testArticle.text); 
         }).then(done).catch(done)
 
-		// validate that only one article is returned
 		done(new Error('Not implemented'))
 	}, 200)
 
