@@ -23,7 +23,7 @@ afterEach(() => {
     }
 })
 
-/*
+/**
 See piazza @138
 This is the "interesting" bit.
 This is also a "mock" of dispatch.  
@@ -35,7 +35,7 @@ const testAction = function(action) {
   done()
 }
 
-/* 
+/** 
 This just handles complex actions that call complex actions (that take
 dispatch as an argument)  the real dispatch does something similar to this 
 */
@@ -43,7 +43,7 @@ const dispatch = function(complexAction) {
     return complexAction(testAction)
 }
 
-/* 
+/**
 Note that fetching user's profile info is done both in the real profile
 file and in this 'mini' profile. However, actually updating the headline is
 only done in this 'mini' profile, and not done in the real profile. As such, I
