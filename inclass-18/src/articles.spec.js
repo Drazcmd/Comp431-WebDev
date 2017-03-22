@@ -4,6 +4,9 @@
 const expect = require('chai').expect
 const fetch = require('isomorphic-fetch')
 
+/**
+Helper code taken from my adventures in inclass-17
+*/
 const resource = (method, endpoint, payload) => {
     const url = `http://localhost:3000/${endpoint}`
     const options = { method, headers: { 'Content-Type': 'application/json' }}
@@ -20,12 +23,12 @@ const resource = (method, endpoint, payload) => {
 }
 
 const url = path => `http://localhost:3000${path}`
-
 describe('Validate Article functionality', () => {
-
     it('should give me three or more articles', (done) => {
-        // IMPLEMENT ME
-        done(new Error('Not implemented'))
+        resource('GET', "articles").then(body=> {
+            expect(body.articles).to.be.ok;
+            expect(body.articles.length).to.be.at.least(3);
+        }).then(done).catch(done);
     }, 200)
 
     let firstId;
@@ -88,7 +91,7 @@ x   }, 200)
     it('should return nothing for an invalid id', (done) => {
         // call GET /articles/id where id is not a valid article id, perhaps 0
         // confirm that you get no results
-        resource('GET', `articles/${testArticle.id}`).then(body=> {
+        resource('GET', `articles/-2`).then(body=> {
             expect(body.article).to.not.be.ok;
         }).then(done).catch(done)
     }, 200)
