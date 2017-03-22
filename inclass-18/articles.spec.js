@@ -27,6 +27,7 @@ describe('Validate Article functionality', () => {
 		// IMPLEMENT ME
 		done(new Error('Not implemented'))
  	}, 200)
+
     let firstId;
 	it('should add two articles with successive article ids, and return the article each time', (done) => {
 		// add a new article
@@ -39,10 +40,9 @@ describe('Validate Article functionality', () => {
             expect(body.article.id).to.be.ok;
             firstId = body.article.id
 		// verify the content of the article
-            expect body.article.text.to.be.ok; 
-            expect body.article.text.to.be.eql(firstArticle.text); 
+            expect(body.article.text).to.be.ok; 
+            expect(body.article.text).to.be.eql(firstArticle.text); 
         }).then(done).catch(done)
-
         
 		// add a second article
         secondArticle = {
@@ -54,10 +54,9 @@ describe('Validate Article functionality', () => {
             expect(body.article.id).to.be.ok;
             expect(body.article.id).to.be.eql(firstId + 1);
 		// verify the second artice has the correct content
-            expect body.article.text.to.be.ok; 
-            expect body.article.text.to.be.eql(secondArticle.text); 
-        }).then(done).catch(done)
-		done(new Error('Not implemented'))
+            expect(body.article.text).to.be.ok; 
+            expect(body.article.text).to.be.eql(secondArticle.text); 
+        }).then(done).catch(done);
  	}, 200)
 
 	it('should return an article with a specified id', (done) => {
@@ -71,7 +70,8 @@ describe('Validate Article functionality', () => {
             testArticle = body.articles[Math.floor(body.articles.length / 2])];
             expect(testArticle).to.be.ok
             expect(testArticle.id).to.be.ok
-        }).then(done).catch(done)
+        }).then(done).catch(done);
+
 
         // then call GET /articles/id with the chosen id
 		// validate that only one article is returned
@@ -79,17 +79,17 @@ describe('Validate Article functionality', () => {
             expect(body.article).to.be.ok;
             expect(body.article.id).to.be.ok;
             expect(body.article.id).to.be.eql(testID);
-            expect body.article.text.to.be.ok; 
-            expect body.article.text.to.be.eql(testArticle.text); 
-        }).then(done).catch(done)
-
-		done(new Error('Not implemented'))
-	}, 200)
+            expect(body.article.text).to.be.ok; 
+            expect(body.article.text).to.be.eql(testArticle.text); 
+        }).then(done).catch(done);
+x	}, 200)
 
 	it('should return nothing for an invalid id', (done) => {
 		// call GET /articles/id where id is not a valid article id, perhaps 0
 		// confirm that you get no results
-		done(new Error('Not implemented'))
+        resource('GET', `articles/${testArticle.id}`).then(body=> {
+            expect(body.article).to.not.be.ok;
+        }).then(done).catch(done)
 	}, 200)
 
 });
