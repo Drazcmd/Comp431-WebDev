@@ -27,7 +27,9 @@ describe('Validate Article functionality', () => {
         resource('GET', "articles").then(body=> {
             expect(body).to.be.ok;
             expect(body.length).to.be.at.least(3);
-        }).then(done);
+        }).then(done).catch(function(e){ 
+            console.log(e)
+        });
     }, 200)
 
     let firstId;
@@ -49,7 +51,11 @@ describe('Validate Article functionality', () => {
             expect(body.text).to.be.eql(firstArticle.text);
         }).then(done).catch(function(e) {
             console.log(e);
-        })
+        });
+    }, 200)
+
+    it('should add two articles with successive article ids, and return the article each time', (done) => {
+
         // add a second article
         resource('POST', "article", secondArticle).then(body=> {
         // verify the article id increases by one
@@ -59,7 +65,9 @@ describe('Validate Article functionality', () => {
         // verify the second artice has the correct content
             expect(body.text).to.be.ok; 
             expect(body.text).to.be.eql(secondArticle.text); 
-        }).then(done);
+        }).then(done).catch(function(e) {
+            console.log(e);
+        });
     }, 200)
 
     it('should return an article with a specified id', (done) => {
@@ -74,8 +82,9 @@ describe('Validate Article functionality', () => {
             testArticle = body[Math.floor(arbitraryValue)];
             expect(testArticle).to.be.ok
             expect(testArticle.id).to.be.ok
-        }).then(done);
-
+        }).then(done).catch(function(e) {
+            console.log(e);
+        });
 
         // then call GET /articles/id with the chosen id
         // validate that only one article is returned
@@ -85,7 +94,9 @@ describe('Validate Article functionality', () => {
             expect(body.id).to.be.eql(testID);
             expect(body.text).to.be.ok; 
             expect(body.text).to.be.eql(testArticle.text); 
-        }).then(done);
+        }).then(done).catch(function(e) {
+            console.log(e);
+        });
 x   }, 200)
 
     it('should return nothing for an invalid id', (done) => {
@@ -93,7 +104,9 @@ x   }, 200)
         // confirm that you get no results
         resource('GET', `articles/-2`).then(body=> {
             expect(body).to.not.be.ok;
-        }).then(done);
+        }).then(done).catch(function(e) {
+            console.log(e);
+        });
     }, 200)
 
 });
