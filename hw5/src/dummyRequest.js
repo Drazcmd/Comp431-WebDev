@@ -1,7 +1,6 @@
 import fetch from 'node-fetch'
 
 const url = 'https://webdev-dummy.herokuapp.com'
-
 /**
 See the provided code for connecting to the dummy server
 (https://jsbin.com/jeliroluni/edit?js,output)

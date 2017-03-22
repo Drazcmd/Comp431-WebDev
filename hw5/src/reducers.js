@@ -1,4 +1,5 @@
 import { ActionTypes, VisModes } from './actions'
+//TODO remove hardcoding
 const initialItems = require('./data/articles.json')
 const otherUsers = require('./data/followees.json')
 const obama = require('./data/profile.json')

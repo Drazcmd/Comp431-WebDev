@@ -1,4 +1,4 @@
-import { updateStatus } from '../../actions'
+import { updateProfileData, downloadProfileData } from '../../actions'
 import { resource } from '../../dummyRequest'
 
 /** 
@@ -29,19 +29,58 @@ generic profile update if you will).
 However, for now explicitly doing these three is the best option.
 */
 export const multiUpdateGenerator = (newProfileData) => {
+	console.log(newProfileData)
 	return ((dispatch) => {
-	    dispatch(updateField('headline', newProfileData.headline))
-	    dispatch(updateField('email', newProfileData.email))
-	    dispatch(updateField('zipcode', newProfileData.zipcode))
+		newProfileData.forEach((dataPiece) => {
+	    	dispatch(updateField(dataPiece))
+		})
 	})
 }
+/**
+Special case for updating the user's profile's data,
+such as the headline, email, or zipcode
 
-const updateField = (field, value) => (dispatch) => {
-  	const payload = { field: value }
-  	resource('PUT', field, payload).then((response) => {
+the data piece, which is our payload, should be
+like {'username':blah, 'headline':'blah'}
+*/
+const updateField = (dataPiece) => (dispatch) => {
+    const field = Object.keys(dataPiece).filter((key) => {
+        return key != 'username'
+    })[0]
+    console.log(dataPiece)
+  	resource('PUT', field, dataPiece).then((response) => {
   		//TODO error checking
-	 	const action = updateStatus(response.field)
+	 	const action = updateProfileData(response.field)
 	    dispatch(action)
   	})
+}
+
+
+/*
+Special case for accessing the user's profile data - 
+Input might be something like 'headlines', and so
+we'd send the get request to /headlines/cmd11test
+
+on the server it'd look something like
+"headlines" : [{
+    'username' : 'cmd11test', 'headline' : 'TESTING'
+}]
+The action only wants the inner dictionary, which is
+why we do response.field[0]
+*/
+const downloadField = (field) =>  (dispatch) => {
+  	resource('GET', field).then((response) => {
+  		//TODO error checking
+	 	const action = downloadProfileData(response.field[0])
+	    dispatch(action)
+  	})
+}
+
+export const multiDownloadGenerator = (fields) => {
+	return ((dispatch) => {
+		fields.forEach((field) => {
+	    	dispatch(downloadField(field, newProfileData.field))
+		})
+	})
 }
 

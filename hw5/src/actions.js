@@ -15,9 +15,10 @@ export const ActionTypes = {
     ADD_ARTICLE: 'ADD_ARTICLE',
     UPDATE_STATUS: 'UPDATE_STATUS',
     UPDATE_PROFILE_DATA: 'UPDATE_PROFILE_DATA',
+    DOWNLOAD_PROFILE_DATA: 'DOWNLOAD_PROFILE_DATA',
     UPDATE_SHOWN_ARTICLES: 'UPDATE_SHOWN_ARTICLES',
     REMOVE_FOLLOWEE: "REMOVE_FOLLOWEE",
-    ADD_FOLLOWEE: "ADD_FOLLOWEE"
+    ADD_FOLLOWEE: "ADD_FOLLOWEE",
 }
 
 /* 
@@ -57,4 +58,14 @@ export const removeFollowee = (name) => {
 }
 export const addFollowee = (name) => {
     return {type: ActionTypes.ADD_FOLLOWEE, name}
+}
+/* 
+Input ought to look something like:
+{
+    'username' : 'cmd11test',
+    'headline' : 'TESTING'
+}
+*/
+export const downloadProfileData = (dataEntry) => {
+    return {type: ActionTypes.DOWNLOAD_DATA, dataEntry}
 }
