@@ -66,6 +66,6 @@ Input ought to look something like:
     'headline' : 'TESTING'
 }
 */
-export const downloadProfileData = (dataEntry) => {
-    return {type: ActionTypes.DOWNLOAD_DATA, dataEntry}
+export const downloadProfileData = (field, user) => {
+    return {type: ActionTypes.DOWNLOAD_DATA, field, user}
 }

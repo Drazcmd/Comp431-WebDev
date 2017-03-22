@@ -2,7 +2,7 @@ import { expect } from 'chai'
 import mockery from 'mockery'
 import fetch, { mock } from 'mock-fetch'
 
-import { multiUpdateGenerator } from './profileActions'
+import { multiUpdateGenerator, multiDownloadGenerator} from './profileActions'
 
 const url = 'https://webdev-dummy.herokuapp.com'
 let Action, actions
@@ -23,25 +23,29 @@ afterEach(() => {
     }
 })
 
-it('should update the profile data all at once', (done) => {
-    const fieldsToTest = ['headline', 'email', 'zipcode']
+// mainly for mocking the ajax call
+const username = 'cmd11test'
+const headline = 'A new headline!'
+const email = 'bob@bobmail.com'
+const zipcode = '30333'
+const fieldMapping = {
+    'username': username,
+    'headline': headline,
+    'email': email 
+}
+/*
+Could be built automatically from the fieldMapping dict, but I'd
+rather have it explicitly visible to make reading this 
+easier
+*/
+const newDataPieces = [ 
+    {'username': username, 'headline': headline},
+    {'username': username, 'email' : email},
+    {'username': username, 'zipcode' : zipcode}
+]
 
-    // for the result from the mocked AJAX call
-    const username = 'cmd11test'
-    const headline = 'A new headline!'
-    const email = 'bob@bobmail.com'
-    const zipcode = '30333'
-    const fieldMapping = {
-        'username': username,
-        'headline': headline,
-        'email': email 
-    }
-    //TODO - might be able to build from the mapping?
-    const newDataPieces = [ 
-        {'username': username, 'headline': headline},
-        {'username': username, 'email' : email},
-        {'username': username, 'zipcode' : zipcode}
-    ]
+it('should update all the profile data piece by piece', (done) => {
+    const fieldsToTest = ['headline', 'email', 'zipcode']
 
     /**
     See piazza @138
@@ -67,8 +71,7 @@ it('should update the profile data all at once', (done) => {
                 expect(action.newData.field).to.be(zipcode);
                 break;
         }
-        expect(fieldsToTest).to.have.length(0)
-      done()
+        done()
     }
 
     /** 
@@ -96,5 +99,41 @@ it('should update the profile data all at once', (done) => {
     //call our complex action with our mock of dispatch, which
     //will test our stuff using testFieldUpdate
     multiUpdateGenerator(newDataPieces)(updateDispatch)
+    //Ensure each one had a dispatch
+    expect(fieldsToTest).to.have.length(0)
+    done()
+})
+
+it('should download all the profile data piece by piece', (done) => {
+    const fieldsToTest = ['headline', 'email', 'zipcode']
+    const testFieldsDownloaded = function(action) {
+        const field = Obj.keys(action.newData)[0]
+        expect(action.type).to.eql(actions.DOWNLOAD_PROFILE_DATA)
+        fieldsToTest.remove(field)
+        done()
+    }
+    
+    const downloadDispatch = function(complexAction) { 
+        return complexAction(testFieldsDownloaded)
+    }
+    //Now mock the call:
+    newDataPieces.forEach((dataPiece, index) => {
+        const field = Object.keys(dataPiece).filter((key) => {
+            return key != 'username'
+        })[0]
+        const fieldVal = fieldMapping[field]
+        //mock up the responses to the 3 PUT fetch calls we intercept
+        mock(`${url}/${fieldVal}`, {
+            method: 'PUT',
+            headers: {'Content-Type':'application/json'},
+            json: { username, fieldVal } 
+        })
+    })
+
+    //call our complex action with our mock of dispatch, which
+    //will test our stuff using testFieldUpdate
+    multiDownloadGenerator(newDataPieces)(updateDispatch)
+    //Ensure each one had a dispatch
+    expect(fieldsToTest).to.have.length(0)
     done()
 })
