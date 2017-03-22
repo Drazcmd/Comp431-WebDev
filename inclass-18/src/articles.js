@@ -1,17 +1,3 @@
-const helloUser = (req, res) => {
-	const user = req.params.user || 'Somebody'
-	res.send('Hello ' + user + '!')
-}
-
-const getArticles = (req, res) => {
-	res.send(articles)
-}
-
-module.exports = (app) => {
-	app.get('/articles', getArticles)
-	app.get('/:user*?', helloUser)
-}
-
 const articles = [
 	{
 		"_id": 5052063,
@@ -42,3 +28,17 @@ const articles = [
 		"author": "yg33test"
 	}
 ]
+const helloUser = (req, res) => {
+	const user = req.params.user || 'Somebody'
+	res.send('Hello ' + user + '!')
+}
+
+const getArticles = (req, res) => {
+	res.send(articles)
+}
+
+module.exports = (app) => {
+	app.get('/articles', getArticles)
+	app.get('/:user*?', helloUser)
+}
+
