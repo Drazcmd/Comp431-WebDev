@@ -61,5 +61,35 @@ it ('should update success message (for displaying success message to user', (do
     const updateSuccessAction = authActions.delegateRegistration(mockValidUserInfo)
     expect(expectedAction).to.eql(expectedAction)
     done()
-
+})
+//These two are both in relation to user login
+it ('should log in a user', (done) => {
+	console.log("NOT IMPLEMENTED LOGIN TEST YET")
+	const mockValidUserInfo = {
+		"username": "bobbyMcbobface",
+		"password":"BobDaBuilda"
+	}
+    const expectedAction = { 
+        type: actions.ActionTypes.LOGIN_SUCCESS,
+        username: "bobbyMcbobface"
+    } 
+    const updateSuccessAction = authActions.delegateLogin(mockValidUserInfo)
+    expect(expectedAction).to.eql(expectedAction)
+    done()
+})
+it ('should not login an invalid user', (done) => {
+	console.log("NOT IMPLEMENTED LOGIN TEST YET")
+	//TODO - choose something which will have invalid field or two
+	const mockInvalidUserInfo = {
+		"username": "bobbyMcbobface",
+		"password":"BobDaBuilda"
+	}
+	//TODO - figure out what the result will actually be of that
+    const expectedAction = { 
+        type: actions.ActionTypes.LOGIN_FAILURE,
+        username: "bobbyMcbobface"
+    } 
+    const updateFailureAction = authActions.delegateLogin(mockInvalidUserInfo)
+    expect(updateFailureAction).to.eql(expectedAction)
+    done()
 })

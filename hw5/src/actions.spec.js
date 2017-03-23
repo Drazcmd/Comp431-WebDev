@@ -29,7 +29,8 @@ afterEach(() => {
 })
 
 
-//According to Suzanne this is all I need ^-^
+//According to Suzanne this is all I need for the action side ^-^
+//The rest of the test for it can be found back in the reducer
 it('should navigate (to profile, main, or landing)', (done) => {
     const changeAction = actions.updateLocation(actions.MAIN_PAGE)
     const expectedAction = { 
@@ -39,30 +40,3 @@ it('should navigate (to profile, main, or landing)', (done) => {
     done()
 })
 
-//The next two are both in relation to registering new users
-it ('should update error message (for displaying error message to user', (done) => {
-    const updateErrorAction = actions.notifyRegFailure("bobbyMcbobface", "because I said so")
-    const expectedAction = { 
-        type: actions.ActionTypes.REGISTRATION_FAILURE,
-        attemptedUser: "bobbyMcbobface",
-        failureReason: "because I said so"
-    } 
-    expect(expectedAction).to.eql(expectedAction)
-    done()
-})
-it ('should update success message (for displaying success message to user', (done) => {
-    const successAction = function(action) {
-        const expectedAction = { 
-            type: actions.ActionTypes.REGISTRATION_SUCCESS,
-            newUser: "bobbyMcbobface"
-        } 
-        expect(action).to.eql(expectedAction)
-        done()
-    }
-    const dispatch = function(complexAction){
-        return complexAction(sucessAction)
-    }
-    const updateSuccessAction = actions.notifyRegSuccess("bobbyMcbobface", "because I said so")
-    done()
-
-})
