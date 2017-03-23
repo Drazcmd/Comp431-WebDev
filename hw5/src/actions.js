@@ -19,6 +19,8 @@ export const ActionTypes = {
     UPDATE_SHOWN_ARTICLES: 'UPDATE_SHOWN_ARTICLES',
     REMOVE_FOLLOWEE: "REMOVE_FOLLOWEE",
     ADD_FOLLOWEE: "ADD_FOLLOWEE",
+    REGISTRATION_SUCCESS: "REGISTRATION_SUCCESS",
+    REGISTRATION_FAILURE: "REGISTRATION_FAILURE"
 }
 
 /* 
@@ -68,4 +70,10 @@ Input ought to look something like:
 */
 export const downloadProfileData = (field, user) => {
     return {type: ActionTypes.DOWNLOAD_DATA, field, user}
+}
+export const notifyRegSuccess = (newUser) => {
+    return {type: ActionTypes.REGISTRATION_SUCCESS, newUser}
+}
+export const notifyRegFailure = (attemptedUser, failureReason) => {
+    return {type: ActionTypes.REGISTRATION_FAILURE, attemptedUser, failureReason}
 }

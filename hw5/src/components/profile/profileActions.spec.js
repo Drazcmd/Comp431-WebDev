@@ -5,7 +5,7 @@ import fetch, { mock } from 'mock-fetch'
 import { multiUpdateGenerator, multiDownloadGenerator} from './profileActions'
 
 const url = 'https://webdev-dummy.herokuapp.com'
-let Action, actions
+let Action, actions, resource
 beforeEach(() => {
     if (mockery.enable) {
         mockery.enable({warnOnUnregistered: false, useCleanCache:true})
@@ -14,6 +14,9 @@ beforeEach(() => {
     }
     Action = require('./../../actions').default
     actions = require('./../../actions')
+    const interceptedResource = require('./../../serverRequest')
+    //mocked resource function we can drop in!
+    resource = interceptedResource.resource
 })
 
 afterEach(() => {

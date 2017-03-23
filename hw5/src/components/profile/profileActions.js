@@ -1,5 +1,5 @@
 import { updateProfileData, downloadProfileData } from '../../actions'
-import { resource } from '../../dummyRequest'
+import { resource } from '../../serverRequest'
 
 /** 
 Note that fetching user's profile info is done both in the real profile

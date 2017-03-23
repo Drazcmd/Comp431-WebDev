@@ -2,8 +2,6 @@ import { expect } from 'chai'
 import mockery from 'mockery'
 import fetch, { mock } from 'mock-fetch'
 
-import { resource } from './dummyRequest'
-
 const url = 'https://webdev-dummy.herokuapp.com'
 let Action, actions, interceptedResource
 beforeEach(() => {
@@ -14,7 +12,7 @@ beforeEach(() => {
     }
     Action = require('./actions').default
     actions = require('./actions')
-    interceptedResource = require('./dummyRequest')
+    interceptedResource = require('./serverRequest')
 })
 
 afterEach(() => {

@@ -4,7 +4,6 @@ import fetch from 'node-fetch'
 'Dummy' as in the dummy server at the url below;
 this is a real http request.
 */
-
 const url = 'https://webdev-dummy.herokuapp.com'
 /**
 See the provided code for connecting to the dummy server

@@ -10,9 +10,30 @@ const Reducer = (state = {
     visibilityMode: VisModes.NO_FILTER,
     filterStr: "",
     profileData: obama,
-    followees: otherUsers
+    followees: otherUsers,
+    registrationMessage: ""
 }, action) => {
     switch (action.type) {
+        case ActionTypes.REGISTRATION_SUCCESS: {
+            const firstpart = `New user named `
+            const secondpart = `${action.user} `
+            const thirdpart = `was successfully registered :)`
+            const fullMessage = firstpart + secondpart + thirdpart
+            return { 
+                ...state, 
+                registrationMessage: fullMessage
+            } 
+        }
+        case ActionTypes.REGISTRATION_FAILURE: {
+            const firstpart = `Registration Failure: New user named `
+            const secondpart = `${action.user} wasn't registered `
+            const thirdpart = `because ${action.failureReason}`
+            const fullMessage = firstpart + secondpart + thirdpart
+            return { 
+                ...state, 
+                registrationMessage: fullMessage
+            } 
+        }
         case ActionTypes.LOCATION_CHANGE: {
             return { ...state, location: action.location}
         }

@@ -9,7 +9,7 @@ CODE ALMOST ENTIRELY COPIED FROM THAT PROVIDED ON THE
 ASSIGNMENT POSTING! 
 See https://www.clear.rice.edu/comp431/#/assignments
 */
-let Action, actions
+let Action, actions, interceptedResource
 beforeEach(() => {
     if (mockery.enable) {
     	mockery.enable({warnOnUnregistered: false, useCleanCache:true})
@@ -18,6 +18,7 @@ beforeEach(() => {
     }
     Action = require('./actions').default
     actions = require('./actions')
+    interceptedResource = require('./serverRequest')
 })
 
 afterEach(() => {
@@ -36,4 +37,26 @@ it('should navigate (to profile, main, or landing)', (done) => {
     } 
     expect(changeAction).to.eql(expectedAction)
     done()
+})
+
+//The next two are both in relation to registering new users
+it ('should update error message (for displaying error message to user', (done) => {
+    const updateErrorAction = actions.notifyRegFailure("bobbyMcbobface", "because I said so")
+    const expectedAction = { 
+        type: actions.ActionTypes.REGISTRATION_FAILURE,
+        attemptedUser: "bobbyMcbobface",
+        failureReason: "because I said so"
+    } 
+    expect(expectedAction).to.eql(expectedAction)
+    done()
+})
+it ('should update success message (for displaying success message to user', (done) => {
+    const updateSuccessAction = actions.notifyRegSuccess("bobbyMcbobface", "because I said so")
+    const expectedAction = { 
+        type: actions.ActionTypes.REGISTRATION_SUCCESS,
+        newUser: "bobbyMcbobface"
+    } 
+    expect(updateSuccessAction).to.eql(expectedAction)
+    done()
+
 })

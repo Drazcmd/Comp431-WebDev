@@ -2,7 +2,8 @@ import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import NavButton from '../navigation/navButton'
 import { Well, FormGroup, FormControl, ControlLabel } from 'react-bootstrap'
-export const Registration = ({ }, { }) => {
+
+export const Registration = ({ registrationMessage }) => {
 	return (
 		<Well>
 		<h4>REGISTER A NEW ACCOUNT: </h4>
@@ -32,6 +33,7 @@ export const Registration = ({ }, { }) => {
 		</FormGroup>
 
 		<NavButton redirectLocation={"MAIN_PAGE"} text={"Create New Account!"}/>
+		<div> { registrationMessage } </div>
 		</Well>
 
 	)
@@ -42,6 +44,10 @@ Registration.propTypes = {
 }
 
 export default connect(
-    (state) => ({ }),
+    (state) => {
+    	return {
+    		registrationMessage: state.registrationMessage
+    	}
+    },
     (dispatch) => ({ })
 )(Registration)
