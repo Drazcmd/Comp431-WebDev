@@ -5,7 +5,7 @@ import fetch, { mock } from 'mock-fetch'
 import { resource } from './dummyRequest'
 
 const url = 'https://webdev-dummy.herokuapp.com'
-let Action, actions
+let Action, actions, interceptedResource
 beforeEach(() => {
     if (mockery.enable) {
         mockery.enable({warnOnUnregistered: false, useCleanCache:true})
@@ -14,6 +14,7 @@ beforeEach(() => {
     }
     Action = require('./actions').default
     actions = require('./actions')
+    interceptedResource = require('./dummyRequest')
 })
 
 afterEach(() => {
@@ -27,28 +28,33 @@ it('resource should be a resource', (done) => {
     mock(`${url}`, {
         method: 'GET',
         headers: {'Content-Type':'application/json'},
-        json: { 'hello':'world'} 
+        json: { 'hello':'worasdfasdfd'} 
     })
 
-    resource('GET', "").then((res) => {
+    interceptedResource.resource('GET', "").then((res) => {
         expect(res.status).to.eql(200)
         return res.json()
     }).then((resJSON) => {
+        console.log(resJSON)
         expect(resJSON).to.eql({ 'hello': 'world'});
         done();
     })
 })
 
 it('resource should give me the http error', (done) => {
+    console.log("helllloooo")
     const errorEndpint = 'asodifjasdf'
     mock(`${url}/${errorEndpint}`, {
         method: 'GET',
         headers: {'Content-Type':'application/json'},
-        json: { 'hello':'world'} 
+        status: 404
     })
-    const invalidRequest = resource('GET', errorEndpint).then((res) =>{
+    const invalidRequest = interceptedResource.resource('GET', errorEndpint).then((res) =>{
+        console.log("HELLLO")
         expect(res.status).to.eql(404)
         done();
+    }).catch((error) => {
+        done(error)
     })
 })
 
@@ -64,8 +70,10 @@ it('resource should be POSTable', (done) => {
         json: { 'username':'cmd11test', 'result':'success' } 
     })
     const payload = {'username':'cmd11test', 'password':'damage-butter-memory'}
-    const postRequest = resource('POST', endpoint, payload).then((res) =>{
+    const postRequest = interceptedResource.resource('POST', endpoint, payload).then((res) =>{
         expect(res.status).to.eql(200)
         done()
+    }).catch((error) => {
+        done(error)
     })
 })
