@@ -40,8 +40,8 @@ it('resource should be a resource', (done) => {
 })
 
 it('resource should give me the http error', (done) => {
-    const errorEndpint = '/asodifjasdf'
-    mock(`${url}${errorEndpint}`, {
+    const errorEndpint = 'asodifjasdf'
+    mock(`${url}/${errorEndpint}`, {
         method: 'GET',
         headers: {'Content-Type':'application/json'},
         json: { 'hello':'world'} 
@@ -52,3 +52,20 @@ it('resource should give me the http error', (done) => {
     })
 })
 
+/*
+I test post through a hardcoded login using test dummy credentials
+However, all I care about is the returned status - not the login results
+*/
+it('resource should be POSTable', (done) => {
+    const endpoint = 'login'
+    mock(`${url}/${endpoint}`, {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        json: { 'username':'cmd11test', 'result':'success' } 
+    })
+    const payload = {'username':'cmd11test', 'password':'damage-butter-memory'}
+    const postRequest = resource('POST', endpoint, payload).then((res) =>{
+        expect(res.status).to.eql(200)
+        done()
+    })
+})
