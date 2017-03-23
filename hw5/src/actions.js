@@ -20,7 +20,8 @@ export const ActionTypes = {
     REMOVE_FOLLOWEE: "REMOVE_FOLLOWEE",
     ADD_FOLLOWEE: "ADD_FOLLOWEE",
     REGISTRATION_SUCCESS: "REGISTRATION_SUCCESS",
-    REGISTRATION_FAILURE: "REGISTRATION_FAILURE"
+    REGISTRATION_FAILURE: "REGISTRATION_FAILURE",
+    LOGOUT: "LOGOUT"
 }
 
 /* 
@@ -76,4 +77,7 @@ export const notifyRegSuccess = (newUser) => {
 }
 export const notifyRegFailure = (attemptedUser, failureReason) => {
     return {type: ActionTypes.REGISTRATION_FAILURE, attemptedUser, failureReason}
+}
+export const logout = () => {
+    return updateLocation(LANDING_PAGE)
 }

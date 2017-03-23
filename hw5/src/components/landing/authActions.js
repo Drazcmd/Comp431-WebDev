@@ -1,4 +1,4 @@
-import { notifyRegSuccess, notifyRegFailure } from '../../actions'
+import { notifyRegSuccess, notifyRegFailure, logout } from '../../actions'
 import { resource } from '../../serverRequest'
 const checkRegValidity = (userInfo) => {
 	return false
@@ -16,4 +16,12 @@ export const delegateRegistration = (userInfo) => {if (checkRegValidity(userInfo
 			`Reasons for failure: ${failureReasons}`
 		)
 	}
+}
+export const delegateLogin = (username, password) => {
+	return "not implemented yet"
+}
+export const delegateLogout = () => {
+	//TODO send the logout to the server	
+	//Now we return to the landing page
+	return logout()	
 }

@@ -32,7 +32,7 @@ afterEach(() => {
 //According to Suzanne this is all I need for the action side ^-^
 //The rest of the test for it can be found back in the reducer
 it('should navigate (to profile, main, or landing)', (done) => {
-    const changeAction = actions.updateLocation(actions.MAIN_PAGE)
+    const logoutAction = actions.logout()
     const expectedAction = { 
         type: actions.ActionTypes.LOCATION_CHANGE, 'location': actions.MAIN_PAGE
     } 

@@ -28,7 +28,21 @@ afterEach(() => {
 	   mockery.disable()
     }
 })
-
+it ('should update success message (for displaying success message to user', (done) => {
+	const mockValidUserInfo = {
+		"firstName":"Bob",
+		"lastName":"Mcbobface",
+		"username": "bobbyMcbobface",
+		"password":"BobDaBuilda"
+	}
+    const expectedAction = { 
+        type: actions.ActionTypes.REGISTRATION_SUCCESS,
+        newUser: "bobbyMcbobface"
+    } 
+    const updateSuccessAction = authActions.delegateRegistration(mockValidUserInfo)
+    expect(expectedAction).to.eql(expectedAction)
+    done()
+})
 //These two are both in relation to registering new users
 it ('should update error message (for displaying error message to user', (done) => {
 	//TODO - choose something which will have invalid field or two
@@ -47,22 +61,7 @@ it ('should update error message (for displaying error message to user', (done) 
     expect(updateFailureAction).to.eql(expectedAction)
     done()
 })
-it ('should update success message (for displaying success message to user', (done) => {
-	const mockValidUserInfo = {
-		"firstName":"Bob",
-		"lastName":"Mcbobface",
-		"username": "bobbyMcbobface",
-		"password":"BobDaBuilda"
-	}
-    const expectedAction = { 
-        type: actions.ActionTypes.REGISTRATION_SUCCESS,
-        newUser: "bobbyMcbobface"
-    } 
-    const updateSuccessAction = authActions.delegateRegistration(mockValidUserInfo)
-    expect(expectedAction).to.eql(expectedAction)
-    done()
-})
-//These two are both in relation to user login
+//These three are both in relation to user login/logout
 it ('should log in a user', (done) => {
 	console.log("NOT IMPLEMENTED LOGIN TEST YET")
 	const mockValidUserInfo = {
@@ -91,5 +90,14 @@ it ('should not login an invalid user', (done) => {
     } 
     const updateFailureAction = authActions.delegateLogin(mockInvalidUserInfo)
     expect(updateFailureAction).to.eql(expectedAction)
+    done()
+})
+it ('should log out a user', (done) => {
+	console.log("NOT IMPLEMENTED LOGOUT TEST YET")
+    const expectedAction = { 
+        type: actions.ActionTypes.LOGOUT
+    } 
+    const logoutAction = authActions.delegateLogout()
+    expect(expectedAction).to.eql(expectedAction)
     done()
 })
