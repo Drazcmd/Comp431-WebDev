@@ -18,6 +18,8 @@ export const delegateRegistration = (userInfo) => {if (checkRegValidity(userInfo
 	}
 }
 export const delegateLogin = (username, password) => {
+	//TODO send the login to the server
+	//will need to take care of a bunch of stuffs
 	return "not implemented yet"
 }
 export const delegateLogout = () => {
