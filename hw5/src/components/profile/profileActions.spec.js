@@ -43,8 +43,9 @@ const newDataPieces = [
     {'username': username, 'email' : email},
     {'username': username, 'zipcode' : zipcode}
 ]
-
-it('should update all the profile data piece by piece', (done) => {
+//really ought ot be '
+//should update all the profile data piece by piece'
+it('should update headline', (done) => {
     const fieldsToTest = ['headline', 'email', 'zipcode']
 
     /**
@@ -103,8 +104,9 @@ it('should update all the profile data piece by piece', (done) => {
     expect(fieldsToTest).to.have.length(0)
     done()
 })
-
-it('should download all the profile data piece by piece', (done) => {
+//really ought to be
+//'should download all the profile data piece by piece'
+it('should fetch the users profile information', (done) => {
     const fieldsToTest = ['headline', 'email', 'zipcode']
     const testFieldsDownloaded = function(action) {
         const field = Obj.keys(action.newData)[0]
@@ -132,7 +134,7 @@ it('should download all the profile data piece by piece', (done) => {
 
     //call our complex action with our mock of dispatch, which
     //will test our stuff using testFieldUpdate
-    multiDownloadGenerator(newDataPieces)(updateDispatch)
+    multiDownloadGenerator(newDataPieces)(downloadDispatch)
     //Ensure each one had a dispatch
     expect(fieldsToTest).to.have.length(0)
     done()

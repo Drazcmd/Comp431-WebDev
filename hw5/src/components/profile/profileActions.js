@@ -29,7 +29,6 @@ generic profile update if you will).
 However, for now explicitly doing these three is the best option.
 */
 export const multiUpdateGenerator = (newProfileData) => {
-	console.log(newProfileData)
 	return ((dispatch) => {
 		newProfileData.forEach((dataPiece) => {
 	    	dispatch(updateField(dataPiece))
@@ -47,7 +46,6 @@ const updateField = (dataPiece) => (dispatch) => {
     const field = Object.keys(dataPiece).filter((key) => {
         return key != 'username'
     })[0]
-    console.log(dataPiece)
   	resource('PUT', field, dataPiece).then((response) => {
   		//TODO error checking
 	 	const action = updateProfileData(response.field)
