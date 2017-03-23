@@ -51,12 +51,18 @@ it ('should update error message (for displaying error message to user', (done) 
     done()
 })
 it ('should update success message (for displaying success message to user', (done) => {
+    const successAction = function(action) {
+        const expectedAction = { 
+            type: actions.ActionTypes.REGISTRATION_SUCCESS,
+            newUser: "bobbyMcbobface"
+        } 
+        expect(action).to.eql(expectedAction)
+        done()
+    }
+    const dispatch = function(complexAction){
+        return complexAction(sucessAction)
+    }
     const updateSuccessAction = actions.notifyRegSuccess("bobbyMcbobface", "because I said so")
-    const expectedAction = { 
-        type: actions.ActionTypes.REGISTRATION_SUCCESS,
-        newUser: "bobbyMcbobface"
-    } 
-    expect(updateSuccessAction).to.eql(expectedAction)
     done()
 
 })
