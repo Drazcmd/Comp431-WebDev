@@ -26,7 +26,7 @@ export const delegateLogin = (username, password) => {
     //will bear responsiblitiy for changing location if
     //it succeeded - otherwise it'll alter the error message
     if (username && password) {
-        return login({"data":"data"}) 
+        return login(username, password) 
     } else {
         const usernameFailure = missingField("username", username)      
         const passwordFailure = missingField("password", password)
