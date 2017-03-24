@@ -69,8 +69,9 @@ it ('should log in a user', (done) => {
 		"password":"BobDaBuilda"
 	}
     const expectedAction = { 
-        type: actions.ActionTypes.LOGIN_SUCCESS,
-        username: "bobbyMcbobface"
+        type: actions.ActionTypes.LOGIN,
+        username: "bobbyMcbobface",
+        
     } 
     const updateSuccessAction = authActions.delegateLogin(mockValidUserInfo)
     expect(expectedAction).to.eql(expectedAction)

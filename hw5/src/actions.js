@@ -19,9 +19,9 @@ export const ActionTypes = {
     UPDATE_SHOWN_ARTICLES: 'UPDATE_SHOWN_ARTICLES',
     REMOVE_FOLLOWEE: "REMOVE_FOLLOWEE",
     ADD_FOLLOWEE: "ADD_FOLLOWEE",
-    REGISTRATION_SUCCESS: "REGISTRATION_SUCCESS",
-    REGISTRATION_FAILURE: "REGISTRATION_FAILURE",
-    LOGOUT: "LOGOUT"
+    LOGOUT: "LOGOUT",
+    LOGIN: "LOGIN",
+    UPDATE_ERROR_MESSAGE: 'UPDATE_ERROR_MESSAGE'
 }
 
 /* 
@@ -72,12 +72,28 @@ Input ought to look something like:
 export const downloadProfileData = (field, user) => {
     return {type: ActionTypes.DOWNLOAD_DATA, field, user}
 }
+//Although possibly successful, it's not actually implemented on
+//the server's side - so it'll always display an error msg
 export const notifyRegSuccess = (newUser) => {
-    return {type: ActionTypes.REGISTRATION_SUCCESS, newUser}
+    const firstHalf = `Your registration of ${newUser} is valid, `
+    const secondHalf = `but the server doesn't have this feature working yet`
+    const msg = firstHalf + secondHalf
+    return {type: ActionTypes.UPDATE_ERROR_MESSAGE, msg}
 }
 export const notifyRegFailure = (attemptedUser, failureReason) => {
-    return {type: ActionTypes.REGISTRATION_FAILURE, attemptedUser, failureReason}
+    const firstHalf = `Your registration of ${attemptedUser} `
+    const secondHalf = `is invalid because ${failureReason}`
+    const msg = firstHalf + secondHalf
+    return {type: ActionTypes.UPDATE_ERROR_MESSAGE, msg}
 }
 export const logout = () => {
-    return updateLocation(LANDING_PAGE)
+    //TODO - clear stuff?
+    return {type: ActionTypes.LOGOUT}
+}
+export const login = () => {
+    //TODO - send requests?
+    return {type: ActionTypes.LOGIN}
+}
+export const dispError = (message) => {
+    return {type: ActionTypes.UPDATE_ERROR_MESSAGE, message:message}
 }

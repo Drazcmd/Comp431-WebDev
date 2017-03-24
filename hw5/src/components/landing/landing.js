@@ -2,11 +2,13 @@ import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import Registration from './registration'
 import Login from './login'
+import ErrorDisplay from './../textDisplay/errorDisplay'
 import { Grid, Row, Col } from 'react-bootstrap'
 
 export const Landing = ({ }, { }) => {
 	return (
 	 	<Grid>
+	 		<Row> <ErrorDisplay /> </Row>
 	 	  <Row>
 	 	    <h1> ELECT-BOOK </h1>
 	 	  </Row>

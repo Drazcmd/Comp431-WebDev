@@ -11,7 +11,7 @@ const Reducer = (state = {
     filterStr: "",
     profileData: obama,
     followees: otherUsers,
-    registrationMessage: ""
+    globalErrorMessage: ""
 }, action) => {
     switch (action.type) {
         case ActionTypes.REGISTRATION_SUCCESS: {
@@ -36,6 +36,10 @@ const Reducer = (state = {
         }
         case ActionTypes.LOCATION_CHANGE: {
             return { ...state, location: action.location}
+        }
+        case ActionTypes.LOGIN: {
+            //TODO - update other areas if needed
+            return { ...state, location: "MAIN_PAGE"}
         }
 
         case ActionTypes.UPDATE_SHOWN_ARTICLES: {
