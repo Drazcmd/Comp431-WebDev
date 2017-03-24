@@ -23,10 +23,10 @@ afterEach(() => {
 })
 
 it('resource should be a resource', (done) => {
-    mock(`${url}`, {
+    mock(`${url}/`, {
         method: 'GET',
         headers: {'Content-Type':'application/json'},
-        json: { 'hello':'worasdfasdfd'} 
+        json: { 'hello':'world'} 
     })
 
     interceptedResource.resource('GET', "").then((res) => {
@@ -40,7 +40,6 @@ it('resource should be a resource', (done) => {
 })
 
 it('resource should give me the http error', (done) => {
-    console.log("helllloooo")
     const errorEndpint = 'asodifjasdf'
     mock(`${url}/${errorEndpint}`, {
         method: 'GET',
@@ -48,7 +47,6 @@ it('resource should give me the http error', (done) => {
         status: 404
     })
     const invalidRequest = interceptedResource.resource('GET', errorEndpint).then((res) =>{
-        console.log("HELLLO")
         expect(res.status).to.eql(404)
         done();
     }).catch((error) => {

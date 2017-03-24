@@ -54,8 +54,9 @@ it ('should update error message (for displaying error message to user', (done) 
 	}
 	//TODO - figure out what the result will actually be of that
     const expectedAction = { 
-        type: actions.ActionTypes.REGISTRATION_FAILURE,
-        newUser: "bobbyMcbobface"
+        type: actions.ActionTypes.UPDATE_ERROR_MESSAGE,
+        message: `Your registration inputs were valid, but ` +
+            `the server's registration feature isn't working yet`
     } 
     const updateFailureAction = authActions.delegateRegistration(mockInvalidUserInfo)
     expect(updateFailureAction).to.eql(expectedAction)
@@ -63,14 +64,13 @@ it ('should update error message (for displaying error message to user', (done) 
 })
 //These three are both in relation to user login/logout
 it ('should log in a user', (done) => {
-	console.log("NOT IMPLEMENTED LOGIN TEST YET")
 	const mockValidUserInfo = {
 		"username": "bobbyMcbobface",
 		"password":"BobDaBuilda"
 	}
     const expectedAction = { 
         type: actions.ActionTypes.LOGIN,
-        username: "bobbyMcbobface",
+        username: "implement me",
         
     } 
     const updateSuccessAction = authActions.delegateLogin(mockValidUserInfo)
@@ -78,7 +78,6 @@ it ('should log in a user', (done) => {
     done()
 })
 it ('should not login an invalid user', (done) => {
-	console.log("NOT IMPLEMENTED LOGIN TEST YET")
 	//TODO - choose something which will have invalid field or two
 	const mockInvalidUserInfo = {
 		"username": "bobbyMcbobface",
@@ -87,16 +86,16 @@ it ('should not login an invalid user', (done) => {
 	//TODO - figure out what the result will actually be of that
     const expectedAction = { 
         type: actions.ActionTypes.LOGIN_FAILURE,
-        username: "bobbyMcbobface"
+        username: "implement me"
     } 
     const updateFailureAction = authActions.delegateLogin(mockInvalidUserInfo)
     expect(updateFailureAction).to.eql(expectedAction)
     done()
 })
 it ('should log out a user', (done) => {
-	console.log("NOT IMPLEMENTED LOGOUT TEST YET")
     const expectedAction = { 
-        type: actions.ActionTypes.LOGOUT
+        type: actions.ActionTypes.LOGOUT,
+        "implement Me":"failing on purpose rn"
     } 
     const logoutAction = authActions.delegateLogout()
     expect(expectedAction).to.eql(expectedAction)
