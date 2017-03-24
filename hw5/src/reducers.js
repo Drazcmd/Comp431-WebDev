@@ -1,16 +1,20 @@
 import { ActionTypes, VisModes } from './actions'
 //TODO remove hardcoding
-const initialItems = require('./data/articles.json')
-const otherUsers = require('./data/followees.json')
-const obama = require('./data/profile.json')
-const Reducer = (state = {
+//export is only so I can test it
+export const Reducer = (state = {
     location: 'LANDING_PAGE',
-    articles: initialItems.articles,
-    visibleArticles: initialItems.articles,
+    articles: [],
+    visibleArticles: [],
     visibilityMode: VisModes.NO_FILTER,
-    filterStr: "",
-    profileData: obama,
-    followees: otherUsers,
+    filterStr: "",  
+    profileData: {
+        "name":"Anon", 
+        "email":"missingEmail@missing.com", 
+        "zip":"00000",
+        "img": "http://www.clker.com/cliparts/n/T/5/z/f/Y/image-missing-md.png ",
+        "status":"missing status"
+    },
+    followees: [],
     globalErrorMessage: ""
 }, action) => {
     switch (action.type) {
@@ -108,16 +112,21 @@ const Reducer = (state = {
                 ...state,
                 profileData: {
                     ...state.profileData, 
-                    name: new_data.name,
                     zip: new_data.zip,
-                    email: new_data.email,
-                    phoneNumber: new_data.phoneNumber
+                    email: new_data.email
                 }
             }
         }
         case ActionTypes.LOGIN: {
-            console.log("implement login reduce!")
-            return state
+            return {
+                ...state,
+                location:"MAIN_PAGE",
+                profileData: {
+                    ...state.profileData,
+                    status: action.initialStatus
+                },
+                globalErrorMessage: ""
+            }
         }
         case ActionTypes.LOGOUT: {
             console.log("implement logout reduce!")

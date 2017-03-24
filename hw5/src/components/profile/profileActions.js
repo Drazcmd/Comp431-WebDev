@@ -77,7 +77,7 @@ const downloadField = (field) =>  (dispatch) => {
 export const multiDownloadGenerator = (fields) => {
 	return ((dispatch) => {
 		fields.forEach((field) => {
-	    	dispatch(downloadField(field, newProfileData.field))
+	    	dispatch(downloadField(field))
 		})
 	})
 }

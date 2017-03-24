@@ -34,6 +34,6 @@ export const resource = (method, endpoint, payload) => {
         console.error(`${method} ${endpoint} ${res.statusText}`)
         throw new Error(res.statusText)
       }
-    })
-    */
+    })*/
+   
 }

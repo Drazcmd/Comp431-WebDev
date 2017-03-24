@@ -1,3 +1,4 @@
+import { resource } from './serverRequest'
 export const MAIN_PAGE = 'MAIN_PAGE'
 export const PROFILE_PAGE = 'PROFILE_PAGE'
 export const LANDING_PAGE = 'LANDING_PAGE'
@@ -84,10 +85,27 @@ export const logout = () => {
     //TODO - clear stuff?
     return {type: ActionTypes.LOGOUT}
 }
-export const login = () => {
-    //TODO - send requests?
-    return {type: ActionTypes.LOGIN}
+export const login = (username, password) => {
+    const resultingAction = resource('POST', 'login', {
+        username, password 
+    })
+    .then(res => resource('GET', 'headlines'))
+    .then(res => res.json())
+    .then(jsonData => {
+        return {
+            type: ActionTypes.LOGIN,
+            username: jsonData.headlines[0]
+        }
+    }).catch(res => {
+        return `"${res.message || 'Error'}" when logging in`
+    }).then(errMsg => {
+        console.log("msg =", errMsg)
+        return dispError(errMsg)
+    })
+    console.log("what we got:", resultingAction)
+    return resultingAction
 }
+
 export const dispError = (message) => {
     return {type: ActionTypes.UPDATE_ERROR_MESSAGE, message:message}
 }
