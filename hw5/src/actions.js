@@ -89,8 +89,14 @@ export const login = (username, password) => {
     const resultingAction = resource('POST', 'login', {
         username, password 
     })
-    .then(res => resource('GET', 'headlines'))
-    .then(res => res.json())
+    .then(res => {
+        console.log(res)
+        return resource('GET', 'headlines')
+    })
+    .then(res => {
+        console.log(res)
+        return res.json()
+    })
     .then(jsonData => {
         return {
             type: ActionTypes.LOGIN,
