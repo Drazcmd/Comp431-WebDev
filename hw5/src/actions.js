@@ -98,11 +98,13 @@ export const login = (username, password) => {
         return res.json()
     })
     .then(jsonData => {
+        console.log(jsonData)
         return {
             type: ActionTypes.LOGIN,
             username: jsonData.headlines[0]
         }
     }).catch(res => {
+        console.log(res)
         return `"${res.message || 'Error'}" when logging in`
     }).then(errMsg => {
         console.log("msg =", errMsg)
