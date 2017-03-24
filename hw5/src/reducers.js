@@ -14,26 +14,6 @@ const Reducer = (state = {
     globalErrorMessage: ""
 }, action) => {
     switch (action.type) {
-        case ActionTypes.REGISTRATION_SUCCESS: {
-            const firstpart = `New user named `
-            const secondpart = `${action.user} `
-            const thirdpart = `was successfully registered :)`
-            const fullMessage = firstpart + secondpart + thirdpart
-            return { 
-                ...state, 
-                registrationMessage: fullMessage
-            } 
-        }
-        case ActionTypes.REGISTRATION_FAILURE: {
-            const firstpart = `Registration Failure: New user named `
-            const secondpart = `${action.user} wasn't registered `
-            const thirdpart = `because ${action.failureReason}`
-            const fullMessage = firstpart + secondpart + thirdpart
-            return { 
-                ...state, 
-                registrationMessage: fullMessage
-            } 
-        }
         case ActionTypes.LOCATION_CHANGE: {
             return { ...state, location: action.location}
         }
@@ -133,6 +113,20 @@ const Reducer = (state = {
                     email: new_data.email,
                     phoneNumber: new_data.phoneNumber
                 }
+            }
+        }
+        case ActionTypes.LOGIN: {
+            console.log("implement login reduce!")
+            return state
+        }
+        case ActionTypes.LOGOUT: {
+            console.log("implement logout reduce!")
+            return state
+        }
+        case ActionTypes.UPDATE_ERROR_MESSAGE: {
+            return {
+                ...state,
+                globalErrorMessage: action.message
             }
         }
         default: {

@@ -1,19 +1,18 @@
-import { dispError, logout, login } from '../../actions'
+import { dispError, logout, login, notifyRegSuccess } from '../../actions'
 import { resource } from '../../serverRequest'
 
-const missingField = (field) => field ? "" : `${field} is invalid. `
+const missingField = (field, value) => value ? "" : `${field} is invalid (you entered "${value}"). `
 
 export const delegateRegistration = (userInfo) => {
 
 	if (userInfo.username && userInfo.password
 	  && userInfo.firstName && userInfo.lastName){
-
 		return notifyRegSuccess(userInfo)
 	} else {
-		const usernameFailure = missingField(userInfo.username)		
-		const passwordFailure = missingField(userInfo.password)
-		const firstNameFailure = missingField(userInfo.firstName)		
-		const lastNameFailure = missingField(userInfo.lastName)
+		const usernameFailure = missingField("username", userInfo.username)		
+		const passwordFailure = missingField("password", userInfo.password)
+		const firstNameFailure = missingField("First Name", userInfo.firstName)		
+		const lastNameFailure = missingField("Last Name", userInfo.lastName)
 		//ask it why the fields were invalid, and pass on the reason
 	    const errorMessage = usernameFailure + passwordFailure +
 	    	firstNameFailure + lastNameFailure
@@ -29,8 +28,8 @@ export const delegateLogin = (username, password) => {
 	if (username && password) {
 		return login({"data":"data"}) 
 	} else {
-		const usernameFailure = missingField(username)		
-		const passwordFailure = missingField(password)
+		const usernameFailure = missingField("username", username)		
+		const passwordFailure = missingField("password", password)
 		const errorMessage = usernameFailure + passwordFailure
 		return dispError(errorMessage)
 	}

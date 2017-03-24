@@ -39,25 +39,25 @@ proper term.
 In Redux action creators simply return an action:
 */
 export const updateLocation = (new_location) => {
-	return { type: ActionTypes.LOCATION_CHANGE, location: new_location }
+    return { type: ActionTypes.LOCATION_CHANGE, location: new_location }
 }
 export const addArticle = (newArticle) => {
-	return { type: ActionTypes.ADD_ARTICLE, newArticle }
+    return { type: ActionTypes.ADD_ARTICLE, newArticle }
 }
 export const updateStatus = (newStatus) => {
-	return { type: ActionTypes.UPDATE_STATUS, newStatus }
+    return { type: ActionTypes.UPDATE_STATUS, newStatus }
 }
 export const updateProfileData = (newData) => {
     return { type: ActionTypes.UPDATE_PROFILE_DATA, newData }
 }
 export const updateShownArticles = (visibilityMode, filterStr) => {
-	return { 
-		type: ActionTypes.UPDATE_SHOWN_ARTICLES,
-	 	visibilityMode, filterStr
-	}
+    return { 
+        type: ActionTypes.UPDATE_SHOWN_ARTICLES,
+        visibilityMode, filterStr
+    }
 }
 export const removeFollowee = (name) => {
-	return {type: ActionTypes.REMOVE_FOLLOWEE, name}
+    return {type: ActionTypes.REMOVE_FOLLOWEE, name}
 }
 export const addFollowee = (name) => {
     return {type: ActionTypes.ADD_FOLLOWEE, name}
@@ -75,16 +75,10 @@ export const downloadProfileData = (field, user) => {
 //Although possibly successful, it's not actually implemented on
 //the server's side - so it'll always display an error msg
 export const notifyRegSuccess = (newUser) => {
-    const firstHalf = `Your registration of ${newUser} is valid, `
-    const secondHalf = `but the server doesn't have this feature working yet`
+    const firstHalf = `Your registration inputs were valid, but the `
+    const secondHalf = `server's registration feature isn't working yet`
     const msg = firstHalf + secondHalf
-    return {type: ActionTypes.UPDATE_ERROR_MESSAGE, msg}
-}
-export const notifyRegFailure = (attemptedUser, failureReason) => {
-    const firstHalf = `Your registration of ${attemptedUser} `
-    const secondHalf = `is invalid because ${failureReason}`
-    const msg = firstHalf + secondHalf
-    return {type: ActionTypes.UPDATE_ERROR_MESSAGE, msg}
+    return {type: ActionTypes.UPDATE_ERROR_MESSAGE, message:msg}
 }
 export const logout = () => {
     //TODO - clear stuff?
