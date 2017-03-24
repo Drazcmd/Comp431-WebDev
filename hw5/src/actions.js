@@ -93,10 +93,11 @@ export const login = (username, password) => {
         console.log(res)
         return resource('GET', 'headlines')
     })
+    /*
     .then(res => {
         console.log(res)
         return res.json()
-    })
+    })*/
     .then(jsonData => {
         console.log(jsonData)
         return {
@@ -104,7 +105,7 @@ export const login = (username, password) => {
             username: jsonData.headlines[0]
         }
     }).catch(res => {
-        console.log(res)
+        console.log(res.message)
         return `"${res.message || 'Error'}" when logging in`
     }).then(errMsg => {
         console.log("msg =", errMsg)

@@ -23,7 +23,7 @@ export const resource = (method, endpoint, payload) => {
 
   console.log('REMOVE DUMMY REQUEST STUFFFFFS')
   return fetch(`${url}/${endpoint}`, options)
-    /*.then(res => {
+    .then(res => {
       if (res.status === 200) {
         //not sure if there's a better way to do ternary indentation
         return (res.headers.get('Content-Type').indexOf('json') > 0)
@@ -34,6 +34,6 @@ export const resource = (method, endpoint, payload) => {
         console.error(`${method} ${endpoint} ${res.statusText}`)
         throw new Error(res.statusText)
       }
-    })*/
+    })
    
 }
