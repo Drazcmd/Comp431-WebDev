@@ -1,9 +1,9 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 
-import Main from './components/Main/main'
-import Profile from './components/Profile/profile'
-import Landing from './components/Landing/landing'
+import Main from './components/main/Main'
+import Profile from './components/profile/Profile'
+import Landing from './components/landing/Landing'
 
 export const AppRoot = ({ location, update }) => {
     if (location == 'MAIN_PAGE') {

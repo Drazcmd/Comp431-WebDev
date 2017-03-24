@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
-import Registration from './registration'
-import Login from './login'
+import Registration from './Registration'
+import Login from './Login'
 import ErrorDisplay from './../textDisplay/errorDisplay'
 import { Grid, Row, Col } from 'react-bootstrap'
 
