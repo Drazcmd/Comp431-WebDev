@@ -9,6 +9,7 @@ const url = 'https://webdev-dummy.herokuapp.com'
 See the provided code for connecting to the dummy server
 (https://jsbin.com/jeliroluni/edit?js,output)
 */
+
 export const resource = (method, endpoint, payload) => {
   const options =  {
     method,
@@ -17,23 +18,16 @@ export const resource = (method, endpoint, payload) => {
       'Content-Type': 'application/json'
     }
   }
-  if (payload) {
-    options.body = JSON.stringify(payload)
-  };
+  if (payload) options.body = JSON.stringify(payload)
 
-  console.log('REMOVE DUMMY REQUEST STUFFFFFS')
   return fetch(`${url}/${endpoint}`, options)
-    .then(res => {
-      if (res.status === 200) {
-        //not sure if there's a better way to do ternary indentation
-        return (res.headers.get('Content-Type').indexOf('json') > 0)
-            ? res.json()
-            : res.text()
-
+    .then(r => {
+      if (r.status === 200) {
+        return (r.headers.get('Content-Type').indexOf('json') > 0) ? r.json() : r.text()
       } else {
-        console.error(`${method} ${endpoint} ${res.statusText}`)
-        throw new Error(res.statusText)
+        // useful for debugging, but remove in production
+        console.error(`${method} ${endpoint} ${r.statusText}`)
+        throw new Error(r.statusText)
       }
     })
-   
 }

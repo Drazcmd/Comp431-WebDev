@@ -19,7 +19,15 @@ export const Reducer = (state = {
 }, action) => {
     switch (action.type) {
         case ActionTypes.LOCATION_CHANGE: {
-            return { ...state, location: action.location}
+            return { ...state,
+                location: action.location,
+                articles: action.articles ? 
+                    action.articles: state.articles,
+                followee: action.followees ? 
+                    action.followees: state.followees,
+                profileData: action.profileData ?
+                    action.profileData: state.profileData
+            }
         }
         case ActionTypes.LOGIN: {
             //TODO - update other areas if needed

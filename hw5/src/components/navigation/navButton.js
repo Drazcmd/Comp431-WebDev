@@ -27,7 +27,11 @@ export default connect(
 	},
 	(dispatch, ownProps) => {
     	return {
-    		navigate: (redirectLocation) => dispatch(updateLocation(ownProps.redirectLocation))
+    		navigate: (redirectLocation) => {
+	    		updateLocation(ownProps.redirectLocation).then(
+	    			(resultingAction) => dispatch(resultingAction)
+	    		)
+	    	}
     	}
     }
 

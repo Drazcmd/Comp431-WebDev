@@ -40,7 +40,41 @@ proper term.
 In Redux action creators simply return an action:
 */
 export const updateLocation = (new_location) => {
-    return { type: ActionTypes.LOCATION_CHANGE, location: new_location }
+    let resultingAction = { type: ActionTypes.LOCATION_CHANGE, location: new_location }
+    if (new_location == MAIN_PAGE) {
+        //need to grab the articles and followees
+        return resource('GET', 'articles')
+        .then(r => {
+            const articles = r.articles
+            resultingAction.articles = articles
+            return resource('GET', 'following')
+        })
+        .then(r => {
+            const followees = r.following
+            resultingAction.followees = followees
+            return resultingAction
+        })
+        .catch(r => {
+            console.log("caught something")
+            return resultingAction
+        })
+    } else if (new_location == PROFILE_PAGE) {
+        console.log("implement profile data update")
+        //need to grab the other profile data
+        return resource('GET', 'email')
+        .then(r => {
+            const email = r.email
+            resultingAction.email = email
+            return resultingAction
+        }).catch(r => {
+            console.log("caught something")
+            return resultingAction
+        })
+    } else {
+        //only one left is landing page - note we should
+        //have already logged out before this part!
+        return resultingAction
+    }
 }
 export const addArticle = (newArticle) => {
     return { type: ActionTypes.ADD_ARTICLE, newArticle }
@@ -83,7 +117,14 @@ export const notifyRegSuccess = (newUser) => {
 }
 export const logout = () => {
     //TODO - clear stuff?
-    return {type: ActionTypes.LOGOUT}
+    console.log("gotta clear stuff still")
+    return resource('PUT', 'logout')
+    .then(r => {
+        return updateLocation(LANDING_PAGE)
+    }).catch(r => {
+        console.log('caught something...')
+        return updateLocation(LANDING_PAGE)
+    })
 }
 
 const requestProfile = (username) => {
@@ -97,31 +138,20 @@ const requestProfile = (username) => {
 }
 
 export const login = (username, password) => {
-    const resultingAction = resource('POST', 'login', {
-        username, password 
+    return resource('POST', 'login', { username, password })
+    .then(r => resource('GET', 'headlines/'))
+    .then(r => {
+      const user = r.headlines[0]
+      const message = `you are logged in as ${user.username} "${user.headline}"`
+      return updateLocation(MAIN_PAGE)
     })
-    .then(jsonData => {
-        console.log(jsonData)
-        return {
-            type: ActionTypes.LOGIN,
-            username: jsonData.username
-        }
-    }).catch(res => {
-        console.log(res.message)
-        return dispError(`"${res.message || 'Error'}" when logging in`)
-    }).then(loginAction => {
-        const profileData = requestProfile(username)
-        .then(data => {
-            console.log(profileData)
-            return data
-        })
-        return {
-            ...loginAction,
-            profileData
-        }
+    .catch(r => {
+        const message = `"${r.message || 'Error'}" when logging in`
+        console.log("caught something!!")
+        //return dispError(message)
+        return updateLocation(MAIN_PAGE)
+
     })
-    console.log("what we got:", resultingAction)
-    return resultingAction
 }
 
 export const dispError = (message) => {
