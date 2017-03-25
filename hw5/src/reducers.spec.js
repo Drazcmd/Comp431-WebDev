@@ -68,12 +68,62 @@ it('should state error (for displaying error message to user)', (done) => {
     expect(returnedState.globalErrorMessage).to.eql(errorMessage)
     done()
 })
+
 it('should set the articles', (done) => {
-    expect(1).to.eql(2)
+    const newArticles = {"articles":[
+        {"_id":3833265,"text":"TESTING 456",
+        "date":"2015-06-10T19:26:31.978Z","img":null,
+        "comments":[],"author":"cesetest"},
+        {"_id":3833260,"text":"TESTING 123",
+        "date":"2015-01-10T19:26:31.978Z","img":null,
+        "comments":[],"author":"adftest"}
+    ]}
+    const mockAction = {
+        //Refresh should not change filter str or visiblity mode
+        type: ActionTypes.UPDATE_SHOWN_ARTICLES,
+        articles: newArticles,
+        visibilityMode: VisModes.REFRESH,
+        filterStr: "asdjfb"
+    }
+    const returnedState = reducer.Reducer(mockUninitializedState, mockAction)
+    expect(returnedState.articles).to.eql(newArticles)
+    expect(returnedState.visibilityMode).to.eql(VisModes.NO_FILTER)
+    expect(returnedState.filterStr).to.eql("")
     done()
 })
 it('should set the search keyword', (done) => {
-    expect(1).to.eql(2)
+    const mockAction = {
+        type: ActionTypes.UPDATE_SHOWN_ARTICLES,
+        visibilityMode: VisModes.FIL_TEXT,
+        filterStr: "123"
+    }
+    const returnedState = reducer.Reducer(mockUninitializedState, mockAction)
+    expect(returnedState.articles).to.eql([])
+    expect(returnedState.visibilityMode).to.eql(VisModes.FIL_TEXT)
+    expect(returnedState.filterStr).to.eql("123")
+    done()
+})
+
+it('should be able to set the search keyword while updating articles',
+(done) => {
+    const newArticles = {"articles":[
+        {"_id":333, "text":"TESTING abcdef",
+        "date":"2015-06-10T19:26:31.978Z","img":null,
+        "comments":[],"author":"cesetest"},
+        {"_id":444,"text":"TESTbobby",
+        "date":"2015-01-10T19:26:31.978Z","img":null,
+        "comments":[],"author":"adftest"}
+    ]}
+    const mockAction = {
+        type: ActionTypes.UPDATE_SHOWN_ARTICLES,
+        visibilityMode: VisModes.FIL_AUTH,
+        filterStr: "bobby",
+        articles: newArticles
+    }
+    const returnedState = reducer.Reducer(mockUninitializedState, mockAction)
+    expect(returnedState.articles).to.eql(newArticles)
+    expect(returnedState.visibilityMode).to.eql(VisModes.FIL_AUTH)
+    expect(returnedState.filterStr).to.eql("bobby")
     done()
 })
 it('should filter displayed articles by the search keyword', (done) => {
