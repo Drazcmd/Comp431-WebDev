@@ -85,10 +85,11 @@ export const updateStatus = (newStatus) => {
 export const updateProfileData = (newData) => {
     return { type: ActionTypes.UPDATE_PROFILE_DATA, newData }
 }
-export const updateShownArticles = (visibilityMode, filterStr) => {
+export const updateShownArticles =
+ (visibilityMode, filterStr, optionallyArticles) => {
     return { 
         type: ActionTypes.UPDATE_SHOWN_ARTICLES,
-        visibilityMode, filterStr
+        visibilityMode, filterStr, optionallyArticles
     }
 }
 export const removeFollowee = (name) => {

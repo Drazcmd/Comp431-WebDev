@@ -4,7 +4,6 @@ import { ActionTypes, VisModes } from './actions'
 export const Reducer = (state = {
     location: 'LANDING_PAGE',
     articles: [],
-    visibleArticles: [],
     visibilityMode: VisModes.NO_FILTER,
     filterStr: "",  
     profileData: {
@@ -35,46 +34,26 @@ export const Reducer = (state = {
         }
 
         case ActionTypes.UPDATE_SHOWN_ARTICLES: {
-            //It's either a new mode or a direction to use the old
-            let visibilityMode = VisModes.NO_FILTER
-            let filterStr = state.filterStr
-            if (action.visibilityMode != VisModes.REFRESH) {
-                visibilityMode = action.visibilityMode
-                filterStr = action.filterStr
-            }
+            //These articles were an optional input
+            const returnedArticles =
+                action.articles ? action.articles: state.articles
 
-            //NO_FILTER wants to show everything
-            if (visibilityMode == VisModes.NO_FILTER) {
+            //It's a direction to use the old settings...
+            //(the state itself should have VisModes.REFRESH)
+            if (action.visibilityMode === VisModes.REFRESH) {
                 return {
-                    ...state, visibleArticles: state.articles.concat()
+                    ...state,
+                    visibilityMode: state.visibilityMode,
+                    articles: returnedArticles
                 }
-            }
-
-            let filterFunc = () => articles.concat()
-            //Ternary operator is being weird, not sure why.
-            //This is identical in function to one though
-            if (visibilityMode === VisModes.FIL_AUTH){
-                filterFunc = (articles) => {
-                    //Only assume it's by author if explicitly so
-                    return articles.filter(article => {
-                        return article.author.includes(filterStr)
-                    })
-                }
-            } else if (visibilityMode === VisModes.FIL_TEXT){
-                filterFunc = (articles) => {
-                    //If it's not by author, we assume it's by text
-                    //AKA, == VisModes.FIL_TEXT
-                    return articles.filter(article => {
-                        return article.text.includes(filterStr)
-                    })
-                };
             } else {
-                ;
-            }
-            const filteredArticles = filterFunc(state.articles);
-            return {
-                ...state, 
-                visibleArticles: filteredArticles
+                //Or a request to use the new visibility mode
+                return {
+                    ...state,
+                    visibilityMode: action.visibilityMode,
+                    articles: returnedArticles,
+                    filterStr: action.filterStr
+                } 
             }
         }
 
