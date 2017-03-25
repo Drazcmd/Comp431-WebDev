@@ -23,7 +23,7 @@ export const Reducer = (state = {
                 location: action.location,
                 articles: action.articles ? 
                     action.articles: state.articles,
-                followee: action.followees ? 
+                followees: action.followees ? 
                     action.followees: state.followees,
                 profileData: action.profileData ?
                     action.profileData: state.profileData

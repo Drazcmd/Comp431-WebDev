@@ -1,12 +1,35 @@
 import { expect } from 'chai'
 import mockery from 'mockery'
-import { ActionTypes } from './actions'
+import { ActionTypes, VisModes } from './actions'
+
+//This is hardcoded data only to be used for mocking actions
+const testArticles = require('./testData/articles.json')
+const testFollowees = require('./testData/followees.json')
+const testProfileData = require('./testData/profile.json')
+
 //Note - shouldn't be doing any fetch's here!
 let reducer
+let mockUninitializedState
 beforeEach(() => {
     if (mockery.enable) {
         mockery.enable({warnOnUnregistered: false, useCleanCache:true})
         reducer = require('./reducers')
+        mockUninitializedState = {
+            location: 'LANDING_PAGE',
+            articles: [],
+            visibleArticles: [],
+            visibilityMode: VisModes.NO_FILTER,
+            filterStr: "",  
+            profileData: {
+                "name":"Anon", 
+                "email":"missingEmail@missing.com", 
+                "zip":"00000",
+                "img": "http://www.clker.com/cliparts/n/T/5/z/f/Y/image-missing-md.png ",
+                "status":"missing status"
+            },
+            followees: [],
+            globalErrorMessage: ""
+        }
     }
 })
 
@@ -16,20 +39,19 @@ afterEach(() => {
     }
 })
 
-it('should confirm navigation worked', (done) => {
+it('should initialize state', (done) => {
     const mockAction = {
         type: ActionTypes.LOCATION_CHANGE,
-        location: 'MAIN_PAGE'
+        location: 'MAIN_PAGE',
+        articles: testArticles,
+        profileData: testProfileData,
+        followees: testFollowees
     }
-    const mockState = {
-        location: 'LANDING_PAGE'
-    }
-    const returnedState = reducer.Reducer(mockState, mockAction)
-    expect(returnedState).to.eql({location: 'MAIN_PAGE'})
-    done()
-})
-it('should initialize state', (done) => {
-    expect(1).to.eql(2)
+    const returnedState = reducer.Reducer(mockUninitializedState, mockAction)
+    expect(returnedState.location).to.eql('MAIN_PAGE')
+    expect(returnedState.articles).to.eql(testArticles)
+    expect(returnedState.followees).to.eql(testFollowees)
+    expect(returnedState.profileData).to.eql(testProfileData)
     done()
 })
 it('should state success (for displaying success message to user)', (done) => {
@@ -37,7 +59,13 @@ it('should state success (for displaying success message to user)', (done) => {
     done()
 })
 it('should state error (for displaying error message to user)', (done) => {
-    expect(1).to.eql(2)
+    const errorMessage = "Testing error functionality"
+    const mockAction = {
+        type: ActionTypes.UPDATE_ERROR_MESSAGE,
+        message: errorMessage
+    }
+    const returnedState = reducer.Reducer(mockUninitializedState, mockAction)
+    expect(returnedState.globalErrorMessage).to.eql(errorMessage)
     done()
 })
 it('should set the articles', (done) => {
