@@ -9,7 +9,6 @@ import NavBar from '../navigation/navBar'
 export const Landing = ({ }, { }) => {
 	return (
 	 	<Grid>
-	 		<NavBar />
 	 		<Row> <ErrorDisplay /> </Row>
 	 	  <Row>
 	 	    <h1> ELECT-BOOK </h1>

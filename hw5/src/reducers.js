@@ -121,15 +121,23 @@ export const Reducer = (state = {
             return {
                 ...state,
                 location:"MAIN_PAGE",
-                profileData: {
-                    ...state.profileData,
-                    status: action.initialStatus
-                },
+                profileData: action.profileData,
                 globalErrorMessage: ""
             }
         }
         case ActionTypes.LOGOUT: {
-            console.log("implement logout reduce!")
+            return {
+                ...state,
+                location:"LANDING_PAGE",
+                profileData: {
+                    "name":"Anon", 
+                    "email":"missingEmail@missing.com", 
+                    "zip":"00000",
+                    "img": "http://www.clker.com/cliparts/n/T/5/z/f/Y/image-missing-md.png ",
+                    "status":"missing status"
+                },
+                globalErrorMessage: ""
+            }
             return state
         }
         case ActionTypes.UPDATE_ERROR_MESSAGE: {

@@ -85,6 +85,17 @@ export const logout = () => {
     //TODO - clear stuff?
     return {type: ActionTypes.LOGOUT}
 }
+
+const requestProfile = (username) => {
+    const profileData = resource('GET', 'headlines')
+    .then(jsonData => {
+        console.log(jsonData) 
+    })
+    console.log(profileData)
+    return profileData
+
+}
+
 export const login = (username, password) => {
     const resultingAction = resource('POST', 'login', {
         username, password 
@@ -98,6 +109,16 @@ export const login = (username, password) => {
     }).catch(res => {
         console.log(res.message)
         return dispError(`"${res.message || 'Error'}" when logging in`)
+    }).then(loginAction => {
+        const profileData = requestProfile(username)
+        .then(data => {
+            console.log(profileData)
+            return data
+        })
+        return {
+            ...loginAction,
+            profileData
+        }
     })
     console.log("what we got:", resultingAction)
     return resultingAction
