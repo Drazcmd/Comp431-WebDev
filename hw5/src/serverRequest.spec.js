@@ -46,12 +46,15 @@ it('resource should give me the http error', (done) => {
         headers: {'Content-Type':'application/json'},
         status: 404
     })
-    const invalidRequest = interceptedResource.resource('GET', errorEndpint).then((res) =>{
-        expect(res.status).to.eql(404)
-        done();
-    }).catch((error) => {
-        done(error)
-    })
+    try {
+        invalidRequest = interceptedResource.resource('GET', errorEndpint)
+        //we want to fail if an error isn't thrown
+        expect(1).to.eql(2)
+        done()
+    } catch (error) {
+        expect(error).to.be.an('error')
+        done()
+    }
 })
 
 /*

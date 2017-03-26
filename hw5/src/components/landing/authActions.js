@@ -4,7 +4,6 @@ import { resource } from '../../serverRequest'
 const missingField = (field, value) => value ? "" : `${field} is invalid (you entered "${value}"). `
 
 export const delegateRegistration = (userInfo) => {
-
     if (userInfo.username && userInfo.password
       && userInfo.firstName && userInfo.lastName){
         return notifyRegSuccess(userInfo)

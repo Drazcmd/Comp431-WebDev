@@ -42,19 +42,47 @@ In Redux action creators simply return an action:
 export const updateLocation = (new_location) => {
     let resultingAction = { type: ActionTypes.LOCATION_CHANGE, location: new_location }
     if (new_location == MAIN_PAGE) {
-        //need to grab the articles and followees
+        //grab the articles and followees/followees headlines
         return resource('GET', 'articles')
         .then(r => {
             const articles = r.articles
             resultingAction.articles = articles
+            //the way following works is that it only returns the
+            //usernames, not any of the other data (avatar/headline)
             return resource('GET', 'following')
         })
         .then(r => {
-            const followees = r.following
-            resultingAction.followees = followees
+            const followeesNames = r.following
+            const userListStr = followeesNames.join(',')
+            //therefore we must do two more requests to get these
+            return Promise.all([
+                resource('GET', `headlines/${userListStr}`),
+                resource('GET', `avatars/${userListStr}`)
+            ])
+        }).then(headlinesAndAvatars => {
+            const followeesHeadlines = headlinesAndAvatars[0].headlines
+            const followeesAvatars = headlinesAndAvatars[1].avatars
+            console.log(followeesHeadlines)
+            console.log(followeesAvatars)
+            //and finally we need to package each followee up for my components to use
+            const outputFollowees = followeesHeadlines.map((followeeWithHeadline) => {
+                const headline = followeeWithHeadline.headline
+                const username = followeeWithHeadline.username
+                const possibleAvatar = followeesAvatars.find((followee) => {
+                    return followee.username === username
+                })
+                const avatar = possibleAvatar ? possibleAvatar.avatar : null
+                return { 
+                    name: username,
+                    status: headline,
+                    img: avatar
+                }
+            })
+            resultingAction.followees = outputFollowees
             return resultingAction
         })
         .catch(r => {
+            console.log(r)
             console.log("caught something")
             return resultingAction
         })
