@@ -31,12 +31,12 @@ export const getMainData = (userListStr) => {
 }
 export const getProfileData = () => {
     return Promise.all([
-        resource('GET', 'email'),
+      	resource('GET', 'email'),
         resource('GET', 'zipcode')
     ]).then(getRequests => {
         const email = getRequests[0].email
         const zipcode = getRequests[1].zipcode
-       return {
+        return {
        		profileData: {
 	            email: email,
 	            zipcode: zipcode
@@ -44,3 +44,49 @@ export const getProfileData = () => {
        } 
     })
 }
+
+/**  
+These two can be used for updating any of the various user fields who are
+updated using a PUT with endpoint as /${fieldname} and required payload as
+{ ${fieldname}: value }.
+
+This includes the user's headline, user email,  zipcode, and password,
+*/
+const updateField = (field, value) => {
+	console.log('field', field, 'val:', value)
+	//unfortunately there's no way to functionally interpolate the
+	//field variable as our key (rather than 'field' as the key) :(
+	const payload = {}
+	payload[field] = value
+	return resource('PUT', field, payload)
+}
+export const updateFields = (fieldValueObjs) => {
+	const resultingDataAcc = {}
+	console.log(fieldValueObjs)
+	return Promise.all(
+		fieldValueObjs.map(fieldValueObj => {
+			//i.e. email, zipcode, headline, etc
+			const fieldToUpdate = fieldValueObj.field
+			//i.e. a@gmail.com, 33333, etc.
+			const newValue = fieldValueObj.value
+			return updateField(fieldToUpdate, newValue)
+		})
+	).then((fetchResponses) => {
+		return fetchResponses.reduce(
+			((resultingDataAcc, fetchResponse, index) => {
+				//Index should be the same due to use of Promise.all
+				const field = fieldValueObjs[index].field
+				console.log(field, fetchResponse[field])
+				//And now package it up nicely for our reducers to use
+				const withField = {
+					...resultingDataAcc
+				}
+				//Same inability to interpolate as above :/ It's a
+				//fundamental limitation of js as far as I understand
+				withField[field] = fetchResponse[field]
+				return withField
+			})
+		)
+	})
+}
+

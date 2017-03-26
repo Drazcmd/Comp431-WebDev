@@ -1,5 +1,8 @@
 import { resource } from './serverRequests/serverRequest'
-import { getMainData, getProfileData } from './serverRequests/dataFetching'
+import { 
+    getMainData, getProfileData, updateFields
+} from './serverRequests/dataFetching'
+
 export const MAIN_PAGE = 'MAIN_PAGE'
 export const PROFILE_PAGE = 'PROFILE_PAGE'
 export const LANDING_PAGE = 'LANDING_PAGE'
@@ -92,8 +95,21 @@ export const addArticle = (newArticle) => {
 export const updateStatus = (newStatus) => {
     return { type: ActionTypes.UPDATE_STATUS, newStatus }
 }
-export const updateProfileData = (newData) => {
-    return { type: ActionTypes.UPDATE_PROFILE_DATA, newData }
+export const updateProfileData = (fieldValueObjs) => {
+    console.log(fieldValueObjs)
+    //Delegate to dataFetching.js for the (currently 2) PUT requests
+    //Each tuple is of form {fieldToUpdate: valueToBeUpdatedTo}
+    return updateFields(fieldValueObjs).then(newProfileData => {
+        //And now we update state based off what the server sends back
+        //(note that fetchResponses comes from a Promise.all())
+        return {
+            type: ActionTypes.UPDATE_PROFILE_DATA, 
+            newProfileData: newProfileData
+        }
+    }).catch(error => {
+        console.log(error)
+        return dispError(error)
+    })
 }
 export const updateShownArticles =
  (visibilityMode, filterStr, optionallyArticles) => {

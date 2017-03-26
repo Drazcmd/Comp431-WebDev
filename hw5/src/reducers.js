@@ -74,14 +74,14 @@ export const Reducer = (state = {
 
         case ActionTypes.ADD_ARTICLE: {
             //These will be non-persitant on refresh as required")
-            const new_state = ((action.newArticle.text) &&
-              (action.newArticle.text.length != 0)) ? {
+            const newState = 
+                ((action.newArticle.text) && (action.newArticle.text.length != 0)) 
+                ? {
                     ...state,
                     articles:
                         state.articles.concat(action.newArticle),
-                } :
-                state
-            return new_state
+                } : state
+            return newSstate
         }
 
         case ActionTypes.UPDATE_STATUS: {
@@ -108,17 +108,22 @@ export const Reducer = (state = {
             )}
         }
         case ActionTypes.UPDATE_PROFILE_DATA: {
-            const new_data = action.newData;
-            console.log(new_data)
+            const newProfileData = action.newProfileData;
+            console.log(newProfileData)
             return {
                 ...state,
                 profileData: {
                     ...state.profileData, 
-                    zip: new_data.zip,
-                    email: new_data.email
+                    zip: newProfileData.zipcode ?
+                        newProfileData.zipcode : 
+                        state.profileData.zip,
+                    email: newProfileData.email ?
+                        newProfileData.email :
+                        state.profileData.email
                 }
             }
         }
+
         case ActionTypes.LOGIN: {
             return {
                 ...state,
