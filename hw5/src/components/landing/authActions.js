@@ -1,5 +1,5 @@
 import { dispError, logout, login, notifyRegSuccess } from '../../actions'
-import { resource } from '../../serverRequest'
+import { resource } from '../../serverRequests/serverRequest'
 
 const missingField = (field, value) => value ? "" : `${field} is invalid (you entered "${value}"). `
 

@@ -1,4 +1,5 @@
-import { resource } from './serverRequest'
+import { resource } from './serverRequests/serverRequest'
+import { getMainData, getProfileData } from './serverRequests/dataFetching'
 export const MAIN_PAGE = 'MAIN_PAGE'
 export const PROFILE_PAGE = 'PROFILE_PAGE'
 export const LANDING_PAGE = 'LANDING_PAGE'
@@ -39,69 +40,50 @@ conflate the terms “action” and “action creator,” so do your best to use
 proper term.
 In Redux action creators simply return an action:
 */
-export const updateLocation = (new_location) => {
-    let resultingAction = { type: ActionTypes.LOCATION_CHANGE, location: new_location }
-    if (new_location == MAIN_PAGE) {
-        //grab the articles and followees/followees headlines
-        return resource('GET', 'articles')
+
+const createLocAction = ((newLocation, fetchedData) => {
+    //Might not be fetching data if going to landing, therefore it needs 
+    //to work if only passed newLocation as an input arg
+    return fetchedData ? {
+        ...fetchedData,
+        type: ActionTypes.LOCATION_CHANGE,
+        newLocation: newLocation
+    } : {
+        type: ActionTypes.LOCATION_CHANGE,
+        newLocation: newLocation
+    }
+})
+export const updateLocation = (newLocation) => {
+    if (newLocation === MAIN_PAGE) {
+        //We need to update two things: the articles and the followee data
+        //However, to do the latter, we first need the names of our folowees
+        return resource('GET', 'following')
         .then(r => {
-            const articles = r.articles
-            resultingAction.articles = articles
-            //the way following works is that it only returns the
-            //usernames, not any of the other data (avatar/headline)
-            return resource('GET', 'following')
-        })
-        .then(r => {
+            //(the way following works is that it only returns the
+            //usernames, not any of the other data (avatar/headline))
             const followeesNames = r.following
             const userListStr = followeesNames.join(',')
-            //therefore we must do two more requests to get these
-            return Promise.all([
-                resource('GET', `headlines/${userListStr}`),
-                resource('GET', `avatars/${userListStr}`)
-            ])
-        }).then(headlinesAndAvatars => {
-            const followeesHeadlines = headlinesAndAvatars[0].headlines
-            const followeesAvatars = headlinesAndAvatars[1].avatars
-            console.log(followeesHeadlines)
-            console.log(followeesAvatars)
-            //and finally we need to package each followee up for my components to use
-            const outputFollowees = followeesHeadlines.map((followeeWithHeadline) => {
-                const headline = followeeWithHeadline.headline
-                const username = followeeWithHeadline.username
-                const possibleAvatar = followeesAvatars.find((followee) => {
-                    return followee.username === username
-                })
-                const avatar = possibleAvatar ? possibleAvatar.avatar : null
-                return { 
-                    name: username,
-                    status: headline,
-                    img: avatar
-                }
-            })
-            resultingAction.followees = outputFollowees
-            return resultingAction
+            //Now we can actually fetch all our main data
+            return getMainData(userListStr)
+        }).then(fetchedData => {
+            return createLocAction(newLocation, fetchedData)
+        }).catch(error => {
+            console.log(error)
+            return dispError(error)
         })
-        .catch(r => {
-            console.log(r)
-            console.log("caught something")
-            return resultingAction
+    } else if (newLocation === PROFILE_PAGE) {
+        //profile data is comparatively much much simpler to fetch
+        return getProfileData().then(fetchedData => {
+            return createLocAction(newLocation, fetchedData)
+        }).catch(error => {
+            console.log(error)
+            return dispError(error)
         })
-    } else if (new_location == PROFILE_PAGE) {
-        console.log("implement profile data update")
-        //need to grab the other profile data
-        return resource('GET', 'email')
-        .then(r => {
-            const email = r.email
-            resultingAction.email = email
-            return resultingAction
-        }).catch(r => {
-            console.log("caught something")
-            return resultingAction
-        })
+    } else if (newLocation === LANDING_PAGE) {
+        //should have already logged out before this part!
+        return createLocAction(newLocation)
     } else {
-        //only one left is landing page - note we should
-        //have already logged out before this part!
-        return resultingAction
+        return dispError("Invalid place to navigate to")
     }
 }
 export const addArticle = (newArticle) => {

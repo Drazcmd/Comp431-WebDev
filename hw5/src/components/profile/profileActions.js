@@ -53,32 +53,16 @@ const updateField = (dataPiece) => (dispatch) => {
   	})
 }
 
-
-/*
-Special case for accessing the user's profile data - 
-Input might be something like 'headlines', and so
-we'd send the get request to /headlines/cmd11test
-
-on the server it'd look something like
-"headlines" : [{
-    'username' : 'cmd11test', 'headline' : 'TESTING'
-}]
-The action only wants the inner dictionary, which is
-why we do response.field[0]
-*/
-const downloadField = (field) =>  (dispatch) => {
-  	resource('GET', field).then((response) => {
-  		//TODO error checking
-	 	const action = downloadProfileData(response.field[0])
-	    dispatch(action)
-  	})
+export const getProfileData = () => {
+    return Promise.all([
+        resource('GET', 'email'),
+        resource('GET', 'zipcode')
+    ]).then(getRequests => {
+        const email = getRequests[0].email
+        const zipcode = getRequests[1].zipcode
+       return {
+            email: email,
+            zipcode: zipcode
+       } 
+    })
 }
-
-export const multiDownloadGenerator = (fields) => {
-	return ((dispatch) => {
-		fields.forEach((field) => {
-	    	dispatch(downloadField(field))
-		})
-	})
-}
-

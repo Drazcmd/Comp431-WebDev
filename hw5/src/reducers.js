@@ -18,14 +18,29 @@ export const Reducer = (state = {
 }, action) => {
     switch (action.type) {
         case ActionTypes.LOCATION_CHANGE: {
+            //doing a full refresh - Facebook seems to do this too
+            const location = action.newLocation
+            //Since this assignment doesn't require all the fields we
+            //will eventually, can't guarantee what'll be passed in
+            const profileData = action.profileData 
+            ? {
+                name: action.profileData.name ?
+                    action.profileData.name : state.profileData.name,
+                email: action.profileData.email ?
+                    action.profileData.email : state.profileData.email,
+                zip: action.profileData.zipcode ?
+                    action.profileData.zipcode : state.profileData.zip,
+                img: action.profileData.img ?
+                    action.profileData.img : state.profileData.img,
+                status: action.profileData.status ?
+                    action.profileData.status : state.profileData.status,
+            } 
+            : state.profileData
+            const articles = action.articles ? action.articles: state.articles
+            const followees = action.followees ? action.followees: state.followees
             return { ...state,
-                location: action.location,
-                articles: action.articles ? 
-                    action.articles: state.articles,
-                followees: action.followees ? 
-                    action.followees: state.followees,
-                profileData: action.profileData ?
-                    action.profileData: state.profileData
+                location: location, articles: articles,
+                followees: followees, profileData: profileData
             }
         }
         case ActionTypes.LOGIN: {
