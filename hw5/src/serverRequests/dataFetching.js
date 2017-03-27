@@ -4,7 +4,9 @@ export const getMainData = (userList) => {
     return Promise.all([
         resource('GET', 'articles'),
         resource('GET', `headlines/${userListStr}`),
-        resource('GET', `avatars/${userListStr}`)
+        resource('GET', `avatars/${userListStr}`),
+        //this one is to get our own headline!
+        resource('GET', `headlines`)
     ]).then(getRequests => {
         const articles = getRequests[0].articles
 
@@ -24,9 +26,15 @@ export const getMainData = (userList) => {
                 img: avatar
             }
         })
+        //response is like {headlines: [{username: cmd11, headline: "woo!"}]}
+        const ourHeadline = getRequests[3].headlines[0].headline
         return {
             articles: articles,
-            followees: followees
+            followees: followees,
+            //the reducer will only update what we put in here
+            profileData: {
+            	status: ourHeadline
+            }
         }
     })
 }

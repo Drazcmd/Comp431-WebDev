@@ -100,7 +100,14 @@ export const addArticle = (newArticle) => {
     })
 }
 export const updateStatus = (newStatus) => {
-    return { type: ActionTypes.UPDATE_STATUS, newStatus }
+    const payload = {headline: newStatus}
+    return resource('PUT', 'headline', payload)
+    .then(r => {
+        return { type: ActionTypes.UPDATE_STATUS, newStatus}
+    }).catch(error => {
+        console.log(error)
+        return dispError(error)
+    })
 }
 export const updateProfileData = (fieldValueObjs) => {
     console.log(fieldValueObjs)

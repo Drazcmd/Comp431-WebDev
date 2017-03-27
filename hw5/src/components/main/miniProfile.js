@@ -58,7 +58,11 @@ export default connect(
     }),
 	(dispatch) => {
 		return {
-			updateStatus: (newStatus) => dispatch(updateStatus(newStatus))
+			updateStatus: ((newStatus) => {
+				updateStatus(newStatus).then(returnedAction => {
+					dispatch(returnedAction)
+				})
+			})
 		}
 	}
 )(MiniProfile)
