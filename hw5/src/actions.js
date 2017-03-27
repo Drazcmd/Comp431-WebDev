@@ -22,8 +22,7 @@ export const ActionTypes = {
     UPDATE_PROFILE_DATA: 'UPDATE_PROFILE_DATA',
     DOWNLOAD_PROFILE_DATA: 'DOWNLOAD_PROFILE_DATA',
     UPDATE_SHOWN_ARTICLES: 'UPDATE_SHOWN_ARTICLES',
-    REMOVE_FOLLOWEE: "REMOVE_FOLLOWEE",
-    ADD_FOLLOWEE: "ADD_FOLLOWEE",
+    UPDATE_FOLLOWEES: "UPDATE_FOLLOWEES",
     LOGOUT: "LOGOUT",
     LOGIN: "LOGIN",
     UPDATE_ERROR_MESSAGE: 'UPDATE_ERROR_MESSAGE'
@@ -65,9 +64,8 @@ export const updateLocation = (newLocation) => {
             //(the way following works is that it only returns the
             //usernames, not any of the other data (avatar/headline))
             const followeesNames = r.following
-            const userListStr = followeesNames.join(',')
             //Now we can actually fetch all our main data
-            return getMainData(userListStr)
+            return getMainData(followeesNames)
         }).then(fetchedData => {
             return createLocAction(newLocation, fetchedData)
         }).catch(error => {
@@ -90,7 +88,16 @@ export const updateLocation = (newLocation) => {
     }
 }
 export const addArticle = (newArticle) => {
-    return { type: ActionTypes.ADD_ARTICLE, newArticle }
+    const payload = {
+        text: newArticle.text
+    }
+    return resource('POST', 'article', payload)
+    .then(r => {
+        return updateShownArticles(VisModes.REFRESH)
+    }).catch(error => {
+        console.log(error)
+        return dispError(error)
+    })
 }
 export const updateStatus = (newStatus) => {
     return { type: ActionTypes.UPDATE_STATUS, newStatus }
@@ -111,18 +118,71 @@ export const updateProfileData = (fieldValueObjs) => {
         return dispError(error)
     })
 }
-export const updateShownArticles =
- (visibilityMode, filterStr, optionallyArticles) => {
-    return { 
-        type: ActionTypes.UPDATE_SHOWN_ARTICLES,
-        visibilityMode, filterStr, optionallyArticles
-    }
+export const updateShownArticles = (
+    visibilityMode, filterStr, optionallyArticles
+) => {
+    //No matter what operation we're updaitng for, 
+    //even if it's just to sort, we might as well refresh the feed
+    console.log("optional articles???", optionallyArticles) 
+    return resource('GET', 'articles/')
+    .then(r => {
+        const articles = r.articles
+        return {
+            type: ActionTypes.UPDATE_SHOWN_ARTICLES,
+            visibilityMode, filterStr, articles
+        }
+    }).catch(error => {
+        console.log(error)
+        return dispError(error)
+    })
 }
+
+/**
+Followee operations basically require an entire refresh of the data
+that is displayed on the main page (articles and followees)
+Technically there is some repeated code between these, but
+given the way that it's part of the promise chain at best we
+wouldn't really be able to re-use more than a line or two. Plus
+in the future we don't neccessarily want changing functionality
+of one remove to affect add and vice-versa
+*/
 export const removeFollowee = (name) => {
-    return {type: ActionTypes.REMOVE_FOLLOWEE, name}
+    return resource('GET', `headlines/${name}`)
+    .then(r => {
+        return resource('DELETE', `following/${name}`)
+    }).then(r => {
+        const resultingFollowees = r.following
+        return getMainData(resultingFollowees)
+    }).then(fetchedData => {
+        //the component's responsible for dispatching another
+        //update articles action after this action
+        return {
+            type: ActionTypes.UPDATE_FOLLOWEES,
+            resultingFollowees: fetchedData.followees
+        }
+    }).catch(error => {
+        console.log(error)
+        return dispError(error)
+    })
 }
 export const addFollowee = (name) => {
-    return {type: ActionTypes.ADD_FOLLOWEE, name}
+    return resource('GET', `headlines/${name}`)
+    .then(r => {
+        return resource('PUT', `following/${name}`) 
+    })
+    .then(r => {
+        const resultingFollowees = r.following
+        return getMainData(resultingFollowees)
+    }).then(fetchedData => {
+        //see above note regarding updating articles
+        return {
+            type: ActionTypes.UPDATE_FOLLOWEES,
+            resultingFollowees: fetchedData.followees
+        }
+    }).catch(error => {
+        console.log(error)
+        return dispError(error)
+    })
 }
 /* 
 Input ought to look something like:
@@ -155,7 +215,7 @@ export const logout = () => {
 }
 
 const requestProfile = (username) => {
-    const profileData = resource('GET', 'headlines')
+    const profileData = resource('GET', 'headlines/')
     .then(jsonData => {
         console.log(jsonData) 
     })

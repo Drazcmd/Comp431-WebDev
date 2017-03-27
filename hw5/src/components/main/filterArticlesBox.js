@@ -56,19 +56,16 @@ filterArticlesBox.propTypes = {
 }
 
 export default connect(
-	(state) => {
-		return ({})
-	},
+	(state) => ({
+		filterStr: state.filterStr
+	}),
  	(dispatch) => {
  		return {
-			postArticle: (article) => {
-				dispatch(addArticle(article))
-				//Gotta refresh visible articles to see it
-			},
-			filterArticles: (mode, filterStr) => {
-				dispatch(updateShownArticles(
-					mode, filterStr
-				))
+			filterArticles: (mode, newFilterStr) => {
+				updateShownArticles(mode, newFilterStr)
+				.then(returnedAction => {
+					dispatch(returnedAction)
+				})
 
 			}
 		}

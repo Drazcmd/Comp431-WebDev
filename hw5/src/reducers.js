@@ -49,16 +49,15 @@ export const Reducer = (state = {
         }
 
         case ActionTypes.UPDATE_SHOWN_ARTICLES: {
-            //These articles were an optional input
+            //(just in case the GET fails)
             const returnedArticles =
                 action.articles ? action.articles: state.articles
 
-            //It's a direction to use the old settings...
-            //(the state itself should have VisModes.REFRESH)
+            //It's a direction to use the old settings; the
+            //state itself should NEVER have VisModes.REFRESH
             if (action.visibilityMode === VisModes.REFRESH) {
                 return {
                     ...state,
-                    visibilityMode: state.visibilityMode,
                     articles: returnedArticles
                 }
             } else {
@@ -73,7 +72,6 @@ export const Reducer = (state = {
         }
 
         case ActionTypes.ADD_ARTICLE: {
-            //These will be non-persitant on refresh as required")
             const newState = 
                 ((action.newArticle.text) && (action.newArticle.text.length != 0)) 
                 ? {
@@ -91,21 +89,10 @@ export const Reducer = (state = {
                 }
             }
         }
-        case ActionTypes.REMOVE_FOLLOWEE: {
-            return {...state, followees: state.followees.filter(
-                (followee) => {
-                    return !(followee.name === action.name)
-                }
-            )}
-        }
-        case ActionTypes.ADD_FOLLOWEE: {
-            return {...state, followees: state.followees.concat(
-                {
-                    name: action.name,
-                    status: "Now struggling with a HARD CODE assignment...",
-                    img: "https://unsplash.it/200"
-                }
-            )}
+        case ActionTypes.UPDATE_FOLLOWEES: {
+            const newFollowees = action.resultingFollowees 
+                ? action.resultingFollowees : state.followees
+            return {...state, followees: newFollowees}
         }
         case ActionTypes.UPDATE_PROFILE_DATA: {
             const newProfileData = action.newProfileData;

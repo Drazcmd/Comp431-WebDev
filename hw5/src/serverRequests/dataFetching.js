@@ -1,5 +1,6 @@
 import { resource } from './serverRequest'
-export const getMainData = (userListStr) => {
+export const getMainData = (userList) => {
+	const userListStr = userList.join(',')
     return Promise.all([
         resource('GET', 'articles'),
         resource('GET', `headlines/${userListStr}`),
