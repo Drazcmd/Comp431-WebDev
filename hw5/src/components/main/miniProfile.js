@@ -6,63 +6,63 @@ import { updateStatus } from '../../actions'
 //This component is the picture, status, and name of the 
 //currently logged in user that appears on the main page
 export const MiniProfile = ({ 
-	profileName, profileStatus, profileImgSrc, updateStatus
+    profileName, profileStatus, profileImgSrc, updateStatus
 }) => {
-	const profileImgWidth="200"
-	const profileImgHeight="133"
-	let writeView = ""
-	function _onChange(e){
-		writeView = e.target.value
-	}
-	function _updateStatus(e){
-		updateStatus(writeView)
-	}
-	return (
-		<Well>
-		<Col>
-	 		<img height={ profileImgHeight }
-	 	 	width={ profileImgWidth } src={ profileImgSrc } />
-	 	</Col>
-	 	<Col>
-	 		<span>
-		 	<h2> { profileName }, your current status is: '{ profileStatus }' </h2>
-			</span>
+    const profileImgWidth="200"
+    const profileImgHeight="133"
+    let writeView = ""
+    function _onChange(e){
+        writeView = e.target.value
+    }
+    function _updateStatus(e){
+        updateStatus(writeView)
+    }
+    return (
+        <Well>
+        <Col>
+            <img height={ profileImgHeight }
+            width={ profileImgWidth } src={ profileImgSrc } />
+        </Col>
+        <Col>
+            <span>
+            <h2> { profileName }, your current status is: '{ profileStatus }' </h2>
+            </span>
 
-			<form> <FormGroup controlId="writeStatusForm">
-			  <ControlLabel> Update your status? </ControlLabel>
-			  <FormControl
-			   type="text" placeholder={ "Write status here.." }
-			   onChange={ _onChange } />
-			  <br />
-			  <Button bsStyle="success" type="reset" 
-			  onClick={ _updateStatus } >
-			    {"Update Status"}
-			  </Button>
-			  <Button type="reset" >
-			    { "Clear text" }
-			  </Button>
-			</FormGroup> </form>
-		</Col>
-		</Well>
-	)
+            <form> <FormGroup controlId="writeStatusForm">
+              <ControlLabel> Update your status? </ControlLabel>
+              <FormControl
+               type="text" placeholder={ "Write status here.." }
+               onChange={ _onChange } />
+              <br />
+              <Button bsStyle="success" type="reset" 
+              onClick={ _updateStatus } >
+                {"Update Status"}
+              </Button>
+              <Button type="reset" >
+                { "Clear text" }
+              </Button>
+            </FormGroup> </form>
+        </Col>
+        </Well>
+    )
 }
 
 MiniProfile.propTypes = {
 }
 
 export default connect(
-	(state) => ({ 
-    	profileName: state.profileData.name,
-    	profileStatus: state.profileData.status,
-    	profileImgSrc: state.profileData.img
+    (state) => ({ 
+        profileName: state.profileData.name,
+        profileStatus: state.profileData.status,
+        profileImgSrc: state.profileData.img
     }),
-	(dispatch) => {
-		return {
-			updateStatus: ((newStatus) => {
-				updateStatus(newStatus).then(returnedAction => {
-					dispatch(returnedAction)
-				})
-			})
-		}
-	}
+    (dispatch) => {
+        return {
+            updateStatus: ((newStatus) => {
+                updateStatus(newStatus).then(returnedAction => {
+                    dispatch(returnedAction)
+                })
+            })
+        }
+    }
 )(MiniProfile)
