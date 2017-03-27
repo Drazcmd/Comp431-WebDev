@@ -7,19 +7,18 @@ import { Grid, Row, Col } from 'react-bootstrap'
 import NavBar from '../navigation/navBar'
 
 export const Landing = ({ }, { }) => {
-	return (
-	 	<Grid>
-	 		<NavBar />
-	 		<Row> <ErrorDisplay /> </Row>
-	 	  <Row>
-	 	    <h1> ELECT-BOOK </h1>
-	 	  </Row>
-		  <Row>
-			<Col md={5}> <Registration /> </Col>
-			<Col md={5}> <Login /> </Col>
-		  </Row>
-	  </Grid>
-	)
+    return (
+        <Grid>
+            <Row> <ErrorDisplay /> </Row>
+            <Row>
+                <h1> ELECT-BOOK </h1>
+            </Row>
+            <Row>
+                <Col md={5}> <Registration /> </Col>
+                <Col md={5}> <Login /> </Col>
+            </Row>
+        </Grid>
+    )
 }
 
 Landing.propTypes = {

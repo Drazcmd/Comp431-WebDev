@@ -1,6 +1,6 @@
 import { ActionTypes, VisModes } from './actions'
-//TODO remove hardcoding
-//export is only so I can test it
+
+//export is only so I can test it easier :)
 export const Reducer = (state = {
     location: 'LANDING_PAGE',
     articles: [],
@@ -16,10 +16,21 @@ export const Reducer = (state = {
     followees: [],
     globalErrorMessage: ""
 }, action) => {
+    console.log('type:', action.type, 'loc?', action.newLocation)
     switch (action.type) {
         case ActionTypes.LOCATION_CHANGE: {
             //doing a full refresh - Facebook seems to do this too
+
             const location = action.newLocation
+            if (location == 'LANDING_PAGE'){ 
+                //almost certainly a logout - and as such we really
+                //don't care about current state (cause login would fix)
+                return {
+                    ...state,
+                    location: location 
+                }
+            }
+
             //Since this assignment doesn't require all the fields we
             //will eventually, can't guarantee what'll be passed in
             const profileData = action.profileData 
@@ -96,7 +107,6 @@ export const Reducer = (state = {
         }
         case ActionTypes.UPDATE_PROFILE_DATA: {
             const newProfileData = action.newProfileData;
-            console.log(newProfileData)
             return {
                 ...state,
                 profileData: {
@@ -132,7 +142,6 @@ export const Reducer = (state = {
                 },
                 globalErrorMessage: ""
             }
-            return state
         }
         case ActionTypes.UPDATE_ERROR_MESSAGE: {
             return {

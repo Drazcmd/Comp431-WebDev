@@ -22,10 +22,11 @@ export const ActionTypes = {
     UPDATE_PROFILE_DATA: 'UPDATE_PROFILE_DATA',
     DOWNLOAD_PROFILE_DATA: 'DOWNLOAD_PROFILE_DATA',
     UPDATE_SHOWN_ARTICLES: 'UPDATE_SHOWN_ARTICLES',
-    UPDATE_FOLLOWEES: "UPDATE_FOLLOWEES",
-    LOGOUT: "LOGOUT",
-    LOGIN: "LOGIN",
-    UPDATE_ERROR_MESSAGE: 'UPDATE_ERROR_MESSAGE'
+    UPDATE_FOLLOWEES: 'UPDATE_FOLLOWEES',
+    LOGOUT: 'LOGOUT',
+    LOGIN: 'LOGIN',
+    UPDATE_ERROR_MESSAGE: 'UPDATE_ERROR_MESSAGE',
+    ADD_COMMENT: 'ADD_COMMENT'
 }
 
 /* 
@@ -46,7 +47,7 @@ In Redux action creators simply return an action:
 const createLocAction = ((newLocation, fetchedData) => {
     //Might not be fetching data if going to landing, therefore it needs 
     //to work if only passed newLocation as an input arg
-    return fetchedData ? {
+    const returnedAction = fetchedData ? {
         ...fetchedData,
         type: ActionTypes.LOCATION_CHANGE,
         newLocation: newLocation
@@ -54,6 +55,8 @@ const createLocAction = ((newLocation, fetchedData) => {
         type: ActionTypes.LOCATION_CHANGE,
         newLocation: newLocation
     }
+    console.log(returnedAction)
+    return returnedAction
 })
 export const updateLocation = (newLocation) => {
     if (newLocation === MAIN_PAGE) {
@@ -69,7 +72,6 @@ export const updateLocation = (newLocation) => {
         }).then(fetchedData => {
             return createLocAction(newLocation, fetchedData)
         }).catch(error => {
-            console.log(error)
             return dispError(error)
         })
     } else if (newLocation === PROFILE_PAGE) {
@@ -77,14 +79,13 @@ export const updateLocation = (newLocation) => {
         return getProfileData().then(fetchedData => {
             return createLocAction(newLocation, fetchedData)
         }).catch(error => {
-            console.log(error)
             return dispError(error)
         })
-    } else if (newLocation === LANDING_PAGE) {
-        //should have already logged out before this part!
-        return createLocAction(newLocation)
     } else {
-        return dispError("Invalid place to navigate to")
+        //i.e. this means (newLocation === LANDING_PAGE) 
+        //should have already logged out before this part!
+        console.log("let's get out of here!")
+        return createLocAction(newLocation)
     }
 }
 export const addArticle = (newArticle) => {
@@ -95,7 +96,23 @@ export const addArticle = (newArticle) => {
     .then(r => {
         return updateShownArticles(VisModes.REFRESH)
     }).catch(error => {
-        console.log(error)
+        return dispError(error)
+    })
+}
+/**
+No, this didn't need to be implemented yet. However, I decided
+that I wanted to be able to test my comment display better - and 
+unfortunately basically no other people had ocmments working.
+*/
+export const addComment = (articleId, newComment, commentId) => {
+    const payload = {
+        text: newComment.text,
+        commentId: commentId
+    }
+    return resource('PUT', `articles/${articleId}`, payload)
+    .then(r => {
+        return updateShownArticles(VisModes.REFRESH)
+    }).catch(error => {
         return dispError(error)
     })
 }
@@ -105,12 +122,10 @@ export const updateStatus = (newStatus) => {
     .then(r => {
         return { type: ActionTypes.UPDATE_STATUS, newStatus}
     }).catch(error => {
-        console.log(error)
         return dispError(error)
     })
 }
 export const updateProfileData = (fieldValueObjs) => {
-    console.log(fieldValueObjs)
     //Delegate to dataFetching.js for the (currently 2) PUT requests
     //Each tuple is of form {fieldToUpdate: valueToBeUpdatedTo}
     return updateFields(fieldValueObjs).then(newProfileData => {
@@ -121,7 +136,6 @@ export const updateProfileData = (fieldValueObjs) => {
             newProfileData: newProfileData
         }
     }).catch(error => {
-        console.log(error)
         return dispError(error)
     })
 }
@@ -130,7 +144,6 @@ export const updateShownArticles = (
 ) => {
     //No matter what operation we're updaitng for, 
     //even if it's just to sort, we might as well refresh the feed
-    console.log("optional articles???", optionallyArticles) 
     return resource('GET', 'articles/')
     .then(r => {
         const articles = r.articles
@@ -139,7 +152,6 @@ export const updateShownArticles = (
             visibilityMode, filterStr, articles
         }
     }).catch(error => {
-        console.log(error)
         return dispError(error)
     })
 }
@@ -168,7 +180,6 @@ export const removeFollowee = (name) => {
             resultingFollowees: fetchedData.followees
         }
     }).catch(error => {
-        console.log(error)
         return dispError(error)
     })
 }
@@ -187,7 +198,6 @@ export const addFollowee = (name) => {
             resultingFollowees: fetchedData.followees
         }
     }).catch(error => {
-        console.log(error)
         return dispError(error)
     })
 }
@@ -210,23 +220,21 @@ export const notifyRegSuccess = (newUser) => {
     return {type: ActionTypes.UPDATE_ERROR_MESSAGE, message:msg}
 }
 export const logout = () => {
-    //TODO - clear stuff?
-    console.log("gotta clear stuff still")
+    //In the future might want to add more to this to clear stuff,
+    //or more back in the delegate login area authActions
     return resource('PUT', 'logout')
     .then(r => {
         return updateLocation(LANDING_PAGE)
-    }).catch(r => {
-        console.log('caught something...')
-        return updateLocation(LANDING_PAGE)
+    }).catch(error => {
+        //doesn't really matter since we're logging out :p
+        return dispError(error)
     })
 }
 
 const requestProfile = (username) => {
     const profileData = resource('GET', 'headlines/')
     .then(jsonData => {
-        console.log(jsonData) 
     })
-    console.log(profileData)
     return profileData
 
 }
@@ -241,13 +249,21 @@ export const login = (username, password) => {
     })
     .catch(r => {
         const message = `"${r.message || 'Error'}" when logging in`
-        console.log("caught something!!")
-        //return dispError(message)
-        return updateLocation(MAIN_PAGE)
-
+        return dispError(message)
     })
 }
 
 export const dispError = (message) => {
-    return {type: ActionTypes.UPDATE_ERROR_MESSAGE, message:message}
+    let wrappedMsg
+    if (message) {
+        if (message.message) {
+            //in case it's an actual error object, which
+            //might cause rendering problems!
+            wrappedMsg = message.message
+        }
+    }
+    return {
+        type: ActionTypes.UPDATE_ERROR_MESSAGE, 
+        message: wrappedMsg ? wrappedMsg : message
+    }
 }

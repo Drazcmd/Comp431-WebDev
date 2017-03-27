@@ -23,20 +23,20 @@ export const ProfileUpdateSection = ({ profileData, dispatchProfileUpdate }) => 
     return (
         <Well>
         <form> <FormGroup controlId="ProfileInfo">
-          <ControlLabel> Email: {profileData.email} </ControlLabel>
-          <FormControl type="text" placeholder="Update Email Here"
-           inputRef={email => {_email = email }} />
+            <ControlLabel> Email: {profileData.email} </ControlLabel>
+            <FormControl type="text" placeholder="Update Email Here"
+            inputRef={email => {_email = email }} />
 
-          <br/ >
-          <ControlLabel> Zip: {profileData.zip} </ControlLabel>
-          <FormControl type="text" placeholder="Update Zipcode Here"
-           inputRef={zip => {_zip = zip }} />
+            <br/ >
+            <ControlLabel> Zip: {profileData.zip} </ControlLabel>
+            <FormControl type="text" placeholder="Update Zipcode Here"
+            inputRef={zip => {_zip = zip }} />
         </FormGroup> </form>
 
         <br/ > <br /> <br />
 
         <Button bsStyle="primary" onClick = { _dispatchProfileUpdate }>
-          Update Information! 
+            Update Information! 
         </Button>
         </Well>
     )

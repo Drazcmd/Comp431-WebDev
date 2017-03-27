@@ -5,8 +5,11 @@ import { FormGroup, FormControl, ControlLabel } from 'react-bootstrap'
 
 //should only have one of these visible at a time!
 export const ErrorDisplay = ({ globalErrorMessage }) => {
+	//might be a string, might be an error object
+	const message = globalErrorMessage ? 
+		globalErrorMessage : "No erros so far!"
 	return (
-		<Well bsStyle="danger"> {globalErrorMessage} </Well>
+		<div> {message} </div>
 	)
 }
 

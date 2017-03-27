@@ -3,14 +3,14 @@ import { connect } from 'react-redux'
 import NavButton from './navButton'
 import { delegateLogout } from './../landing/authActions'
 import { ButtonToolbar, Button } from 'react-bootstrap'
-export const NavBar = ({ dispatchLogout }) => {
+export const NavBar = ({ logout }) => {
     //Like real facebook, should be able to refresh main page or profile by
     //clicking on the navigation button (when logged in)
     return (
         <ButtonToolbar> 
         <NavButton redirectLocation={"MAIN_PAGE"} text={"Main Page"}/>
         <NavButton redirectLocation={"PROFILE_PAGE"} text={"Profile"} />
-        <Button bsStyle="primary" onClick = { dispatchLogout }> Logout </Button>
+        <Button bsStyle="primary" onClick = { logout }> Logout </Button>
         </ButtonToolbar>
     )
 }
@@ -24,10 +24,10 @@ export default connect(
         //Logout is special - has to be a custom button unfortunately,
         //since it dispatches a LOGOUT rather than a normal loc change
         return {
-            dispatchLogout: () => {
-                delegateLogout().then(
-                    (resultingAction) => dispatch(resultingAction)
-                )
+            logout: () => {
+                delegateLogout().then((resultingAction) => {
+                    dispatch(resultingAction)
+                })
             }
         }
      }

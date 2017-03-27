@@ -64,7 +64,6 @@ updated using a PUT with endpoint as /${fieldname} and required payload as
 This includes the user's headline, user email,  zipcode, and password,
 */
 const updateField = (field, value) => {
-	console.log('field', field, 'val:', value)
 	//unfortunately there's no way to functionally interpolate the
 	//field variable as our key (rather than 'field' as the key) :(
 	const payload = {}
@@ -73,7 +72,6 @@ const updateField = (field, value) => {
 }
 export const updateFields = (fieldValueObjs) => {
 	const resultingDataAcc = {}
-	console.log(fieldValueObjs)
 	return Promise.all(
 		fieldValueObjs.map(fieldValueObj => {
 			//i.e. email, zipcode, headline, etc
@@ -87,7 +85,6 @@ export const updateFields = (fieldValueObjs) => {
 			((resultingDataAcc, fetchResponse, index) => {
 				//Index should be the same due to use of Promise.all
 				const field = fieldValueObjs[index].field
-				console.log(field, fetchResponse[field])
 				//And now package it up nicely for our reducers to use
 				const withField = {
 					...resultingDataAcc

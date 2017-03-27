@@ -6,6 +6,7 @@ import WriteArticleBox from './writeArticleBox'
 import MiniProfile from './miniProfile'
 import FilterArticlesBox from './FilterArticlesBox'
 import FollowSideBar from './Sidebar/followSideBar'
+import { ErrorDisplay} from './../textDisplay/errorDisplay'
 import { Grid, Row, Col } from 'react-bootstrap'
 
 export const Main = ({ }) => {
@@ -14,6 +15,7 @@ export const Main = ({ }) => {
             <Row>
                 <NavBar />
             </Row>
+            <Row> <ErrorDisplay /> </Row>
             <br />
             <Row> 
                 <MiniProfile />

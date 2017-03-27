@@ -3,10 +3,19 @@ import { connect } from 'react-redux'
 import { Button, Well, ListGroupItem } from 'react-bootstrap';
 import { FormGroup, FormControl, ControlLabel } from 'react-bootstrap'
 import { CommentsHolder } from './commentsHolder'
-export const ArticleCard = ({text, image, author,
+import { addComment } from './../../actions'
+export const ArticleCard = ({id, text, image, author,
     timestamp, comments, postComment, editArticle
 }) => {
+    console.log(id)
     const articleImage = image ? ( <img src={image}/> ) : (<div />);
+    let _comment
+    const _postComment = () => {
+        const newComment = _comment.value ? _comment.value : ""
+        //new comments must have id -1 in the payload to the server
+        const commentId = -1 
+        postComment(id, newComment, commentId)
+    }
     return (
         <ListGroupItem> <Well>
         <div> Author: {author}. Written at {timestamp} </div>
@@ -16,10 +25,11 @@ export const ArticleCard = ({text, image, author,
 
         <FormGroup>
             <ControlLabel />
-            <FormControl type="text"placeholder="Enter Comment Here"/>
+            <FormControl type="text" placeholder="Enter Comment Here"
+                inputRef={comment => {_comment = comment}} />
         </FormGroup>
 
-        <Button bsSize="small" onClick = { postComment }> { "Post Comment" }  </Button>
+        <Button bsSize="small" onClick = { _postComment }> { "Post Comment" }  </Button>
         <Button bsSize="small" onClick = { editArticle }> { "Edit Article" }  </Button>
         </Well> </ListGroupItem>
     )
@@ -33,6 +43,7 @@ export default connect(
     (state, ownProps) => {
         return { 
             //image link might be null
+            id: ownProps.articleJSON._id,
             text: ownProps.articleJSON.text,
             image: ownProps.articleJSON.img,
             author: ownProps.articleJSON.author,
@@ -43,7 +54,15 @@ export default connect(
     (dispatch) => {
         return {
             //Currently button does nothing!
-            postComment: () => ({}),
+            postComment: (articleId, comment, commentId) => {
+                //commentID=-1 means post a new comment
+                //otherwise the PUT would edit a comment
+                return addComment(articleId, comment, commentId)
+                .then((returnedAction) => {
+                    //(probably a refresh updateArticles action)
+                    dispatch(returnedAction)
+                })
+            },
             editArticle: () => ({})
         }
     }

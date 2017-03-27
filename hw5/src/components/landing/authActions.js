@@ -19,22 +19,15 @@ export const delegateRegistration = (userInfo) => {
     }
 }
 export const delegateLogin = (username, password) => {
-    //TODO send the login to the server
-    //will need to take care of a bunch of stuffs
-    //either will return an actions.login or an actions.errorMessage thingy
-    //will bear responsiblitiy for changing location if
-    //it succeeded - otherwise it'll alter the error message
-    if (username && password) {
-        return login(username, password) 
-    } else {
-        const usernameFailure = missingField("username", username)      
-        const passwordFailure = missingField("password", password)
-        const errorMessage = usernameFailure + passwordFailure
-        return dispError(errorMessage)
-    }
+    //will return a promise for either an update_error_message
+    //or for a location change, depending on if successful or not
+    return login(username, password) 
 }
+/**
+Not particularly needed atm, but I want this thing to be extensible
+for if I want to add code here in the future
+*/
 export const delegateLogout = () => {
-    //TODO send the logout to the server    
     //Now we return to the landing page
     return logout() 
 }
