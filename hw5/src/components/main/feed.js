@@ -4,7 +4,6 @@ import ArticleCard from './articleCard'
 import { ListGroup, ListGroupItem } from 'react-bootstrap'
 import { displayedArticles } from './feedFilters.js'
 export const Feed = ({ articles, visibilityMode, filterStr }) => {
-    console.log("input articles to feed:", articles)
     const correctlyOrderedArticles = () => {
         return displayedArticles(articles, visibilityMode, filterStr)
     }

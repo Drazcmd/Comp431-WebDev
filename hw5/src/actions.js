@@ -55,7 +55,6 @@ const createLocAction = ((newLocation, fetchedData) => {
         type: ActionTypes.LOCATION_CHANGE,
         newLocation: newLocation
     }
-    console.log(returnedAction)
     return returnedAction
 })
 export const updateLocation = (newLocation) => {
@@ -84,7 +83,6 @@ export const updateLocation = (newLocation) => {
     } else {
         //i.e. this means (newLocation === LANDING_PAGE) 
         //should have already logged out before this part!
-        console.log("let's get out of here!")
         return createLocAction(newLocation)
     }
 }

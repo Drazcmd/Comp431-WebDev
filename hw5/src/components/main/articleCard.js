@@ -7,7 +7,6 @@ import { addComment } from './../../actions'
 export const ArticleCard = ({id, text, image, author,
     timestamp, comments, postComment, editArticle
 }) => {
-    console.log(id)
     const articleImage = image ? ( <img src={image}/> ) : (<div />);
     let _comment
     const _postComment = () => {

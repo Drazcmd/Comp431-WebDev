@@ -33,7 +33,6 @@ it('resource should be a resource', (done) => {
         expect(res.status).to.eql(200)
         return res.json()
     }).then((resJSON) => {
-        console.log(resJSON)
         expect(resJSON).to.eql({ 'hello': 'world'});
         done();
     })

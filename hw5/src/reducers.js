@@ -16,7 +16,6 @@ export const Reducer = (state = {
     followees: [],
     globalErrorMessage: ""
 }, action) => {
-    console.log('type:', action.type, 'loc?', action.newLocation)
     switch (action.type) {
         case ActionTypes.LOCATION_CHANGE: {
             //doing a full refresh - Facebook seems to do this too

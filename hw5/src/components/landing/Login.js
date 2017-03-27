@@ -6,7 +6,6 @@ import { FormGroup, FormControl, ControlLabel, Well, Button } from 'react-bootst
 export const Login = ({ dispatchLogin }) => {
     let _username, _password
     const _login = () => {
-        console.log(_username.value, _password.value)
         dispatchLogin(_username.value, _password.value)
     }
     return (

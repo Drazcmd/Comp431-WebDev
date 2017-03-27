@@ -8,13 +8,8 @@ export const ProfileUpdateSection = ({ profileData, dispatchProfileUpdate }) => 
     let _email, _zip;
     const _dispatchProfileUpdate = () => {
         //(The ternary is to prevent updating with values of empty string)
-        console.log("email tracker value:", _email)
         const newEmail = _email.value ? _email.value : profileData.email
-        console.log("email value to be updated to:", newEmail)
-        
-        console.log("zip tracker value:", _zip)
         const newZip = _zip.value ? _zip.value : profileData.zip
-        console.log("zip value to be updated to:", newZip)
         dispatchProfileUpdate([
             {field: "email", value: newEmail},
             {field: "zipcode", value: newZip}
