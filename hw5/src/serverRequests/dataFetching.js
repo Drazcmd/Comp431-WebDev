@@ -28,11 +28,13 @@ export const getMainData = (userList) => {
         })
         //response is like {headlines: [{username: cmd11, headline: "woo!"}]}
         const ourHeadline = getRequests[3].headlines[0].headline
+        const ourUsername = getRequests[3].headlines[0].username
         return {
             articles: articles,
             followees: followees,
             //the reducer will only update what we put in here
             profileData: {
+            	name: ourUsername,
             	status: ourHeadline
             }
         }
