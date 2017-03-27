@@ -29,12 +29,14 @@ it('resource should be a resource', (done) => {
         json: { 'hello':'world'} 
     })
 
-    interceptedResource.resource('GET', "").then((res) => {
+    interceptedResource.resource('GET', "/").then((res) => {
         expect(res.status).to.eql(200)
         return res.json()
     }).then((resJSON) => {
         expect(resJSON).to.eql({ 'hello': 'world'});
         done();
+    }).catch(error => {
+        expect(1).to.eql(2)
     })
 })
 
