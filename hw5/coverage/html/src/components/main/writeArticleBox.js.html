@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for src/components/main/writeArticleBox.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../prettify.css" />
+    <link rel="stylesheet" href="../../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../../index.html">all files</a> / <a href="index.html">src/components/main/</a> writeArticleBox.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">56% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>14/25</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>4/4</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">10% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>1/10</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">47.62% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>10/21</span>
+      </div>
+      <div class='fl pad1y'>
+        <span class="strong">1 branch</span>
+        <span class="quiet">Ignored</span>  &nbsp;&nbsp;&nbsp;&nbsp;
+      </div>
+    </div>
+  </div>
+  <div class='status-line medium'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, { PropTypes } from 'react'
+import { connect } from 'react-redux'
+import { Button, Well, ListGroupItem } from 'react-bootstrap';
+import { Col, FormGroup, FormControl, ControlLabel } from 'react-bootstrap'
+import { addArticle, updateShownArticles, VisModes } from '../../actions'
+&nbsp;
+export const WriteArticleBox = <span class="fstat-no" title="function not covered" >({</span>
+<span class="cstat-no" title="statement not covered" >    profileName, nextArticleID, postArticle, filterArticles</span>
+}) =&gt; {
+    /* 
+    Normally this wouldn't be what we'd do, but we need a way to dump the
+    temporary non-persitant writing over into our actual postArticle function.
+    This is the best way to do so since react-bootsrap doesn't provide any
+    easy way to accessing form's input from one of the buttons.
+&nbsp;
+    Note that until 'submitted' it is NOT somethign we ever want to have
+    stored elsewhere. It can't be considered part of the global state of the
+    program. In other words, although it is data, it is NOT state
+    */
+    let <span class="cstat-no" title="statement not covered" >writeView = ""</span>
+    function <span class="fstat-no" title="function not covered" >_onChange(e) {</span>
+        writeView=<span class="cstat-no" title="statement not covered" >e.target.value;</span>
+    }   
+    function <span class="fstat-no" title="function not covered" >_postArticle(e){</span>
+        //Non-text stuff will all be set by server for us
+        postArticle(<span class="cstat-no" title="statement not covered" >{</span>
+            //accessing e.target.value here wouldn't work!
+            text: writeView, 
+            author: profileName,
+        })
+    }
+    return (
+<span class="cstat-no" title="statement not covered" >        &lt;Col&gt; &lt;ListGroupItem&gt; &lt;Well bsSize="small"&gt;</span>
+        &lt;form&gt; &lt;FormGroup controlId="writeArticleForm"&gt;
+          &lt;ControlLabel&gt; Upload an image: &lt;/ControlLabel&gt;
+          &lt;FormControl type="file" /&gt;
+          &lt;br /&gt;
+          &lt;ControlLabel&gt; Write an article: &lt;/ControlLabel&gt;
+          &lt;FormControl
+           type="text" placeholder={ "Write article here..." }
+           onChange={ _onChange }
+           /&gt;
+&nbsp;
+          &lt;br /&gt;
+&nbsp;
+          &lt;Button bsStyle="success"
+           type="reset" onClick={ _postArticle } &gt;
+            {"Post text as article!"}
+          &lt;/Button&gt;
+          &lt;Button type="reset" &gt;
+            { "Clear text" }
+          &lt;/Button&gt;
+        &lt;/FormGroup&gt; &lt;/form&gt;
+        &lt;/Well&gt; &lt;/ListGroupItem&gt; &lt;/Col&gt;
+    )
+}
+&nbsp;
+WriteArticleBox.propTypes = {
+}
+&nbsp;
+export default connect(
+<span class="fstat-no" title="function not covered" >    (state) =&gt; {</span>
+        return <span class="cstat-no" title="statement not covered" >{</span>
+            nextArticleID: state.articles.length,
+            profileName: state.profileData.name
+        }
+    },
+<span class="fstat-no" title="function not covered" >    (dispatch) =&gt; {</span>
+        return <span class="cstat-no" title="statement not covered" >{</span>
+            //postArticle will eventually return an article REFRESH action
+            postArticle: <span class="fstat-no" title="function not covered" >(article) =&gt; <span class="cstat-no" title="statement not covered" >addArticle(article).then(</span></span>
+<span class="fstat-no" title="function not covered" >                returnedAction =&gt; {</span>
+                    dispatch(<span class="cstat-no" title="statement not covered" >returnedAction)    </span>
+                }
+            ),
+            filterArticles: <span class="fstat-no" title="function not covered" >(mode, filterStr) =&gt; <span class="cstat-no" title="statement not covered" >updateShownArticles(</span></span>
+                mode, filterStr
+            ).then(<span class="fstat-no" title="function not covered" >returnedAction =&gt; {</span>
+                dispatch(<span class="cstat-no" title="statement not covered" >returnedAction)</span>
+            })
+        }
+    }
+)(WriteArticleBox)
+&nbsp;
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Mon Mar 27 2017 21:11:39 GMT-0500 (CDT)
+</div>
+</div>
+<script src="../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../sorter.js"></script>
+</body>
+</html>

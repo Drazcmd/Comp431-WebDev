@@ -1,0 +1,477 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for src/reducers.spec.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../prettify.css" />
+    <link rel="stylesheet" href="../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../index.html">all files</a> / <a href="index.html">src/</a> reducers.spec.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">89.83% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>53/59</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">75% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>6/8</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>9/9</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">88.24% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>45/51</span>
+      </div>
+      <div class='fl pad1y'>
+        <span class="strong">2 statements, 1 branch</span>
+        <span class="quiet">Ignored</span>  &nbsp;&nbsp;&nbsp;&nbsp;
+      </div>
+    </div>
+  </div>
+  <div class='status-line high'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">20×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">20×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { expect } from 'chai'
+import mockery from 'mockery'
+import { ActionTypes, VisModes } from './actions'
+import { displayedArticles } from './components/main/feedFilters'
+//reducer doesn't ever fetch so this should be safe
+import { Reducer } from './reducers'
+//This is hardcoded data only to be used for mocking actions
+const testArticles = require('./testData/articles.json')
+const testFollowees = require('./testData/followees.json')
+const testProfileData = require('./testData/profile.json')
+&nbsp;
+//Note - shouldn't be doing any fetch's here!
+let mockUninitializedState
+beforeEach(() =&gt; {
+    if (<span class="missing-if-branch" title="if path not taken" >I</span>mockery.enable) {
+        mockery.<span class="cstat-no" title="statement not covered" >enable({warnOnUnregistered: false, useCleanCache:true})</span>
+        mockUninitializedState = <span class="cstat-no" title="statement not covered" >{</span>
+            location: 'LANDING_PAGE',
+            articles: [],
+            visibleArticles: [],
+            visibilityMode: VisModes.NO_FILTER,
+            filterStr: "",  
+            profileData: {
+                "name":"Anon", 
+                "email":"missingEmail@missing.com", 
+                "zip":"00000",
+                "img": "http://www.clker.com/cliparts/n/T/5/z/f/Y/image-missing-md.png ",
+                "status":"missing status"
+            },
+            followees: [],
+            globalErrorMessage: ""
+        }
+    }
+})
+&nbsp;
+afterEach(() =&gt; {
+    if (<span class="missing-if-branch" title="if path not taken" >I</span>mockery.enable) {
+        mockery.<span class="cstat-no" title="statement not covered" >disable()</span>
+    }
+})
+&nbsp;
+it('should initialize state', (done) =&gt; {
+    const mockAction = {
+        type: ActionTypes.LOCATION_CHANGE,
+        location: 'MAIN_PAGE',
+        articles: testArticles,
+        profileData: testProfileData,
+        followees: testFollowees
+    }
+    const returnedState = Reducer(mockUninitializedState, mockAction)
+    expect(returnedState.location).to.eql('MAIN_PAGE')
+    expect(<span class="cstat-no" title="statement not covered" >returnedState.articles).to.eql(testArticles)</span>
+    expect(<span class="cstat-no" title="statement not covered" >returnedState.followees).to.eql(testFollowees)</span>
+    expect(<span class="cstat-no" title="statement not covered" >returnedState.profileData).to.eql(testProfileData)</span>
+    done()
+})
+it('should state success (for displaying success message to user)', (done) =&gt; {
+    expect(1).to.eql(2)
+    done()
+})
+it('should state error (for displaying error message to user)', (done) =&gt; {
+    const errorMessage = "Testing error functionality"
+    const mockAction = {
+        type: ActionTypes.UPDATE_ERROR_MESSAGE,
+        message: errorMessage
+    }
+    const returnedState = Reducer(mockUninitializedState, mockAction)
+    expect(returnedState.globalErrorMessage).to.eql(errorMessage)
+    done()
+})
+&nbsp;
+it('should set the articles', (done) =&gt; {
+    const newArticles = [
+        {"_id":3833265,"text":"TESTING 456",
+        "date":"2015-06-10T19:26:31.978Z","img":null,
+        "comments":[],"author":"cesetest"},
+        {"_id":3833260,"text":"TESTING 123",
+        "date":"2015-01-10T19:26:31.978Z","img":null,
+        "comments":[],"author":"adftest"}
+    ]
+    const mockAction = {
+        //Refresh should not change filter str or visiblity mode
+        type: ActionTypes.UPDATE_SHOWN_ARTICLES,
+        articles: newArticles,
+        visibilityMode: VisModes.REFRESH,
+        filterStr: "asdjfb"
+    }
+    const returnedState = Reducer(mockUninitializedState, mockAction)
+    expect(returnedState.articles).to.eql(newArticles)
+    expect(returnedState.visibilityMode).to.eql(VisModes.NO_FILTER)
+    expect(returnedState.filterStr).to.eql("")
+    done()
+})
+it('should set the search keyword', (done) =&gt; {
+    const mockAction = {
+        type: ActionTypes.UPDATE_SHOWN_ARTICLES,
+        visibilityMode: VisModes.FIL_TEXT,
+        filterStr: "123"
+    }
+    const returnedState = Reducer(mockUninitializedState, mockAction)
+    expect(returnedState.articles).to.eql([])
+    expect(returnedState.visibilityMode).to.eql(VisModes.FIL_TEXT)
+    expect(returnedState.filterStr).to.eql("123")
+    done()
+})
+&nbsp;
+it('should be able to set the search keyword while updating articles',
+(done) =&gt; {
+    const newArticles = [
+        {"_id":333, "text":"TESTING abcdef",
+        "date":"2015-06-10T19:26:31.978Z","img":null,
+        "comments":[],"author":"cesetest"},
+        {"_id":444,"text":"TESTbobby",
+        "date":"2015-01-10T19:26:31.978Z","img":null,
+        "comments":[],"author":"adftest"}
+    ]
+    const mockAction = {
+        type: ActionTypes.UPDATE_SHOWN_ARTICLES,
+        visibilityMode: VisModes.FIL_AUTH,
+        filterStr: "bobby",
+        articles: newArticles
+    }
+    const returnedState = Reducer(mockUninitializedState, mockAction)
+    expect(returnedState.articles).to.eql(newArticles)
+    expect(returnedState.visibilityMode).to.eql(VisModes.FIL_AUTH)
+    expect(returnedState.filterStr).to.eql("bobby")
+    done()
+})
+&nbsp;
+/* 
+The filter logic, which is not being tested explicitly here, is done on the
+fly from functions outside the component this idea was suggested to me by Dr.
+Pollack when talking about hw4. If it were here, the 'it' would be 'should
+filter displayed articles by the search keyword'
+*/
+&nbsp;
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Mon Mar 27 2017 21:11:39 GMT-0500 (CDT)
+</div>
+</div>
+<script src="../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../sorter.js"></script>
+</body>
+</html>

@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for src/components/main/miniProfile.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../prettify.css" />
+    <link rel="stylesheet" href="../../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../../index.html">all files</a> / <a href="index.html">src/components/main/</a> miniProfile.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">56% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>14/25</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>4/4</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">12.5% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>1/8</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">47.62% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>10/21</span>
+      </div>
+      <div class='fl pad1y'>
+        <span class="strong">1 branch</span>
+        <span class="quiet">Ignored</span>  &nbsp;&nbsp;&nbsp;&nbsp;
+      </div>
+    </div>
+  </div>
+  <div class='status-line medium'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, { PropTypes } from 'react'
+import { connect } from 'react-redux'
+import { Well, Grid, Row, Col } from 'react-bootstrap'
+import { Button, FormGroup, FormControl, ControlLabel } from 'react-bootstrap'
+import { updateStatus } from '../../actions'
+//This component is the picture, status, and name of the 
+//currently logged in user that appears on the main page
+export const MiniProfile = <span class="fstat-no" title="function not covered" >({ </span>
+<span class="cstat-no" title="statement not covered" >    profileName, profileStatus, profileImgSrc, updateStatus</span>
+}) =&gt; {
+    const <span class="cstat-no" title="statement not covered" >profileImgWidth="200"</span>
+    const <span class="cstat-no" title="statement not covered" >profileImgHeight="133"</span>
+    let <span class="cstat-no" title="statement not covered" >writeView = ""</span>
+    function <span class="fstat-no" title="function not covered" >_onChange(e){</span>
+        writeView = <span class="cstat-no" title="statement not covered" >e.target.value</span>
+    }
+    function <span class="fstat-no" title="function not covered" >_updateStatus(e){</span>
+        updateStatus(<span class="cstat-no" title="statement not covered" >writeView)</span>
+    }
+    return (
+<span class="cstat-no" title="statement not covered" >        &lt;Well&gt;</span>
+        &lt;Col&gt;
+            &lt;img height={ profileImgHeight }
+            width={ profileImgWidth } src={ profileImgSrc } /&gt;
+        &lt;/Col&gt;
+        &lt;Col&gt;
+            &lt;span&gt;
+            &lt;h2&gt; { profileName }, your current status is: '{ profileStatus }' &lt;/h2&gt;
+            &lt;/span&gt;
+&nbsp;
+            &lt;form&gt; &lt;FormGroup controlId="writeStatusForm"&gt;
+              &lt;ControlLabel&gt; Update your status? &lt;/ControlLabel&gt;
+              &lt;FormControl
+               type="text" placeholder={ "Write status here.." }
+               onChange={ _onChange } /&gt;
+              &lt;br /&gt;
+              &lt;Button bsStyle="success" type="reset" 
+              onClick={ _updateStatus } &gt;
+                {"Update Status"}
+              &lt;/Button&gt;
+              &lt;Button type="reset" &gt;
+                { "Clear text" }
+              &lt;/Button&gt;
+            &lt;/FormGroup&gt; &lt;/form&gt;
+        &lt;/Col&gt;
+        &lt;/Well&gt;
+    )
+}
+&nbsp;
+MiniProfile.propTypes = {
+}
+&nbsp;
+export default connect(
+<span class="fstat-no" title="function not covered" >    (state) =&gt; (<span class="cstat-no" title="statement not covered" >{ </span></span>
+        profileName: state.profileData.name,
+        profileStatus: state.profileData.status,
+        profileImgSrc: state.profileData.img
+    }),
+<span class="fstat-no" title="function not covered" >    (dispatch) =&gt; {</span>
+        return <span class="cstat-no" title="statement not covered" >{</span>
+            updateStatus: (<span class="fstat-no" title="function not covered" >(newStatus) =&gt; {</span>
+                updateStatus(<span class="cstat-no" title="statement not covered" >newStatus).then(<span class="fstat-no" title="function not covered" >returnedAction =&gt; {</span></span>
+                    dispatch(<span class="cstat-no" title="statement not covered" >returnedAction)</span>
+                })
+            })
+        }
+    }
+)(MiniProfile)
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Mon Mar 27 2017 21:11:39 GMT-0500 (CDT)
+</div>
+</div>
+<script src="../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../sorter.js"></script>
+</body>
+</html>

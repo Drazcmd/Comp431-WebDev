@@ -34,7 +34,7 @@ afterEach(() => {
 it('should navigate (to landing)', (done) => {
     const changeAction = actions.updateLocation(actions.LANDING_PAGE)
     const expectedAction = { 
-        type: actions.ActionTypes.LOCATION_CHANGE, 'location': actions.MAIN_PAGE
+        type: actions.ActionTypes.LOCATION_CHANGE, 'newLocation': actions.LANDING_PAGE
     } 
     expect(changeAction).to.eql(expectedAction)
     done()
@@ -48,7 +48,7 @@ const email = 'bob@bobmail.com'
 const zipcode = '30333'
 
 it('should update user headline', (done) => {
-    const endpoint = 'headlines/'
+    const endpoint = 'headline'
     mock(`${url}/${endpoint}`, {
         method: 'PUT',
         headers: {'Content-Type':'application/json'},
