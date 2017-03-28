@@ -1,6 +1,7 @@
 import { expect } from 'chai'
 import mockery from 'mockery'
 import fetch, { mock } from 'mock-fetch'
+describe("this is actions", () => {
 
 const url = 'https://webdev-dummy.herokuapp.com'
 let resource, actions
@@ -10,7 +11,7 @@ beforeEach(() => {
     	mockery.registerMock('node-fetch', fetch)
     	require('node-fetch')
     }
-    resource = require('./serverRequests/serverRequest')
+    resource = require('./serverRequest')
     actions = require('./actions')
 })
 
@@ -111,4 +112,5 @@ it('should fetch users profile info (zipcode)', (done) => {
     }).catch((error) => {
         done(error)
     })
+})
 })

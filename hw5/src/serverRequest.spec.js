@@ -1,7 +1,7 @@
 import { expect } from 'chai'
 import mockery from 'mockery'
 import fetch, { mock } from 'mock-fetch'
-
+describe('server something', () => {
 const url = 'https://webdev-dummy.herokuapp.com'
 let Action, actions, resource
 beforeEach(() => {
@@ -10,7 +10,7 @@ beforeEach(() => {
         mockery.registerMock('node-fetch', fetch)
         require('node-fetch')
     }
-    actions = require('./../actions')
+    actions = require('./actions')
     resource = require('./serverRequest')
 })
 
@@ -77,4 +77,5 @@ it('resource should be POSTable', (done) => {
     }).catch((error) => {
         done(error)
     })
+})
 })

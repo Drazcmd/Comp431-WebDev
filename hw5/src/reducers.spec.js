@@ -9,6 +9,8 @@ const testArticles = require('./testData/articles.json')
 const testFollowees = require('./testData/followees.json')
 const testProfileData = require('./testData/profile.json')
 
+describe('test4', () => {
+
 //Note - shouldn't be doing any fetch's here!
 let actions, mockUninitializedState
 beforeEach(() => {
@@ -149,3 +151,5 @@ fly from functions outside the component this idea was suggested to me by Dr.
 Pollack when talking about hw4. If it were here, the 'it' would be 'should
 filter displayed articles by the search keyword'
 */
+
+})

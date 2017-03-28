@@ -1,6 +1,6 @@
 import {
     resource, getMainData, getProfileData, updateFields
-} from './serverRequests/serverRequest'
+} from './serverRequest'
 
 export const MAIN_PAGE = 'MAIN_PAGE'
 export const PROFILE_PAGE = 'PROFILE_PAGE'

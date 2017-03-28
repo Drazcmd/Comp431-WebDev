@@ -1,7 +1,7 @@
 import { expect } from 'chai'
 import mockery from 'mockery'
 import fetch, { mock } from 'mock-fetch'
-
+describe("test2", () => {
 const url = 'https://webdev-dummy.herokuapp.com'
 
 /*
@@ -18,7 +18,7 @@ beforeEach(() => {
     }
     actions = require('./../../actions')
     authActions = require('./authActions')
-    resource = require('./../../serverRequests/serverRequest')
+    resource = require('./../../serverRequest')
 })
 
 afterEach(() => {
@@ -102,4 +102,5 @@ it ('should log out a user', (done) => {
     }).catch((error) => {
         done(error)
     })
+})
 })
