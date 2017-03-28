@@ -16,9 +16,9 @@ beforeEach(() => {
     	mockery.registerMock('node-fetch', fetch)
     	require('node-fetch')
     }
+    interceptedResource = require('./serverRequests/serverRequest')
     Action = require('./actions').default
     actions = require('./actions')
-    interceptedResource = require('./serverRequests/serverRequest')
 })
 
 afterEach(() => {

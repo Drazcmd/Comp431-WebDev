@@ -42,16 +42,24 @@ afterEach(() => {
 it('should initialize state', (done) => {
     const mockAction = {
         type: ActionTypes.LOCATION_CHANGE,
-        location: 'MAIN_PAGE',
+        newLocation: 'MAIN_PAGE',
         articles: testArticles,
         profileData: testProfileData,
         followees: testFollowees
+    }
+    //since I internally call stuff differently
+    const expectedProfileData = {
+        email: testProfileData.email,
+        img: testProfileData.img,
+        name: testProfileData.name,
+        status: testProfileData.status,
+        zip: testProfileData.zipcode
     }
     const returnedState = Reducer(mockUninitializedState, mockAction)
     expect(returnedState.location).to.eql('MAIN_PAGE')
     expect(returnedState.articles).to.eql(testArticles)
     expect(returnedState.followees).to.eql(testFollowees)
-    expect(returnedState.profileData).to.eql(testProfileData)
+    expect(returnedState.profileData).to.eql(expectedProfileData)
     done()
 })
 it('should state success (for displaying success message to user)', (done) => {
