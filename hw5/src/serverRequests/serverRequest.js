@@ -1,7 +1,6 @@
 //turns out you CANNOT do "import fetch from 'node-fetch'" - it
 //imports some stuff that wrecks how the cookies work :/
-//require('isomorphic-fetch');
-import fetch from 'node-fetch'
+require('isomorphic-fetch');
 /**
 'Dummy' as in the dummy server at the url below;
 this is a real http request.
