@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import NavButton from '../navigation/navButton'
-import { delegateLogin } from '../landing/authActions'
+import { login, logout } from '../../actions'
 import { FormGroup, FormControl, ControlLabel, Well, Button } from 'react-bootstrap'
 export const Login = ({ dispatchLogin }) => {
     let _username, _password
@@ -46,7 +46,7 @@ export default connect(
     (dispatch) => { 
         return {
             dispatchLogin: (username, password) => {
-                delegateLogin(username, password).then(
+                login(username, password).then(
                     (resultingAction) => dispatch(resultingAction)
                 )
             }

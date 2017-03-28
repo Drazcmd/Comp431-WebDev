@@ -17,16 +17,3 @@ export const delegateRegistration = (userInfo) => {
         return dispError (errorMessage)
     }
 }
-export const delegateLogin = (username, password) => {
-    //will return a promise for either an update_error_message
-    //or for a location change, depending on if successful or not
-    return login(username, password) 
-}
-/**
-Not particularly needed atm, but I want this thing to be extensible
-for if I want to add code here in the future
-*/
-export const delegateLogout = () => {
-    //Now we return to the landing page
-    return logout() 
-}

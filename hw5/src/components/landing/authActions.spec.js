@@ -9,17 +9,16 @@ CODE ALMOST ENTIRELY COPIED FROM THAT PROVIDED ON THE
 ASSIGNMENT POSTING! 
 See https://www.clear.rice.edu/comp431/#/assignments
 */
-let Action, actions, authActions, interceptedResource
+let actions, authActions, resource
 beforeEach(() => {
     if (mockery.enable) {
     	mockery.enable({warnOnUnregistered: false, useCleanCache:true})
     	mockery.registerMock('node-fetch', fetch)
     	require('node-fetch')
     }
-    interceptedResource = require('./../../serverRequests/serverRequest')
-    Action = require('./../../actions').default
     actions = require('./../../actions')
     authActions = require('./authActions')
+    resource = require('./../../serverRequests/serverRequest')
 })
 
 afterEach(() => {
@@ -52,7 +51,6 @@ it ('should update error message (for displaying error message to user', (done) 
 		"username": "bobbyMcbobface",
 		"password":"BobDaBuilda"
 	}
-	//TODO - figure out what the result will actually be of that
     const expectedAction = { 
         type: actions.ActionTypes.UPDATE_ERROR_MESSAGE,
         message: `Your registration inputs were valid, but ` +
@@ -63,41 +61,89 @@ it ('should update error message (for displaying error message to user', (done) 
     done()
 })
 //These three are both in relation to user login/logout
+const username = "bobbyMcbobface"
+const password = "BobDaBuilda"
 it ('should log in a user', (done) => {
-	const mockValidUserInfo = {
-		"username": "bobbyMcbobface",
-		"password":"BobDaBuilda"
-	}
-    const expectedAction = { 
-        type: actions.ActionTypes.LOGIN,
-        username: "implement me",
-        
-    } 
-    const updateSuccessAction = authActions.delegateLogin(mockValidUserInfo)
-    expect(expectedAction).to.eql(expectedAction)
-    done()
+    mock(`${url}/login`, {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        json: { 'username':'bobbyMcbobface'} 
+    })
+    mock(`${url}/headlines/`, {
+        method: 'GET',
+        headers: {'Content-Type':'application/json'},
+        json: {'headlines':[
+            {'username':'bobbyMcbobface', 'headline':'does not matter!'}
+        ]}
+    })
+    mock(`${url}/headlines/cmd11test`, {
+        method: 'GET',
+        headers: {'Content-Type':'application/json'},
+        json: {'headlines':[
+            {'username':'cmd11test', 'headline':'does not matter'}
+        ]}
+    })
+    mock(`${url}/following/`, {
+        method: 'GET',
+        headers: {'Content-Type':'application/json'},
+        json: { 'username':'bobbyMcbobface', following:[
+            {'username':'cmd11test', 'headline':'yoyoyoyo'}
+        ]} 
+    })
+    mock(`${url}/articles/cmd11test`, {
+        method: 'GET',
+        headers: {'Content-Type':'application/json'},
+        json: { articles:[{
+            '_id':1, 'author':'cmd11test', 
+            'text':'does not matter', 'comments':[]
+        }]}
+    })
+    actions.login(username, password)
+    .then((returnedAction) => {
+        console.log("RETURNED ACTION:", returnedAction)
+        expect(returnedAction).to.be.ok
+        expect(returnedAction.type).to.be.ok
+        expect(returnedAction.type).to.eql(actions.ActionTypes.LOCATION_CHANGE)
+        expect(returnedAction.newLocation).to.be.ok
+        expect(returnedAction.newLocation).to.eql("MAIN_PAGE")
+        done()
+    }).catch(error => {
+        done(error)
+    })
 })
 it ('should not login an invalid user', (done) => {
-	//TODO - choose something which will have invalid field or two
-	const mockInvalidUserInfo = {
-		"username": "bobbyMcbobface",
-		"password":"BobDaBuilda"
-	}
-	//TODO - figure out what the result will actually be of that
+    mock(`${url}/login`, {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        status: 402
+    })
     const expectedAction = { 
-        type: actions.ActionTypes.LOGIN_FAILURE,
-        username: "implement me"
+        type: actions.ActionTypes.UPDATE_ERROR_MESSAGE,
+        message: '"Error" when logging in'
     } 
-    const updateFailureAction = authActions.delegateLogin(mockInvalidUserInfo)
-    expect(updateFailureAction).to.eql(expectedAction)
-    done()
+    actions.login(username, password)
+    .then((returnedAction) => {
+        expect(returnedAction).to.be.ok
+        expect(returnedAction.type).to.be.ok
+        expect(returnedAction.type).to.eql('UPDATE_ERROR_MESSAGE')
+        done()
+    }).catch(error => {
+        done(error)
+    })
 })
 it ('should log out a user', (done) => {
-    const expectedAction = { 
-        type: actions.ActionTypes.LOGOUT,
-        "implement Me":"failing on purpose rn"
-    } 
-    const logoutAction = authActions.delegateLogout()
-    expect(expectedAction).to.eql(expectedAction)
-    done()
+    mock(`${url}/logout`, {
+        method: 'PUT',
+        headers: {'Content-Type':'application/json'}
+    })
+    actions.logout().then((returnedAction) => {
+        expect(returnedAction).to.be.ok
+        expect(returnedAction.type)
+        expect(returnedAction.type).to.eql(actions.ActionTypes.LOCATION_CHANGE)
+        expect(returnedAction.newLocation).to.be.ok
+        expect(returnedAction.newLocation).to.eql('LANDING_PAGE')
+        done()
+    }).catch((error) => {
+        done(error)
+    })
 })

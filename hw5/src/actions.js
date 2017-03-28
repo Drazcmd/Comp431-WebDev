@@ -1,7 +1,6 @@
-import { resource } from './serverRequests/serverRequest'
-import { 
-    getMainData, getProfileData, updateFields
-} from './serverRequests/dataFetching'
+import {
+    resource, getMainData, getProfileData, updateFields
+} from './serverRequests/serverRequest'
 
 export const MAIN_PAGE = 'MAIN_PAGE'
 export const PROFILE_PAGE = 'PROFILE_PAGE'

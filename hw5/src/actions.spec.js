@@ -3,16 +3,14 @@ import mockery from 'mockery'
 import fetch, { mock } from 'mock-fetch'
 
 const url = 'https://webdev-dummy.herokuapp.com'
-let Action, actions, interceptedResource, dataFetching
+let resource, actions
 beforeEach(() => {
     if (mockery.enable) {
     	mockery.enable({warnOnUnregistered: false, useCleanCache:true})
     	mockery.registerMock('node-fetch', fetch)
     	require('node-fetch')
     }
-    interceptedResource = require('./serverRequests/serverRequest')
-    dataFetching = require('./serverRequests/dataFetching')
-    Action = require('./actions').default
+    resource = require('./serverRequests/serverRequest')
     actions = require('./actions')
 })
 
@@ -49,7 +47,7 @@ it('should update user headline', (done) => {
             [{'username': username, 'headline': headline}]
         }
     })
-    interceptedResource.resource('PUT', endpoint)
+    resource.resource('PUT', endpoint)
     .then((resJSON) =>{
         expect(resJSON).to.be.ok
         expect(resJSON).to.eql({
@@ -70,7 +68,7 @@ it('should fetch users profile info (headline)', (done) => {
             [{'username': username, 'headline': headline}]
         }
     })
-    interceptedResource.resource('GET', endpoint)
+    resource.resource('GET', endpoint)
     .then((resJSON) =>{
         expect(resJSON).to.be.ok
         expect(resJSON).to.eql({
@@ -89,7 +87,7 @@ it('should fetch users profile info (email)', (done) => {
         headers: {'Content-Type':'application/json'},
         json: {'username': username, 'email': email} 
     })
-    interceptedResource.resource('GET', endpoint)
+    resource.resource('GET', endpoint)
     .then((resJSON) =>{
         expect(resJSON).to.be.ok
         expect(resJSON).to.eql({'username': username, 'email': email})
@@ -105,7 +103,7 @@ it('should fetch users profile info (zipcode)', (done) => {
         headers: {'Content-Type':'application/json'},
         json: {'username': username, 'zipcode': zipcode} 
     })
-    interceptedResource.resource('GET', endpoint)
+    resource.resource('GET', endpoint)
     .then((resJSON) =>{
         expect(resJSON).to.be.ok
         expect(resJSON).to.eql({'username': username, 'zipcode': zipcode})

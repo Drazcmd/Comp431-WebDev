@@ -3,16 +3,15 @@ import mockery from 'mockery'
 import fetch, { mock } from 'mock-fetch'
 
 const url = 'https://webdev-dummy.herokuapp.com'
-let Action, actions, interceptedResource
+let Action, actions, resource
 beforeEach(() => {
     if (mockery.enable) {
         mockery.enable({warnOnUnregistered: false, useCleanCache:true})
         mockery.registerMock('node-fetch', fetch)
         require('node-fetch')
     }
-    interceptedResource = require('./serverRequest')
-    Action = require('./../actions').default
     actions = require('./../actions')
+    resource = require('./serverRequest')
 })
 
 afterEach(() => {
@@ -28,7 +27,7 @@ it('resource should be a resource', (done) => {
         headers: {'Content-Type':'application/json'},
         json: { 'hello':'world'} 
     })
-    interceptedResource.resource('GET', "")
+    resource.resource('GET', "")
     .then((resJSON) => {
         expect(resJSON).to.be.ok
         expect(resJSON).to.eql({ 'hello': 'world'});
@@ -45,7 +44,7 @@ it('resource should give me the http error', (done) => {
         headers: {'Content-Type':'application/json'},
         status: 404
     })
-    interceptedResource.resource('GET', errorEndpint)
+    resource.resource('GET', errorEndpint)
     .then((problematicResponse) => {
         //we want to fail if an error isn't thrown
         expect(1).to.eql(2)
@@ -70,7 +69,7 @@ it('resource should be POSTable', (done) => {
         json: { 'username':'cmd11test', 'result':'success' } 
     })
     const payload = {'username':'cmd11test', 'password':'damage-butter-memory'}
-    interceptedResource.resource('POST', endpoint, payload)
+    resource.resource('POST', endpoint, payload)
     .then((resJSON) =>{
         expect(resJSON).to.be.ok
         expect(resJSON).to.eql({ 'username':'cmd11test', 'result':'success' })

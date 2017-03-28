@@ -10,7 +10,7 @@ const testFollowees = require('./testData/followees.json')
 const testProfileData = require('./testData/profile.json')
 
 //Note - shouldn't be doing any fetch's here!
-let mockUninitializedState
+let actions, mockUninitializedState
 beforeEach(() => {
     if (mockery.enable) {
         mockery.enable({warnOnUnregistered: false, useCleanCache:true})
@@ -30,6 +30,7 @@ beforeEach(() => {
             followees: [],
             globalErrorMessage: ""
         }
+        actions = require('./actions')
     }
 })
 
@@ -63,7 +64,14 @@ it('should initialize state', (done) => {
     done()
 })
 it('should state success (for displaying success message to user)', (done) => {
-    expect(1).to.eql(2)
+    //I assume this has to do with the registration 'success but unimplemented' error message
+    const firstHalf = `Your registration inputs were valid, but the `
+    const secondHalf = `server's registration feature isn't working yet`
+    const successErrorMsg = firstHalf + secondHalf
+    const expectedAction = {type: ActionTypes.UPDATE_ERROR_MESSAGE, message:successErrorMsg}
+    const mockAction = actions.notifyRegSuccess("bobby")
+    const returnedState = Reducer(mockUninitializedState, mockAction)
+    expect(returnedState.globalErrorMessage).to.eql(successErrorMsg)
     done()
 })
 it('should state error (for displaying error message to user)', (done) => {
