@@ -3,13 +3,7 @@ import mockery from 'mockery'
 import fetch, { mock } from 'mock-fetch'
 
 const url = 'https://webdev-dummy.herokuapp.com'
-
-/*
-CODE ALMOST ENTIRELY COPIED FROM THAT PROVIDED ON THE 
-ASSIGNMENT POSTING! 
-See https://www.clear.rice.edu/comp431/#/assignments
-*/
-let Action, actions, interceptedResource
+let Action, actions, interceptedResource, dataFetching
 beforeEach(() => {
     if (mockery.enable) {
     	mockery.enable({warnOnUnregistered: false, useCleanCache:true})
@@ -17,6 +11,7 @@ beforeEach(() => {
     	require('node-fetch')
     }
     interceptedResource = require('./serverRequests/serverRequest')
+    dataFetching = require('./serverRequests/dataFetching')
     Action = require('./actions').default
     actions = require('./actions')
 })
@@ -29,8 +24,12 @@ afterEach(() => {
 })
 
 
-//According to Suzanne this is all I need for the action side ^-^
-//The rest of the test for it can be found back in the reducer
+// mainly for mocking the ajax call
+const username = 'cmd11test'
+const headline = 'A new headline!'
+const email = 'bob@bobmail.com'
+const zipcode = '30333'
+
 it('should navigate (to landing)', (done) => {
     const changeAction = actions.updateLocation(actions.LANDING_PAGE)
     const expectedAction = { 
@@ -40,12 +39,6 @@ it('should navigate (to landing)', (done) => {
     done()
 })
 
-
-// mainly for mocking the ajax call
-const username = 'cmd11test'
-const headline = 'A new headline!'
-const email = 'bob@bobmail.com'
-const zipcode = '30333'
 
 it('should update user headline', (done) => {
     const endpoint = 'headline'
