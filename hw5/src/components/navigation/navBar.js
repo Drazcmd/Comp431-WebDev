@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import NavButton from './navButton'
-import { delegateLogout } from './../landing/authActions'
+import { logout } from './../../actions'
 import { ButtonToolbar, Button } from 'react-bootstrap'
 export const NavBar = ({ logout }) => {
     //Like real facebook, should be able to refresh main page or profile by
@@ -25,7 +25,7 @@ export default connect(
         //since it dispatches a LOGOUT rather than a normal loc change
         return {
             logout: () => {
-                delegateLogout().then((resultingAction) => {
+                logout().then((resultingAction) => {
                     dispatch(resultingAction)
                 })
             }
