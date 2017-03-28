@@ -45,18 +45,17 @@ it('resource should give me the http error', (done) => {
         headers: {'Content-Type':'application/json'},
         status: 404
     })
-    try {
-        invalidRequest = interceptedResource.resource('GET', errorEndpint)
-        .then((problematicResponse) => {
-            //we want to fail if an error isn't thrown
-            expect(1).to.eql(2)
-            done()
-        })
-    } catch (error) {
+    interceptedResource.resource('GET', errorEndpint)
+    .then((problematicResponse) => {
+        //we want to fail if an error isn't thrown
+        expect(1).to.eql(2)
+        done()
+    })
+    .catch((error) => {
         expect(error).to.be.ok
         //this means success!
         done()
-    }
+    })
 })
 
 /*
@@ -71,7 +70,7 @@ it('resource should be POSTable', (done) => {
         json: { 'username':'cmd11test', 'result':'success' } 
     })
     const payload = {'username':'cmd11test', 'password':'damage-butter-memory'}
-    const postRequest = interceptedResource.resource('POST', endpoint, payload)
+    interceptedResource.resource('POST', endpoint, payload)
     .then((resJSON) =>{
         expect(resJSON).to.be.ok
         expect(resJSON).to.eql({ 'username':'cmd11test', 'result':'success' })

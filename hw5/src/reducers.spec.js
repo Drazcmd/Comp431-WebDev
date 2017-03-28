@@ -2,19 +2,18 @@ import { expect } from 'chai'
 import mockery from 'mockery'
 import { ActionTypes, VisModes } from './actions'
 import { displayedArticles } from './components/main/feedFilters'
-
+//reducer doesn't ever fetch so this should be safe
+import { Reducer } from './reducers'
 //This is hardcoded data only to be used for mocking actions
 const testArticles = require('./testData/articles.json')
 const testFollowees = require('./testData/followees.json')
 const testProfileData = require('./testData/profile.json')
 
 //Note - shouldn't be doing any fetch's here!
-let reducer
 let mockUninitializedState
 beforeEach(() => {
     if (mockery.enable) {
         mockery.enable({warnOnUnregistered: false, useCleanCache:true})
-        reducer = require('./reducers')
         mockUninitializedState = {
             location: 'LANDING_PAGE',
             articles: [],
@@ -48,7 +47,7 @@ it('should initialize state', (done) => {
         profileData: testProfileData,
         followees: testFollowees
     }
-    const returnedState = reducer.Reducer(mockUninitializedState, mockAction)
+    const returnedState = Reducer(mockUninitializedState, mockAction)
     expect(returnedState.location).to.eql('MAIN_PAGE')
     expect(returnedState.articles).to.eql(testArticles)
     expect(returnedState.followees).to.eql(testFollowees)
@@ -65,7 +64,7 @@ it('should state error (for displaying error message to user)', (done) => {
         type: ActionTypes.UPDATE_ERROR_MESSAGE,
         message: errorMessage
     }
-    const returnedState = reducer.Reducer(mockUninitializedState, mockAction)
+    const returnedState = Reducer(mockUninitializedState, mockAction)
     expect(returnedState.globalErrorMessage).to.eql(errorMessage)
     done()
 })
@@ -86,7 +85,7 @@ it('should set the articles', (done) => {
         visibilityMode: VisModes.REFRESH,
         filterStr: "asdjfb"
     }
-    const returnedState = reducer.Reducer(mockUninitializedState, mockAction)
+    const returnedState = Reducer(mockUninitializedState, mockAction)
     expect(returnedState.articles).to.eql(newArticles)
     expect(returnedState.visibilityMode).to.eql(VisModes.NO_FILTER)
     expect(returnedState.filterStr).to.eql("")
@@ -98,7 +97,7 @@ it('should set the search keyword', (done) => {
         visibilityMode: VisModes.FIL_TEXT,
         filterStr: "123"
     }
-    const returnedState = reducer.Reducer(mockUninitializedState, mockAction)
+    const returnedState = Reducer(mockUninitializedState, mockAction)
     expect(returnedState.articles).to.eql([])
     expect(returnedState.visibilityMode).to.eql(VisModes.FIL_TEXT)
     expect(returnedState.filterStr).to.eql("123")
@@ -121,7 +120,7 @@ it('should be able to set the search keyword while updating articles',
         filterStr: "bobby",
         articles: newArticles
     }
-    const returnedState = reducer.Reducer(mockUninitializedState, mockAction)
+    const returnedState = Reducer(mockUninitializedState, mockAction)
     expect(returnedState.articles).to.eql(newArticles)
     expect(returnedState.visibilityMode).to.eql(VisModes.FIL_AUTH)
     expect(returnedState.filterStr).to.eql("bobby")
