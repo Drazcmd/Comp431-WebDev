@@ -28,15 +28,13 @@ it('resource should be a resource', (done) => {
         headers: {'Content-Type':'application/json'},
         json: { 'hello':'world'} 
     })
-
-    interceptedResource.resource('GET', "/").then((res) => {
-        expect(res.status).to.eql(200)
-        return res.json()
-    }).then((resJSON) => {
+    interceptedResource.resource('GET', "")
+    .then((resJSON) => {
+        expect(resJSON).to.be.ok
         expect(resJSON).to.eql({ 'hello': 'world'});
         done();
     }).catch(error => {
-        expect(1).to.eql(2)
+        done(error)
     })
 })
 
@@ -49,11 +47,14 @@ it('resource should give me the http error', (done) => {
     })
     try {
         invalidRequest = interceptedResource.resource('GET', errorEndpint)
-        //we want to fail if an error isn't thrown
-        expect(1).to.eql(2)
-        done()
+        .then((problematicResponse) => {
+            //we want to fail if an error isn't thrown
+            expect(1).to.eql(2)
+            done()
+        })
     } catch (error) {
-        expect(error).to.be.an('error')
+        expect(error).to.be.ok
+        //this means success!
         done()
     }
 })
@@ -70,8 +71,10 @@ it('resource should be POSTable', (done) => {
         json: { 'username':'cmd11test', 'result':'success' } 
     })
     const payload = {'username':'cmd11test', 'password':'damage-butter-memory'}
-    const postRequest = interceptedResource.resource('POST', endpoint, payload).then((res) =>{
-        expect(res.status).to.eql(200)
+    const postRequest = interceptedResource.resource('POST', endpoint, payload)
+    .then((resJSON) =>{
+        expect(resJSON).to.be.ok
+        expect(resJSON).to.eql({ 'username':'cmd11test', 'result':'success' })
         done()
     }).catch((error) => {
         done(error)

@@ -1,3 +1,4 @@
+require('isomorphic-fetch');
 /**
 'Dummy' as in the dummy server at the url below;
 this is a real http request.
