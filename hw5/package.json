@@ -14,7 +14,7 @@
     "dev": "webpack-dev-server --content-base dist --inline -d",
     "test": "npm run mocha",
     "test:watch": "npm run mocha -- -w",
-    "mocha": "mocha --opts mocha.opts src/**/*.spec.js",
+    "mocha": "mocha --opts mocha.opts 'src/**/*.spec.js'",
     "karma": "karma start --single-run",
     "karma:watch": "karma start",
     "e2e": "npm run e2e:base -- --reporter spec",
