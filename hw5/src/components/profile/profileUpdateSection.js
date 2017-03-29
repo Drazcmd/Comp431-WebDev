@@ -4,8 +4,6 @@ import { Row, Button, FormGroup, FormControl,
  ControlLabel, Well } from 'react-bootstrap'
 import { updateProfileData, dispError } from '../../actions'
 import { validateData } from './profileValidation'
-import { ErrorDisplay } from './../textDisplay/errorDisplay'
-
 export const ProfileUpdateSection = ({ profileData, dispatchProfileUpdate }) => {
     let _email, _zip;
     const _dispatchProfileUpdate = () => {
@@ -17,7 +15,6 @@ export const ProfileUpdateSection = ({ profileData, dispatchProfileUpdate }) => 
     }
     return (
         <Well>
-        <ErrorDisplay /> 
         <form> <FormGroup controlId="ProfileInfo">
             <ControlLabel> Email: {profileData.email} </ControlLabel>
             <FormControl type="text" placeholder="Update Email Here"
