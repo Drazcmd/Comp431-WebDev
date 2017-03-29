@@ -3,7 +3,7 @@ import mockery from 'mockery'
 import { ActionTypes, VisModes } from './actions'
 import { displayedArticles } from './components/main/feedFilters'
 //reducer doesn't ever fetch so this should be safe
-import { Reducer } from './reducers'
+import { Reducer, defaultState } from './reducers'
 //This is hardcoded data only to be used for mocking actions
 const testArticles = require('./testData/articles.json')
 const testFollowees = require('./testData/followees.json')
@@ -16,22 +16,7 @@ let actions, mockUninitializedState
 beforeEach(() => {
     if (mockery.enable) {
         mockery.enable({warnOnUnregistered: false, useCleanCache:true})
-        mockUninitializedState = {
-            location: 'LANDING_PAGE',
-            articles: [],
-            visibleArticles: [],
-            visibilityMode: VisModes.NO_FILTER,
-            filterStr: "",  
-            profileData: {
-                "name":"Anon", 
-                "email":"missingEmail@missing.com", 
-                "zip":"00000",
-                "img": "http://www.clker.com/cliparts/n/T/5/z/f/Y/image-missing-md.png ",
-                "status":"missing status"
-            },
-            followees: [],
-            globalErrorMessage: ""
-        }
+        mockUninitializedState = defaultState
         actions = require('./actions')
     }
 })
@@ -119,6 +104,32 @@ it('should set the search keyword', (done) => {
     expect(returnedState.articles).to.eql([])
     expect(returnedState.visibilityMode).to.eql(VisModes.FIL_TEXT)
     expect(returnedState.filterStr).to.eql("123")
+    done()
+})
+it('should clear state on change to landing (i.e. logout)', (done) => {
+    const mockInitializedState = {
+        location: 'MAIN_PAGE',
+        articles: [],
+        visibleArticles: [],
+        visibilityMode: VisModes.FIL_AUTH,
+        filterStr: "abcd",  
+        profileData: {
+            "name":"SUP", 
+            "email":"mil@mis.c", 
+            "zip":"00010",
+            "img": "http://www.clker.com/cliparts/n/T/5/z/f/Y/image-missing-md.png ",
+            "status":"I did something!"
+        },
+        followees: [],
+        globalErrorMessage: "YEP, you had an error"
+    }
+    const mockAction = {
+        type: ActionTypes.LOCATION_CHANGE,
+        newLocation: 'LANDING_PAGE'
+    }
+    const returnedState = Reducer(mockInitializedState, mockAction)
+    //Note the difference (hard to spot) - INitialized going to UNinitialized
+    expect(returnedState).to.eql(mockUninitializedState)
     done()
 })
 

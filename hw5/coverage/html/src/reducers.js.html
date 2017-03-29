@@ -20,14 +20,14 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">68.42% </span>
+        <span class="strong">71.79% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>26/38</span>
+        <span class='fraction'>28/39</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">47.06% </span>
+        <span class="strong">50.98% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>24/51</span>
+        <span class='fraction'>26/51</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
@@ -35,9 +35,9 @@
         <span class='fraction'>2/2</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">58.62% </span>
+        <span class="strong">62.07% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>17/29</span>
+        <span class='fraction'>18/29</span>
       </div>
       <div class='fl pad1y'>
         <span class="strong">6 statements, 1 function, 4 branches</span>
@@ -201,40 +201,34 @@
 152
 153
 154
-155
-156
-157
-158
-159</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">5×</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">5×</span>
-<span class="cline-any cline-yes">5×</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+155</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -336,9 +330,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -366,7 +358,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { ActionTypes, VisModes } from './actions'
 &nbsp;
 //export is only so I can test it easier :)
-export const Reducer = (state = <span class="branch-0 cbranch-no" title="branch not covered" >{</span>
+export const defaultState = {
     location: 'LANDING_PAGE',
     articles: [],
     visibilityMode: VisModes.NO_FILTER,
@@ -380,19 +372,17 @@ export const Reducer = (state = <span class="branch-0 cbranch-no" title="branch 
     },
     followees: [],
     globalErrorMessage: ""
-}, action) =&gt; {
+}
+export const Reducer = (state=defaultState, action) =&gt; {
     switch (action.type) {
         case ActionTypes.LOCATION_CHANGE: {
             //doing a full refresh - Facebook seems to do this too
 &nbsp;
             const location = action.newLocation
-            if (<span class="missing-if-branch" title="if path not taken" >I</span>location == 'LANDING_PAGE'){ 
+            if (location == 'LANDING_PAGE'){ 
                 //almost certainly a logout - and as such we really
-                //don't care about current state (cause login would fix)
-                return {
-                    ...<span class="cstat-no" title="statement not covered" >state,</span>
-                    location: location 
-                }
+                //need to wipe our internal state
+                return defaultState
             }
 &nbsp;
             //Since this assignment doesn't require all the fields we
@@ -489,8 +479,7 @@ export const Reducer = (state = <span class="branch-0 cbranch-no" title="branch 
             return {
                 ...<span class="cstat-no" title="statement not covered" >state,</span>
                 location:"MAIN_PAGE",
-                profileData: action.profileData,
-                globalErrorMessage: ""
+                profileData: action.profileData
             }
         }
         case <span class="branch-8 cbranch-no" title="branch not covered" >ActionTypes.LOGOUT: {</span>
@@ -503,8 +492,7 @@ export const Reducer = (state = <span class="branch-0 cbranch-no" title="branch 
                     "zip":"00000",
                     "img": "http://www.clker.com/cliparts/n/T/5/z/f/Y/image-missing-md.png ",
                     "status":"missing status"
-                },
-                globalErrorMessage: ""
+                }
             }
         }
         case ActionTypes.UPDATE_ERROR_MESSAGE: {
@@ -527,7 +515,7 @@ export default Reducer
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Tue Mar 28 2017 16:22:36 GMT-0500 (CDT)
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Tue Mar 28 2017 21:37:14 GMT-0500 (CDT)
 </div>
 </div>
 <script src="../prettify.js"></script>

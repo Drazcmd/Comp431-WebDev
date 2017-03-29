@@ -20,28 +20,28 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">50% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>7/14</span>
+        <span class='fraction'>14/14</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">62.5% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>5/8</span>
+        <span class='fraction'>8/8</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">50% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>1/2</span>
+        <span class='fraction'>2/2</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">50% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>6/12</span>
+        <span class='fraction'>12/12</span>
       </div>
     </div>
   </div>
-  <div class='status-line medium'></div>
+  <div class='status-line high'></div>
 <pre><table class="coverage">
 <tr><td class="line-count quiet">1
 2
@@ -65,41 +65,41 @@
 20
 21</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">4×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-yes">2×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { dispError, logout, login, notifyRegSuccess } from '../../actions'
 &nbsp;
-const missingField = <span class="fstat-no" title="function not covered" >(field, value) =&gt; <span class="cstat-no" title="statement not covered" >value ? "" : `${field} is invalid (you entered "${value}"). `</span></span>
+const missingField = (field, value) =&gt; value ? "" : `${field} is invalid (you entered "${value}"). `
 &nbsp;
 export const delegateRegistration = (userInfo) =&gt; {
-    if (<span class="missing-if-branch" title="else path not taken" >E</span>userInfo.username &amp;&amp; userInfo.password
+    if (userInfo.username &amp;&amp; userInfo.password
       &amp;&amp; userInfo.firstName &amp;&amp; userInfo.lastName){
         return notifyRegSuccess(userInfo)
     } else {
-        const <span class="cstat-no" title="statement not covered" >usernameFailure = missingField("username", userInfo.username)     </span>
-        const <span class="cstat-no" title="statement not covered" >passwordFailure = missingField("password", userInfo.password)</span>
-        const <span class="cstat-no" title="statement not covered" >firstNameFailure = missingField("First Name", userInfo.firstName)     </span>
-        const <span class="cstat-no" title="statement not covered" >lastNameFailure = missingField("Last Name", userInfo.lastName)</span>
+        const usernameFailure = missingField("username", userInfo.username)     
+        const passwordFailure = missingField("password", userInfo.password)
+        const firstNameFailure = missingField("First Name", userInfo.firstName)     
+        const lastNameFailure = missingField("Last Name", userInfo.lastName)
         //ask it why the fields were invalid, and pass on the reason
-        const <span class="cstat-no" title="statement not covered" >errorMessage = usernameFailure + passwordFailure +</span>
+        const errorMessage = usernameFailure + passwordFailure +
             firstNameFailure + lastNameFailure
-        return <span class="cstat-no" title="statement not covered" >dispError (errorMessage)</span>
+        return dispError (errorMessage)
     }
 }
 &nbsp;
@@ -109,7 +109,7 @@ export const delegateRegistration = (userInfo) =&gt; {
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Tue Mar 28 2017 16:22:36 GMT-0500 (CDT)
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Tue Mar 28 2017 21:37:14 GMT-0500 (CDT)
 </div>
 </div>
 <script src="../../../prettify.js"></script>

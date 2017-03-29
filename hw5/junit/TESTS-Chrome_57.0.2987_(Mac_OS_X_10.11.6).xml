@@ -1,32 +1,38 @@
 <?xml version="1.0"?>
-<testsuite name="Chrome 57.0.2987 (Mac OS X 10.11.6)" package="" timestamp="2017-03-28T21:22:36" id="0" hostname="Claytons-MacBook-Pro.local" tests="20" errors="0" failures="1" time="0.006">
+<testsuite name="Chrome 57.0.2987 (Mac OS X 10.11.6)" package="" timestamp="2017-03-29T02:37:14" id="0" hostname="Claytons-MacBook-Pro.local" tests="22" errors="0" failures="2" time="0.01">
   <properties>
     <property name="browser.fullName" value="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.98 Safari/537.36"/>
   </properties>
-  <testcase name="this is actions should navigate (to landing)" time="0.001" classname="Chrome_57_0_2987_(Mac_OS_X_10_11_6).this is actions"/>
-  <testcase name="this is actions should update user headline" time="0" classname="Chrome_57_0_2987_(Mac_OS_X_10_11_6).this is actions"/>
-  <testcase name="this is actions should fetch users profile info (headline)" time="0.001" classname="Chrome_57_0_2987_(Mac_OS_X_10_11_6).this is actions"/>
-  <testcase name="this is actions should fetch users profile info (email)" time="0.001" classname="Chrome_57_0_2987_(Mac_OS_X_10_11_6).this is actions"/>
-  <testcase name="this is actions should fetch users profile info (zipcode)" time="0" classname="Chrome_57_0_2987_(Mac_OS_X_10_11_6).this is actions"/>
-  <testcase name="test2 should update success message (for displaying success message to user" time="0" classname="Chrome_57_0_2987_(Mac_OS_X_10_11_6).test2"/>
-  <testcase name="test2 should update error message (for displaying error message to user" time="0" classname="Chrome_57_0_2987_(Mac_OS_X_10_11_6).test2"/>
-  <testcase name="test2 should log in a user" time="0" classname="Chrome_57_0_2987_(Mac_OS_X_10_11_6).test2"/>
-  <testcase name="test2 should not login an invalid user" time="0" classname="Chrome_57_0_2987_(Mac_OS_X_10_11_6).test2"/>
-  <testcase name="test2 should log out a user" time="0" classname="Chrome_57_0_2987_(Mac_OS_X_10_11_6).test2"/>
-  <testcase name="test3 should filter displayed articles by the search keyword" time="0.001" classname="Chrome_57_0_2987_(Mac_OS_X_10_11_6).test3"/>
-  <testcase name="test4 should initialize state" time="0.001" classname="Chrome_57_0_2987_(Mac_OS_X_10_11_6).test4"/>
-  <testcase name="test4 should state success (for displaying success message to user)" time="0" classname="Chrome_57_0_2987_(Mac_OS_X_10_11_6).test4">
+  <testcase name="Test Actions should navigate (to landing)" time="0.002" classname="Chrome_57_0_2987_(Mac_OS_X_10_11_6).Test Actions"/>
+  <testcase name="Test Actions should update user headline" time="0.001" classname="Chrome_57_0_2987_(Mac_OS_X_10_11_6).Test Actions"/>
+  <testcase name="Test Actions should fetch users profile info (headline)" time="0" classname="Chrome_57_0_2987_(Mac_OS_X_10_11_6).Test Actions"/>
+  <testcase name="Test Actions should fetch users profile info (email)" time="0" classname="Chrome_57_0_2987_(Mac_OS_X_10_11_6).Test Actions"/>
+  <testcase name="Test Actions should fetch users profile info (zipcode)" time="0" classname="Chrome_57_0_2987_(Mac_OS_X_10_11_6).Test Actions"/>
+  <testcase name="Test Actions should update error message (for displaying error message to user" time="0" classname="Chrome_57_0_2987_(Mac_OS_X_10_11_6).Test Actions"/>
+  <testcase name="Test AuthActions should display error if input registration data is invalid)" time="0.001" classname="Chrome_57_0_2987_(Mac_OS_X_10_11_6).Test AuthActions"/>
+  <testcase name="Test AuthActions should update success message (for displaying success message to user)" time="0" classname="Chrome_57_0_2987_(Mac_OS_X_10_11_6).Test AuthActions"/>
+  <testcase name="Test AuthActions should log in a user" time="0" classname="Chrome_57_0_2987_(Mac_OS_X_10_11_6).Test AuthActions"/>
+  <testcase name="Test AuthActions should not login an invalid user" time="0" classname="Chrome_57_0_2987_(Mac_OS_X_10_11_6).Test AuthActions"/>
+  <testcase name="Test AuthActions should log out a user (state should be cleared - check reducer)" time="0" classname="Chrome_57_0_2987_(Mac_OS_X_10_11_6).Test AuthActions"/>
+  <testcase name="Test Feed Filtering should filter displayed articles by the search keyword" time="0.001" classname="Chrome_57_0_2987_(Mac_OS_X_10_11_6).Test Feed Filtering"/>
+  <testcase name="Test Reducers should initialize state" time="0.001" classname="Chrome_57_0_2987_(Mac_OS_X_10_11_6).Test Reducers"/>
+  <testcase name="Test Reducers should state success (for displaying success message to user)" time="0" classname="Chrome_57_0_2987_(Mac_OS_X_10_11_6).Test Reducers">
     <failure type="">TypeError: Cannot read property 'notifyRegSuccess' of undefined
-    at Context.&lt;anonymous&gt; (/Users/claytonmdrazner/Documents/CompSci_Files/CollegeCompCourses/Comp431-WebDev/hw5/tests.webpack.js:77429:542 &lt;- webpack:///src/reducers.spec.js:9:4146)
+    at Context.&lt;anonymous&gt; (/Users/claytonmdrazner/Documents/CompSci_Files/CollegeCompCourses/Comp431-WebDev/hw5/tests.webpack.js:77459:542 &lt;- webpack:///src/reducers.spec.js:9:3854)
 </failure>
   </testcase>
-  <testcase name="test4 should state error (for displaying error message to user)" time="0" classname="Chrome_57_0_2987_(Mac_OS_X_10_11_6).test4"/>
-  <testcase name="test4 should set the articles" time="0" classname="Chrome_57_0_2987_(Mac_OS_X_10_11_6).test4"/>
-  <testcase name="test4 should set the search keyword" time="0.001" classname="Chrome_57_0_2987_(Mac_OS_X_10_11_6).test4"/>
-  <testcase name="test4 should be able to set the search keyword while updating articles" time="0" classname="Chrome_57_0_2987_(Mac_OS_X_10_11_6).test4"/>
-  <testcase name="server something resource should be a resource" time="0" classname="Chrome_57_0_2987_(Mac_OS_X_10_11_6).server something"/>
-  <testcase name="server something resource should give me the http error" time="0" classname="Chrome_57_0_2987_(Mac_OS_X_10_11_6).server something"/>
-  <testcase name="server something resource should be POSTable" time="0" classname="Chrome_57_0_2987_(Mac_OS_X_10_11_6).server something"/>
+  <testcase name="Test Reducers should state error (for displaying error message to user)" time="0.001" classname="Chrome_57_0_2987_(Mac_OS_X_10_11_6).Test Reducers"/>
+  <testcase name="Test Reducers should set the articles" time="0" classname="Chrome_57_0_2987_(Mac_OS_X_10_11_6).Test Reducers"/>
+  <testcase name="Test Reducers should set the search keyword" time="0" classname="Chrome_57_0_2987_(Mac_OS_X_10_11_6).Test Reducers"/>
+  <testcase name="Test Reducers should clear state on change to landing (i.e. logout)" time="0.002" classname="Chrome_57_0_2987_(Mac_OS_X_10_11_6).Test Reducers">
+    <failure type="">AssertionError: expected { Object (location, articles, ...) } to deeply equal undefined
+    at Context.&lt;anonymous&gt; (/Users/claytonmdrazner/Documents/CompSci_Files/CollegeCompCourses/Comp431-WebDev/hw5/tests.webpack.js:77467:794 &lt;- webpack:///src/reducers.spec.js:9:7483)
+</failure>
+  </testcase>
+  <testcase name="Test Reducers should be able to set the search keyword while updating articles" time="0" classname="Chrome_57_0_2987_(Mac_OS_X_10_11_6).Test Reducers"/>
+  <testcase name="Test Server Requests resource should be a resource" time="0" classname="Chrome_57_0_2987_(Mac_OS_X_10_11_6).Test Server Requests"/>
+  <testcase name="Test Server Requests resource should give me the http error" time="0.001" classname="Chrome_57_0_2987_(Mac_OS_X_10_11_6).Test Server Requests"/>
+  <testcase name="Test Server Requests resource should be POSTable" time="0" classname="Chrome_57_0_2987_(Mac_OS_X_10_11_6).Test Server Requests"/>
   <system-out>
     <![CDATA[
 ]]>

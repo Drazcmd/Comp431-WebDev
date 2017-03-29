@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <title>Code coverage report for src/components/main/feed.js</title>
+    <title>Code coverage report for src/components/profile/profileValidation.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../../prettify.css" />
     <link rel="stylesheet" href="../../../base.css" />
@@ -16,32 +16,36 @@
 <div class='wrapper'>
   <div class='pad1'>
     <h1>
-      <a href="../../../index.html">all files</a> / <a href="index.html">src/components/main/</a> feed.js
+      <a href="../../../index.html">all files</a> / <a href="index.html">src/components/profile/</a> profileValidation.js
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">66.67% </span>
+        <span class="strong">42.86% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>14/21</span>
+        <span class='fraction'>9/21</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">100% </span>
+        <span class="strong">20% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>4/4</span>
+        <span class='fraction'>4/20</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">16.67% </span>
+        <span class="strong">50% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>1/6</span>
+        <span class='fraction'>1/2</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">60% </span>
+        <span class="strong">14.29% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>9/15</span>
+        <span class='fraction'>2/14</span>
+      </div>
+      <div class='fl pad1y'>
+        <span class="strong">6 statements, 1 function, 3 branches</span>
+        <span class="quiet">Ignored</span>  &nbsp;&nbsp;&nbsp;&nbsp;
       </div>
     </div>
   </div>
-  <div class='status-line medium'></div>
+  <div class='status-line low'></div>
 <pre><table class="coverage">
 <tr><td class="line-count quiet">1
 2
@@ -83,31 +87,17 @@
 38
 39
 40</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -116,50 +106,64 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, { PropTypes } from 'react'
-import { connect } from 'react-redux'
-import ArticleCard from './articleCard'
-import { ListGroup, ListGroupItem } from 'react-bootstrap'
-import { displayedArticles } from './feedFilters.js'
-export const Feed = <span class="fstat-no" title="function not covered" >({ <span class="cstat-no" title="statement not covered" >articles, visibilityMode, filterStr }) =&gt; {</span></span>
-    const <span class="cstat-no" title="statement not covered" >correctlyOrderedArticles = <span class="fstat-no" title="function not covered" >() =&gt; {</span></span>
-        return <span class="cstat-no" title="statement not covered" >displayedArticles(articles, visibilityMode, filterStr)</span>
-    }
-    return (
-<span class="cstat-no" title="statement not covered" >        &lt;ListGroup&gt;</span>
-        {
-            correctlyOrderedArticles().map(<span class="fstat-no" title="function not covered" >(article, index) =&gt; (</span>
-<span class="cstat-no" title="statement not covered" >                &lt;ArticleCard articleJSON={ article } key={ index } /&gt;</span>
-            ))
-        }
-        &lt;/ListGroup&gt;
-    )
-}
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">export const validateData = (<span class="fstat-no" title="function not covered" >(newEmail, newZipcode) =&gt; {</span>
+	const <span class="cstat-no" title="statement not covered" >error_base = {</span>
+		validity: false	
+	}
 &nbsp;
-Feed.propTypes = {
-    articles: PropTypes.array.isRequired,
-    filterStr: PropTypes.string.isRequired,
-    visibilityMode: PropTypes.string.isRequired
-}
-export default connect(
-<span class="fstat-no" title="function not covered" >    (state) =&gt; {</span>
-        return (<span class="cstat-no" title="statement not covered" >{</span>
-            articles: state.articles, 
-            visibilityMode: state.visibilityMode,
-            filterStr: state.filterStr
-        })
-    }, <span class="fstat-no" title="function not covered" >(dispatch) =&gt; {</span>
-        return <span class="cstat-no" title="statement not covered" >{</span>
+	//I decidd to only allow an update if every field has an input value
+	const <span class="cstat-no" title="statement not covered" >emailMissing = (!newEmail) ? </span>
+	"Error: You need to input a new email" : ""
+	const <span class="cstat-no" title="statement not covered" >zipcodeMissing = (!newZipcode) ? </span>
+	"Error: You need to input a new zipcode" : ""
+	//An empty string "" has falsiness (nonempty has truthiness)
+	if (<span class="cstat-no" title="statement not covered" >emailMissing || zipcodeMissing) {</span>
+		return {
+			...<span class="cstat-no" title="statement not covered" >error_base,</span>
+			errorReason: emailMissing + zipcodeMissing
+		}
+	}
 &nbsp;
-        }   
-    }
-)(Feed)
+	//If we made it to here then there is SOMETHING inputted for both parts
+	const <span class="cstat-no" title="statement not covered" >emailRegex = /([a-zA-Z0-9]+)(\x40)([a-z]+)(\x2E)([a-z]+)/</span>
+	const <span class="cstat-no" title="statement not covered" >zipcodeRegex = /\d{5}/  </span>
 &nbsp;
+	const <span class="cstat-no" title="statement not covered" >emailInvalid = emailRegex.test(newEmail) </span>
+	? "" : "Email was invalid - enter something of form 'a@b.c'. "
+	const <span class="cstat-no" title="statement not covered" >zipcodeInvalid = zipcodeRegex.test(newZipcode) </span>
+	? "" : "Zipcode was invalid - enter 5 digits, each 0-9. "
+&nbsp;
+	if (<span class="cstat-no" title="statement not covered" >emailInvalid || zipcodeInvalid) {</span>
+		return {
+			...<span class="cstat-no" title="statement not covered" >error_base,</span>
+			errorReason: emailInvalid + zipcodeInvalid
+		}
+	} else {
+		return <span class="cstat-no" title="statement not covered" >{</span>
+			validity: true,
+			errorReason: ""
+		}
+	}
+})
 &nbsp;</pre></td></tr>
 </table></pre>
 <div class='push'></div><!-- for sticky footer -->

@@ -20,9 +20,9 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">91.18% </span>
+        <span class="strong">93.24% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>62/68</span>
+        <span class='fraction'>69/74</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">75% </span>
@@ -32,15 +32,15 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>10/10</span>
+        <span class='fraction'>11/11</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">90% </span>
+        <span class="strong">92.19% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>54/60</span>
+        <span class='fraction'>59/64</span>
       </div>
       <div class='fl pad1y'>
-        <span class="strong">1 statement, 1 branch</span>
+        <span class="strong">3 statements, 1 branch</span>
         <span class="quiet">Ignored</span>  &nbsp;&nbsp;&nbsp;&nbsp;
       </div>
     </div>
@@ -203,7 +203,18 @@
 154
 155
 156
-157</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1×</span>
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-yes">1×</span>
@@ -219,30 +230,15 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">7×</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">7×</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -323,6 +319,32 @@
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -364,35 +386,20 @@ import mockery from 'mockery'
 import { ActionTypes, VisModes } from './actions'
 import { displayedArticles } from './components/main/feedFilters'
 //reducer doesn't ever fetch so this should be safe
-import { Reducer } from './reducers'
+import { Reducer, defaultState } from './reducers'
 //This is hardcoded data only to be used for mocking actions
 const testArticles = require('./testData/articles.json')
 const testFollowees = require('./testData/followees.json')
 const testProfileData = require('./testData/profile.json')
 &nbsp;
-describe('test4', () =&gt; {
+describe('Test Reducers', () =&gt; {
 &nbsp;
 //Note - shouldn't be doing any fetch's here!
 let actions, mockUninitializedState
 beforeEach(() =&gt; {
     if (<span class="missing-if-branch" title="if path not taken" >I</span>mockery.enable) {
         mockery.<span class="cstat-no" title="statement not covered" >enable({warnOnUnregistered: false, useCleanCache:true})</span>
-        mockUninitializedState = <span class="cstat-no" title="statement not covered" >{</span>
-            location: 'LANDING_PAGE',
-            articles: [],
-            visibleArticles: [],
-            visibilityMode: VisModes.NO_FILTER,
-            filterStr: "",  
-            profileData: {
-                "name":"Anon", 
-                "email":"missingEmail@missing.com", 
-                "zip":"00000",
-                "img": "http://www.clker.com/cliparts/n/T/5/z/f/Y/image-missing-md.png ",
-                "status":"missing status"
-            },
-            followees: [],
-            globalErrorMessage: ""
-        }
+        mockUninitializedState = defaultState
         actions = <span class="cstat-no" title="statement not covered" >require('./actions')</span>
     }
 })
@@ -482,6 +489,32 @@ it('should set the search keyword', (done) =&gt; {
     expect(returnedState.filterStr).to.eql("123")
     done()
 })
+it('should clear state on change to landing (i.e. logout)', (done) =&gt; {
+    const mockInitializedState = {
+        location: 'MAIN_PAGE',
+        articles: [],
+        visibleArticles: [],
+        visibilityMode: VisModes.FIL_AUTH,
+        filterStr: "abcd",  
+        profileData: {
+            "name":"SUP", 
+            "email":"mil@mis.c", 
+            "zip":"00010",
+            "img": "http://www.clker.com/cliparts/n/T/5/z/f/Y/image-missing-md.png ",
+            "status":"I did something!"
+        },
+        followees: [],
+        globalErrorMessage: "YEP, you had an error"
+    }
+    const mockAction = {
+        type: ActionTypes.LOCATION_CHANGE,
+        newLocation: 'LANDING_PAGE'
+    }
+    const returnedState = Reducer(mockInitializedState, mockAction)
+    //Note the difference (hard to spot) - INitialized going to UNinitialized
+    expect(returnedState).to.eql(mockUninitializedState)
+    done()
+})
 &nbsp;
 it('should be able to set the search keyword while updating articles',
 (done) =&gt; {
@@ -521,7 +554,7 @@ filter displayed articles by the search keyword'
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Tue Mar 28 2017 16:22:36 GMT-0500 (CDT)
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Tue Mar 28 2017 21:37:14 GMT-0500 (CDT)
 </div>
 </div>
 <script src="../prettify.js"></script>

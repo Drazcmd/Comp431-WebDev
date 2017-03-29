@@ -86,7 +86,7 @@ it ('should not login an invalid user', (done) => {
         done(error)
     })
 })
-it ('should log out a user', (done) => {
+it ('should log out a user (state should be cleared - check reducer)', (done) => {
     mock(`${url}/logout`, {
         method: 'PUT',
         headers: {'Content-Type':'application/json'}

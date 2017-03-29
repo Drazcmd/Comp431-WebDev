@@ -20,24 +20,24 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">50.52% </span>
+        <span class="strong">50% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>49/97</span>
+        <span class='fraction'>44/88</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">66.67% </span>
+        <span class="strong">71.43% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>12/18</span>
+        <span class='fraction'>10/14</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">20% </span>
+        <span class="strong">21.43% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>9/45</span>
+        <span class='fraction'>9/42</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">46.07% </span>
+        <span class="strong">45% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>41/89</span>
+        <span class='fraction'>36/80</span>
       </div>
       <div class='fl pad1y'>
         <span class="strong">6 statements, 1 function, 3 branches</span>
@@ -287,34 +287,7 @@
 238
 239
 240
-241
-242
-243
-244
-245
-246
-247
-248
-249
-250
-251
-252
-253
-254
-255
-256
-257
-258
-259
-260
-261
-262
-263
-264
-265
-266
-267
-268</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1×</span>
+241</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -517,35 +490,16 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-yes">2×</span>
-<span class="cline-any cline-yes">2×</span>
-<span class="cline-any cline-yes">2×</span>
-<span class="cline-any cline-yes">2×</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -567,15 +521,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">3×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -653,14 +599,14 @@ export const updateLocation = (newLocation) =&gt; {
         }).then(<span class="fstat-no" title="function not covered" >fetchedData =&gt; {</span>
             return <span class="cstat-no" title="statement not covered" >createLocAction(newLocation, fetchedData)</span>
         }).catch(<span class="fstat-no" title="function not covered" >error =&gt; {</span>
-            return <span class="cstat-no" title="statement not covered" >dispError(error)</span>
+            return <span class="cstat-no" title="statement not covered" >dispError(error.message)</span>
         })
     } else <span class="missing-if-branch" title="if path not taken" >I</span>if (newLocation === PROFILE_PAGE) {
         //profile data is comparatively much much simpler to fetch
         return <span class="cstat-no" title="statement not covered" >getProfileData().then(<span class="fstat-no" title="function not covered" >fetchedData =&gt; {</span></span>
             return <span class="cstat-no" title="statement not covered" >createLocAction(newLocation, fetchedData)</span>
         }).catch(<span class="fstat-no" title="function not covered" >error =&gt; {</span>
-            return <span class="cstat-no" title="statement not covered" >dispError(error)</span>
+            return <span class="cstat-no" title="statement not covered" >dispError(error.message)</span>
         })
     } else {
         //i.e. this means (newLocation === LANDING_PAGE) 
@@ -676,7 +622,7 @@ export const addArticle = <span class="fstat-no" title="function not covered" >(
     .then(<span class="fstat-no" title="function not covered" >r =&gt; {</span>
         return <span class="cstat-no" title="statement not covered" >updateShownArticles(VisModes.REFRESH)</span>
     }).catch(<span class="fstat-no" title="function not covered" >error =&gt; {</span>
-        return <span class="cstat-no" title="statement not covered" >dispError(error)</span>
+        return <span class="cstat-no" title="statement not covered" >dispError(error.message)</span>
     })
 }
 /**
@@ -693,7 +639,7 @@ export const addComment = <span class="fstat-no" title="function not covered" >(
     .then(<span class="fstat-no" title="function not covered" >r =&gt; {</span>
         return <span class="cstat-no" title="statement not covered" >updateShownArticles(VisModes.REFRESH)</span>
     }).catch(<span class="fstat-no" title="function not covered" >error =&gt; {</span>
-        return <span class="cstat-no" title="statement not covered" >dispError(error)</span>
+        return <span class="cstat-no" title="statement not covered" >dispError(error.message)</span>
     })
 }
 export const updateStatus = <span class="fstat-no" title="function not covered" >(newStatus) =&gt; {</span>
@@ -702,7 +648,7 @@ export const updateStatus = <span class="fstat-no" title="function not covered" 
     .then(<span class="fstat-no" title="function not covered" >r =&gt; {</span>
         return <span class="cstat-no" title="statement not covered" >{ type: ActionTypes.UPDATE_STATUS, newStatus}</span>
     }).catch(<span class="fstat-no" title="function not covered" >error =&gt; {</span>
-        return <span class="cstat-no" title="statement not covered" >dispError(error)</span>
+        return <span class="cstat-no" title="statement not covered" >dispError(error.message)</span>
     })
 }
 export const updateProfileData = <span class="fstat-no" title="function not covered" >(fieldValueObjs) =&gt; {</span>
@@ -716,7 +662,7 @@ export const updateProfileData = <span class="fstat-no" title="function not cove
             newProfileData: newProfileData
         }
     }).catch(<span class="fstat-no" title="function not covered" >error =&gt; {</span>
-        return <span class="cstat-no" title="statement not covered" >dispError(error)</span>
+        return <span class="cstat-no" title="statement not covered" >dispError(error.message)</span>
     })
 }
 export const updateShownArticles = <span class="fstat-no" title="function not covered" >(</span>
@@ -732,7 +678,7 @@ export const updateShownArticles = <span class="fstat-no" title="function not co
             visibilityMode, filterStr, articles
         }
     }).catch(<span class="fstat-no" title="function not covered" >error =&gt; {</span>
-        return <span class="cstat-no" title="statement not covered" >dispError(error)</span>
+        return <span class="cstat-no" title="statement not covered" >dispError(error.message)</span>
     })
 }
 &nbsp;
@@ -760,7 +706,7 @@ export const removeFollowee = <span class="fstat-no" title="function not covered
             resultingFollowees: fetchedData.followees
         }
     }).catch(<span class="fstat-no" title="function not covered" >error =&gt; {</span>
-        return <span class="cstat-no" title="statement not covered" >dispError(error)</span>
+        return <span class="cstat-no" title="statement not covered" >dispError(error.message)</span>
     })
 }
 export const addFollowee = <span class="fstat-no" title="function not covered" >(name) =&gt; {</span>
@@ -778,19 +724,10 @@ export const addFollowee = <span class="fstat-no" title="function not covered" >
             resultingFollowees: fetchedData.followees
         }
     }).catch(<span class="fstat-no" title="function not covered" >error =&gt; {</span>
-        return <span class="cstat-no" title="statement not covered" >dispError(error)</span>
+        return <span class="cstat-no" title="statement not covered" >dispError(error.message)</span>
     })
 }
-/* 
-Input ought to look something like:
-{
-    'username' : 'cmd11test',
-    'headline' : 'TESTING'
-}
-*/
-export const downloadProfileData = <span class="fstat-no" title="function not covered" >(field, user) =&gt; {</span>
-    return <span class="cstat-no" title="statement not covered" >{type: ActionTypes.DOWNLOAD_DATA, field, user}</span>
-}
+&nbsp;
 //Although possibly successful, it's not actually implemented on
 //the server's side - so it'll always display an error msg
 export const notifyRegSuccess = (newUser) =&gt; {
@@ -800,23 +737,13 @@ export const notifyRegSuccess = (newUser) =&gt; {
     return {type: ActionTypes.UPDATE_ERROR_MESSAGE, message:msg}
 }
 export const logout = () =&gt; {
-    //In the future might want to add more to this to clear stuff,
-    //or more back in the delegate login area authActions
     return resource('PUT', 'logout')
     .then(r =&gt; {
         return updateLocation(LANDING_PAGE)
     }).catch(<span class="fstat-no" title="function not covered" >error =&gt; {</span>
         //doesn't really matter since we're logging out :p
-        return <span class="cstat-no" title="statement not covered" >dispError(error)</span>
+        return <span class="cstat-no" title="statement not covered" >dispError(error.message)</span>
     })
-}
-&nbsp;
-const requestProfile = <span class="fstat-no" title="function not covered" >(username) =&gt; {</span>
-    const <span class="cstat-no" title="statement not covered" >profileData = resource('GET', 'headlines/')</span>
-    .then(<span class="fstat-no" title="function not covered" >jsonData =&gt; {</span>
-    })
-    return <span class="cstat-no" title="statement not covered" >profileData</span>
-&nbsp;
 }
 &nbsp;
 export const login = (username, password) =&gt; {
@@ -834,17 +761,9 @@ export const login = (username, password) =&gt; {
 }
 &nbsp;
 export const dispError = (message) =&gt; {
-    let wrappedMsg
-    if (<span class="missing-if-branch" title="else path not taken" >E</span>message) {
-        if (<span class="missing-if-branch" title="if path not taken" >I</span>message.message) {
-            //in case it's an actual error object, which
-            //might cause rendering problems!
-            wrappedMsg = <span class="cstat-no" title="statement not covered" >message.message</span>
-        }
-    }
     return {
         type: ActionTypes.UPDATE_ERROR_MESSAGE, 
-        message: w</span>rappedMsg ? <span class="branch-0 cbranch-no" title="branch not covered" >wrappedMsg : message
+        message: message ? message : <span class="branch-1 cbranch-no" title="branch not covered" >"some undefined error occurred!"</span>
     }
 }
 &nbsp;
@@ -854,7 +773,7 @@ export const dispError = (message) =&gt; {
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Tue Mar 28 2017 16:22:36 GMT-0500 (CDT)
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Tue Mar 28 2017 21:37:14 GMT-0500 (CDT)
 </div>
 </div>
 <script src="../prettify.js"></script>

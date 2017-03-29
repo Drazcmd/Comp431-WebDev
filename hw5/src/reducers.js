@@ -1,7 +1,7 @@
 import { ActionTypes, VisModes } from './actions'
 
 //export is only so I can test it easier :)
-export const Reducer = (state = {
+export const defaultState = {
     location: 'LANDING_PAGE',
     articles: [],
     visibilityMode: VisModes.NO_FILTER,
@@ -15,7 +15,8 @@ export const Reducer = (state = {
     },
     followees: [],
     globalErrorMessage: ""
-}, action) => {
+}
+export const Reducer = (state=defaultState, action) => {
     switch (action.type) {
         case ActionTypes.LOCATION_CHANGE: {
             //doing a full refresh - Facebook seems to do this too
@@ -23,11 +24,8 @@ export const Reducer = (state = {
             const location = action.newLocation
             if (location == 'LANDING_PAGE'){ 
                 //almost certainly a logout - and as such we really
-                //don't care about current state (cause login would fix)
-                return {
-                    ...state,
-                    location: location 
-                }
+                //need to wipe our internal state
+                return defaultState
             }
 
             //Since this assignment doesn't require all the fields we

@@ -20,14 +20,14 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">48% </span>
+        <span class="strong">43.33% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>12/25</span>
+        <span class='fraction'>13/30</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">50% </span>
+        <span class="strong">40% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>4/8</span>
+        <span class='fraction'>4/10</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">11.11% </span>
@@ -35,9 +35,9 @@
         <span class='fraction'>1/9</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">40% </span>
+        <span class="strong">36% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>8/20</span>
+        <span class='fraction'>9/25</span>
       </div>
       <div class='fl pad1y'>
         <span class="strong">1 branch</span>
@@ -102,22 +102,33 @@
 53
 54
 55
-56</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1×</span>
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -130,6 +141,11 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -150,6 +166,16 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -161,18 +187,16 @@
 import { connect } from 'react-redux'
 import { Row, Button, FormGroup, FormControl,
  ControlLabel, Well } from 'react-bootstrap'
-import { updateProfileData } from '../../actions'
-&nbsp;
+import { updateProfileData, dispError } from '../../actions'
+import { validateData } from './profileValidation'
 export const ProfileUpdateSection = <span class="fstat-no" title="function not covered" >({ <span class="cstat-no" title="statement not covered" >profileData, dispatchProfileUpdate }) =&gt; {</span></span>
     let <span class="cstat-no" title="statement not covered" >_email, _zip;</span>
     const <span class="cstat-no" title="statement not covered" >_dispatchProfileUpdate = <span class="fstat-no" title="function not covered" >() =&gt; {</span></span>
-        //(The ternary is to prevent updating with values of empty string)
-        const <span class="cstat-no" title="statement not covered" >newEmail = _email.value ? _email.value : profileData.email</span>
-        const <span class="cstat-no" title="statement not covered" >newZip = _zip.value ? _zip.value : profileData.zip</span>
-        dispatchProfileUpdate(<span class="cstat-no" title="statement not covered" >[</span>
-            {field: "email", value: newEmail},
-            {field: "zipcode", value: newZip}
-        ])
+        //(The ternary is to prevent crashing if something weird happended
+        //(with the variables
+        const <span class="cstat-no" title="statement not covered" >newEmail = _email ? _email.value : null</span>
+        const <span class="cstat-no" title="statement not covered" >newZip = _zip ? _zip.value : null</span>
+        dispatchProfileUpdate(<span class="cstat-no" title="statement not covered" >newEmail, newZip)</span>
     }
     return (
 <span class="cstat-no" title="statement not covered" >        &lt;Well&gt;</span>
@@ -187,11 +211,16 @@ export const ProfileUpdateSection = <span class="fstat-no" title="function not c
             inputRef={<span class="fstat-no" title="function not covered" >zip =&gt; {</span>_zip = <span class="cstat-no" title="statement not covered" >zip }} /&gt;</span>
         &lt;/FormGroup&gt; &lt;/form&gt;
 &nbsp;
-        &lt;br/ &gt; &lt;br /&gt; &lt;br /&gt;
-&nbsp;
         &lt;Button bsStyle="primary" onClick = { _dispatchProfileUpdate }&gt;
             Update Information! 
         &lt;/Button&gt;
+        &lt;br /&gt; &lt;br /&gt; &lt;br /&gt;
+&nbsp;
+        &lt;form&gt; &lt;FormGroup controlId="PasswordUpdate"&gt;
+        &lt;ControlLabel&gt; Password: (Currently unimplemented! Password will not change) &lt;/ControlLabel&gt;
+        &lt;FormControl type="text" placeholder="Update Password Here" /&gt;
+        &lt;/FormGroup&gt; &lt;/form&gt;
+        &lt;Button&gt; Coming Soon: Update Password! &lt;/Button&gt;
         &lt;/Well&gt;
     )
 }
@@ -203,10 +232,20 @@ export default connect(
         profileData: state.profileData
     }), <span class="fstat-no" title="function not covered" >(dispatch) =&gt; {</span>
         return <span class="cstat-no" title="statement not covered" >{</span>
-            dispatchProfileUpdate: <span class="fstat-no" title="function not covered" >(fieldValueObjs) =&gt; {</span>
-                updateProfileData(<span class="cstat-no" title="statement not covered" >fieldValueObjs).then(<span class="fstat-no" title="function not covered" >(returnedAction) =&gt; {</span></span>
-                    dispatch(<span class="cstat-no" title="statement not covered" >returnedAction)</span>
-                })
+            dispatchProfileUpdate: <span class="fstat-no" title="function not covered" >(newEmail, newZip) =&gt; {</span>
+                const <span class="cstat-no" title="statement not covered" >validationResults = validateData(newEmail, newZip)</span>
+                if (<span class="cstat-no" title="statement not covered" >validationResults.validity) {</span>
+                    const <span class="cstat-no" title="statement not covered" >fieldValueObjs = [</span>
+                        {field: "email", value: newEmail},
+                        {field: "zipcode", value: newZip}
+                    ]
+                    updateProfileData(<span class="cstat-no" title="statement not covered" >fieldValueObjs)</span>
+                        .then(<span class="fstat-no" title="function not covered" >(returnedAction) =&gt; {</span>
+                            dispatch(<span class="cstat-no" title="statement not covered" >returnedAction)</span>
+                        })
+                } else {
+                    dispatch(<span class="cstat-no" title="statement not covered" >dispError(validationResults.errorReason))</span>
+                }
             }
         }
     }
@@ -218,7 +257,7 @@ export default connect(
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Tue Mar 28 2017 16:22:36 GMT-0500 (CDT)
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Tue Mar 28 2017 21:37:14 GMT-0500 (CDT)
 </div>
 </div>
 <script src="../../../prettify.js"></script>

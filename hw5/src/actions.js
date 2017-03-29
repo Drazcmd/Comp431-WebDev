@@ -208,8 +208,6 @@ export const notifyRegSuccess = (newUser) => {
     return {type: ActionTypes.UPDATE_ERROR_MESSAGE, message:msg}
 }
 export const logout = () => {
-    //In the future might want to add more to this to clear stuff,
-    //or more back in the delegate login area authActions
     return resource('PUT', 'logout')
     .then(r => {
         return updateLocation(LANDING_PAGE)
