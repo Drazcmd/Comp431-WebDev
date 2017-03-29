@@ -4,19 +4,19 @@ import { Well, ListGroupItem } from 'react-bootstrap';
 import { FormGroup, FormControl, ControlLabel } from 'react-bootstrap'
 
 //should only have one of these visible at a time!
-export const ErrorDisplay = ({ globalErrorMessage }) => {
+export const ErrorDisplay = ({ message }) => {
 	//might be a string, might be an error object
-	const message = globalErrorMessage ? 
-		globalErrorMessage : "No erros so far!"
 	return (
-		<div> {message} </div>
+		<Well bsSize="small">Most recent error: {message} </Well>
 	)
 }
-
+ErrorDisplay.propTypes = {
+}
 export default connect(
 	(state) => {
+		const msg = state.globalErrorMessage
 		return { 
-			globalErrorMessage: state.globalErrorMessage 
+			message: msg ? msg : "None yet :)"
 		} 
 	},
 	(dispatch) => ({ })

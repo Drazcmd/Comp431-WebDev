@@ -1,8 +1,9 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import NavButton from '../navigation/navButton'
-import { login, logout } from '../../actions'
+import { login, logout } from './../../actions'
 import { FormGroup, FormControl, ControlLabel, Well, Button } from 'react-bootstrap'
+import { errorDisplay } from './../textDisplay/errorDisplay'
 export const Login = ({ dispatchLogin }) => {
     let _username, _password
     const _login = () => {

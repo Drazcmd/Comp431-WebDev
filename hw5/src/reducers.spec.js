@@ -9,7 +9,7 @@ const testArticles = require('./testData/articles.json')
 const testFollowees = require('./testData/followees.json')
 const testProfileData = require('./testData/profile.json')
 
-describe('test4', () => {
+describe('Test Reducers', () => {
 
 //Note - shouldn't be doing any fetch's here!
 let actions, mockUninitializedState

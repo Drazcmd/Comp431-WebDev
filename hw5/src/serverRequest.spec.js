@@ -1,7 +1,7 @@
 import { expect } from 'chai'
 import mockery from 'mockery'
 import fetch, { mock } from 'mock-fetch'
-describe('server something', () => {
+describe('Test Server Requests', () => {
 const url = 'https://webdev-dummy.herokuapp.com'
 let Action, actions, resource
 beforeEach(() => {

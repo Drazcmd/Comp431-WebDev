@@ -70,14 +70,14 @@ export const updateLocation = (newLocation) => {
         }).then(fetchedData => {
             return createLocAction(newLocation, fetchedData)
         }).catch(error => {
-            return dispError(error)
+            return dispError(error.message)
         })
     } else if (newLocation === PROFILE_PAGE) {
         //profile data is comparatively much much simpler to fetch
         return getProfileData().then(fetchedData => {
             return createLocAction(newLocation, fetchedData)
         }).catch(error => {
-            return dispError(error)
+            return dispError(error.message)
         })
     } else {
         //i.e. this means (newLocation === LANDING_PAGE) 
@@ -93,7 +93,7 @@ export const addArticle = (newArticle) => {
     .then(r => {
         return updateShownArticles(VisModes.REFRESH)
     }).catch(error => {
-        return dispError(error)
+        return dispError(error.message)
     })
 }
 /**
@@ -110,7 +110,7 @@ export const addComment = (articleId, newComment, commentId) => {
     .then(r => {
         return updateShownArticles(VisModes.REFRESH)
     }).catch(error => {
-        return dispError(error)
+        return dispError(error.message)
     })
 }
 export const updateStatus = (newStatus) => {
@@ -119,7 +119,7 @@ export const updateStatus = (newStatus) => {
     .then(r => {
         return { type: ActionTypes.UPDATE_STATUS, newStatus}
     }).catch(error => {
-        return dispError(error)
+        return dispError(error.message)
     })
 }
 export const updateProfileData = (fieldValueObjs) => {
@@ -133,7 +133,7 @@ export const updateProfileData = (fieldValueObjs) => {
             newProfileData: newProfileData
         }
     }).catch(error => {
-        return dispError(error)
+        return dispError(error.message)
     })
 }
 export const updateShownArticles = (
@@ -149,7 +149,7 @@ export const updateShownArticles = (
             visibilityMode, filterStr, articles
         }
     }).catch(error => {
-        return dispError(error)
+        return dispError(error.message)
     })
 }
 
@@ -177,7 +177,7 @@ export const removeFollowee = (name) => {
             resultingFollowees: fetchedData.followees
         }
     }).catch(error => {
-        return dispError(error)
+        return dispError(error.message)
     })
 }
 export const addFollowee = (name) => {
@@ -195,19 +195,10 @@ export const addFollowee = (name) => {
             resultingFollowees: fetchedData.followees
         }
     }).catch(error => {
-        return dispError(error)
+        return dispError(error.message)
     })
 }
-/* 
-Input ought to look something like:
-{
-    'username' : 'cmd11test',
-    'headline' : 'TESTING'
-}
-*/
-export const downloadProfileData = (field, user) => {
-    return {type: ActionTypes.DOWNLOAD_DATA, field, user}
-}
+
 //Although possibly successful, it's not actually implemented on
 //the server's side - so it'll always display an error msg
 export const notifyRegSuccess = (newUser) => {
@@ -224,16 +215,8 @@ export const logout = () => {
         return updateLocation(LANDING_PAGE)
     }).catch(error => {
         //doesn't really matter since we're logging out :p
-        return dispError(error)
+        return dispError(error.message)
     })
-}
-
-const requestProfile = (username) => {
-    const profileData = resource('GET', 'headlines/')
-    .then(jsonData => {
-    })
-    return profileData
-
 }
 
 export const login = (username, password) => {
@@ -251,16 +234,8 @@ export const login = (username, password) => {
 }
 
 export const dispError = (message) => {
-    let wrappedMsg
-    if (message) {
-        if (message.message) {
-            //in case it's an actual error object, which
-            //might cause rendering problems!
-            wrappedMsg = message.message
-        }
-    }
     return {
         type: ActionTypes.UPDATE_ERROR_MESSAGE, 
-        message: wrappedMsg ? wrappedMsg : message
+        message: message ? message : "some undefined error occurred!"
     }
 }

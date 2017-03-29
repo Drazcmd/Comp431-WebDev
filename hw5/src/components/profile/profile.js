@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import NavBar from '../navigation/navBar'
 import ProfileImgSection from './profileImgSection'
 import ProfileUpdateSection from './profileUpdateSection'
-import { ErrorDisplay } from './../textDisplay/errorDisplay'
 import { Grid, Row, Col } from 'react-bootstrap'
 import { Button, FormGroup, FormControl,
  ControlLabel, Well } from 'react-bootstrap'
@@ -11,14 +10,9 @@ import { Button, FormGroup, FormControl,
 export const Profile = ({ profileData, updateProfileData }) => {
 	return (
 		<Grid>
-		<Row>
-			<NavBar />
-		</Row>
-		<Row> <ErrorDisplay /> </Row>
+		<Row> <NavBar /> </Row>
 		<br />
-		<Row> 
-			<ProfileImgSection />
-		</Row>
+		<Row> <ProfileImgSection /> </Row>
 
 		<br />	
 	 	<Row>

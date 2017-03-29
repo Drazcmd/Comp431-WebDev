@@ -1,7 +1,7 @@
 import { expect } from 'chai'
 import mockery from 'mockery'
 import fetch, { mock } from 'mock-fetch'
-describe("this is actions", () => {
+describe("Test Actions", () => {
 
 const url = 'https://webdev-dummy.herokuapp.com'
 let resource, actions

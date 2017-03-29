@@ -2,7 +2,7 @@ import { expect } from 'chai'
 import mockery from 'mockery'
 import { ActionTypes, VisModes } from './../../actions'
 import { displayedArticles } from './feedFilters'
-describe("test3", () => {
+describe("Test Feed Filtering", () => {
 //This is hardcoded data only to be used for mocking actions
 const testArticles = [
     {"_id":333, "text":"TESTING abcdef",

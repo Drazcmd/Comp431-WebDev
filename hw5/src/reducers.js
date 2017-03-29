@@ -124,8 +124,7 @@ export const Reducer = (state = {
             return {
                 ...state,
                 location:"MAIN_PAGE",
-                profileData: action.profileData,
-                globalErrorMessage: ""
+                profileData: action.profileData
             }
         }
         case ActionTypes.LOGOUT: {
@@ -138,8 +137,7 @@ export const Reducer = (state = {
                     "zip":"00000",
                     "img": "http://www.clker.com/cliparts/n/T/5/z/f/Y/image-missing-md.png ",
                     "status":"missing status"
-                },
-                globalErrorMessage: ""
+                }
             }
         }
         case ActionTypes.UPDATE_ERROR_MESSAGE: {

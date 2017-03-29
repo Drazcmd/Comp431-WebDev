@@ -2,21 +2,22 @@ import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { Row, Button, FormGroup, FormControl,
  ControlLabel, Well } from 'react-bootstrap'
-import { updateProfileData } from '../../actions'
+import { updateProfileData, dispError } from '../../actions'
+import { validateData } from './profileValidation'
+import { ErrorDisplay } from './../textDisplay/errorDisplay'
 
 export const ProfileUpdateSection = ({ profileData, dispatchProfileUpdate }) => {
     let _email, _zip;
     const _dispatchProfileUpdate = () => {
-        //(The ternary is to prevent updating with values of empty string)
-        const newEmail = _email.value ? _email.value : profileData.email
-        const newZip = _zip.value ? _zip.value : profileData.zip
-        dispatchProfileUpdate([
-            {field: "email", value: newEmail},
-            {field: "zipcode", value: newZip}
-        ])
+        //(The ternary is to prevent crashing if something weird happended
+        //(with the variables
+        const newEmail = _email ? _email.value : null
+        const newZip = _zip ? _zip.value : null
+        dispatchProfileUpdate(newEmail, newZip)
     }
     return (
         <Well>
+        <ErrorDisplay /> 
         <form> <FormGroup controlId="ProfileInfo">
             <ControlLabel> Email: {profileData.email} </ControlLabel>
             <FormControl type="text" placeholder="Update Email Here"
@@ -28,11 +29,16 @@ export const ProfileUpdateSection = ({ profileData, dispatchProfileUpdate }) => 
             inputRef={zip => {_zip = zip }} />
         </FormGroup> </form>
 
-        <br/ > <br /> <br />
-
         <Button bsStyle="primary" onClick = { _dispatchProfileUpdate }>
             Update Information! 
         </Button>
+        <br /> <br /> <br />
+
+        <form> <FormGroup controlId="PasswordUpdate">
+        <ControlLabel> Password: (Currently unimplemented! Password will not change) </ControlLabel>
+        <FormControl type="text" placeholder="Update Password Here" />
+        </FormGroup> </form>
+        <Button> Coming Soon: Update Password! </Button>
         </Well>
     )
 }
@@ -44,10 +50,20 @@ export default connect(
         profileData: state.profileData
     }), (dispatch) => {
         return {
-            dispatchProfileUpdate: (fieldValueObjs) => {
-                updateProfileData(fieldValueObjs).then((returnedAction) => {
-                    dispatch(returnedAction)
-                })
+            dispatchProfileUpdate: (newEmail, newZip) => {
+                const validationResults = validateData(newEmail, newZip)
+                if (validationResults.validity) {
+                    const fieldValueObjs = [
+                        {field: "email", value: newEmail},
+                        {field: "zipcode", value: newZip}
+                    ]
+                    updateProfileData(fieldValueObjs)
+                        .then((returnedAction) => {
+                            dispatch(returnedAction)
+                        })
+                } else {
+                    dispatch(dispError(validationResults.errorReason))
+                }
             }
         }
     }
