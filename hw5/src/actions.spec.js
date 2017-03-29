@@ -113,4 +113,14 @@ it('should fetch users profile info (zipcode)', (done) => {
         done(error)
     })
 })
+
+it ('should update error message (for displaying error message to user', (done) => {
+    const errorMessage = 'You messed up!'
+    const expectedAction = { 
+        type: actions.ActionTypes.UPDATE_ERROR_MESSAGE,
+        message: 'You messed up!'
+    } 
+    expect(actions.dispError('You messed up!')).to.eql(expectedAction)
+    done()
+})
 })

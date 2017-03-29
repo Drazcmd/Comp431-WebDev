@@ -27,37 +27,36 @@ afterEach(() => {
 	   mockery.disable()
     }
 })
-it ('should update success message (for displaying success message to user', (done) => {
-	const mockValidUserInfo = {
-		"firstName":"Bob",
-		"lastName":"Mcbobface",
+//These two are both in relation to registering new users
+it ('should display error if input registration data is invalid)', (done) => {
+	//TODO - choose something which will have invalid field or two
+	const mockInvalidUserInfo = {
+		"firstName":"",
+		"lastName":"",
 		"username": "bobbyMcbobface",
 		"password":"BobDaBuilda"
 	}
+    const expectedAction = { 
+        type: actions.ActionTypes.UPDATE_ERROR_MESSAGE
+    } 
+    const updateFailureAction = authActions.delegateRegistration(mockInvalidUserInfo)
+    expect(updateFailureAction).to.be.ok
+    expect(updateFailureAction.type).to.eql(expectedAction.type)
+    done()
+})
+it ('should update success message (for displaying success message to user)', (done) => {
+    const mockValidUserInfo = {
+        "firstName":"Bob",
+        "lastName":"Mcbobface",
+        "username": "bobbyMcbobface",
+        "password":"BobDaBuilda"
+    }
     const expectedAction = { 
         type: actions.ActionTypes.REGISTRATION_SUCCESS,
         newUser: "bobbyMcbobface"
     } 
     const updateSuccessAction = authActions.delegateRegistration(mockValidUserInfo)
     expect(expectedAction).to.eql(expectedAction)
-    done()
-})
-//These two are both in relation to registering new users
-it ('should update error message (for displaying error message to user', (done) => {
-	//TODO - choose something which will have invalid field or two
-	const mockInvalidUserInfo = {
-		"firstName":"Bob",
-		"lastName":"Mcbobface",
-		"username": "bobbyMcbobface",
-		"password":"BobDaBuilda"
-	}
-    const expectedAction = { 
-        type: actions.ActionTypes.UPDATE_ERROR_MESSAGE,
-        message: `Your registration inputs were valid, but ` +
-            `the server's registration feature isn't working yet`
-    } 
-    const updateFailureAction = authActions.delegateRegistration(mockInvalidUserInfo)
-    expect(updateFailureAction).to.eql(expectedAction)
     done()
 })
 //These three are both in relation to user login/logout
