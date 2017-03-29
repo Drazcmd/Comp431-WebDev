@@ -1,4 +1,4 @@
 {
 	"netid": "cmd11",
-	"frontend": "cmdcommandsit.surge.sh"
+	"mongourl": "mongodb://cmd11test:damage-butter-memory@ds143990.mlab.com:43990/cmd11backend_database"
 }
