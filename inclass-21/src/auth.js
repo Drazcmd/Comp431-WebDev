@@ -1,17 +1,19 @@
+const md5 = require('md5')
+const cookieParser = require('cookie-parser')
 exports.setup = function(app){
     app.post('/login', login)
     app.post('/register', register)
     app.put('/logout', isLoggedIn, logout)
+    app.use(cookieParser())
 }
 //Maps username to hash
 const authMap = { }
-const md5 = require('md5')
 
-//todo - convert to looking up salt from the username, then combine with password to create the hashk
 function login(req, res) {
 	const username = req.body.username;
 	const password = req.body.password;
 	if (!username || !password)	{
+		console.log('nope')
 		res.sendStatus(400)
 		return
 	}
@@ -34,10 +36,9 @@ function login(req, res) {
 	res.send(msg)
 }
 function register(req, res) {
-	console.log(req)
-	console.log(req.body)
-	console.log(req.username)
-	console.log(req.password)
+	console.log('body:', req.body)
+	console.log('uname', req.username)
+	console.log('pword', req.password)
 	const username = req.body.username;
 	const password = req.body.password;
 	if (!username || !password)	{
