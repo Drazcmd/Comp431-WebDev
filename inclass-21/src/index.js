@@ -1,6 +1,5 @@
 const express = require('express')
 const bodyParser = require('body-parser')
-const auth = require('./auth')
 const articles = [
      { id:1, author:'Scott', text:'This is my first article'},
      { id:2, author: 'Max', text:"This is Max's article"},
@@ -26,10 +25,11 @@ const hello = (req, res) => res.send({ hello: 'world' })
 
 const app = express()
 app.use(bodyParser.json())
+//gives us register, login, and logout
+require('./auth').setup(app)
+
 // Get the port from the environment, i.e., Heroku sets it
 const port = process.env.PORT || 3000
-//gives us register, login, and logout
-auth.setup(app)
 app.get('/articles/:id?', getArticles)
 app.post('/article', addArticle)
 app.get('/', hello)
