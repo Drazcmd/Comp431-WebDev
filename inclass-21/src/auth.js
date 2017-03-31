@@ -1,7 +1,7 @@
 exports.setup = function(app){
-    app.post('login', login)
-    app.post('register', register)
-    app.put('logout', isLoggedIn, logout)
+    app.post('/login', login)
+    app.post('/register', register)
+    app.put('/logout', isLoggedIn, logout)
 }
 //Maps username to hash
 const authMap = { }

@@ -27,10 +27,13 @@ const hello = (req, res) => res.send({ hello: 'world' })
 const app = express()
 //gives us register, login, and logout
 auth.setup(app)
+console.log(app)
 app.use(bodyParser.json())
 app.get('/articles/:id?', getArticles)
 app.post('/article', addArticle)
 app.get('/', hello)
+console.log(app)
+console.log(app._router.stack)
 
 // Get the port from the environment, i.e., Heroku sets it
 const port = process.env.PORT || 3000
