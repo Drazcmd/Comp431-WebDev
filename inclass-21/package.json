@@ -5,7 +5,7 @@
   "description": "Clayton Drazner backend for inclass",
   "main": "src/index.js",
   "dependencies": {
-    "body-parser": "^1.14.1",
+    "body-parser": "^1.17.1",
     "cookie-parser": "^1.4.3",
     "express": "^4.13.3",
     "md5": "^2.2.1",

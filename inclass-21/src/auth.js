@@ -1,15 +1,16 @@
 const md5 = require('md5')
-const cookieParser = require('cookie-parser')
+const bodyParser = require('body-parser')
 exports.setup = function(app){
     app.post('/login', login)
     app.post('/register', register)
     app.put('/logout', isLoggedIn, logout)
-    app.use(cookieParser())
 }
 //Maps username to hash
 const authMap = { }
 
-function login(req, res) {
+const login = (req, res) => {
+	console.log('Payload received', req.body)
+
 	const username = req.body.username;
 	const password = req.body.password;
 	if (!username || !password)	{
@@ -17,31 +18,33 @@ function login(req, res) {
 		res.sendStatus(400)
 		return
 	}
-	const userObj = authMap.get(username)
-	if (!userObj){
+
+	const userObj = authMap[username]
+	if (!(username in authMap && userObj)){
 		res.sendStatus(401)
 		return
 	}
 
 	const saltedInput = password + userObj.salt
 	const hashedInput = md5(saltedInput)
-	if (hashedInput === userObj.password){
+	if (hashedInput === userObj.hash){
 		res.cookie(
 			cookieKey, generateCode(userObj),
 			{maxAge: 3600*1000, httpOnly: true}
 		)
+		const msg = {username: username, result: 'success'}
+		res.send(msg)
+	} else {
+		const msg = {username: username, result: 'failure'}
+		res.send(msg)
 	}
 
-	const msg = {username: username, result: 'success'}
-	res.send(msg)
 }
-function register(req, res) {
-	console.log('body:', req.body)
-	console.log('uname', req.username)
-	console.log('pword', req.password)
+const register = (req, res) => {
 	const username = req.body.username;
 	const password = req.body.password;
 	if (!username || !password)	{
+		console.log("woah")
 		res.sendStatus(400)
 		return
 	}
@@ -49,14 +52,14 @@ function register(req, res) {
 	const saltedPass = password + salt
 	console.log(saltedPass)
 	const hash = md5(saltedPass)
-	authMap[username] = {salt, hash}
+	authMap[username] = {salt: salt, hash: hash}
 	console.log(authMap)
 	const msg = {username: username, result: 'success'}
 	res.send(msg)
 }
-function logout(req, res) {
-
+const logout = (req, res) => {
+	return;
 }
-function isLoggedIn(){
-
+const isLoggedIn = () => {
+	return;
 }
