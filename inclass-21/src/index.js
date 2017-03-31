@@ -1,6 +1,6 @@
 const express = require('express')
 const bodyParser = require('body-parser')
-
+const auth = require('./auth')
 const articles = [
      { id:1, author:'Scott', text:'This is my first article'},
      { id:2, author: 'Max', text:"This is Max's article"},
@@ -25,6 +25,8 @@ const getArticles = (req, res) => res.send({
 const hello = (req, res) => res.send({ hello: 'world' })
 
 const app = express()
+//gives us register, login, and logout
+auth.setup(app)
 app.use(bodyParser.json())
 app.get('/articles/:id?', getArticles)
 app.post('/article', addArticle)
