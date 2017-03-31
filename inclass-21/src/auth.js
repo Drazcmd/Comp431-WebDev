@@ -34,7 +34,10 @@ function login(req, res) {
 	res.send(msg)
 }
 function register(req, res) {
-	console.log('sup')
+	console.log(req)
+	console.log(req.body)
+	console.log(req.username)
+	console.log(req.password)
 	const username = req.body.username;
 	const password = req.body.password;
 	if (!username || !password)	{
@@ -47,6 +50,8 @@ function register(req, res) {
 	const hash = md5(saltedPass)
 	authMap[username] = {salt, hash}
 	console.log(authMap)
+	const msg = {username: username, result: 'success'}
+	res.send(msg)
 }
 function logout(req, res) {
 
