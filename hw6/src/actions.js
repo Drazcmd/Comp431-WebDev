@@ -103,7 +103,7 @@ unfortunately basically no other people had ocmments working.
 */
 export const addComment = (articleId, newComment, commentId) => {
     const payload = {
-        text: newComment.text,
+        text: newComment,
         commentId: commentId
     }
     return resource('PUT', `articles/${articleId}`, payload)

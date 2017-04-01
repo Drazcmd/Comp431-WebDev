@@ -7,11 +7,11 @@ export const CommentsHolder = ({comments}) => {
     return (
         <Well> 
         {"Comments: "}
-        {
-            comments.map((comment) => (
-                <div key={comment.commentId}> {comment.author}: "{comment.text}" (at {comment.date}) </div>
-            ))
-        }
+        {comments.map((comment) => (
+            <div key={comment.commentId}>
+                {comment.author}: "{comment.text}" (at {comment.date})
+            </div>
+        ))}
         </Well> 
     )
 }
