@@ -6,12 +6,14 @@ import WriteArticleBox from './writeArticleBox'
 import MiniProfile from './miniProfile'
 import FilterArticlesBox from './FilterArticlesBox'
 import FollowSideBar from './Sidebar/followSideBar'
-import { Grid, Row, Col } from 'react-bootstrap'
+import { Grid, Row, Col, Alert } from 'react-bootstrap'
 
-export const Main = ({ }) => {
+export const Main = ({ msg }) => {
     return (
         <Grid>
-            <Row> <NavBar /> </Row>
+            <Row>
+                <Col md={3}><NavBar /> </Col>
+            </Row>
             <br />
 
             <Row> <MiniProfile /> </Row>
@@ -35,6 +37,6 @@ Main.propTypes = {
 }
 
 export default connect(
-    (state) => ({ }),
+    (state) => ({ msg: state.globalErrorMessage }),
     (dispatch) => ({ })
 )(Main)

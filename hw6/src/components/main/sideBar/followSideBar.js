@@ -1,10 +1,10 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { Grid, Row, Col } from 'react-bootstrap'
+import { Grid, Row, Col, Alert } from 'react-bootstrap'
 import NewFollowers from './NewFollowers'
 import Followee from './Followee'
 
-export const followSideBar = ({ followees }) => {
+export const followSideBar = ({ followees, msg }) => {
     const profileImgWidth="100"
     const profileImgHeight="75"
     return (
@@ -19,6 +19,7 @@ export const followSideBar = ({ followees }) => {
         <Row>
              <div> Follow new people here! </div>
              <NewFollowers />
+             <Alert> {msg} </Alert>
          </Row>
 
         </Grid>
@@ -29,7 +30,8 @@ followSideBar.propTypes = {
 }
 export default connect(
     (state) => ({ 
-        followees: state.followees
+        followees: state.followees,
+        msg: state.globalErrorMessage 
     }),
     (dispatch) => ({ })
 )(followSideBar)
