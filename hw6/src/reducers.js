@@ -14,7 +14,7 @@ export const defaultState = {
         "status":"missing status"
     },
     followees: [],
-    globalErrorMessage: ""
+    globalErrorMessage: "No errors at present"
 }
 export const Reducer = (state=defaultState, action) => {
     switch (action.type) {
@@ -46,6 +46,12 @@ export const Reducer = (state=defaultState, action) => {
             : state.profileData
             const articles = action.articles ? action.articles: state.articles
             const followees = action.followees ? action.followees: state.followees
+            console.log("current state:", state)
+            console.log("new state data:", profileData)
+            console.log("new state:", { ...state,
+                location: location, articles: articles,
+                followees: followees, profileData: profileData
+            })
             return { ...state,
                 location: location, articles: articles,
                 followees: followees, profileData: profileData
@@ -126,19 +132,10 @@ export const Reducer = (state=defaultState, action) => {
             }
         }
         case ActionTypes.LOGOUT: {
-            return {
-                ...state,
-                location:"LANDING_PAGE",
-                profileData: {
-                    "name":"Anon", 
-                    "email":"missingEmail@missing.com", 
-                    "zip":"00000",
-                    "img": "http://www.clker.com/cliparts/n/T/5/z/f/Y/image-missing-md.png ",
-                    "status":"missing status"
-                }
-            }
+            return defaultState
         }
         case ActionTypes.UPDATE_ERROR_MESSAGE: {
+            console.log('reducer got an error action', action.message)
             return {
                 ...state,
                 globalErrorMessage: action.message

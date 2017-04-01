@@ -33,7 +33,7 @@ export const validateData = ((newEmail, newZipcode) => {
 	} else {
 		return {
 			validity: true,
-			errorReason: ""
+			errorReason: "No error :)"
 		}
 	}
 })

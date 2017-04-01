@@ -20,7 +20,7 @@ export const ProfileUpdateSection = ({ profileData, dispatchProfileUpdate }) => 
             <FormControl type="text" placeholder="Update Email Here"
             inputRef={email => {_email = email }} />
 
-            <br/ >
+            <br />
             <ControlLabel> Zip: {profileData.zip} </ControlLabel>
             <FormControl type="text" placeholder="Update Zipcode Here"
             inputRef={zip => {_zip = zip }} />
