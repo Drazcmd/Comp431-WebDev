@@ -6,7 +6,6 @@ import ProfileUpdateSection from './profileUpdateSection'
 import { Grid, Row, Col } from 'react-bootstrap'
 import { Button, FormGroup, FormControl,
  ControlLabel, Well } from 'react-bootstrap'
-import { ErrorDisplay } from './../textDisplay/errorDisplay'
 
 export const Profile = ({ profileData, updateProfileData }) => {
 	return (
@@ -18,7 +17,6 @@ export const Profile = ({ profileData, updateProfileData }) => {
 		<br />	
 	 	<Row>
 		  	<b> Date of Birth: {profileData.dob} (Cannot be updated) </b>
-			<ErrorDisplay /> 
 		  	<br />
 			<h3>Update your info here: </h3>
 			<ProfileUpdateSection />
