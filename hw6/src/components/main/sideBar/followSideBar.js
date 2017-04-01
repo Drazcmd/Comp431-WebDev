@@ -20,7 +20,7 @@ export const followSideBar = ({ followees }) => {
         <Row> <ErrorDisplay /> </Row>
         <Row>
              <div> Follow new people here! </div>
-             <NewFollowers/ >
+             <NewFollowers />
          </Row>
 
         </Grid>

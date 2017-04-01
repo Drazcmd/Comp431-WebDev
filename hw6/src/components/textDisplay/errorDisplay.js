@@ -5,9 +5,10 @@ import { FormGroup, FormControl, ControlLabel } from 'react-bootstrap'
 
 //should only have one of these visible at a time!
 export const ErrorDisplay = ({ message }) => {
+	console.log("eror display updating")
 	//might be a string, might be an error object
 	return (
-		<Well bsSize="small">Most recent error: {message} </Well>
+		<p>Most recent error: {message} </p>
 	)
 }
 ErrorDisplay.propTypes = {
