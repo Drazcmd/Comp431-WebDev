@@ -4,13 +4,14 @@ import Registration from './Registration'
 import Login from './Login'
 import { Grid, Row, Col, Alert } from 'react-bootstrap'
 import NavBar from '../navigation/navBar'
+import ErrorDisplay from './../notification/errorDisplay'
 
-export const Landing = ({msg}) => {
+export const Landing = ({}) => {
     return (
         <Grid>
             <Row>
                 <h1> ELECT-BOOK </h1>
-                <Alert> {msg} </Alert>
+                <ErrorDisplay />
             </Row>
             <Row>
                 <Col md={5}> <Registration /> </Col>
@@ -24,10 +25,6 @@ Landing.propTypes = {
 }
 
 export default connect(
-    (state) => { 
-        return {
-            msg: state.globalErrorMessage
-        }
-    },
+    (state) => ({}),
     (dispatch) => ({ })
 )(Landing)

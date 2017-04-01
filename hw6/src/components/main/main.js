@@ -37,6 +37,6 @@ Main.propTypes = {
 }
 
 export default connect(
-    (state) => ({ msg: state.globalErrorMessage }),
+    (state) => ({  }),
     (dispatch) => ({ })
 )(Main)

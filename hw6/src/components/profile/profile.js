@@ -5,7 +5,8 @@ import ProfileImgSection from './profileImgSection'
 import ProfileUpdateSection from './profileUpdateSection'
 import { Grid, Row, Col } from 'react-bootstrap'
 import { Button, FormGroup, FormControl,
- ControlLabel, Well, Alert } from 'react-bootstrap'
+ ControlLabel, Well } from 'react-bootstrap'
+import ErrorDisplay from './../notification/errorDisplay'
 
 export const Profile = ({ profileData, updateProfileData, msg }) => {
 	return (
@@ -14,7 +15,7 @@ export const Profile = ({ profileData, updateProfileData, msg }) => {
 		<br />
 		<Row> <ProfileImgSection /> </Row>
 		<br />	
-		<Row> <Col md={3}><Alert> {msg} </Alert></Col> </Row>
+		<Row> <Col md={3}><ErrorDisplay /></Col> </Row>
 	 	<Row>
 		  	<b> Date of Birth: {profileData.dob} (Cannot be updated) </b>
 		  	<br />

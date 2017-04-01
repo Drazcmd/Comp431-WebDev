@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { Grid, Row, Col, Alert } from 'react-bootstrap'
 import NewFollowers from './NewFollowers'
 import Followee from './Followee'
-
+import ErrorDisplay from './../../notification/errorDisplay'
 export const followSideBar = ({ followees, msg }) => {
     const profileImgWidth="100"
     const profileImgHeight="75"
@@ -19,7 +19,7 @@ export const followSideBar = ({ followees, msg }) => {
         <Row>
              <div> Follow new people here! </div>
              <NewFollowers />
-             <Alert> {msg} </Alert>
+            <ErrorDisplay />
          </Row>
 
         </Grid>
