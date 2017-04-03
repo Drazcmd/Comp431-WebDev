@@ -17,39 +17,36 @@ export const WriteArticleBox = ({
     stored elsewhere. It can't be considered part of the global state of the
     program. In other words, although it is data, it is NOT state
     */
-    let writeView = ""
-    function _onChange(e) {
-        writeView=e.target.value;
-    }   
-    function _postArticle(e){
-        //Non-text stuff will all be set by server for us
+    let articleText, articleImage;
+    const _postArticle = () => {
+        //TODO - check that other stuff will all be set by server for us
         postArticle({
-            //accessing e.target.value here wouldn't work!
-            text: writeView, 
+            text: articleText.value, 
+            img: articleImage.value,
             author: profileName,
         })
     }
     return (
         <Col> <ListGroupItem> <Well bsSize="small">
         <form> <FormGroup controlId="writeArticleForm">
-          <ControlLabel> Upload an image: </ControlLabel>
-          <FormControl type="file" />
-          <br />
-          <ControlLabel> Write an article: </ControlLabel>
-          <FormControl
-           type="text" placeholder={ "Write article here..." }
-           onChange={ _onChange }
-           />
+            <ControlLabel> Give your article an image: </ControlLabel>
+            <FormControl 
+                type="file"
+                inputRef={_articleImage => {articleImage = _articleImage}} 
+            />
+            <br />
 
-          <br />
-
-          <Button bsStyle="success"
-           type="reset" onClick={ _postArticle } >
-            {"Post text as article!"}
-          </Button>
-          <Button type="reset" >
-            { "Clear text" }
-          </Button>
+            <ControlLabel> Write an article: </ControlLabel>
+            <FormControl
+                type="text" placeholder={ "Write article here..." }
+                inputRef={_articleText => {articleText = _articleText}} 
+            />
+            <Button type="reset" bsStyle="success" onClick={ _postArticle } >
+                {"Post article!"}
+            </Button>
+            <Button type="reset" >
+                { "Clear article" }
+            </Button>
         </FormGroup> </form>
         </Well> </ListGroupItem> </Col>
     )
@@ -70,6 +67,7 @@ export default connect(
             //postArticle will eventually return an article REFRESH action
             postArticle: (article) => addArticle(article).then(
                 returnedAction => {
+                    console.log("article posting isn't done yet! gotta deal with the image now, as well as eroring if trying to send article without image!")
                     dispatch(returnedAction)    
                 }
             ),
