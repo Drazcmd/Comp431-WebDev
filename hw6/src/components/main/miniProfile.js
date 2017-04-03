@@ -10,12 +10,9 @@ export const MiniProfile = ({
 }) => {
     const profileImgWidth="200"
     const profileImgHeight="133"
-    let writeView = ""
-    function _onChange(e){
-        writeView = e.target.value
-    }
-    function _updateStatus(e){
-        updateStatus(writeView)
+    let newStatus;
+    const _updateStatus = () => {
+        updateStatus(newStatus ? newStatus.value : "")
     }
     return (
         <Well>
@@ -24,23 +21,22 @@ export const MiniProfile = ({
             width={ profileImgWidth } src={ profileImgSrc } />
         </Col>
         <Col>
-            <span>
-            <h2> { profileName }, your current status is: '{ profileStatus }' </h2>
-            </span>
+            <span> <h2>
+                { profileName }, your current status is: '{ profileStatus }' 
+            </h2> </span>
 
             <form> <FormGroup controlId="writeStatusForm">
-              <ControlLabel> Update your status? </ControlLabel>
-              <FormControl
-               type="text" placeholder={ "Write status here.." }
-               onChange={ _onChange } />
-              <br />
-              <Button bsStyle="success" type="reset" 
-              onClick={ _updateStatus } >
-                {"Update Status"}
-              </Button>
-              <Button type="reset" >
-                { "Clear text" }
-              </Button>
+                <ControlLabel> Update your status? </ControlLabel>
+                <FormControl
+                    type="text" placeholder={ "Write status here.." }
+                    inputRef={(_newStatus) => {newStatus = _newStatus}} />
+                <br />
+
+                <Button bsStyle="success" type="reset" 
+                    onClick={ _updateStatus } >
+                    {"Update Status"}
+                </Button>
+                <Button type="reset" > { "Clear text" } </Button>
             </FormGroup> </form>
         </Col>
         </Well>

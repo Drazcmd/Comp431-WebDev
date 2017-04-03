@@ -1,5 +1,5 @@
 import {
-    resource, getMainData, getProfileData, updateFields
+    resource, getMainData, getProfileData, updateFields, nonJsonResource
 } from './serverRequest'
 
 export const MAIN_PAGE = 'MAIN_PAGE'
@@ -225,12 +225,43 @@ export const login = (username, password) => {
       const message = `you are logged in as ${user.username} "${user.headline}"`
       return updateLocation(MAIN_PAGE)
     })
-    .catch(r => {
-        const message = `"${r.message || 'Error'}" when logging in`
+    .catch(error => {
+        const message = `"${error.message || 'Error'}" when logging in`
         return dispError(message)
     })
 }
 
+export const updateAvatar = (fileObj) => {
+    //see both https://developer.mozilla.org/en-US/docs/Web/API/File and
+    //https://developer.mozilla.org/en-US/docs/Using_files_from_web_applications 
+    if (fileObj) {
+
+        let fileBytestream;
+        const fileWrapper = {file: fileObj}
+
+        //"Esatblish[es] the FileReader to handle asynchronously loading the
+        //image" and setting fileBystream equal to the imgae's bytestream
+        var reader = new FileReader();
+        reader.onload = ((img) => { 
+            return (evt) => { fileBytestream = evt.target.result }
+        })(fileWrapper);
+        reader.readAsDataURL(fileObj);
+
+        console.log('rader, wrapper', reader, fileWrapper)
+        console.log('file byestream:', fileBytestream)
+        return nonJsonResource('PUT', 'avatar', "", fileBytestream)
+        .then(response => {
+            const newAvatarUrl = response.pictureURL 
+            console.log("gota new avatar!", pictureURL)
+            return dispError("Update avatar event unimplemented!!!")
+        })
+        .catch(error => {
+            return dispError(error.message)
+        })
+    } else {
+        throw new Error("No avatar image selected")
+    }
+}
 export const dispError = (message) => {
     return {
         type: ActionTypes.UPDATE_ERROR_MESSAGE, 

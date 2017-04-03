@@ -8,12 +8,11 @@ export const ArticleCard = ({id, text, image, author,
     timestamp, comments, postComment, editArticle
 }) => {
     const articleImage = image ? ( <img src={image}/> ) : (<div />);
-    let _comment
+    let newComment
     const _postComment = () => {
-        const newComment = _comment.value ? _comment.value : ""
         //new comments must have id -1 in the payload to the server
         const commentId = -1 
-        postComment(id, newComment, commentId)
+        postComment(id, newComment.value ? newComment.value : "", commentId)
     }
     return (
         <ListGroupItem> <Well>
@@ -25,7 +24,7 @@ export const ArticleCard = ({id, text, image, author,
         <FormGroup>
             <ControlLabel />
             <FormControl type="text" placeholder="Enter Comment Here"
-                inputRef={comment => {_comment = comment}} />
+                inputRef={(_newComment) => {newComment = _newComment}} />
         </FormGroup>
 
         <Button bsSize="small" onClick = { _postComment }> { "Post Comment" }  </Button>
