@@ -40,10 +40,10 @@ export const nonJsonResource = (method, endpoint, textMessage, imageFile) => {
   // The keys 'text' and 'image' are super super important! 
   const fdPaylod = new FormData()
   if (textMessage) {
-      fd.append('text', textMessage)
+      fdPaylod.append('text', textMessage)
   }
   if (imageFile) {
-    fd.append('image', imageFile)
+    fdPaylod.append('image', imageFile)
   }
 
   //Note how we removed the application/json header

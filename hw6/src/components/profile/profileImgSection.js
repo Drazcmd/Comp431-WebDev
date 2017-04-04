@@ -7,7 +7,7 @@ import { updateAvatar, dispError } from '../../actions'
 export const ProfileImgSection = ({ profileImgSrc, setAvatar}) => {
     const profileImgWidth="500"
     const profileImgHeight="300"
-    let newAvatar = null
+    let newAvatar;
     const _setAvatar = () => {
         if (newAvatar) {
             //doing newAvatar.value instead would return a fake path string

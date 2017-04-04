@@ -7,23 +7,15 @@ import { addArticle, updateShownArticles, VisModes } from '../../actions'
 export const WriteArticleBox = ({
     profileName, nextArticleID, postArticle, filterArticles
 }) => {
-    /* 
-    Normally this wouldn't be what we'd do, but we need a way to dump the
-    temporary non-persitant writing over into our actual postArticle function.
-    This is the best way to do so since react-bootsrap doesn't provide any
-    easy way to accessing form's input from one of the buttons.
-
-    Note that until 'submitted' it is NOT somethign we ever want to have
-    stored elsewhere. It can't be considered part of the global state of the
-    program. In other words, although it is data, it is NOT state
-    */
+    //TODO - check that stuff other than text/img will be set by server for us
     let articleText, articleImage;
     const _postArticle = () => {
-        //TODO - check that other stuff will all be set by server for us
+        //doing articleImage.value instead would return a fake path string
+        //(Won't crash if no file inputted, will just pass along a null)
         postArticle({
             text: articleText.value, 
-            img: articleImage.value,
-            author: profileName,
+            img: articleImage.files[0],
+            author: profileName
         })
     }
     return (
@@ -65,12 +57,14 @@ export default connect(
     (dispatch) => {
         return {
             //postArticle will eventually return an article REFRESH action
-            postArticle: (article) => addArticle(article).then(
-                returnedAction => {
-                    console.log("article posting isn't done yet! gotta deal with the image now, as well as eroring if trying to send article without image!")
-                    dispatch(returnedAction)    
-                }
-            ),
+            postArticle: (article) => {
+                console.log(article)
+                addArticle(article).then((returnedAction) => {
+                    console.log('about to dispatch, for this article: ', article)
+                    console.log('this event: ', returnedAction)
+                    dispatch(returnedAction)
+                });
+            },
             filterArticles: (mode, filterStr) => updateShownArticles(
                 mode, filterStr
             ).then(returnedAction => {

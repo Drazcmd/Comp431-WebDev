@@ -1,3 +1,4 @@
+import {readImageBytestream} from './imageReader'
 import {
     resource, getMainData, getProfileData, updateFields, nonJsonResource
 } from './serverRequest'
@@ -61,10 +62,10 @@ export const updateLocation = (newLocation) => {
         //We need to update two things: the articles and the followee data
         //However, to do the latter, we first need the names of our folowees
         return resource('GET', 'following')
-        .then(r => {
+        .then(res => {
             //(the way following works is that it only returns the
             //usernames, not any of the other data (avatar/headline))
-            const followeesNames = r.following
+            const followeesNames = res.following
             //Now we can actually fetch all our main data
             return getMainData(followeesNames)
         }).then(fetchedData => {
@@ -86,15 +87,33 @@ export const updateLocation = (newLocation) => {
     }
 }
 export const addArticle = (newArticle) => {
-    const payload = {
-        text: newArticle.text
+    if (newArticle.img && newArticle.text) {
+        //can't use our standard json approach to http requests for images
+        console.log('image article time!', newArticle)
+        const imageBytestream = readImageBytestream(newArticle.img)
+        nonJsonResource('POST', 'article', newArticle.text, imageBytestream)
+        .then(res => {
+            console.log('got response!', res)
+            console.log('must update articles')
+            return updateShownArticles(VisModes.REFRESH)
+        }).catch(error => {
+            return dispError(error.message) 
+        })
+    } else if (newArticle.text) {
+        const payload = {
+            text: newArticle.text
+        }
+        //TODO - if there is a way to do a .then on an arbitrarily placed
+        //promise, we could remove a couple lines of repeated code below
+        return resource('POST', 'article', payload)
+        .then(res => {
+            return updateShownArticles(VisModes.REFRESH)
+        }).catch(error => {
+            return dispError(error.message)
+        })
+    } else {
+        return Promise.resolve(dispError("Articles must contain some text"))
     }
-    return resource('POST', 'article', payload)
-    .then(r => {
-        return updateShownArticles(VisModes.REFRESH)
-    }).catch(error => {
-        return dispError(error.message)
-    })
 }
 /**
 No, this didn't need to be implemented yet. However, I decided
@@ -107,7 +126,7 @@ export const addComment = (articleId, newComment, commentId) => {
         commentId: commentId
     }
     return resource('PUT', `articles/${articleId}`, payload)
-    .then(r => {
+    .then(res => {
         return updateShownArticles(VisModes.REFRESH)
     }).catch(error => {
         return dispError(error.message)
@@ -116,7 +135,7 @@ export const addComment = (articleId, newComment, commentId) => {
 export const updateStatus = (newStatus) => {
     const payload = {headline: newStatus}
     return resource('PUT', 'headline', payload)
-    .then(r => {
+    .then(res => {
         return { type: ActionTypes.UPDATE_STATUS, newStatus}
     }).catch(error => {
         return dispError(error.message)
@@ -142,8 +161,9 @@ export const updateShownArticles = (
     //No matter what operation we're updaitng for, 
     //even if it's just to sort, we might as well refresh the feed
     return resource('GET', 'articles/')
-    .then(r => {
-        const articles = r.articles
+    .then(res => {
+        console.log('updating articles!')
+        const articles = res.articles
         return {
             type: ActionTypes.UPDATE_SHOWN_ARTICLES,
             visibilityMode, filterStr, articles
@@ -164,10 +184,10 @@ of one remove to affect add and vice-versa
 */
 export const removeFollowee = (name) => {
     return resource('GET', `headlines/${name}`)
-    .then(r => {
+    .then(res => {
         return resource('DELETE', `following/${name}`)
-    }).then(r => {
-        const resultingFollowees = r.following
+    }).then(res => {
+        const resultingFollowees = res.following
         return getMainData(resultingFollowees)
     }).then(fetchedData => {
         //the component's responsible for dispatching another
@@ -182,11 +202,11 @@ export const removeFollowee = (name) => {
 }
 export const addFollowee = (name) => {
     return resource('GET', `headlines/${name}`)
-    .then(r => {
+    .then(res => {
         return resource('PUT', `following/${name}`) 
     })
-    .then(r => {
-        const resultingFollowees = r.following
+    .then(res => {
+        const resultingFollowees = res.following
         return getMainData(resultingFollowees)
     }).then(fetchedData => {
         //see above note regarding updating articles
@@ -209,7 +229,7 @@ export const notifyRegSuccess = (newUser) => {
 }
 export const logout = () => {
     return resource('PUT', 'logout')
-    .then(r => {
+    .then(res => {
         return updateLocation(LANDING_PAGE)
     }).catch(error => {
         //doesn't really matter since we're logging out :p
@@ -219,9 +239,9 @@ export const logout = () => {
 
 export const login = (username, password) => {
     return resource('POST', 'login', { username, password })
-    .then(r => resource('GET', 'headlines/'))
-    .then(r => {
-      const user = r.headlines[0]
+    .then(res => resource('GET', 'headlines/'))
+    .then(res => {
+      const user = res.headlines[0]
       const message = `you are logged in as ${user.username} "${user.headline}"`
       return updateLocation(MAIN_PAGE)
     })
@@ -232,23 +252,8 @@ export const login = (username, password) => {
 }
 
 export const updateAvatar = (fileObj) => {
-    //see both https://developer.mozilla.org/en-US/docs/Web/API/File and
-    //https://developer.mozilla.org/en-US/docs/Using_files_from_web_applications 
     if (fileObj) {
-
-        let fileBytestream;
-        const fileWrapper = {file: fileObj}
-
-        //"Esatblish[es] the FileReader to handle asynchronously loading the
-        //image" and setting fileBystream equal to the imgae's bytestream
-        var reader = new FileReader();
-        reader.onload = ((img) => { 
-            return (evt) => { fileBytestream = evt.target.result }
-        })(fileWrapper);
-        reader.readAsDataURL(fileObj);
-
-        console.log('rader, wrapper', reader, fileWrapper)
-        console.log('file byestream:', fileBytestream)
+        const fileBytestream = readImageBytestream(fileObj)
         return nonJsonResource('PUT', 'avatar', "", fileBytestream)
         .then(response => {
             const newAvatarUrl = response.pictureURL 

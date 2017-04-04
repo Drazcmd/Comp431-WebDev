@@ -1,5 +1,5 @@
 {
-	"netid": "cmd11",
-	"frontend": "better-nate-than-lever.surge.sh",
-	"backend": "better-nate-than-lever.surge.sh"
+    "netid": "cmd11",
+    "frontend": "",
+    "backend": "https://cmd11bookserver.herokuapp.com/"
 }

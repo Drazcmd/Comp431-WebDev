@@ -32,7 +32,9 @@ export const ProfileUpdateSection = ({ profileData, dispatchProfileUpdate }) => 
         <br /> <br /> <br />
 
         <form> <FormGroup controlId="PasswordUpdate">
-        <ControlLabel> Password: (Currently unimplemented! Password will not change) </ControlLabel>
+        <ControlLabel> 
+            Password: (Currently unimplemented! Password will not change) 
+        </ControlLabel>
         <FormControl type="text" placeholder="Update Password Here" />
         </FormGroup> </form>
         <Button> Coming Soon: Update Password! </Button>
