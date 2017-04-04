@@ -9,11 +9,14 @@ export const readImageBytestream = ((fileObj) => {
     //image" and setting fileBystream equal to the imgae's bytestream
     var reader = new FileReader();
     reader.onload = ((img) => { 
-        return (evt) => { fileBytestream = evt.target.result }
-    })(fileWrapper);
+        return (evt) => { 
+            console.log("reader.result in onload", reader.result)
+            fileBytestream = evt.target.result
+        }
+    })(fileWrapper)
     reader.readAsDataURL(fileObj);
-    console.log('rader, wrapper', reader, fileWrapper)
+    console.log('reader, wrapper', reader, fileWrapper)
     console.log('file byestream:', fileBytestream)
-    console.log('reader.result', reader.result)
+    //TODO - make a promise to return this! because it's async, and returning when not ready yuet.
     return fileBytestream
 })
