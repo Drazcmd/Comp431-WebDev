@@ -1,4 +1,4 @@
-import {readImageBytestream} from './imageReader'
+import {loadImageBytestream} from './imageReader'
 import {
     resource, getMainData, getProfileData, updateFields, nonJsonResource
 } from './serverRequest'
@@ -253,8 +253,17 @@ export const login = (username, password) => {
 
 export const updateAvatar = (fileObj) => {
     if (fileObj) {
-        const fileBytestream = readImageBytestream(fileObj)
-        return nonJsonResource('PUT', 'avatar', "", fileBytestream)
+        console.log('hello!', fileObj)
+        //loadImageBytestream is not a promise, but the loading happens asynch
+        //so as a workaround I made the callback I pass in return a promise :)
+        return new Promise((resolve, reject) => {
+            console.log('begining load')
+            loadImageBytestream(fileObj, resolve, reject)
+        })
+        .then(fileBytestream => {
+            console.log('in next stage of promise - bytsestream is len', fileBytestream.length)
+            return nonJsonResource('PUT', 'avatar', "", fileBytestream)
+        })
         .then(response => {
             const newAvatarUrl = response.pictureURL 
             console.log("gota new avatar!", pictureURL)
@@ -267,6 +276,7 @@ export const updateAvatar = (fileObj) => {
         throw new Error("No avatar image selected")
     }
 }
+
 export const dispError = (message) => {
     return {
         type: ActionTypes.UPDATE_ERROR_MESSAGE, 

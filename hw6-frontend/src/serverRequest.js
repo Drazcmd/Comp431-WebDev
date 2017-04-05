@@ -12,13 +12,6 @@ See the provided code for connecting to the dummy server
 */
 const fetchWrap = (endpoint, options) => {
   return fetch(`${url}/${endpoint}`, options)
-  .then(r => {
-    if (r.status === 200) {
-      return (r.headers.get('Content-Type').indexOf('json') > 0) ? r.json() : r.text()
-    } else {
-      throw new Error(r.statusText)
-    }
-  })
 }
 
 export const resource = (method, endpoint, payload) => {
@@ -33,11 +26,19 @@ export const resource = (method, endpoint, payload) => {
     options.body = JSON.stringify(payload)
   }
   return fetchWrap(endpoint, options)
+  .then(r => {
+    if (r.status === 200) {
+      return (r.headers.get('Content-Type').indexOf('json') > 0) ? r.json() : r.text()
+    } else {
+      throw new Error(r.statusText)
+    }
+  })
 }
 
 export const nonJsonResource = (method, endpoint, textMessage, imageFile) => {
   // See https://www.clear.rice.edu/comp431/data/api.html#upload
   // The keys 'text' and 'image' are super super important! 
+  console.log('beginign nonjson resource')
   const fdPaylod = new FormData()
   if (textMessage) {
       fdPaylod.append('text', textMessage)
@@ -45,14 +46,22 @@ export const nonJsonResource = (method, endpoint, textMessage, imageFile) => {
   if (imageFile) {
     fdPaylod.append('image', imageFile)
   }
-
+  console.log('payload:', fdPaylod)
   //Note how we removed the application/json header
   const options =  {
     method,
     credentials: 'include',
     body: fdPaylod
   }
+  console.log('endpoint, options', endpoint, options)
   return fetchWrap(endpoint, options)
+  .then(r => {
+    if (r.status === 200) {
+      console.log('got a response:', r)
+    } else {
+      throw new Error(r.statusText)
+    }
+  })
 }
 
 
