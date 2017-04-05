@@ -41,8 +41,7 @@ export const nonJsonResource = (method, endpoint, textMessage, imageBytestream) 
   console.log('beginign nonjson resource')
   const fdPaylod = new FormData()
   if (textMessage) {
-    console.log('got text to send!')
-      fdPaylod.append('text', textMessage)
+      fdPaylod.append('text', textMessage ? textMessage : "")
   }
   if (imageBytestream) {
     console.log('got image to send!', imageBytestream.length)
@@ -73,6 +72,7 @@ export const getMainData = (userList) => {
         resource('GET', `headlines`)
     ]).then(getRequests => {
         const articles = getRequests[0].articles
+        console.log('returned articles:', articles)
 
         //we need to package each followee up for my components to use
         const followeesHeadlines = getRequests[1].headlines

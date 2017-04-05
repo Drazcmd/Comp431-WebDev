@@ -85,17 +85,6 @@ export const Reducer = (state=defaultState, action) => {
             }
         }
 
-        case ActionTypes.ADD_ARTICLE: {
-            const newState = 
-                ((action.newArticle.text) && (action.newArticle.text.length != 0)) 
-                ? {
-                    ...state,
-                    articles:
-                        state.articles.concat(action.newArticle),
-                } : state
-            return newSstate
-        }
-
         case ActionTypes.UPDATE_STATUS: {
             return {
                 ...state, profileData: {

@@ -40,6 +40,7 @@ ArticleCard.propTypes = {
 
 export default connect(
     (state, ownProps) => {
+        console.log('article json:', ownProps.articleJSON)
         return { 
             //image link might be null
             id: ownProps.articleJSON._id,
