@@ -86,12 +86,18 @@ export const updateLocation = (newLocation) => {
         return createLocAction(newLocation)
     }
 }
-export const addArticle = (newArticle) => {
-    if (newArticle.img && newArticle.text) {
+export const addArticle = (newArticle, optionalImgFileObj) => {
+    if (newArticle.text && optionalImgFileObj) {
         //can't use our standard json approach to http requests for images
         console.log('image article time!', newArticle)
-        const imageBytestream = readImageBytestream(newArticle.img)
-        nonJsonResource('POST', 'article', newArticle.text, imageBytestream)
+        return new Promise((resolve, reject) => {
+            console.log('begining load')
+            loadImageBytestream(optionalImgFileObj, resolve, reject)
+        })
+        .then(fileBytestream => {
+            console.log('in next stage of promise - bytsestream is len', fileBytestream.length)
+            return nonJsonResource('POST', 'article', newArticle.text, fileBytestream)
+        })
         .then(res => {
             console.log('got response!', res)
             console.log('must update articles')
@@ -100,6 +106,7 @@ export const addArticle = (newArticle) => {
             return dispError(error.message) 
         })
     } else if (newArticle.text) {
+        console.log('text article time')
         const payload = {
             text: newArticle.text
         }
@@ -265,8 +272,8 @@ export const updateAvatar = (fileObj) => {
             return nonJsonResource('PUT', 'avatar', "", fileBytestream)
         })
         .then(response => {
-            const newAvatarUrl = response.pictureURL 
-            console.log("gota new avatar!", pictureURL)
+            const newAvatarUrl = response.avatar
+            console.log("gota new avatar!", newAvatarUrl)
             return dispError("Update avatar event unimplemented!!!")
         })
         .catch(error => {

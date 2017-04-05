@@ -12,6 +12,13 @@ See the provided code for connecting to the dummy server
 */
 const fetchWrap = (endpoint, options) => {
   return fetch(`${url}/${endpoint}`, options)
+  .then(r => {
+    if (r.status === 200) {
+      return (r.headers.get('Content-Type').indexOf('json') > 0) ? r.json() : r.text()
+    } else {
+      throw new Error(r.statusText)
+    }
+  })
 }
 
 export const resource = (method, endpoint, payload) => {
@@ -26,42 +33,33 @@ export const resource = (method, endpoint, payload) => {
     options.body = JSON.stringify(payload)
   }
   return fetchWrap(endpoint, options)
-  .then(r => {
-    if (r.status === 200) {
-      return (r.headers.get('Content-Type').indexOf('json') > 0) ? r.json() : r.text()
-    } else {
-      throw new Error(r.statusText)
-    }
-  })
 }
 
-export const nonJsonResource = (method, endpoint, textMessage, imageFile) => {
+export const nonJsonResource = (method, endpoint, textMessage, imageBytestream) => {
   // See https://www.clear.rice.edu/comp431/data/api.html#upload
   // The keys 'text' and 'image' are super super important! 
   console.log('beginign nonjson resource')
   const fdPaylod = new FormData()
   if (textMessage) {
+    console.log('got text to send!')
       fdPaylod.append('text', textMessage)
   }
-  if (imageFile) {
-    fdPaylod.append('image', imageFile)
+  if (imageBytestream) {
+    console.log('got image to send!', imageBytestream.length)
+    fdPaylod.append('image', imageBytestream)
   }
   console.log('payload:', fdPaylod)
+  console.log('payload vals(len of image since its long):', fdPaylod.get('text'), fdPaylod.get('image').length)
   //Note how we removed the application/json header
   const options =  {
     method,
-    credentials: 'include',
-    body: fdPaylod
+    credentials: 'include'
+  }
+  if (fdPaylod) {
+    options.body = fdPaylod
   }
   console.log('endpoint, options', endpoint, options)
   return fetchWrap(endpoint, options)
-  .then(r => {
-    if (r.status === 200) {
-      console.log('got a response:', r)
-    } else {
-      throw new Error(r.statusText)
-    }
-  })
 }
 
 

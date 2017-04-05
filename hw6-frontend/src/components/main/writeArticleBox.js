@@ -8,15 +8,15 @@ export const WriteArticleBox = ({
     profileName, nextArticleID, postArticle, filterArticles
 }) => {
     //TODO - check that stuff other than text/img will be set by server for us
-    let articleText, articleImage;
+    let articleTextInput, articleImageInput;
     const _postArticle = () => {
         //doing articleImage.value instead would return a fake path string
         //(Won't crash if no file inputted, will just pass along a null)
+        const possibleImageInput = articleImageInput.files[0]
         postArticle({
-            text: articleText.value, 
-            img: articleImage.files[0],
+            text: articleTextInput.value, 
             author: profileName
-        })
+        }, possibleImageInput)
     }
     return (
         <Col> <ListGroupItem> <Well bsSize="small">
@@ -24,14 +24,14 @@ export const WriteArticleBox = ({
             <ControlLabel> Give your article an image: </ControlLabel>
             <FormControl 
                 type="file"
-                inputRef={_articleImage => {articleImage = _articleImage}} 
+                inputRef={_articleImageInput => {articleImageInput = _articleImageInput}} 
             />
             <br />
 
             <ControlLabel> Write an article: </ControlLabel>
             <FormControl
                 type="text" placeholder={ "Write article here..." }
-                inputRef={_articleText => {articleText = _articleText}} 
+                inputRef={_articleTextInput => {articleTextInput = _articleTextInput}} 
             />
             <Button type="reset" bsStyle="success" onClick={ _postArticle } >
                 {"Post article!"}
@@ -57,9 +57,10 @@ export default connect(
     (dispatch) => {
         return {
             //postArticle will eventually return an article REFRESH action
-            postArticle: (article) => {
-                console.log(article)
-                addArticle(article).then((returnedAction) => {
+            postArticle: (article, possibleImageInput) => {
+                console.log(article, possibleImageInput)
+                addArticle(article, possibleImageInput)
+                .then((returnedAction) => {
                     console.log('about to dispatch, for this article: ', article)
                     console.log('this event: ', returnedAction)
                     dispatch(returnedAction)
