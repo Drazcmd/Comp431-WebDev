@@ -16,9 +16,9 @@ export const ArticleCard = ({id, text, image, author,
     }
     return (
         <ListGroupItem> <Well>
-        {articleImage}
+        <div> Image: {articleImage}</div>
         <div> Author: {author}. Written at {timestamp} </div>
-        Image: { image }
+        <div> Image url: { image }</div>
         <Well>Post Text: { text } </Well>
         <div> <CommentsHolder comments={comments}/> </div>
 
