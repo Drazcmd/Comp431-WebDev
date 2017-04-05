@@ -5,12 +5,12 @@ import { Button, Well, ListGroupItem } from 'react-bootstrap';
 import { removeFollowee, updateShownArticles, VisModes } from '../../../actions'
 
 export const Followee = ({
-    name, status, imgSrc, removeFollowee
+    name, status, imgSrc, removeFollowee, loggedInUser
 }) => {
     const profileImgWidth="100"
     const profileImgHeight="75"
     const _removeFollowee = () => {
-        removeFollowee(name)
+        removeFollowee(name, loggedInUser)
     }
     return (
         <Well>
@@ -31,7 +31,8 @@ export default connect(
     (state, ownProps) => ({ 
         name: ownProps.data.name,
         status: ownProps.data.status,
-        imgSrc: ownProps.data.img
+        imgSrc: ownProps.data.img,
+        loggedInUser: state.profileData.name
     }),
     (dispatch) => { 
         return {

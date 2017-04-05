@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { Button, Well, ListGroupItem } from 'react-bootstrap';
+import { Button, Well, ListGroupItem } from 'react-bootstrap'
 import { Col, FormGroup, FormControl, ControlLabel } from 'react-bootstrap'
 import { addArticle, updateShownArticles, VisModes } from '../../actions'
 

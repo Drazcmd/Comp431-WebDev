@@ -189,9 +189,41 @@ wouldn't really be able to re-use more than a line or two. Plus
 in the future we don't neccessarily want changing functionality
 of one remove to affect add and vice-versa
 */
-export const removeFollowee = (name) => {
+export const addFollowee = (name, loggedInUser) => {
+    //if they exist, we hsould be able to get their headline
     return resource('GET', `headlines/${name}`)
     .then(res => {
+        if (res.headlines.length === 0){
+            throw new Error(`The requested user '${name}' doesn't exist!`)
+        }
+        console.log('they exist!', res)
+        console.log("OK, TIME TO UPDATE THE FOLLOWING")
+        return resource('PUT', `following/${name}`) 
+    })
+    .then(res => {
+        console.log(res, 'TIME TO UPDATE PAGE AFTER THE PUT!!!')
+        const resultingFollowees = res.following
+        return getMainData(resultingFollowees)
+    }).then(fetchedData => {
+        //see above note regarding updating articles
+        return {
+            type: ActionTypes.UPDATE_FOLLOWEES,
+            resultingFollowees: fetchedData.followees
+        }
+    }).catch(error => {
+        console.log('uh oh!')
+        return dispError(error.message)
+    })
+}
+
+export const removeFollowee = (name, loggedInUser) => {
+    //not as important as on add, since they probably do exist if already added
+    //Good to be careful, though
+    return resource('GET', `headlines/${name}`)
+    .then(res => {
+        if (res.headlines.length === 0){
+            throw new Error(`The requested user '${name}'doesn't exist!`)
+        }
         return resource('DELETE', `following/${name}`)
     }).then(res => {
         const resultingFollowees = res.following
@@ -207,25 +239,6 @@ export const removeFollowee = (name) => {
         return dispError(error.message)
     })
 }
-export const addFollowee = (name) => {
-    return resource('GET', `headlines/${name}`)
-    .then(res => {
-        return resource('PUT', `following/${name}`) 
-    })
-    .then(res => {
-        const resultingFollowees = res.following
-        return getMainData(resultingFollowees)
-    }).then(fetchedData => {
-        //see above note regarding updating articles
-        return {
-            type: ActionTypes.UPDATE_FOLLOWEES,
-            resultingFollowees: fetchedData.followees
-        }
-    }).catch(error => {
-        return dispError(error.message)
-    })
-}
-
 //Although possibly successful, it's not actually implemented on
 //the server's side - so it'll always display an error msg
 export const notifyRegSuccess = (newUser) => {
