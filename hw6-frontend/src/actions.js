@@ -25,7 +25,8 @@ export const ActionTypes = {
     LOGOUT: 'LOGOUT',
     LOGIN: 'LOGIN',
     UPDATE_ERROR_MESSAGE: 'UPDATE_ERROR_MESSAGE',
-    ADD_COMMENT: 'ADD_COMMENT'
+    ADD_COMMENT: 'ADD_COMMENT',
+    UPDATE_COMMENT: 'UPDATE_COMMENT'
 }
 
 /* 
@@ -283,6 +284,12 @@ export const updateAvatar = (fileObj) => {
     }
 }
 
+export const updateComment = (commentText, commentId) => {
+    console.log('TODO update comment: ', commentText, commentId)
+    return {
+        type: ActionTypes.UPDATE_COMMENT
+    }
+}
 export const dispError = (message) => {
     return {
         type: ActionTypes.UPDATE_ERROR_MESSAGE, 

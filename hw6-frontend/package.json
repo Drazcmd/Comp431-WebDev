@@ -1,7 +1,7 @@
 {
-  "name": "cmd11HW5",
+  "name": "cmd11HW6Frontend",
   "version": "1.0.0",
-  "description": "Clayton Drazner HW5 Frontend App",
+  "description": "Clayton Drazner HW6 Frontend App",
   "main": "./src/index.js",
   "scripts": {
     "clean": "rimraf dist/bundle.js*",
@@ -76,6 +76,7 @@
     "moment": "^2.13.0",
     "react": "^15.0.2",
     "react-addons-test-utils": "^15.1.0",
+    "react-contenteditable": "^2.0.2",
     "react-dom": "^15.0.2",
     "react-redux": "^4.4.5",
     "react-router": "^2.6.1",

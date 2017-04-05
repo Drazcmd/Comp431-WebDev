@@ -1,14 +1,14 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { Button, Well, ListGroupItem } from 'react-bootstrap';
+import { Button, Well, ListGroupItem, Panel } from 'react-bootstrap'
 import { FormGroup, FormControl, ControlLabel } from 'react-bootstrap'
-import { CommentsHolder } from './commentsHolder'
+import { CommentsList } from './commentsList'
 import { addComment } from './../../actions'
 export const ArticleCard = ({id, text, image, author,
     timestamp, comments, postComment, editArticle
 }) => {
     const articleImage = image ? ( <img src={image}/> ) : (<div />);
-    let newComment
+    let newComment;
     const _postComment = () => {
         //new comments must have id -1 in the payload to the server
         const commentId = -1 
@@ -16,11 +16,22 @@ export const ArticleCard = ({id, text, image, author,
     }
     return (
         <ListGroupItem> <Well>
-        <div> Image: {articleImage}</div>
+
+        <Panel bsStyle='info' header={'Post Header (cannot be hidden or edited)'}>
+        <div> Image (if any): </div>
+        <div> {articleImage} </div>
         <div> Author: {author}. Written at {timestamp} </div>
-        <div> Image url: { image }</div>
-        <Well>Post Text: { text } </Well>
-        <div> <CommentsHolder comments={comments}/> </div>
+        <div> Image url (if any): { image }</div>
+        </Panel>
+
+        <Panel collapsible defaultExpanded bsStyle='primary'
+        header={'Post Text (Click me to show/hide)'}> 
+        {'The post text is being shown below (click and type to edit it):'} 
+        <div /> <div /> 
+        {text}
+        </Panel>
+
+        <CommentsList comments={comments} />
 
         <FormGroup>
             <ControlLabel />
@@ -28,8 +39,12 @@ export const ArticleCard = ({id, text, image, author,
                 inputRef={(_newComment) => {newComment = _newComment}} />
         </FormGroup>
 
-        <Button bsSize="small" onClick = { _postComment }> { "Post Comment" }  </Button>
-        <Button bsSize="small" onClick = { editArticle }> { "Edit Article" }  </Button>
+        <Button bsSize="small" onClick = { _postComment }> 
+        { "Post Comment" }  
+        </Button>
+        <Button bsSize="small" onClick = { editArticle }> 
+        { "Edit Article" }
+        </Button>
         </Well> </ListGroupItem>
     )
 }
