@@ -4,51 +4,58 @@ import { Button } from 'react-bootstrap';
 import { updateComment } from './../../actions';
 import ContentEditable from 'react-contenteditable';
 
-export const CommentHolder = ({comment, loggedInUser, editComment}) => {
-    console.log('I am a comment!', comment, loggedInUser, editComment);
+export const CommentHolder = ({
+    commentText, commentId, commentDate, 
+    commentAuthor, editable, 
+    editComment, testData
+}) => {
+    console.log("props showing up correctly:",
+        commentText, commentId, commentDate,
+        commentAuthor, editable, 
+        "state and dispatched stuff not coming correctly:",
+        editComment, testData)
+
+
     //comments have an author, commentId, date, and text fields
-    let commentText = comment.text;
-    console.log('sup')
-    const trackComment = ((e) => {commentText = e.target.value});
-    console.log('yo')
-    const _editComment = (() => editComment(comment.commentId, commentText));
-    console.log('haha')
-    const notEditable = comment.author === loggedInUser
-    console.log('ok')
+    let _commentText = commentText;
+    const trackComment = ((e) => {_commentText = e.target.value});
+    const _editComment = (() => {editComment(_commentText)});
     return (
         <div>
-            <ContentEditable html={comment.text} disabled={notEditable}
+            <ContentEditable html={_commentText} disabled={!editable}
             onChange={trackComment} />
 
-            <Button bsSize={"xsmall"} disabled={notEditable}
+            <Button bsSize={"xsmall"} disabled={!editable}
             onClick={_editComment} >
                 {'Update comment'} 
              </Button>
 
-            {' (Written by '}{comment.author} {' on '} {comment.date} {')'}
+            {' (Written by '}{commentAuthor} {' on '} {commentDate} {')'}
             <br /> <br />
         </div>
     )
 }
 
 CommentHolder.propTypes = {
+    commentText: PropTypes.string.isRequired
 }
 
 export default connect(
-    ((state, ownProps) => {
-        console.log('ownprops',ownProps)
-        console.log('state',state)
+    (state, ownProps) => {
         return {
-            comment: ownProps.comment,
-            loggedInUser: state.profileData.name
+            commentText: ownProps.commentText,
+            commentId: ownProps.commentId,
+            commentDate: ownProps.commentDate,
+            commentAuthor: ownProps.commentAauthor,
+            editable: ownProps.editable,
+            testData: state.profileData
         }
-    }),
-    ((dispatch) => {
+    },(dispatch) => {
         return {
-            editComment: ((commentId, commentText) => {
+            editComment: (commentId, commentText) => {
                 dispatch(updateComment(commentId, commentText))
-            })
+            }
         }
-    })
+    }
 )(CommentHolder)
 
