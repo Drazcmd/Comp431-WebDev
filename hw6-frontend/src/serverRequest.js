@@ -41,7 +41,7 @@ export const nonJsonResource = (method, endpoint, textMessage, imageBytestream) 
   console.log('beginign nonjson resource')
   const fdPaylod = new FormData()
   if (textMessage) {
-      fdPaylod.append('text', textMessage ? textMessage : "")
+    fdPaylod.append('text', textMessage ? textMessage : "")
   }
   if (imageBytestream) {
     console.log('got image to send!', imageBytestream.length)

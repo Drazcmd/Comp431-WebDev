@@ -2,8 +2,7 @@ import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { Button, Well, ListGroupItem, Panel } from 'react-bootstrap'
 import { FormGroup, FormControl, ControlLabel } from 'react-bootstrap'
-import { CommentsList } from './commentsList'
-import { addComment } from './../../actions'
+import CommentsList from './commentsList'
 export const ArticleCard = ({id, text, image, author,
     timestamp, comments, postComment, editArticle
 }) => {

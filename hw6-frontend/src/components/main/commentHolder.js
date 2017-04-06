@@ -42,6 +42,7 @@ CommentHolder.propTypes = {
 
 export default connect(
     (state, ownProps) => {
+        console.log('what is testData', state.profileData)
         return {
             commentText: ownProps.commentText,
             commentId: ownProps.commentId,

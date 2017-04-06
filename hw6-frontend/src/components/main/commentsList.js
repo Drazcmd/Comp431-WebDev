@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { Button, Well, Accordion, Panel } from 'react-bootstrap'
-import { CommentHolder } from './commentHolder'
+import CommentHolder from './commentHolder'
 export const CommentsList = ({comments, userId, testState}) => {
     console.log('dumb test:', userId, testState)
     //comments have an commentId field, in addition to others
