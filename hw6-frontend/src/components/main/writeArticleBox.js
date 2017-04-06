@@ -7,7 +7,6 @@ import { addArticle, updateShownArticles, VisModes } from '../../actions'
 export const WriteArticleBox = ({
     profileName, nextArticleID, postArticle, filterArticles
 }) => {
-    console.log("\n\n\n\n", profileName, "\n\n\n\n\n\n")
     //TODO - check that stuff other than text/img will be set by server for us
     let articleTextInput, articleImageInput;
     const _postArticle = () => {

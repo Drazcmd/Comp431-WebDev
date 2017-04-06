@@ -3,7 +3,8 @@ import { connect } from 'react-redux'
 import ArticleCard from './articleCard'
 import { ListGroup, ListGroupItem } from 'react-bootstrap'
 import { displayedArticles } from './feedFilters.js'
-export const Feed = ({ articles, visibilityMode, filterStr }) => {
+
+export const Feed = ({ articles, visibilityMode, filterStr, userId }) => {
     const correctlyOrderedArticles = () => {
         return displayedArticles(articles, visibilityMode, filterStr)
     }
@@ -11,7 +12,9 @@ export const Feed = ({ articles, visibilityMode, filterStr }) => {
         <ListGroup>
         {
             correctlyOrderedArticles().map((article, index) => (
-                <ArticleCard articleJSON={ article } key={ index } />
+                <ArticleCard articleJSON={ article } key={ index }
+                 editable={article.author === userId}
+                />
             ))
         }
         </ListGroup>
@@ -28,7 +31,8 @@ export default connect(
         return ({
             articles: state.articles, 
             visibilityMode: state.visibilityMode,
-            filterStr: state.filterStr
+            filterStr: state.filterStr,
+            userId: state.profileData.name
         })
     }, (dispatch) => {
         return {

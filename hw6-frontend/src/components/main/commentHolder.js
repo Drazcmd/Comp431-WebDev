@@ -4,56 +4,42 @@ import { Button } from 'react-bootstrap';
 import { updateComment } from './../../actions';
 import ContentEditable from 'react-contenteditable';
 
-export const CommentHolder = ({
-    commentText, commentId, commentDate, 
-    commentAuthor, editable, 
-    editComment, testData
-}) => {
-    console.log("props showing up correctly:",
-        commentText, commentId, commentDate,
-        commentAuthor, editable, 
-        "state and dispatched stuff not coming correctly:",
-        editComment, testData)
-
-
-    //comments have an author, commentId, date, and text fields
-    let _commentText = commentText;
+export const CommentHolder = ({comment, editable, sendCommentEdit}) => {
+    //comments have text, commentId, date, author
+    console.log('here is the comment:', comment)
+    let _commentText = comment.text;
     const trackComment = ((e) => {_commentText = e.target.value});
-    const _editComment = (() => {editComment(_commentText)});
+    const _sendCommentEdit = (() => {sendCommentEdit(_commentText)});
     return (
         <div>
-            <ContentEditable html={_commentText} disabled={!editable}
-            onChange={trackComment} />
+            <ContentEditable 
+            html={_commentText} disabled={!editable} onChange={trackComment}
+            />
 
-            <Button bsSize={"xsmall"} disabled={!editable}
-            onClick={_editComment} >
+            <Button 
+            bsSize={"xsmall"} disabled={!editable} onClick={_sendCommentEdit}
+            >
                 {'Update comment'} 
-             </Button>
+            </Button>
 
-            {' (Written by '}{commentAuthor} {' on '} {commentDate} {')'}
+            {' (Written by '}{comment.author} {' on '} {comment.date} {')'}
             <br /> <br />
         </div>
     )
 }
 
 CommentHolder.propTypes = {
-    commentText: PropTypes.string.isRequired
 }
 
 export default connect(
     (state, ownProps) => {
-        console.log('what is testData', state.profileData)
         return {
-            commentText: ownProps.commentText,
-            commentId: ownProps.commentId,
-            commentDate: ownProps.commentDate,
-            commentAuthor: ownProps.commentAauthor,
-            editable: ownProps.editable,
-            testData: state.profileData
+            comment: ownProps.comment,
+            editable: ownProps.editable
         }
     },(dispatch) => {
         return {
-            editComment: (commentId, commentText) => {
+            sendCommentEdit: (commentId, commentText) => {
                 dispatch(updateComment(commentId, commentText))
             }
         }
