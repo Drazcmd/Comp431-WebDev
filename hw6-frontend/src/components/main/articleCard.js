@@ -4,7 +4,7 @@ import { Button, Well, ListGroupItem, Panel } from 'react-bootstrap'
 import { FormGroup, FormControl, ControlLabel } from 'react-bootstrap'
 import ContentEditable from 'react-contenteditable';
 import CommentsList from './commentsList'
-import { editArticle } from './../../actions'
+import { editArticle, putComment } from './../../actions'
 
 export const ArticleCard = ({
     articleJSON, editable, postComment, sendArticleEdit 

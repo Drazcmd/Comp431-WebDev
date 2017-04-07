@@ -4,9 +4,7 @@ import { Col, Button, Well, ListGroupItem } from 'react-bootstrap';
 import { FormGroup, FormControl, ControlLabel } from 'react-bootstrap'
 import { addArticle, updateShownArticles, VisModes } from '../../actions'
 
-export const filterArticlesBox = ({
-    filterArticles
-}) => {
+export const filterArticlesBox = ({filterStr, filterArticles }) => {
     /*
     Not actual state - none of these get stored anywhere
     or do anything until the user actually clicks the 'filter'
@@ -15,7 +13,7 @@ export const filterArticlesBox = ({
     available at a moment's glance. Temporary data, in other words -
     not state
     */
-    let writeView = ""
+    let writeView = filterStr
     function _onChangeText(e) {
         writeView=e.target.value;
     }   
@@ -29,7 +27,9 @@ export const filterArticlesBox = ({
     return (
         <ListGroupItem> <Well bsSize="small">
         <form> <FormGroup controlId="writeArticleForm">
-          <ControlLabel> Filter articles here: </ControlLabel>
+          <ControlLabel> 
+          Filter articles here (currently filter string is '{writeView}'):
+          </ControlLabel>
           <FormControl
            type="text" placeholder={ "Write filter string here..." }
            onChange={ _onChangeText }
