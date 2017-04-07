@@ -42,11 +42,9 @@ export default connect(
     }), (dispatch) => {
         return {
             setAvatar: (newAvatar) => {
-                console.log("hello")
                 if (newAvatar) {
                     updateAvatar(newAvatar)
                     .then(returnedEvent => {
-                        console.log("what is this?", returnedEvent)
                         dispatch(returnedEvent)
                     })
                 } else {

@@ -5,8 +5,6 @@ import { FormGroup, FormControl, ControlLabel } from 'react-bootstrap'
 import { addFollowee, updateShownArticles, VisModes } from '../../../actions'
 
 export const newFollowers = ({ loggedInUser, addFollowee }) => {
-    console.log('I am: ', loggedInUser)
-    console.log(addFollowee)
     let writeView = ""
     function _onChange(e) {
         writeView=e.target.value;

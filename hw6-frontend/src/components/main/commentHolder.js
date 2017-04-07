@@ -8,7 +8,6 @@ export const CommentHolder = ({
     comment, editable, articleId, sendCommentEdit
 }) => {
     //comments have text, commentId, date, author
-    console.log('here is the comment:', comment)
     let commentText = comment.text;
     const trackComment = ((e) => {commentText = e.target.value});
     const _sendCommentEdit = (() => {

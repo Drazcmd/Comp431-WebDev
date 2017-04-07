@@ -38,17 +38,13 @@ export const resource = (method, endpoint, payload) => {
 export const nonJsonResource = (method, endpoint, textMessage, imageBytestream) => {
   // See https://www.clear.rice.edu/comp431/data/api.html#upload
   // The keys 'text' and 'image' are super super important! 
-  console.log('beginign nonjson resource')
   const fdPaylod = new FormData()
   if (textMessage) {
     fdPaylod.append('text', textMessage ? textMessage : "")
   }
   if (imageBytestream) {
-    console.log('got image to send!', imageBytestream.length)
     fdPaylod.append('image', imageBytestream)
   }
-  console.log('payload:', fdPaylod)
-  console.log('payload vals(len of image since its long):', fdPaylod.get('text'), fdPaylod.get('image').length)
   //Note how we removed the application/json header
   const options =  {
     method,
@@ -57,7 +53,6 @@ export const nonJsonResource = (method, endpoint, textMessage, imageBytestream) 
   if (fdPaylod) {
     options.body = fdPaylod
   }
-  console.log('endpoint, options', endpoint, options)
   return fetchWrap(endpoint, options)
 }
 
@@ -74,7 +69,6 @@ export const getMainData = (userList) => {
         resource('GET', `avatars`)
     ]).then(getRequests => {
         const articles = getRequests[0].articles
-        console.log('returned articles:', articles)
 
         //we need to package each followee up for my components to use
         const followeesHeadlines = getRequests[1].headlines
@@ -96,8 +90,6 @@ export const getMainData = (userList) => {
         const ourHeadline = getRequests[3].headlines[0].headline
         const ourUsername = getRequests[3].headlines[0].username
         const ourAvatar = getRequests[4].avatars[0].avatar
-        console.log('avatar request', getRequests[4])
-        console.log("OUR AVATAR!!!", ourAvatar)
         return {
             articles: articles,
             followees: followees,

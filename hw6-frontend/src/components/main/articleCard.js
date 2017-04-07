@@ -76,7 +76,6 @@ ArticleCard.propTypes = {
 
 export default connect(
     (state, ownProps) => {
-        console.log('CONNECTING ARTICLE!', ownProps)
         return { 
             articleJSON: ownProps.articleJSON,
             editable: ownProps.editable

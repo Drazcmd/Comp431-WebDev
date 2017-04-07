@@ -11,9 +11,8 @@ import AppRoot from './approot'
 
 //Creates a Redux store that holds the complete state tree of your app.
 //There should only be a single store in your app. 
-//const store = createStore(Reducer)
-const logger = createLogger()
-const store = createStore(Reducer, applyMiddleware(logger))
+const store = createStore(Reducer)
+
 //'When rendering, we will wrap our root component inside a <Provider>
 //to make the store available to all components in the component "tree"'
 render(

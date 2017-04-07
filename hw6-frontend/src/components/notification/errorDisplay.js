@@ -5,7 +5,6 @@ import { FormGroup, FormControl, ControlLabel, Alert } from 'react-bootstrap'
 
 //should only have one of these visible at a time!
 export const ErrorDisplay = ({ message }) => {
-	console.log("message:", message)
 	//might be a string, might be an error object
 	return (
 		<Alert bsStyle='warning'>Most recent error: {message} </Alert>

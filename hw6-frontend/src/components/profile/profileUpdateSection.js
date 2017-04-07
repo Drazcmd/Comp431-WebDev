@@ -61,7 +61,6 @@ export default connect(
                             dispatch(returnedAction)
                         })
                 } else {
-                    console.log("invalid profile update", validationResults.errorReason)
                     dispatch(dispError(validationResults.errorReason))
                 }
             }

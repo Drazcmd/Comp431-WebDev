@@ -121,7 +121,6 @@ export const Reducer = (state=defaultState, action) => {
             return defaultState
         }
         case ActionTypes.UPDATE_ERROR_MESSAGE: {
-            console.log('reducer got an error action', action.message)
             return {
                 ...state,
                 globalErrorMessage: action.message

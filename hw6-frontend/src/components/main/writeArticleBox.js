@@ -58,11 +58,8 @@ export default connect(
         return {
             //postArticle will eventually return an article REFRESH action
             postArticle: (article, possibleImageInput) => {
-                console.log(article, possibleImageInput)
                 addArticle(article, possibleImageInput)
                 .then((returnedAction) => {
-                    console.log('about to dispatch, for this article: ', article)
-                    console.log('this event: ', returnedAction)
                     dispatch(returnedAction)
                 });
             },

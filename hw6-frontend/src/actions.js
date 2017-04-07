@@ -89,9 +89,7 @@ export const updateLocation = (newLocation) => {
 export const addArticle = (newArticle, optionalImgFileObj) => {
     if (newArticle.text && optionalImgFileObj) {
         //can't use our standard json approach to http requests for images
-        console.log('image article time!', newArticle)
         return new Promise((resolve, reject) => {
-            console.log('begining load')
             loadImageBytestream(optionalImgFileObj, resolve, reject)
         })
         .then(fileObjWithBytestream=> {
@@ -105,7 +103,6 @@ export const addArticle = (newArticle, optionalImgFileObj) => {
             return dispError(error.message) 
         })
     } else if (newArticle.text) {
-        console.log('text article time')
         const payload = {
             text: newArticle.text
         }
@@ -127,8 +124,6 @@ export const addArticle = (newArticle, optionalImgFileObj) => {
 * number id in the article.
 */
 export const putComment = (articleId, newCommentText, commentId) => {
-    console.log('PUTTING COMMENT!!!!')
-    console.log('aritcle id, new tetxt, comment id:', articleId, newCommentText, commentId)
     const payload = {
         text: newCommentText,
         commentId: commentId
@@ -141,7 +136,6 @@ export const putComment = (articleId, newCommentText, commentId) => {
     })
 }
 export const editArticle = (articleId, newArticleText) => {
-    console.log('PUTTING article')
     //note - if oyu put in the optional commentId, it'd update a comment instead
     const payload = {
         text: newArticleText,
@@ -183,7 +177,6 @@ export const updateShownArticles = (
     //even if it's just to sort, we might as well refresh the feed
     return resource('GET', 'articles/')
     .then(res => {
-        console.log('updating articles!')
         const articles = res.articles
         return {
             type: ActionTypes.UPDATE_SHOWN_ARTICLES,
@@ -210,12 +203,9 @@ export const addFollowee = (name, loggedInUser) => {
         if (res.headlines.length === 0){
             throw new Error(`The requested user '${name}' doesn't exist!`)
         }
-        console.log('they exist!', res)
-        console.log("OK, TIME TO UPDATE THE FOLLOWING")
         return resource('PUT', `following/${name}`) 
     })
     .then(res => {
-        console.log(res, 'TIME TO UPDATE PAGE AFTER THE PUT!!!')
         const resultingFollowees = res.following
         return getMainData(resultingFollowees)
     }).then(fetchedData => {
@@ -225,7 +215,6 @@ export const addFollowee = (name, loggedInUser) => {
             resultingFollowees: fetchedData.followees
         }
     }).catch(error => {
-        console.log('uh oh!')
         return dispError(error.message)
     })
 }
@@ -287,11 +276,9 @@ export const login = (username, password) => {
 
 export const updateAvatar = (fileObj) => {
     if (fileObj) {
-        console.log('hello!', fileObj)
         //loadImageBytestream is not a promise, but the loading happens asynch
         //so as a workaround I made the callback I pass in return a promise :)
         return new Promise((resolve, reject) => {
-            console.log('begining load')
             //since we pass in the resolve method, no need to 'return' this
             //the input to resolve will be 'x' in '.then((x) => ...)' 
             loadImageBytestream(fileObj, resolve, reject)
