@@ -46,12 +46,6 @@ export const Reducer = (state=defaultState, action) => {
             : state.profileData
             const articles = action.articles ? action.articles: state.articles
             const followees = action.followees ? action.followees: state.followees
-            console.log("current state:", state)
-            console.log("new state data:", profileData)
-            console.log("new state:", { ...state,
-                location: location, articles: articles,
-                followees: followees, profileData: profileData
-            })
             return { ...state,
                 location: location, articles: articles,
                 followees: followees, profileData: profileData
@@ -108,7 +102,10 @@ export const Reducer = (state=defaultState, action) => {
                         state.profileData.zip,
                     email: newProfileData.email ?
                         newProfileData.email :
-                        state.profileData.email
+                        state.profileData.email,
+                    img: newProfileData.img ?
+                        newProfileData.img :
+                        state.profileData.img
                 }
             }
         }

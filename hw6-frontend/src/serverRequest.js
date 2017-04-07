@@ -68,8 +68,10 @@ export const getMainData = (userList) => {
         resource('GET', 'articles'),
         resource('GET', `headlines/${userListStr}`),
         resource('GET', `avatars/${userListStr}`),
-        //this one is to get our own headline!
-        resource('GET', `headlines`)
+
+        //these two are to get our own headline and avatar!
+        resource('GET', `headlines`),
+        resource('GET', `avatars`)
     ]).then(getRequests => {
         const articles = getRequests[0].articles
         console.log('returned articles:', articles)
@@ -93,13 +95,17 @@ export const getMainData = (userList) => {
         //response is like {headlines: [{username: cmd11, headline: "woo!"}]}
         const ourHeadline = getRequests[3].headlines[0].headline
         const ourUsername = getRequests[3].headlines[0].username
+        const ourAvatar = getRequests[4].avatars[0].avatar
+        console.log('avatar request', getRequests[4])
+        console.log("OUR AVATAR!!!", ourAvatar)
         return {
             articles: articles,
             followees: followees,
             //the reducer will only update what we put in here
             profileData: {
               name: ourUsername,
-              status: ourHeadline
+              status: ourHeadline,
+              img: ourAvatar
             }
         }
     })

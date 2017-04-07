@@ -20,10 +20,8 @@ export const ArticleCard = ({
         : 'The post text is being shown below (it CANNOT be edited):'
     const trackTextEdit = ((e) => articleText = e.target.value)
     const _postComment = () => {
-        //new comments must have id -1 in the payload to the server
-        const commentId = -1 
         const commentText = newComment.value ? newComment.value : ""
-        postComment(articleJSON._id, commentText, commentId)
+        postComment(articleJSON._id, commentText)
     }
     const editArticle = (() => {sendArticleEdit(articleJSON._id, articleText)})
     return (
@@ -86,10 +84,10 @@ export default connect(
     },
     (dispatch) => {
         return {
-            //Currently button does nothing!
-            postComment: (articleId, comment, commentId) => {
+            postComment: (articleId, comment) => {
                 //commentID=-1 means post a new comment
                 //otherwise the PUT would edit a comment
+                const commentId = -1 
                 putComment(articleId, comment, commentId)
                 .then((returnedAction) => {
                     //(probably a refresh updateArticles action)
@@ -99,7 +97,6 @@ export default connect(
             sendArticleEdit: (articleId, newArticleText) => {
                 editArticle(articleId, newArticleText)
                 .then((returnedAction) => {
-                    console.log("what next?\n\n\n\n\n")
                     dispatch(returnedAction)
                 })
             }

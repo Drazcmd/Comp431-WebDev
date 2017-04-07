@@ -6,20 +6,14 @@ This function takes in the resolve of a promise function, and calls it
 when the image is loaded (since loading is asych)
 */
 export const loadImageBytestream = ((fileObj, resolver, rejecter) => {
-    let fileBytestream;
     const fileWrapper = {file: fileObj};
 
     //"Esatblish[es] the FileReader to handle asynchronously loading the
-    //image" and setting fileBystream equal to the imgae's bytestream
+    //image" and mutate the file object ot have the bytestream inside it
     var reader = new FileReader();
     reader.addEventListener('loadend', ((e) => { 
-        console.log('load ended')
-        console.log("reader.result length in loadend", reader.result.length)
-        fileBytestream = e.target.result
-        console.log('e.target.result length in loadend', fileBytestream.length)
-        resolver(fileBytestream)
+        resolver(fileObj)
     }));
-    console.log('really begining load...')
     reader.readAsDataURL(fileObj);
     return
 })

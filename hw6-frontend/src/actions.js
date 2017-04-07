@@ -94,9 +94,10 @@ export const addArticle = (newArticle, optionalImgFileObj) => {
             console.log('begining load')
             loadImageBytestream(optionalImgFileObj, resolve, reject)
         })
-        .then(fileBytestream => {
-            console.log('in next stage of promise - bytsestream is len', fileBytestream.length)
-            return nonJsonResource('POST', 'article', newArticle.text, fileBytestream)
+        .then(fileObjWithBytestream=> {
+            return nonJsonResource(
+                'POST', 'article', newArticle.text, fileObjWithBytestream
+            )
         })
         .then(res => {
             return updateShownArticles(VisModes.REFRESH)
@@ -291,16 +292,21 @@ export const updateAvatar = (fileObj) => {
         //so as a workaround I made the callback I pass in return a promise :)
         return new Promise((resolve, reject) => {
             console.log('begining load')
+            //since we pass in the resolve method, no need to 'return' this
+            //the input to resolve will be 'x' in '.then((x) => ...)' 
             loadImageBytestream(fileObj, resolve, reject)
         })
-        .then(fileBytestream => {
-            console.log('in next stage of promise - bytsestream is len', fileBytestream.length)
-            return nonJsonResource('PUT', 'avatar', "", fileBytestream)
+        .then(fileObjWithBytestream => {
+            //loadImageBytestram call a file API function load the bytestream 
+            //into the file object (unfortunately, the API mutates -_-)
+            return nonJsonResource('PUT', 'avatar', "", fileObjWithBytestream)
         })
         .then(response => {
             const newAvatarUrl = response.avatar
-            console.log("gota new avatar!", newAvatarUrl)
-            return dispError("Update avatar event unimplemented!!!")
+            return {
+                type: ActionTypes.UPDATE_PROFILE_DATA, 
+                newProfileData: {img: newAvatarUrl} 
+            }
         })
         .catch(error => {
             return dispError(error.message)
