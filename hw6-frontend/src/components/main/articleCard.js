@@ -6,24 +6,32 @@ import ContentEditable from 'react-contenteditable';
 import CommentsList from './commentsList'
 import { editArticle, putComment } from './../../actions'
 
+//This is probably the largest component I have, code wise. However, although
+//there's lots of stuff going on, this stuff is simple. It's not complex or fat!
 export const ArticleCard = ({
     articleJSON, editable, postComment, sendArticleEdit 
 }) => {
     //article's field are _id, text, img, author, date, comments
-    const articleImage = articleJSON.img 
-        ? ( <img src={articleJSON.img}/> ) 
-        : (<div />);
+    //(This stuff is just to deal with react-bootstrap form weirdness)
     let newComment;
     let articleText = articleJSON.text;
-    const editInstructions = editable 
-        ? 'The post text is being shown below (click and type to edit it):'
-        : 'The post text is being shown below (it CANNOT be edited):'
     const trackTextEdit = ((e) => articleText = e.target.value)
     const _postComment = () => {
         const commentText = newComment.value ? newComment.value : ""
         postComment(articleJSON._id, commentText)
     }
     const editArticle = (() => {sendArticleEdit(articleJSON._id, articleText)})
+
+    //Not of this is buisness logic - just making stuff nicer looking
+    const articleImage = articleJSON.img 
+        ? ( <img src={articleJSON.img}/> ) 
+        : (<div />);
+    const editInstructions = editable 
+        ? 'The post text is being shown below (click and type to edit it):'
+        : 'The post text is being shown below (it CANNOT be edited):'
+
+    //Note that there are lots of components actually created/defined in here 
+    //because it's the best way to make the inner panels look exactly how I want
     return (
         <ListGroupItem> <Well>
         <Panel bsStyle='info' 

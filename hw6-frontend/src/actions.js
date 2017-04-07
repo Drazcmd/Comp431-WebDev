@@ -106,8 +106,8 @@ export const addArticle = (newArticle, optionalImgFileObj) => {
         const payload = {
             text: newArticle.text
         }
-        //TODO - if there is a way to do a .then on an arbitrarily placed
-        //promise, we could remove a couple lines of repeated code below
+        //if there were a way to do a .then on an arbitrarily placed
+        //promise, we could remove a couple lines of repeated code below :/
         return resource('POST', 'article', payload)
         .then(res => {
             return updateShownArticles(VisModes.REFRESH)

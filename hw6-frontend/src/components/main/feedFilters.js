@@ -18,8 +18,8 @@ const filterArticles = (articles, visibilityMode, filterStr) => {
 }
 export const displayedArticles = (articles, visibilityMode, filterStr) => {
     return filterArticles(
-		//Arr.sort is a litle demented in js - it directly mutates
-		//This is why I call .concat - to get us a fresh copy 
+        //Arr.sort is a litle demented in js - it directly mutates
+        //This is why I call .concat - to get us a fresh copy 
         articles.concat(), visibilityMode, filterStr
     ).sort((articleA, articleB) => {
 

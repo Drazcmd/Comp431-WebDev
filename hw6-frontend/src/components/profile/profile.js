@@ -9,21 +9,19 @@ import { Button, FormGroup, FormControl,
 import ErrorDisplay from './../notification/errorDisplay'
 
 export const Profile = ({ profileData, updateProfileData, msg }) => {
-	return (
-		<Grid>
-		<Row> <NavBar /> </Row>
-		<br />
-		<Row> <ProfileImgSection /> </Row>
-		<br />	
-		<Row> <Col md={3}><ErrorDisplay /></Col> </Row>
-	 	<Row>
-		  	<b> Date of Birth: {profileData.dob} (Cannot be updated) </b>
-		  	<br />
-			<h3>Update your info here: </h3>
-			<ProfileUpdateSection />
-		</Row>
-		</Grid>
-	)
+    return (
+        <Grid>
+        <Row> <NavBar /> </Row>
+        <br />
+        <Row> <ProfileImgSection /> </Row>
+        <br />  
+        <Row> <Col md={3}><ErrorDisplay /></Col> </Row>
+        <Row>
+            <h3>Update your info here: </h3>
+            <ProfileUpdateSection />
+        </Row>
+        </Grid>
+    )
 
 }
 
@@ -31,9 +29,9 @@ Profile.propTypes = {
 }
 
 export default connect(
-	(state) => ({ 
-    	profileData: state.profileData,
-		msg: state.globalErrorMessage
+    (state) => ({ 
+        profileData: state.profileData,
+        msg: state.globalErrorMessage
     }),
- 	(dispatch) => ({})
+    (dispatch) => ({})
 )(Profile)

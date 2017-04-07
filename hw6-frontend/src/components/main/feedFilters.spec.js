@@ -26,17 +26,17 @@ afterEach(() => {
     }
 })
 it('should filter displayed articles by the search keyword', (done) => {
-	expect(displayedArticles(
-		testArticles, 
-		VisModes.FIL_AUTH, "aaa"
-	)).to.eql([
-	    {"_id":444,"text":"TESTTTTbobby",
-	    "date":"2015-08-10T19:26:31.978Z","img":null,
-	    "comments":[],"author":"saaa"},
-	    {"_id":445, "text":"TESTbobby",
-	    "date":"2015-02-10T19:26:31.978Z","img":null,
-	    "comments":[],"author":"saaa"}
-	])
-	done()
+    expect(displayedArticles(
+        testArticles, 
+        VisModes.FIL_AUTH, "aaa"
+    )).to.eql([
+        {"_id":444,"text":"TESTTTTbobby",
+        "date":"2015-08-10T19:26:31.978Z","img":null,
+        "comments":[],"author":"saaa"},
+        {"_id":445, "text":"TESTbobby",
+        "date":"2015-02-10T19:26:31.978Z","img":null,
+        "comments":[],"author":"saaa"}
+    ])
+    done()
 })
 })

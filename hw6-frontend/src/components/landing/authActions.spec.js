@@ -12,9 +12,9 @@ See https://www.clear.rice.edu/comp431/#/assignments
 let actions, authActions, resource
 beforeEach(() => {
     if (mockery.enable) {
-    	mockery.enable({warnOnUnregistered: false, useCleanCache:true})
-    	mockery.registerMock('node-fetch', fetch)
-    	require('node-fetch')
+        mockery.enable({warnOnUnregistered: false, useCleanCache:true})
+        mockery.registerMock('node-fetch', fetch)
+        require('node-fetch')
     }
     actions = require('./../../actions')
     authActions = require('./authActions')
@@ -23,19 +23,18 @@ beforeEach(() => {
 
 afterEach(() => {
     if (mockery.enable) {
-	   mockery.deregisterMock('node-fetch')
-	   mockery.disable()
+       mockery.deregisterMock('node-fetch')
+       mockery.disable()
     }
 })
 //These two are both in relation to registering new users
 it ('should display error if input registration data is invalid)', (done) => {
-	//TODO - choose something which will have invalid field or two
-	const mockInvalidUserInfo = {
-		"firstName":"",
-		"lastName":"",
-		"username": "bobbyMcbobface",
-		"password":"BobDaBuilda"
-	}
+    const mockInvalidUserInfo = {
+        "firstName":"",
+        "lastName":"",
+        "username": "bobbyMcbobface",
+        "password":"BobDaBuilda"
+    }
     const expectedAction = { 
         type: actions.ActionTypes.UPDATE_ERROR_MESSAGE
     } 

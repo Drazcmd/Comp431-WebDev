@@ -5,16 +5,16 @@ export const defaultState = {
     location: 'LANDING_PAGE',
     articles: [],
     visibilityMode: VisModes.NO_FILTER,
-    filterStr: "",  
+    filterStr: '',  
     profileData: {
-        "name":"Anon", 
-        "email":"missingEmail@missing.com", 
-        "zip":"00000",
-        "img": "http://www.clker.com/cliparts/n/T/5/z/f/Y/image-missing-md.png ",
-        "status":"missing status"
+        'name':'Anon',
+        'email':'missingEmail@missing.com', 
+        'zip':'00000',
+        'img': 'http://www.clker.com/cliparts/n/T/5/z/f/Y/image-missing-md.png',
+        'status':'missing status'
     },
     followees: [],
-    globalErrorMessage: "No errors at present"
+    globalErrorMessage: 'No errors at present'
 }
 export const Reducer = (state=defaultState, action) => {
     switch (action.type) {
@@ -52,7 +52,6 @@ export const Reducer = (state=defaultState, action) => {
             }
         }
         case ActionTypes.LOGIN: {
-            //TODO - update other areas if needed
             return { ...state, location: "MAIN_PAGE"}
         }
 

@@ -7,9 +7,9 @@ const url = 'https://webdev-dummy.herokuapp.com'
 let resource, actions
 beforeEach(() => {
     if (mockery.enable) {
-    	mockery.enable({warnOnUnregistered: false, useCleanCache:true})
-    	mockery.registerMock('node-fetch', fetch)
-    	require('node-fetch')
+        mockery.enable({warnOnUnregistered: false, useCleanCache:true})
+        mockery.registerMock('node-fetch', fetch)
+        require('node-fetch')
     }
     resource = require('./serverRequest')
     actions = require('./actions')
@@ -17,8 +17,8 @@ beforeEach(() => {
 
 afterEach(() => {
     if (mockery.enable) {
-	   mockery.deregisterMock('node-fetch')
-	   mockery.disable()
+       mockery.deregisterMock('node-fetch')
+       mockery.disable()
     }
 })
 
