@@ -4,7 +4,7 @@ import { Button, Well, ListGroupItem, Panel } from 'react-bootstrap'
 import { FormGroup, FormControl, ControlLabel } from 'react-bootstrap'
 import ContentEditable from 'react-contenteditable';
 import CommentsList from './commentsList'
-import { putComment } from './../../actions'
+import { editArticle } from './../../actions'
 
 export const ArticleCard = ({
     articleJSON, editable, postComment, sendArticleEdit 
@@ -25,7 +25,7 @@ export const ArticleCard = ({
         const commentText = newComment.value ? newComment.value : ""
         postComment(articleJSON._id, commentText, commentId)
     }
-    const editArticle = (() => sendArticleEdit(articleJSON._id, articleText))
+    const editArticle = (() => {sendArticleEdit(articleJSON._id, articleText)})
     return (
         <ListGroupItem> <Well>
         <Panel bsStyle='info' 
@@ -90,13 +90,19 @@ export default connect(
             postComment: (articleId, comment, commentId) => {
                 //commentID=-1 means post a new comment
                 //otherwise the PUT would edit a comment
-                return putComment(articleId, comment, commentId)
+                putComment(articleId, comment, commentId)
                 .then((returnedAction) => {
                     //(probably a refresh updateArticles action)
                     dispatch(returnedAction)
                 })
             },
-            sendArticleEdit: () => ({})
+            sendArticleEdit: (articleId, newArticleText) => {
+                editArticle(articleId, newArticleText)
+                .then((returnedAction) => {
+                    console.log("what next?\n\n\n\n\n")
+                    dispatch(returnedAction)
+                })
+            }
         }
     }
 )(ArticleCard)
