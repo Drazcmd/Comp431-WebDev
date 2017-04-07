@@ -3,13 +3,13 @@ import { connect } from 'react-redux'
 import { Button, Well, Accordion, Panel } from 'react-bootstrap'
 import CommentHolder from './commentHolder'
 
-export const CommentsList = ({comments, userId}) => {
+export const CommentsList = ({comments, userId, articleId}) => {
     //comments have an commentId field, in addition to others
     //(obviously, we only want to be edit our own comments)
     const mapCommentToHTML = ((comment, index) => {
         return (
             <CommentHolder 
-                comment={comment} key={index} 
+                comment={comment} key={index} articleId={articleId}
                 editable={userId === comment.author} 
             />
         )
@@ -36,7 +36,8 @@ export default connect(
     (state, ownProps) => {
         return { 
             comments: ownProps.comments,
-            userId: state.profileData.name,
+            articleId: ownProps.articleId,
+            userId: state.profileData.name
         } 
     },
     (dispatch) => {

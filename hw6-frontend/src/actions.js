@@ -99,8 +99,6 @@ export const addArticle = (newArticle, optionalImgFileObj) => {
             return nonJsonResource('POST', 'article', newArticle.text, fileBytestream)
         })
         .then(res => {
-            console.log('got response!', res)
-            console.log('must update articles')
             return updateShownArticles(VisModes.REFRESH)
         }).catch(error => {
             return dispError(error.message) 
@@ -123,14 +121,29 @@ export const addArticle = (newArticle, optionalImgFileObj) => {
     }
 }
 /**
-No, this didn't need to be implemented yet. However, I decided
-that I wanted to be able to test my comment display better - and 
-unfortunately basically no other people had ocmments working.
+* If commentId is -1, will add a new comment. If commentId is
+* any other value, it will attempt to edit the comment with that
+* number id in the article.
 */
-export const addComment = (articleId, newComment, commentId) => {
+export const putComment = (articleId, newCommentText, commentId) => {
+    console.log('PUTTING COMMENT!!!!')
+    console.log('aritcle id, new tetxt, comment id:', articleId, newCommentText, commentId)
     const payload = {
-        text: newComment,
+        text: newCommentText,
         commentId: commentId
+    }
+    return resource('PUT', `articles/${articleId}`, payload)
+    .then(res => {
+        return updateShownArticles(VisModes.REFRESH)
+    }).catch(error => {
+        return dispError(error.message)
+    })
+}
+export const editArticle = (articleId, newArticleText) => {
+    console.log('PUTTING article')
+    //note - if oyu put in the optional commentId, it'd update a comment instead
+    const payload = {
+        text: newArticleText,
     }
     return resource('PUT', `articles/${articleId}`, payload)
     .then(res => {
@@ -294,13 +307,6 @@ export const updateAvatar = (fileObj) => {
         })
     } else {
         throw new Error("No avatar image selected")
-    }
-}
-
-export const updateComment = (commentText, commentId) => {
-    console.log('TODO update comment: ', commentText, commentId)
-    return {
-        type: ActionTypes.UPDATE_COMMENT
     }
 }
 export const dispError = (message) => {

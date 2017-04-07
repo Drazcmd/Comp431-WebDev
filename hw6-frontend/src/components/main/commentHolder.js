@@ -1,19 +1,23 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Button } from 'react-bootstrap';
-import { updateComment } from './../../actions';
+import { putComment } from './../../actions';
 import ContentEditable from 'react-contenteditable';
 
-export const CommentHolder = ({comment, editable, sendCommentEdit}) => {
+export const CommentHolder = ({
+    comment, editable, articleId, sendCommentEdit
+}) => {
     //comments have text, commentId, date, author
     console.log('here is the comment:', comment)
-    let _commentText = comment.text;
-    const trackComment = ((e) => {_commentText = e.target.value});
-    const _sendCommentEdit = (() => {sendCommentEdit(_commentText)});
+    let commentText = comment.text;
+    const trackComment = ((e) => {commentText = e.target.value});
+    const _sendCommentEdit = (() => {
+        sendCommentEdit(articleId, commentText, comment.commentId)
+    });
     return (
         <div>
             <ContentEditable 
-            html={_commentText} disabled={!editable} onChange={trackComment}
+            html={commentText} disabled={!editable} onChange={trackComment}
             />
 
             <Button 
@@ -39,8 +43,11 @@ export default connect(
         }
     },(dispatch) => {
         return {
-            sendCommentEdit: (commentId, commentText) => {
-                dispatch(updateComment(commentId, commentText))
+            sendCommentEdit: (articleId, commentText, commentId) => {
+                putComment(articleId, commentText, commentId)
+                .then((returnedAction) => {
+                    dispatch(returnedAction)
+                })
             }
         }
     }
