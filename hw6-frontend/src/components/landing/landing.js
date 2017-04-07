@@ -10,7 +10,7 @@ export const Landing = ({}) => {
     return (
         <Grid>
             <Row>
-                <h1> ELECT-BOOK </h1>
+                <h1> CMD-BOOK </h1>
                 <ErrorDisplay />
             </Row>
             <Row>
