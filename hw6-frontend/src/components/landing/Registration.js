@@ -21,33 +21,33 @@ export const Registration = ({ registerUser }) => {
             <ControlLabel> First Name</ControlLabel>
             <FormControl 
                 type="text"
-                id="RegFirstName"
+                name="regFirstName"
                 placeholder="Enter Text Here"
                 inputRef={firstName=> {_firstName = firstName}}
             />
             <ControlLabel> Last Name</ControlLabel>
             <FormControl 
-                id="RegLastName"
+                name="regLastName"
                 type="text"
                 placeholder="Enter Text Here"
                 inputRef={lastName=> {_lastName = lastName}}
             />
             <ControlLabel> Username </ControlLabel>
             <FormControl 
-                id="RegUsername"
+                name="regUsername"
                 type="text"
                 placeholder="Enter Text Here"
                 inputRef={username=> {_username = username}}
             />
             <ControlLabel> Password </ControlLabel>
             <FormControl 
-                id="RegPassword"
+                name="regPassword"
                 type="text"
                 placeholder="Enter Text Here"
                 inputRef={password=> {_password = password}}
             />
         </FormGroup>
-        <Button bsStyle="primary" onClick={_register}> 
+        <Button name="regButton" bsStyle="primary" onClick={_register}> 
             {"Create New Account!"} 
         </Button>
         </Well>

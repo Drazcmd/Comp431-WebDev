@@ -1,18 +1,45 @@
 import { expect } from 'chai'
-import { go, sleep, findId, findCSS, By } from './selenium'
+import { go, sleep, findId, findName, findCSS, By } from './selenium'
 import common from './common'
 
 describe('Test Registration Feedback', () => {
-    const preamble = 'you are logged in as'
-
-    //todo - what's the deal with the id's???
-    it('should register as a new user', (done) => {
+    const validMsg = "Most recent error: Your registration inputs were valid, but the server's" +
+    " registration feature isn't working yet"
+    const invalidMsg = 'Most recent error: First Name is invalid (you entered "").'
+    it('should display a message when trying to register a new user', (done) => {
         sleep(500)
-            .then(findId('message').getText()
+            .then(findName("regFirstName").clear())
+            .then(findName("regLastName").clear())
+            .then(findName("regUsername").clear())
+            .then(findName("regPassword").clear())
+            .then(findName("regFirstName").sendKeys('bobby'))
+            .then(findName("regLastName").sendKeys('bibby'))
+            .then(findName("regUsername").sendKeys('babby'))
+            .then(findName("regPassword").sendKeys('bebby'))
+            .then(findName("regButton").click())
+            .then(findName('message').getText()
                 .then(text => {
-                    expect(text.indexOf(preamble)).to.equal(0)
+                    expect(text).to.equal(validMsg)
                 })
                 .then(done))
     })
+    it('should display an error message when not filling out all the registration fields', (done) => {
+        //this time we leave out just username (to make it easier to test)
+        sleep(500)
+            .then(findName("regFirstName").clear())
+            .then(findName("regLastName").clear())
+            .then(findName("regUsername").clear())
+            .then(findName("regPassword").clear())
+            .then(findName("regLastName").sendKeys('bibby'))
+            .then(findName("regUsername").sendKeys('babby'))
+            .then(findName("regPassword").sendKeys('bebby'))
+            .then(findName("regButton").click())
+            .then(findName('message').getText()
+                .then(text => {
+                    expect(text).to.equal(invalidMsg)
+                })
+                .then(done))
+    })
+
 
 })

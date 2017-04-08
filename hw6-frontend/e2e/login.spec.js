@@ -24,25 +24,20 @@ describe('Test Dummy Server Example Page', () => {
         const initialHeadline = 'Test Account'
         const newHeadline = `A new status message ${Math.random()}`
 
-        const getMessage = (msg) => 
+        const getHeadline = (msg) => 
             `${common.creds.username}, your current status is: '${msg}'`
 
         const updateHeadline = (msg) => () => 
             findName('newHeadline').sendKeys(msg)
             .then(findName('headlineBtn').click())
             .then(common.logout)
-            //to ensure there aren't multiple of the same names/ids 
-            .then(go())
-            .then(sleep(500))
             .then(common.login)
-            .then(sleep(500))
             .then(findName('newHeadline').clear())
             .then(findName('headline').getText().then(text => {
-                expect(text).to.equal(getMessage(msg))
+                expect(text).to.equal(getHeadline(msg))
             }))
 
         updateHeadline(newHeadline)()
-        .then(sleep(500))
         .then(updateHeadline(initialHeadline))
         .then(done)
     })
