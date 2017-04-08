@@ -38,12 +38,12 @@ export const ArticleCard = ({
         header={'Post Header (cannot be hidden or edited)'}
         >
             <div> {articleImage} </div>
-            <div name={`article{articleJSON._id}ID`}>
-                ID: {articleJSON._id}
-            </div>
-            <div> 
-                Author: {articleJSON.author}. 
-                Written at {articleJSON.date} 
+            <div name={"authorAndID"}>
+                <br />
+                ID: {articleJSON._id}.
+                <br /> <br />
+                Author: {articleJSON.author}.
+                Written at {articleJSON.date}.
             </div>
             <div> Image url (if any): { articleJSON.img }</div>
         </Panel>
@@ -58,7 +58,7 @@ export const ArticleCard = ({
                 disabled={!editable}
             />
             <br />
-            <Button bsSize="small" onClick = { editArticle } 
+            <Button bsSize="small" name="editArticleBtn" onClick = { editArticle } 
                 disabled={!editable}
             >
             { "Edit Article" }
