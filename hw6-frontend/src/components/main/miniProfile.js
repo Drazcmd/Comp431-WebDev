@@ -21,19 +21,19 @@ export const MiniProfile = ({
             width={ profileImgWidth } src={ profileImgSrc } />
         </Col>
         <Col>
-            <span> <h2>
+            <span> <h2 name="headline">
                 { profileName }, your current status is: '{ profileStatus }' 
             </h2> </span>
 
             <form> <FormGroup controlId="writeStatusForm">
                 <ControlLabel> Update your status? </ControlLabel>
                 <FormControl
-                    type="text" placeholder={ "Write status here.." }
+                    type="text" name="newHeadline" placeholder={ "Write status here.." }
                     inputRef={(_newStatus) => {newStatus = _newStatus}} />
                 <br />
 
                 <Button bsStyle="success" type="reset" 
-                    onClick={ _updateStatus } >
+                    onClick={ _updateStatus } name="headlineBtn">
                     {"Update Status"}
                 </Button>
                 <Button type="reset" > { "Clear text" } </Button>

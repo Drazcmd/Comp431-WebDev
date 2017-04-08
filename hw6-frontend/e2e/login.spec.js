@@ -1,20 +1,21 @@
 import { expect } from 'chai'
-import { go, sleep, findId, findCSS, By } from './selenium'
+import { go, sleep, findId, findName, findCSS, By } from './selenium'
 import common from './common'
 
 describe('Test Dummy Server Example Page', () => {
 
-    const preamble = 'you are logged in as'
-
+    const username = common.creds.username
     before('should log in', (done) => {
-        go().then(common.login).then(done)
+        go().then(sleep(500)).then(common.login).then(done)
     })
 
     it('should log in as the test user', (done) => {
         sleep(500)
-            .then(findId('message').getText()
+            .then(findName('headline').getText()
                 .then(text => {
-                    expect(text.indexOf(preamble)).to.equal(0)
+                    //looks like the following:
+                    //'cmd11test, your current status is:...'
+                    expect(text.indexOf(username)).to.equal(0)
                 })
                 .then(done))
     })
@@ -24,19 +25,24 @@ describe('Test Dummy Server Example Page', () => {
         const newHeadline = `A new status message ${Math.random()}`
 
         const getMessage = (msg) => 
-            `${preamble} ${common.creds.username} "${msg}"`
+            `${common.creds.username}, your current status is: '${msg}'`
 
         const updateHeadline = (msg) => () => 
-            findId('newHeadline').sendKeys(msg)
-            .then(findId('headline').click())
+            findName('newHeadline').sendKeys(msg)
+            .then(findName('headlineBtn').click())
             .then(common.logout)
+            //to ensure there aren't multiple of the same names/ids 
+            .then(go())
+            .then(sleep(500))
             .then(common.login)
-            .then(findId('newHeadline').clear())
-            .then(findId('message').getText().then(text => {
+            .then(sleep(500))
+            .then(findName('newHeadline').clear())
+            .then(findName('headline').getText().then(text => {
                 expect(text).to.equal(getMessage(msg))
             }))
 
         updateHeadline(newHeadline)()
+        .then(sleep(500))
         .then(updateHeadline(initialHeadline))
         .then(done)
     })

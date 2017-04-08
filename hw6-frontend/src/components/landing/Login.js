@@ -16,19 +16,19 @@ export const Login = ({ dispatchLogin }) => {
         >
             <ControlLabel> Username </ControlLabel>
             <FormControl 
-                type="text"
+                type="text" name="username"
                 placeholder="Enter Username Here"
                 inputRef={username=> {_username = username}}
             />
             <ControlLabel> Password </ControlLabel>
             <FormControl 
-                type="text"
+                type="text" name="password"
                 placeholder="Enter Password Here"
                 inputRef={password=> {_password = password}}
             />
 
         </FormGroup>
-            <Button bsStyle="primary" onClick={ _login }>
+            <Button bsStyle="primary" name="loginBtn" onClick={ _login }>
                 {"Login!"}
             </Button>
     

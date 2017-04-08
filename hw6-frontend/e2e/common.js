@@ -1,5 +1,5 @@
 import { expect } from 'chai'
-import { findId, sleep } from './selenium'
+import { findId, findName, sleep, wait } from './selenium'
 
 exports.creds = {
     username: 'cmd11test',
@@ -8,18 +8,14 @@ exports.creds = {
 
 exports.login = () =>
     sleep(500)
-        .then(findId('username').clear())
-        .then(findId('password').clear())
-        .then(findId('username').sendKeys(exports.creds.username))
-        .then(findId('password').sendKeys(exports.creds.password))
-        .then(findId('login').click())
+        .then(findName('username').clear())
+        .then(findName('password').clear())
+        .then(findName('username').sendKeys(exports.creds.username))
+        .then(findName('password').sendKeys(exports.creds.password))
+        .then(findName('loginBtn').click())
         .then(sleep(2000))
 
 exports.logout = () =>
     sleep(500)
-    .then(findId('logout').click())
-    .then(sleep(2000))
-    .then(findId('message').getText()
-        .then(text => {
-            expect(text).to.equal('You have logged out')
-        }))
+    .then(findName('logoutBtn').click())
+    .then(sleep(500))

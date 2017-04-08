@@ -9,6 +9,7 @@ const driver = new webdriver.Builder()
 exports.driver = driver
 exports.By = webdriver.By
 exports.findId = id => driver.findElement(webdriver.By.id(id))
+exports.findName = name => driver.findElement(webdriver.By.name(name))
 exports.findCSS = css => driver.findElement(webdriver.By.css(css))
 exports.go = _ => driver.navigate().to(url)
 exports.sleep = millis => driver.sleep(millis)

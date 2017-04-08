@@ -10,7 +10,7 @@ export const NavBar = ({ logout }) => {
         <ButtonToolbar> 
         <NavButton redirectLocation={"MAIN_PAGE"} text={"Main Page"}/>
         <NavButton redirectLocation={"PROFILE_PAGE"} text={"Profile"} />
-        <Button bsStyle="primary" onClick = { logout }> Logout </Button>
+        <Button bsStyle="primary" name="logoutBtn" onClick = { logout }> Logout </Button>
         </ButtonToolbar>
     )
 }
