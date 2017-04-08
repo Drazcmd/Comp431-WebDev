@@ -58,8 +58,8 @@ export const ArticleCard = ({
                 disabled={!editable}
             />
             <br />
-            <Button bsSize="small" name="editArticleBtn" onClick = { editArticle } 
-                disabled={!editable}
+            <Button bsSize="small" name={`editArticleBtn${articleJSON._id}`}
+                onClick = { editArticle } disabled={!editable}
             >
             { "Edit Article" }
             </Button>
