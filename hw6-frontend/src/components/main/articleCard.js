@@ -38,6 +38,9 @@ export const ArticleCard = ({
         header={'Post Header (cannot be hidden or edited)'}
         >
             <div> {articleImage} </div>
+            <div name={`article{articleJSON._id}ID`}>
+                ID: {articleJSON._id}
+            </div>
             <div> 
                 Author: {articleJSON.author}. 
                 Written at {articleJSON.date} 
@@ -50,7 +53,7 @@ export const ArticleCard = ({
         > 
             { editInstructions }
             <br /> <br />
-            <ContentEditable 
+            <ContentEditable name={"article"}
                 html={articleText} disabled={!editable} onChange={trackTextEdit}
                 disabled={!editable}
             />

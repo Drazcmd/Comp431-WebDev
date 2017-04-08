@@ -13,7 +13,7 @@ export const Feed = ({ articles, visibilityMode, filterStr, userId }) => {
         {
             correctlyOrderedArticles().map((article, index) => (
                 <ArticleCard articleJSON={ article } key={ index }
-                 editable={article.author === userId}
+                 editable={article.author === userId} 
                 />
             ))
         }

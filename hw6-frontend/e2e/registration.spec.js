@@ -2,6 +2,7 @@ import { expect } from 'chai'
 import { go, sleep, findId, findName, findCSS, By } from './selenium'
 import common from './common'
 
+//unlike most other tests, no need to log in or log out
 describe('Test Registration Feedback', () => {
     const validMsg = "Most recent error: Your registration inputs were valid, but the server's" +
     " registration feature isn't working yet"
@@ -38,8 +39,8 @@ describe('Test Registration Feedback', () => {
                 .then(text => {
                     expect(text).to.equal(invalidMsg)
                 })
-                .then(done))
+                .then(done)
+            )
     })
-
 
 })

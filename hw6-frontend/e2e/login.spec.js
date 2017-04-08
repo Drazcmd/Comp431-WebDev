@@ -27,8 +27,8 @@ describe('Test Dummy Server Example Page', () => {
         const getHeadline = (msg) => 
             `${common.creds.username}, your current status is: '${msg}'`
 
-        const updateHeadline = (msg) => () => 
-            findName('newHeadline').sendKeys(msg)
+        const updateHeadline = (msg) => () => {
+            return findName('newHeadline').sendKeys(msg)
             .then(findName('headlineBtn').click())
             .then(common.logout)
             .then(common.login)
@@ -36,6 +36,7 @@ describe('Test Dummy Server Example Page', () => {
             .then(findName('headline').getText().then(text => {
                 expect(text).to.equal(getHeadline(msg))
             }))
+        }
 
         updateHeadline(newHeadline)()
         .then(updateHeadline(initialHeadline))

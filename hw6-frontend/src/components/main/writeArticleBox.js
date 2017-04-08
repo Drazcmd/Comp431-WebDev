@@ -22,17 +22,17 @@ export const WriteArticleBox = ({
         <form> <FormGroup controlId="writeArticleForm">
             <ControlLabel> Give your article an image: </ControlLabel>
             <FormControl 
-                type="file"
+                type="file" 
                 inputRef={_articleImageInput => {articleImageInput = _articleImageInput}} 
             />
             <br />
 
             <ControlLabel> Write an article: </ControlLabel>
             <FormControl
-                type="text" placeholder={ "Write article here..." }
+                type="text" placeholder={ "Write article here..." } name={"writeArticle"}
                 inputRef={_articleTextInput => {articleTextInput = _articleTextInput}} 
             />
-            <Button type="reset" bsStyle="success" onClick={ _postArticle } >
+            <Button type="reset" bsStyle="success" name="writeArticleBtn" onClick={ _postArticle } >
                 {"Post article!"}
             </Button>
             <Button type="reset" >

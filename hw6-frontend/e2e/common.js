@@ -13,9 +13,9 @@ exports.login = () =>
         .then(findName('username').sendKeys(exports.creds.username))
         .then(findName('password').sendKeys(exports.creds.password))
         .then(findName('loginBtn').click())
-        .then(sleep(500))
+        .then(sleep(2000))
 
 exports.logout = () =>
     sleep(500)
     .then(findName('logoutBtn').click())
-    .then(sleep(50))
+    .then(sleep(500))
