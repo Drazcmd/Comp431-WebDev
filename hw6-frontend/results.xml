@@ -1,0 +1,11 @@
+<testsuite name="Mocha Tests" tests="9" failures="0" errors="0" skipped="0" timestamp="2017-04-09T04:51:06" time="61.309">
+<testcase classname="Test Articles" name="should create a new article and validate article appears in feed" time="11.718"/>
+<testcase classname="Test Articles" name="should edit an article and validate changed article text" time="17.687"/>
+<testcase classname="Test Articles" name="should find the special article (&quot;Only one article like this&quot;)" time="5.361"/>
+<testcase classname="Followee tests" name="should add a new follower user and verify the following count increased by one" time="6.112"/>
+<testcase classname="Test Login" name="should log in as the test user" time="4.971"/>
+<testcase classname="Test Login" name="Update the headline and verify the change" time="13.078"/>
+<testcase classname="Test Registration Feedback" name="should display a message when trying to register a new user" time="1.172"/>
+<testcase classname="Test Registration Feedback" name="should display an error message when not filling out all the registration fields" time="0.951"/>
+<testcase classname="shutdown" name="now" time="0.106"/>
+</testsuite>

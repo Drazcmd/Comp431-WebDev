@@ -9,7 +9,7 @@ export const NavButton = ({ displayText, navigate, beforeNavigating }) => {
     }
     return (
         <span>
-        <Button bsStyle="primary" onClick = { doStuffThenNavigate }> { displayText }  </Button>
+        <Button name={displayText} bsStyle="primary" onClick = { doStuffThenNavigate }> { displayText }  </Button>
         </span>
     )
 }
