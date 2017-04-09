@@ -16,28 +16,28 @@ export const ProfileUpdateSection = ({ profileData, dispatchProfileUpdate }) => 
     return (
         <Well>
         <form> <FormGroup controlId="ProfileInfo">
-            <ControlLabel> Email: {profileData.email} </ControlLabel>
-            <FormControl type="text" placeholder="Update Email Here"
+            <ControlLabel name="email"> Email: {profileData.email} </ControlLabel>
+            <FormControl name={"updateEmail"} type="text" placeholder="Update Email Here"
             inputRef={(email) => {_email = email }} />
 
             <br />
-            <ControlLabel> Zip: {profileData.zip} </ControlLabel>
-            <FormControl type="text" placeholder="Update Zipcode Here"
+            <ControlLabel name="zipcode"> Zip: {profileData.zip} </ControlLabel>
+            <FormControl name={"updateZipcode"} type="text" placeholder="Update Zipcode Here"
             inputRef={(zip) => {_zip = zip }} />
         </FormGroup> </form>
 
-        <Button bsStyle="primary" onClick = { _dispatchProfileUpdate }>
+        <Button name={"profileUpdateBtn"} bsStyle="primary" onClick = { _dispatchProfileUpdate }>
             Update Information! 
         </Button>
         <br /> <br /> <br />
 
-        <form> <FormGroup controlId="PasswordUpdate">
+        <form> <FormGroup name="updatePassword" controlId="PasswordUpdate">
         <ControlLabel> 
             Password: (Currently unimplemented! Password will not change) 
         </ControlLabel>
-        <FormControl type="text" placeholder="Update Password Here" />
+        <FormControl name={"updatePassword"} type="text" placeholder="Update Password Here" />
         </FormGroup> </form>
-        <Button> Coming Soon: Update Password! </Button>
+        <Button name={"passwordUpdateBtn"}> Coming Soon: Update Password! </Button>
         </Well>
     )
 }
