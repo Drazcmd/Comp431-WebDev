@@ -37,7 +37,7 @@ describe('Test Articles', () => {
         .then(common.logout)
         .then(common.login)
         .then(check0thArticle(newArticle))
-        .then(done)
+        .then(sleep(500)).then(common.logout).then(done)
     })
     
     it('should edit an article and validate changed article text', (done) => {
@@ -82,7 +82,7 @@ describe('Test Articles', () => {
         .then(common.login)
         .then(sleep(500))
         .then(check0thArticle(newText2))
-        .then(done)
+        .then(sleep(500)).then(common.logout).then(done)
     })
 
     it('should find the special article ("Only one article like this")', (done) => {
@@ -114,9 +114,6 @@ describe('Test Articles', () => {
                 expect(validHeaders.length).to.eql(1)
             })
         })
-        .then(done)
+        .then(sleep(500)).then(common.logout).then(done)
     })
 })    
-after('should log out', (done) => {
-    sleep(500).then(common.logout).then(done)
-})

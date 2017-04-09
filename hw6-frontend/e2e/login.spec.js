@@ -2,21 +2,20 @@ import { expect } from 'chai'
 import { go, sleep, findId, findName, findCSS, By } from './selenium'
 import common from './common'
 
-before('should log in', (done) => {
-    go().then(sleep(500)).then(common.login).then(done)
-})
 describe('Test Login', () => {
     const username = common.creds.username
 
     it('should log in as the test user', (done) => {
-        sleep(500)
-            .then(findName('headline').getText()
-                .then(text => {
-                    //looks like the following:
-                    //'cmd11test, your current status is:...'
-                    expect(text.indexOf(username)).to.equal(0)
-                })
-                .then(done))
+        go().then(sleep(500)).then(common.login)
+        .then(sleep(500))
+        .then(findName('headline').getText()
+            .then(text => {
+                //looks like the following:
+                //'cmd11test, your current status is:...'
+                expect(text.indexOf(username)).to.equal(0)
+            })
+            .then(common.logout)
+            .then(done))
     })
 
     it("Update the headline and verify the change", (done) => {
@@ -37,13 +36,11 @@ describe('Test Login', () => {
             }))
         }
 
-        updateHeadline(newHeadline)()
-        .then(updateHeadline(initialHeadline))
+        go().then(sleep(500)).then(common.login)
+        .then(sleep(500))
+        .then(updateHeadline(newHeadline)())
+        .then(updateHeadline(initialHeadline)())
         .then(common.logout)
         .then(done)
     })
-})
-after('should log out', (done) => {
-    console.log('logging out')
-    sleep(50).then(common.logout).then(done)
 })
