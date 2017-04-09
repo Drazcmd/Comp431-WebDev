@@ -11,14 +11,14 @@ export const followSideBar = ({ followees, msg }) => {
         <Grid>
         {
             followees.map((followee, index) => (
-                <Row key={index}>
+                <Row key={index} name={"followee"}>
                 <Followee data={followee} key={index} />
                 </Row>
             ))
         }
         <Row>
-             <div> Follow new people here! </div>
-             <NewFollowers />
+            <div> Follow new people here! </div>
+            <NewFollowers />
             <ErrorDisplay />
          </Row>
 

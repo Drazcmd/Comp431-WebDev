@@ -20,9 +20,11 @@ export const newFollowers = ({ loggedInUser, addFollowee }) => {
 
             <FormControl
             type="text" placeholder={ "Write name here..." }
-            onChange={ _onChange }
+            onChange={ _onChange } name={"addFollowee"}
             />
-            <Button bsSize="small" onClick={ _addFollowee }> 
+            <Button bsSize="small" onClick={ _addFollowee }
+            name={"addFolloweeBtn"}
+            > 
             {"Add new followee"}
             </Button>
 

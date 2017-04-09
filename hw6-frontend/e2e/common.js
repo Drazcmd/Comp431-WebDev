@@ -6,7 +6,7 @@ exports.creds = {
     password: 'damage-butter-memory'
 }
 
-exports.login = () =>
+exports.login = () => {
     sleep(500)
         .then(findName('username').clear())
         .then(findName('password').clear())
@@ -14,8 +14,10 @@ exports.login = () =>
         .then(findName('password').sendKeys(exports.creds.password))
         .then(findName('loginBtn').click())
         .then(sleep(2000))
+}
 
-exports.logout = () =>
+exports.logout = () => {
     sleep(500)
     .then(findName('logoutBtn').click())
     .then(sleep(500))
+}

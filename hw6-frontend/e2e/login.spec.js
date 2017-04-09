@@ -2,7 +2,7 @@ import { expect } from 'chai'
 import { go, sleep, findId, findName, findCSS, By } from './selenium'
 import common from './common'
 
-describe('Test Dummy Server Example Page', () => {
+describe('Test Login', () => {
 
     const username = common.creds.username
     before('should log in', (done) => {

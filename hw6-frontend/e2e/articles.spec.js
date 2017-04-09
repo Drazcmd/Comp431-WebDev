@@ -19,7 +19,6 @@ const check0thArticle = (newArticle) => {
             expect(articleTexts[0]).to.eql(newArticle)
             //and ensure there re no other such articles in the feed
             expect(articleTexts.filter(text => text === newArticle).length).to.eql(1)
-            console.log(savedArticles[0])
             return savedArticles[0]
         })
     })
@@ -29,7 +28,7 @@ before('should log in', (done) => {
     go().then(sleep(500)).then(common.login).then(done)
 })
 
-describe('Test Article Creation', () => {
+describe('Test Articles', () => {
     it('should create a new article and validate article appears in feed', (done) => {
         const newArticle = `A new article ${Math.random()}`
         postArticle(newArticle)()
@@ -37,12 +36,9 @@ describe('Test Article Creation', () => {
         .then(common.logout)
         .then(common.login)
         .then(check0thArticle(newArticle))
-        .then(common.logout)
         .then(done)
     })
-})
-
-describe('Test Article Edits', () => {
+    
     it('should edit an article and validate changed article text', (done) => {
         const newText1 = `A new article ${Math.random()}`
         const newText2 = `A new article ${Math.random()}`
@@ -53,27 +49,21 @@ describe('Test Article Edits', () => {
         //only will work if we've recently posted the one we want (so it's the 0 index
         //among stuff we've posted)
         const getWantedID = () => findNames('authorAndID').then(articleHeaders => {
-            console.log('headers:', articleHeaders)
             return Promise.all(articleHeaders.map(
                 (articleHeader) => articleHeader.getText()
             )).then((headerTexts) => {
-                console.log("hello!", headerTexts)
                 const validHeaders = headerTexts.filter(headerText => {
                     //filtered since someone else might've posted in the meantime, and 
                     //we don't accidentally want the weird one we don't actually own 
-                    console.log('author and ID', getAuthor(headerText), getID(headerText))
                     return getAuthor(headerText) === username && getID(headerText) !== '12345'
                 })
-                console.log('valid headers:', validHeaders)
-                console.log('this ID:', getID(validHeaders[0]))
                 return getID(validHeaders[0])
             })
         })
 
         //makes life way easier since we can just look at the 0th result from the
         //findNames, so long as we only allow ones from ourselves as the author 
-        common.login()
-        .then(postArticle(newText1)())
+        postArticle(newText1)()
         .then(sleep(500))
         .then(check0thArticle(newText1))
         .then(sleep(500))
@@ -81,19 +71,51 @@ describe('Test Article Edits', () => {
         .then(common.login)
         .then(sleep(500))
         .then(findName('authorAndID'))
-        .then(result => console.log("result:", result))
         .then(check0thArticle(newText1))
         .then(findName('article').clear())
         .then(findName('article').sendKeys(newText2))
         .then(sleep(500))
         .then(getWantedID().then(foundID => {
-            console.log('found id', foundID)
             findName(`editArticleBtn${foundID}`).click()
         }))
         .then(common.logout)
         .then(common.login)
         .then(check0thArticle(newText2))
-        .then(common.logout)
         .then(done)
     })
+})    
+it('should find the special article ("Only one article like this")', (done) => {
+    const specialText = 'Only One Article Like This -- This test article has been prepared for you. Be sure to validate the author of this article in your test suite'
+
+    findNames('article').then(articles => {
+        return Promise.all(savedArticles.map((article) => article.getText()))
+        .then(articleTexts => {
+            console.log('article texts', articleTexts)
+            //one of the articles should have the special text we want, and its ID should be 12345
+            expect(articleTexts.some(text => text === specialText)).to.be.true
+            //and ensure there re no other such articles in the feed
+            expect(articleTexts.filter(text => text === specialText).length).to.eql(1)
+        })
+    })
+    .then(() => findNames('authorAndID'))
+    .then(articleHeaders => {
+        console.log('headers:', articleHeader)
+        //and now ensure there's only one article with id 12345 written by the user
+        //that'll be the article we found
+        return Promise.all(articleHeaders.map(
+            (articleHeader) => articleHeader.getText()
+        )).then((headerTexts) => {
+            console.log(headerTexts)
+            const validHeaders = headerTexts.filter(headerText => {
+                //filtered since someone else might've posted in the meantime, and 
+                //we don't accidentally want the weird one we don't actually own 
+                return getAuthor(headerText) === username && getID(headerText) === '12345'
+            })
+            expect(validHeaders.length).to.eql(1)
+        })
+    })
+    .then(done)
+})
+after('should log out', (done) => {
+    common.logout().then(done)
 })
