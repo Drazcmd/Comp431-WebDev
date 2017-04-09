@@ -2,12 +2,12 @@ import { expect } from 'chai'
 import { go, sleep, findId, findName, findCSS, By } from './selenium'
 import common from './common'
 
+before('should log in', (done) => {
+    go().then(sleep(500)).then(common.login).then(done)
+})
 describe('Test Login', () => {
 
     const username = common.creds.username
-    before('should log in', (done) => {
-        go().then(sleep(500)).then(common.login).then(done)
-    })
 
     it('should log in as the test user', (done) => {
         sleep(500)
@@ -43,7 +43,8 @@ describe('Test Login', () => {
         .then(done)
     })
 
-    after('should log out', (done) => {
-        common.logout().then(done)
-    })
+})
+after('should log out', (done) => {
+    console.log('logging out')
+    common.logout().then(sleep(5000).then(done)
 })

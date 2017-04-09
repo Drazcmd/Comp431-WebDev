@@ -22,7 +22,6 @@ describe('Followee tests', () => {
         	expect(followees.length).to.eql(initialFolloweesNum + 1)
         })
         .then(sleep(500))
-        .then(common.logout)
         .then(done)
     })
 })
