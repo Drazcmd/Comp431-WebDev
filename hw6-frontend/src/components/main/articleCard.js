@@ -39,9 +39,7 @@ export const ArticleCard = ({
         >
             <div> {articleImage} </div>
             <div name={"authorAndID"}>
-                <br />
                 ID: {articleJSON._id}.
-                <br /> <br />
                 Author: {articleJSON.author}.
                 Written at {articleJSON.date}.
             </div>
