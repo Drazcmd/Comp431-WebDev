@@ -6,7 +6,6 @@ before('should log in', (done) => {
     go().then(sleep(500)).then(common.login).then(done)
 })
 describe('Test Login', () => {
-
     const username = common.creds.username
 
     it('should log in as the test user', (done) => {
@@ -28,11 +27,11 @@ describe('Test Login', () => {
             `${common.creds.username}, your current status is: '${msg}'`
 
         const updateHeadline = (msg) => () => {
-            return findName('newHeadline').sendKeys(msg)
+            return findName('newHeadline').clear()
+            .then(findName('newHeadline').sendKeys(msg))
             .then(findName('headlineBtn').click())
             .then(common.logout)
             .then(common.login)
-            .then(findName('newHeadline').clear())
             .then(findName('headline').getText().then(text => {
                 expect(text).to.equal(getHeadline(msg))
             }))
@@ -40,11 +39,11 @@ describe('Test Login', () => {
 
         updateHeadline(newHeadline)()
         .then(updateHeadline(initialHeadline))
+        .then(common.logout)
         .then(done)
     })
-
 })
 after('should log out', (done) => {
     console.log('logging out')
-    common.logout().then(sleep(5000).then(done)
+    common.logout().then(done)
 })

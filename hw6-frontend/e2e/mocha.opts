@@ -2,3 +2,4 @@
 --recursive
 --colors
 --timeout 30000
+--bail
