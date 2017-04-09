@@ -32,7 +32,7 @@ export const WriteArticleBox = ({
                 type="text" placeholder={ "Write article here..." } name={"writeArticle"}
                 inputRef={_articleTextInput => {articleTextInput = _articleTextInput}} 
             />
-            <Button type="reset" bsStyle="success" name="writeArticleBtn" onClick={ _postArticle } >
+            <Button type="reset" bsStyle="success" name={"writeArticleBtn"} onClick={ _postArticle } >
                 {"Post article!"}
             </Button>
             <Button type="reset" >

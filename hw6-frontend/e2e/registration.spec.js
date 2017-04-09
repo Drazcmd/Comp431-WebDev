@@ -2,11 +2,15 @@ import { expect } from 'chai'
 import { go, sleep, findId, findName, findCSS, By } from './selenium'
 import common from './common'
 
+before('should log in', (done) => {
+    go().then(sleep(500)).then(done)
+})
+const validMsg = "Most recent error: Your registration inputs were valid, but the server's" +
+" registration feature isn't working yet"
+
+const invalidMsg = 'Most recent error: First Name is invalid (you entered "").'
 //unlike most other tests, no need to log in or log out
 describe('Test Registration Feedback', () => {
-    const validMsg = "Most recent error: Your registration inputs were valid, but the server's" +
-    " registration feature isn't working yet"
-    const invalidMsg = 'Most recent error: First Name is invalid (you entered "").'
     it('should display a message when trying to register a new user', (done) => {
         sleep(500)
             .then(findName("regFirstName").clear())

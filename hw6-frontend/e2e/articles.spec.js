@@ -2,6 +2,7 @@ import { expect } from 'chai'
 import { go, sleep, findName, findNames, By } from './selenium'
 import common from './common'
 
+
 const username = common.creds.username
 const postArticle = (newArticle) => () => {
     return findName('writeArticle').clear()
@@ -27,14 +28,11 @@ const check0thArticle = (newArticle) => {
 const getID = (headerText) => headerText.split("ID: ")[1].split(".")[0]
 const getAuthor = (headerText) => headerText.split("Author: ")[1].split(".")[0]
 
-before('should log in', (done) => {
-    go().then(sleep(500)).then(common.login).then(done)
-})
-
 describe('Test Articles', () => {
     it('should create a new article and validate article appears in feed', (done) => {
         const newArticle = `A new article ${Math.random()}`
-        postArticle(newArticle)()
+        go().then(sleep(500)).then(common.login)
+        .then(postArticle(newArticle)())
         .then(check0thArticle(newArticle))
         .then(common.logout)
         .then(common.login)
@@ -63,7 +61,8 @@ describe('Test Articles', () => {
 
         //makes life way easier since we can just look at the 0th result from the
         //findNames, so long as we only allow ones from ourselves as the author 
-        postArticle(newText1)()
+        go().then(sleep(500)).then(common.login)
+        .then(postArticle(newText1)())
         .then(sleep(500))
         .then(check0thArticle(newText1))
         .then(sleep(500))
@@ -79,7 +78,9 @@ describe('Test Articles', () => {
             findName(`editArticleBtn${foundID}`).click()
         }))
         .then(common.logout)
+        .then(sleep(500))
         .then(common.login)
+        .then(sleep(500))
         .then(check0thArticle(newText2))
         .then(done)
     })
@@ -87,10 +88,11 @@ describe('Test Articles', () => {
     it('should find the special article ("Only one article like this")', (done) => {
         const specialText = 'Only One Article Like This -- This test article has been prepared for you. Be sure to validate the author of this article in your test suite'
 
-        findNames('article').then(articles => {
+        go().then(sleep(500)).then(common.login)
+        .then(() => findNames('article'))
+        .then(articles => {
             return Promise.all(articles.map((article) => article.getText()))
             .then(articleTexts => {
-                console.log('article texts', articleTexts)
                 //one of the articles should have the special text we want, and its ID should be 12345
                 expect(articleTexts.some(text => text === specialText)).to.be.true
                 //and ensure there re no other such articles in the feed
@@ -99,13 +101,11 @@ describe('Test Articles', () => {
         })
         .then(() => findNames('authorAndID'))
         .then(articleHeaders => {
-            console.log('headers:', articleHeaders)
             //and now ensure there's only one article with id 12345 written by the user
             //that'll be the article we found
             return Promise.all(articleHeaders.map(
                 (articleHeader) => articleHeader.getText()
             )).then((headerTexts) => {
-                console.log(headerTexts)
                 const validHeaders = headerTexts.filter(headerText => {
                     //filtered since someone else might've posted in the meantime, and 
                     //we don't accidentally want the weird one we don't actually own 
@@ -118,5 +118,5 @@ describe('Test Articles', () => {
     })
 })    
 after('should log out', (done) => {
-    common.logout().then(done)
+    sleep(500).then(common.logout).then(done)
 })

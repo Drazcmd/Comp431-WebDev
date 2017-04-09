@@ -45,5 +45,5 @@ describe('Test Login', () => {
 })
 after('should log out', (done) => {
     console.log('logging out')
-    common.logout().then(done)
+    sleep(50).then(common.logout).then(done)
 })
