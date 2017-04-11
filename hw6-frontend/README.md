@@ -1,2 +1,3 @@
-# Clayton's HW5 - starting based off my HW4 which was based off the example COMP431/531 Frontend Repository
+# Clayton's HW6, frontend code. 
+Original setup done using the COMP431/531 Frontend Repository as a starting point
 
