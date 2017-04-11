@@ -1,14 +1,23 @@
 const md5 = require('md5')
 const bodyParser = require('body-parser')
+const REDIS_URL = redis://h:p58afdee5f98f2e9a6d89cb8f0f284a3b46ff8644bda0c55b4b9bddc6206e451b@ec2-34-206-56-30.compute-1.amazonaws.com:45719
+
 exports.setup = function(app){
     app.post('/login', login)
     app.post('/register', register)
     app.put('/logout', isLoggedIn, logout)
 }
+
+
 //Maps username to hash
 const authMap = { }
-const cookieKey = 'sid'
+const cookieKey = 'sid';
+
+// - move in-memory map to a redis store
+var redis = requires('redis').createClient(process.env.REDIS_URL)
 const sessionMap = { }
+
+
 const login = (req, res) => {
 	console.log('Payload received', req.body)
 
@@ -35,9 +44,21 @@ const login = (req, res) => {
         //information about other users (security hole??)
 		const sessionId = Math.random().toString()
 		res.cookie(cookieKey, sessionId, {maxAge: 3600*1000, httpOnly: true})
+
+        //user object?
+        redis.hmset(sid, null)
+        redis.hgetall(sid, function(err, userObj) {
+            console.log(sid + 'mapped to ' + null)
+        })
+        //TODO - remove using the map
 		sessionMap[sessionId] = username
+
+
 		const msg = {username: username, result: 'success'}
 		res.send(msg)
+
+
+
 	} else {
 		const msg = {username: username, result: 'failure'}
 		res.send(msg)
