@@ -41,8 +41,8 @@ const login = (req, res) => {
         //Better idea - use a monotonically increasing or decreasing function. But ideally
         //not something predictable (i.e. always add 1 or something) so that you don't leak
         //information about other users (security hole??)
-		const sessionId = Math.random().toString()
-		res.cookie(cookieKey, sessionId, {maxAge: 3600*1000, httpOnly: true})
+		const sid = Math.random().toString()
+		res.cookie(cookieKey, sid, {maxAge: 3600*1000, httpOnly: true})
 
         redis.hmset(sid, userObj)
         redis.hgetall(sid, function(err, userObj) {
