@@ -13,8 +13,8 @@ exports.setup = function(app){
 const authMap = { }
 const cookieKey = 'sid';
 
-// - move in-memory map to a redis store
-const redis = require('redis').createClient(process.env.REDIS_URL)
+// - we moved the in-memory session id map to a redis store
+const redis = require('redis').createClient(process.env.REDIS_URL || REDIS_URL)
 
 
 const login = (req, res) => {
