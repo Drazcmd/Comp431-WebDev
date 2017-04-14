@@ -48,9 +48,6 @@ const uploadImage = (publicId) => (req, res, next) =>
 ///////////////////////////////////////////////////////////////////////////////
 // These three functions are examples to validate that uploading works
 // You do not want them in your final application
-               //
-               // RIGHT NOW THEY AREN'T BEING USED!
-// 
 function postImage(req, res) {
    // create an image tag from the cloudinary upload
    const image = cloudinary.image(req.fileid, {
@@ -75,17 +72,17 @@ function getImage(req, res) {
 	);
 }
 
-//function setup(app) {
+function setup(app) {
 	
 	// this provides a form.  This is uneeded because
 	// we have the upload on the frontend already.
     // but I provide it here for the inclass exercise example
-	//app.get('/image', getImage)
+    app.get('/image', getImage)
 
 	// body-parser provides us the textual formData
 	// which is just title in this case
-	//app.post('/image', uploadImage('title'), postImage)
-//}
+    app.post('/image', uploadImage('title'), postImage)
+}
 //
 //
 // remove the above three functions and change the last line below to
@@ -97,4 +94,4 @@ function getImage(req, res) {
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-module.exports = uploadImage
+module.exports = {uploadImage, setup}

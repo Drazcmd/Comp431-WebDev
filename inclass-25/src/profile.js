@@ -1,4 +1,4 @@
-const uploadImage = require('./uploadCloudinary')
+const uploadImage = require('./uploadCloudinary').uploadImage
 exports.setup = function(app){
      app.get('/', index)
      //note this is the only one with :users rather than :user
