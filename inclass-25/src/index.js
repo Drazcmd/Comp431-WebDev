@@ -16,8 +16,6 @@ app.use(cookieParser())
 auth.setup(app)
 //gives us avatar and other stuffs
 profile.setup(app)
-//(for avatar img uploading)
-uploadCloudinary.setup(app)
 
 const server = app.listen(port, () => {
      const addr = server.address()

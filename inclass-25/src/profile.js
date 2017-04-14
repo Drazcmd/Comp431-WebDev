@@ -1,3 +1,4 @@
+const uploadImage = require('./uploadCloudinary')
 exports.setup = function(app){
      app.get('/', index)
      //note this is the only one with :users rather than :user
@@ -11,7 +12,7 @@ exports.setup = function(app){
      app.put('/zipcode', putZipcode)
 
      app.get('/avatars/:user?', avatars)
-     app.put('/avatar', putAvatar)
+     app.put('/avatar', uploadImage('avatar'), uploadAvatar)
 
      app.get('/dob', dob)
 }
@@ -165,7 +166,7 @@ const avatars  = (req, res) => {
           { username: req.user, avatar: profile.avatar}
      ]})
 }
-const putAvatar = (req, res) => {
+const uploadAvatar = (req, res) => {
      //only allowed for logged in user
      //TODO - this one is a bit odd...
      if (!req.body.image){
@@ -174,6 +175,10 @@ const putAvatar = (req, res) => {
           setProfileField('avatar', req.body.image)
           res.send({username: user, avatar: accessField(user, 'avatar')}) 
      }
+
+
+
+
 }
 const dob = (req, res) => {
      //I think the API had a typo here. Gonna assume it should rally be like
