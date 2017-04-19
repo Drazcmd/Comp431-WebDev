@@ -1,0 +1,33 @@
+1. Very little - this course was awesome
+
+2. The game was really fun, and the way react-redux does state blew my mind
+
+3. Both you and Suzanne were really really really good at explaining confusing
+things and helping us out. Like, seriously helpful - I learned tons just from
+asking you guys stuff.
+
+4. The sudden jump into certain weirdness with arrow functions really confused
+me, for example there was some weirdness with the particle constructor.
+
+Also, despite spending hours on the multi-dispatch thing I could never figure
+it out, even with your piazza posts - would have liked more in class
+explanation. Getting set up with react-redux in general was pretty tough too
+
+5. More undergraduate TAs. Suzanne was AMAZING, but far as I could tell the
+grad students had no idea what was going on because they hadn't taken the
+class before.
+
+Also, grading needs to be worked on. There were two big issues.
+
+First, since the different graders used different formats, I could tell that
+my grade was higher or lower in some cases depending on just who I was being
+graded by, and inconsistant from week to week. This shouldn't be happening,
+the TAs need to communicate more about what they're expecitng of the students.
+
+Second, I could tell that one of the harsher graders was applying the rubric
+very mechanically without really thinking through things. There were some
+times when I got large deductions meant for wide-spread coding style
+violatings. Like once I think I got hit with the entire whole five poitn 'dead
+code' penalty for what was two commented out console.log's (literally, I
+checked and if I recall correclty these were the only two commented out lines
+of code in my ENTIRE APP).
