@@ -1,0 +1,47 @@
+Most oplished/devliered, learned the most from, talk I liked the best (I must
+admit I really don't remmber the Tuesday talks' titles or order so this is
+focused on the Thursday ones)
+
+1: This one is hard to answer since almost all of the slide decks were really
+nice, but most of the presenters were just ok at delivering (although to be
+fair, this was partly due to the fact that for many English was not their first
+language - in addition to the fact that as CS majors many of us don't get much
+practice at presenting).
+
+If I had to decide, I'd have to split into two categories.  I thought that the
+parallelax slide-set had an edge over the others simply because it included a
+real working example showing the difference between parallelax and
+non-parallelax, in addition to the basic code snippets needed to get it going.
+However, if I recall correctly the speaker wasn't the greatest at prsenting.
+
+For that category, of the talks that went today, the presenter of angular vs
+react was very well spoken (assuming I'm remembereing the right one - I just
+remember that he was talking about angular, so it could potentially might have
+been a different person). 
+
+2 and 3: I liked and learned the most from the speaker that went into detail
+about the origins of redux (i.e. all the stuff about flux). I'm really not sure
+which person/presentation it was based off of the slide titles (and the order
+got kinda messed up).  I have no idea why I liked it so much, probably it just
+had to do with my curiousity over where redux came from (since it's so
+different from everythign else I'd ever seen before). And the reason I learned
+the most from it was probably because it was an interesting topic to me,
+answering a lot of questions that I'd had but hadn't ever asked anyone - so I
+was able to remember it a little bit better than the other presentations, which
+are all a little blurrier because they came in rapid succession one after the
+other.
+
+
+
+...
+
+
+
+...Although if I were to purposefully mis-interpret the instructions I would be
+bale to say the presentation) on Tuesday by a certain Scott Pollack was
+probably the best talk I'd heard :p 
+
+Why you ask? Because it explained why NOT to use a bunch of stuff out there by
+listing all the things wrong with them - which is always super entertaining and
+informative ^-^
+
