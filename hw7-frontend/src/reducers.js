@@ -14,8 +14,7 @@ export const defaultState = {
         'status':'missing status'
     },
     followees: [],
-    globalErrorMessage: 'No errors at present',
-    loggedIn: false
+    globalErrorMessage: 'No errors at present'
 }
 export const Reducer = (state=defaultState, action) => {
     switch (action.type) {
@@ -53,7 +52,7 @@ export const Reducer = (state=defaultState, action) => {
             }
         }
         case ActionTypes.LOGIN: {
-            return { ...state, location: "MAIN_PAGE", loggedIn: true}
+            return { ...state, location: "MAIN_PAGE"}
         }
 
         case ActionTypes.UPDATE_SHOWN_ARTICLES: {

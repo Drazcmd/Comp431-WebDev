@@ -1,13 +1,9 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import NavButton from '../navigation/navButton'
-import { login, logout, updateLocation } from './../../actions'
+import { login, logout } from './../../actions'
 import { FormGroup, FormControl, ControlLabel, Well, Button } from 'react-bootstrap'
-export const Login = ({ dispatchLogin, loggedIn, updateLocation}) => {
-    if(loggedIn){
-        dispatchStayLoggedIn()
-        return
-    }
+export const Login = ({ dispatchLogin }) => {
     let _username, _password
     const _login = () => {
         dispatchLogin(_username.value, _password.value)
@@ -46,22 +42,14 @@ Login.propTypes = {
 }
 
 export default connect(
-    (state) => ({
-        loggedIn: state.loggedIn
-    }),
-    (state) => ,
+    (state) => ({ }),
     (dispatch) => { 
         return {
             dispatchLogin: (username, password) => {
                 login(username, password).then(
                     (resultingAction) => dispatch(resultingAction)
                 )
-            },
-            stayLoggedIn: () => {
-                updateLocation('MAIN_PAGE'.then(
-                    (resultingAction) => dispatch(resultingAction)
-                ))
             }
-        )
+        }
     }
 )(Login)
