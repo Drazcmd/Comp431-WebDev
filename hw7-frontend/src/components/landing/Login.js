@@ -61,6 +61,6 @@ export default connect(
                     (resultingAction) => dispatch(resultingAction)
                 ))
             }
-        )
+        }
     }
 )(Login)
