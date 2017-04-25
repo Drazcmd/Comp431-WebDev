@@ -1,11 +1,11 @@
 //turns out you CANNOT do "import fetch from 'node-fetch'" - it
 //imports some stuff that wrecks how the cookies work :/
 const fetch = require('isomorphic-fetch');
-/**
-'Dummy' as in the dummy server at the url below;
-this is a real http request.
-*/
-const url = 'https://webdev-dummy.herokuapp.com'
+
+//URL of the backend server - used to be https://webdev-dummy.herokuapp.com
+//Now it's of my backend that I deployed to heroku
+const url = "https://besthw7serverever.herokuapp.com"
+
 /**
 See the provided code for connecting to the dummy server
 (https://jsbin.com/jeliroluni/edit?js,output)
