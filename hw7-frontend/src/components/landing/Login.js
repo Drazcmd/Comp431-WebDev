@@ -49,7 +49,6 @@ export default connect(
     (state) => ({
         loggedIn: state.loggedIn
     }),
-    (state) => ,
     (dispatch) => { 
         return {
             dispatchLogin: (username, password) => {
