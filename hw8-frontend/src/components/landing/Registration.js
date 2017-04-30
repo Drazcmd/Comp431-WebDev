@@ -4,11 +4,13 @@ import NavButton from '../navigation/navButton'
 import { Well, FormGroup, FormControl, ControlLabel, Button } from 'react-bootstrap'
 import { delegateRegistration } from './authActions'
 export const Registration = ({ registerUser }) => {
-    let _firstName, _lastName, _username, _password
+    let _firstName, _lastName, _zipcode, _email, _username, _password
     const _register = () => {
         const userInfo = {
             "firstName": _firstName.value,
             "lastName": _lastName.value,
+            "email": _email.value,
+            "zipcode": _zipcode.value,
             "username": _username.value,
             "password": _password.value
         }   
@@ -31,6 +33,21 @@ export const Registration = ({ registerUser }) => {
                 type="text"
                 placeholder="Enter Text Here"
                 inputRef={lastName=> {_lastName = lastName}}
+            />
+            <ControlLabel> Email </ControlLabel>
+            <FormControl 
+                name="regEmail"
+                type="text"
+                placeholder="Enter Text Here"
+                inputRef={email => {_email = email}}
+            />
+
+            <ControlLabel> Zipcode </ControlLabel>
+            <FormControl 
+                name="regZipcode"
+                type="text"
+                placeholder="Enter Text Here"
+                inputRef={zipcode=> {_zipcode = zipcode}}
             />
             <ControlLabel> Username </ControlLabel>
             <FormControl 
@@ -67,8 +84,6 @@ export default connect(
     },
     (dispatch) => {
         return {
-            //Currently registration is non-functional, even though
-            //we are validating the user's input
             registerUser: (userInfo) => {
                 dispatch(delegateRegistration(userInfo))
             }

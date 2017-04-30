@@ -22,7 +22,7 @@ export const Login = ({ dispatchLogin }) => {
             />
             <ControlLabel> Password </ControlLabel>
             <FormControl 
-                type="text" name="password"
+                type="password" name="password"
                 placeholder="Enter Password Here"
                 inputRef={password=> {_password = password}}
             />
