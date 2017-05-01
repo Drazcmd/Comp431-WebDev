@@ -7,12 +7,10 @@ export const Registration = ({ registerUser }) => {
     let _firstName, _lastName, _zipcode, _email, _username, _password
     const _register = () => {
         const userInfo = {
-            "firstName": _firstName.value,
-            "lastName": _lastName.value,
-            "email": _email.value,
-            "zipcode": _zipcode.value,
             "username": _username.value,
-            "password": _password.value
+            "password": _password.value,
+            "email": _email.value,
+            "zipcode": _zipcode.value
         }   
         registerUser(userInfo)
     }
@@ -20,19 +18,19 @@ export const Registration = ({ registerUser }) => {
         <Well>
         <h4>REGISTER A NEW ACCOUNT: </h4>
         <FormGroup>
-            <ControlLabel> First Name</ControlLabel>
+            <ControlLabel> Username </ControlLabel>
             <FormControl 
+                name="regUsername"
                 type="text"
-                name="regFirstName"
                 placeholder="Enter Text Here"
-                inputRef={firstName=> {_firstName = firstName}}
+                inputRef={username=> {_username = username}}
             />
-            <ControlLabel> Last Name</ControlLabel>
+            <ControlLabel> Password </ControlLabel>
             <FormControl 
-                name="regLastName"
+                name="regPassword"
                 type="text"
                 placeholder="Enter Text Here"
-                inputRef={lastName=> {_lastName = lastName}}
+                inputRef={password=> {_password = password}}
             />
             <ControlLabel> Email </ControlLabel>
             <FormControl 
@@ -48,20 +46,6 @@ export const Registration = ({ registerUser }) => {
                 type="text"
                 placeholder="Enter Text Here"
                 inputRef={zipcode=> {_zipcode = zipcode}}
-            />
-            <ControlLabel> Username </ControlLabel>
-            <FormControl 
-                name="regUsername"
-                type="text"
-                placeholder="Enter Text Here"
-                inputRef={username=> {_username = username}}
-            />
-            <ControlLabel> Password </ControlLabel>
-            <FormControl 
-                name="regPassword"
-                type="text"
-                placeholder="Enter Text Here"
-                inputRef={password=> {_password = password}}
             />
         </FormGroup>
         <Button name="regButton" bsStyle="primary" onClick={_register}> 

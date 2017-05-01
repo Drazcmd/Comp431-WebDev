@@ -20,20 +20,21 @@ const validateField = (field, value) => {
     return pattern.test(value)
 }
 const invalidFieldError = (field, value) => {
-    return validateField(field, value) ? "" :
-    `You entered an invalid value for the ${field} field. A valid value looks like ${fieldMessages[field]}.`
+    return validateField(field, value) ? `Odd error on checking ${field}?` :
+    `You entered an invalid value for the ${field} field. ` +
+    `A valid value looks like ${fieldMessages[field]}.`
 }
 const missingFieldError = (field, value) => {
     return value ? "" : `${field} is required for registration.`
 }
 const notifyMissingFields = (userInfo, missingFields) => {
-    const errorMessages = registrationFields.map(field => {
+    const errorMessages = missingFields.map(field => {
         return missingFieldError(field, userInfo[field])
     })
     return dispError(errorMessages.join("\t"))
 }
 const notifyInvalidFields = (userInfo, invalidFields) => {
-    const errorMessages = registrationFields.map(field => {
+    const errorMessages = invalidFields.map(field => {
         return invalidFieldError(field, userInfo[field])
     })
     return dispError(errorMessages.join("\t"))
