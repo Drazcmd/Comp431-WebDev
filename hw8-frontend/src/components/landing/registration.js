@@ -69,7 +69,9 @@ export default connect(
     (dispatch) => {
         return {
             registerUser: (userInfo) => {
-                dispatch(delegateRegistration(userInfo))
+                delegateRegistration(userInfo).then(
+                    (resultingAction) => dispatch(resultingAction)
+                )
             }
         }
     }

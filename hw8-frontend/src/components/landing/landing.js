@@ -5,27 +5,30 @@ import Login from './login'
 import { Grid, Row, Col, Alert } from 'react-bootstrap'
 import NavBar from '../navigation/navBar'
 import ErrorDisplay from './../notification/errorDisplay'
-import { isLoggedIn } from '../../serverRequest.js'
-import { updateLocation, visModes } from './../../actions'
+import { pingBackend } from '../../serverRequest.js'
+import { updateLocation, MAIN_PAGE } from './../../actions'
 
 export const Landing = ({ switchView }) => {
-    if (isLoggedIn()){
-        switchView(visModes.MAIN_PAGE)
-        return (<div> Already logged in! Fetching info... </div>)
-    } else {
-        return (
-            <Grid>
-                <Row>
-                    <h1> CMD-BOOK </h1>
-                    <ErrorDisplay />
-                </Row>
-                <Row>
-                    <Col md={5}> <Registration /> </Col>
-                    <Col md={5}> <Login /> </Col>
-                </Row>
-            </Grid>
-        )
-    }
+    console.log('hello!')
+    pingBackend()
+    .then((isLoggedIn) => {
+        if (isLoggedIn) {
+            console.log("Should be switching now!")
+            switchView(MAIN_PAGE)
+        }
+    })
+    return (
+        <Grid>
+            <Row>
+                <h1> CMD-BOOK </h1>
+                <ErrorDisplay />
+            </Row>
+            <Row>
+                <Col md={5}> <Registration /> </Col>
+                <Col md={5}> <Login /> </Col>
+            </Row>
+        </Grid>
+    )
 }
 
 Landing.propTypes = {

@@ -1,4 +1,4 @@
-import { dispError, logout, login, notifyRegSuccess } from '../../actions'
+import { dispError, logout, login, register} from '../../actions'
 const registrationFields = [
     "email", "zipcode", "username", "password"
 ]
@@ -31,13 +31,13 @@ const notifyMissingFields = (userInfo, missingFields) => {
     const errorMessages = missingFields.map(field => {
         return missingFieldError(field, userInfo[field])
     })
-    return dispError(errorMessages.join("\t"))
+    return Promise.resolve(dispError(errorMessages.join("\t")))
 }
 const notifyInvalidFields = (userInfo, invalidFields) => {
     const errorMessages = invalidFields.map(field => {
         return invalidFieldError(field, userInfo[field])
     })
-    return dispError(errorMessages.join("\t"))
+    return Promise.resolve(dispError(errorMessages.join("\t")))
 }
 export const delegateRegistration = (userInfo) => {
     //To avoid crashes later, I separated out checking fields existances
@@ -55,5 +55,5 @@ export const delegateRegistration = (userInfo) => {
     }
 
     //...And if we make it here, then we should be good to go
-    return dispError("IMPLEMENT REGISTRATION")
+    return register(userInfo)
 }

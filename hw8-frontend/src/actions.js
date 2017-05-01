@@ -244,11 +244,13 @@ export const removeFollowee = (name, loggedInUser) => {
 }
 //Although possibly successful, it's not actually implemented on
 //the server's side - so it'll always display an error msg
-export const notifyRegSuccess = (newUser) => {
-    const firstHalf = `Your registration inputs were valid, but the `
-    const secondHalf = `server's registration feature isn't working yet`
-    const msg = firstHalf + secondHalf
-    return {type: ActionTypes.UPDATE_ERROR_MESSAGE, message:msg}
+export const register = (newUserInfo) => {
+    return resource('POST', 'register', newUserInfo)
+    .then(res => login(newUserInfo.username, newUserInfo.password))
+    .catch(error => {
+        const message = `"${error.message || 'Error'}" when registering`
+        return dispError(message)
+    })
 }
 export const logout = () => {
     return resource('PUT', 'logout')

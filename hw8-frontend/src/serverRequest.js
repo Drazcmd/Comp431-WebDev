@@ -7,6 +7,7 @@ const fetch = require('isomorphic-fetch');
 //const url = "https://besthw7serverever.herokuapp.com"
 //const url = "https://webdev-dummy.herokuapp.com"
 const url = "http://localhost:3000"
+
 /**
 See the provided code for connecting to the dummy server
 (https://jsbin.com/jeliroluni/edit?js,output)
@@ -23,29 +24,26 @@ const fetchWrap = (endpoint, options) => {
 }
 
 /**
- * Basically a hack/workaround I made since the API
- * doesn't support a 'isLoggedIn' endpoint
+ * Basically a hack/workaround I made to see if we're already logged in since 
+ * the API doesn't support a true 'isLoggedIn' endpoint
+ *
+ * Should return a promise for a repsonse that will be true iff the brower's 
+ * current sid cookie is accepted by the backend as valid for a logged in user
  */
-export const isLoggedIn = () => {
-  const options =  {
-    method: 'GET',
-    credentials: 'include',
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  }
-
-  //Since there's no API specification for an endpoint that will tell you
-  //if we're logged in, I figured we'd poke it and see if we get a 401
-  //unathorized back as a response
-  fetchWrap('email', options)
+export const pingBackend = () => {
+  //choice of 'email' as the endpoint we're poking at was pretty arbitrary - I
+  //just wanted something that was fast (little reading/writing on either side) 
+  //and requried being logged in
+  const arbitraryEndpoint = 'email'
+  return resource('GET', arbitraryEndpoint)
   .then((response) => {
-    console.log('response to poke was ok:', response)
-    console.log('this means that we must be authenticated!')
+    //a response that's not 401 unauthorize means we are authenticated!
     return true
   })
   .catch((err) => {
-    console.log('respone to poke was an error, we must not be authenticated', err)
+    //a response that's 401 unauthorized results in an error being caught here
+    //therefore, at htis point we know we're not logged in (assuming the code
+    //for sending POST requsts is working correctly)
     return false
   })
 }
