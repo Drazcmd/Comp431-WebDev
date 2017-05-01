@@ -9,11 +9,9 @@ import { pingBackend } from '../../serverRequest.js'
 import { updateLocation, MAIN_PAGE } from './../../actions'
 
 export const Landing = ({ switchView }) => {
-    console.log('hello!')
     pingBackend()
     .then((isLoggedIn) => {
         if (isLoggedIn) {
-            console.log("Should be switching now!")
             switchView(MAIN_PAGE)
         }
     })
