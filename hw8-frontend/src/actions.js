@@ -275,20 +275,6 @@ export const login = (username, password) => {
         return dispError(message)
     })
 }
-/**
- * Use oauth2 as login credentials instead
- * Consists of doing a GET request that will end up redirecting
- */
-export const googleLogin = () => {
-    console.log('lets login with google instead') 
-    return resource('GET', 'auth/google')
-    .then(res => {
-        console.log('what do I do with this?', res)
-    })
-    .catch(error => {
-        console.log('so, looks like an error...', error)
-    })
-}
 export const updateAvatar = (fileObj) => {
     if (fileObj) {
         //loadImageBytestream is not a promise, but the loading happens asynch

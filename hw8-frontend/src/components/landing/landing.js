@@ -5,8 +5,8 @@ import Login from './login'
 import { Grid, Row, Col, Alert, Button, Well} from 'react-bootstrap'
 import NavBar from '../navigation/navBar'
 import ErrorDisplay from './../notification/errorDisplay'
-import { pingBackend } from '../../serverRequest.js'
-import { updateLocation, MAIN_PAGE, googleLogin } from './../../actions'
+import { pingBackend, googleLoginRedirect } from '../../serverRequest.js'
+import { updateLocation, MAIN_PAGE } from './../../actions'
 
 export const Landing = ({ switchView }) => {
     pingBackend()
@@ -29,7 +29,7 @@ export const Landing = ({ switchView }) => {
                     </Row>
                     <Row> <Well> 
                         <h4> GOOGLE LOGIN: </h4>
-                        <Button name={"Google Login"} bsStyle="primary" onClick = { googleLogin }> { "Use my google acccount!"}  </Button> 
+                        <Button name={"Google Login"} bsStyle="primary" onClick = { googleLoginRedirect }> { "Use my google acccount!"}  </Button> 
                     </Well> </Row>
                 </Col>
             </Row>
