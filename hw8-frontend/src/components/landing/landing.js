@@ -2,11 +2,11 @@ import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import Registration from './registration'
 import Login from './login'
-import { Grid, Row, Col, Alert } from 'react-bootstrap'
+import { Grid, Row, Col, Alert, Button, Well} from 'react-bootstrap'
 import NavBar from '../navigation/navBar'
 import ErrorDisplay from './../notification/errorDisplay'
 import { pingBackend } from '../../serverRequest.js'
-import { updateLocation, MAIN_PAGE } from './../../actions'
+import { updateLocation, MAIN_PAGE, googleLogin } from './../../actions'
 
 export const Landing = ({ switchView }) => {
     pingBackend()
@@ -23,7 +23,15 @@ export const Landing = ({ switchView }) => {
             </Row>
             <Row>
                 <Col md={5}> <Registration /> </Col>
-                <Col md={5}> <Login /> </Col>
+                <Col md={5}> 
+                    <Row> 
+                        <Login />
+                    </Row>
+                    <Row> <Well> 
+                        <h4> GOOGLE LOGIN: </h4>
+                        <Button name={"Google Login"} bsStyle="primary" onClick = { googleLogin }> { "Use my google acccount!"}  </Button> 
+                    </Well> </Row>
+                </Col>
             </Row>
         </Grid>
     )

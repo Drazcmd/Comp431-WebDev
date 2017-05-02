@@ -57,3 +57,6 @@ export const delegateRegistration = (userInfo) => {
     //...And if we make it here, then we should be good to go
     return register(userInfo)
 }
+export const delegateGoogleLogin = () => {
+    console.log('lets login with google') 
+}
