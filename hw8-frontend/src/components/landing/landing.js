@@ -5,7 +5,7 @@ import Login from './login'
 import { Grid, Row, Col, Alert, Button, Well} from 'react-bootstrap'
 import NavBar from '../navigation/navBar'
 import ErrorDisplay from './../notification/errorDisplay'
-import { pingBackend, googleLoginRedirect } from '../../serverRequest.js'
+import { pingBackend, facebookLoginRedirect } from '../../serverRequest.js'
 import { updateLocation, MAIN_PAGE } from './../../actions'
 
 export const Landing = ({ switchView }) => {
@@ -28,8 +28,8 @@ export const Landing = ({ switchView }) => {
                         <Login />
                     </Row>
                     <Row> <Well> 
-                        <h4> GOOGLE LOGIN: </h4>
-                        <Button name={"Google Login"} bsStyle="primary" onClick = { googleLoginRedirect }> { "Use my google acccount!"}  </Button> 
+                        <h4> FACEBOOK LOGIN: </h4>
+                        <Button name={"Facebook Login"} bsStyle="primary" href="http://localhost:3000/auth/facebook"> { "Use my facebook acccount!"}  </Button> 
                     </Well> </Row>
                 </Col>
             </Row>

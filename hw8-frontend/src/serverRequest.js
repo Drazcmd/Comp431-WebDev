@@ -189,10 +189,10 @@ export const updateFields = (fieldValueObjs) => {
 
 /**
  * To use oauth2 as login credentials instead, we need to redirect the
- * user from this frontend to our backendurl/auth/google. This will result in
+ * user from this frontend to our backendurl/auth/facebook This will result in
  * a GET request that will end up redirecting us back here eventually, after
  * it logs in
  */
-export const googleLoginRedirect = () => {
-    window.location.replace(url + "/auth/google")
+export const facebookLoginRedirect = () => {
+    window.location.replace(url + "/auth/facebook")
 }
