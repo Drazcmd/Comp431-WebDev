@@ -29,7 +29,7 @@ export const Landing = ({ switchView }) => {
                     </Row>
                     <Row> <Well> 
                         <h4> FACEBOOK LOGIN: </h4>
-                        <Button name={"Facebook Login"} bsStyle="primary" href="http://localhost:3000/auth/facebook"> { "Use my facebook acccount!"}  </Button> 
+                        <Button name={"Facebook Login"} bsStyle="primary" href="http://localhost:3000/auth/facebook/login"> { "Use my facebook acccount!"}  </Button> 
                     </Well> </Row>
                 </Col>
             </Row>
