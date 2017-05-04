@@ -8,6 +8,9 @@ export const ProfileUpdateSection = ({
     profileData, dispatchProfileUpdate, dispatchPasswordUpdate 
 }) => {
     let _email, _zip, _password;
+    //changing password with facebook logged in once corrupted my database,
+    //Should be fine now, but taking no chances!
+    const disablePasswordChanges = profileData.name.indexOf("@Facebook") !== -1
     const _dispatchProfileUpdate = () => {
         //(The ternary is to prevent crashing if something weird happended
         //(with the variables
@@ -43,7 +46,8 @@ export const ProfileUpdateSection = ({
         <FormControl name={"updatePassword"} type="text" placeholder="Update Password Here" 
          inputRef={(password) => {_password = password }} />
         </FormGroup> </form>
-        <Button name={"passwordUpdateBtn"} bsStyle="danger" onClick = {_dispatchPasswordUpdate} >
+        <Button name={"passwordUpdateBtn"} bsStyle="danger" disabled={disablePasswordChanges} 
+        onClick={_dispatchPasswordUpdate} >
             Update Your Password
         </Button>
         </Well>
