@@ -6,7 +6,7 @@ import { Grid, Row, Col, Alert, Button, Well,
 Tooltip, OverlayTrigger } from 'react-bootstrap'
 import NavBar from '../navigation/navBar'
 import ErrorDisplay from './../notification/errorDisplay'
-import { pingBackend, facebookLoginRedirect } from '../../serverRequest.js'
+import { url, pingBackend, facebookLoginRedirect } from '../../serverRequest.js'
 import { updateLocation, MAIN_PAGE } from './../../actions'
 
 export const Landing = ({ switchView }) => {
@@ -40,7 +40,7 @@ export const Landing = ({ switchView }) => {
                         <h4> FACEBOOK LOGIN: </h4>
                         <OverlayTrigger overlay={tooltip}> 
                         <Button name={"Facebook Login"} bsStyle="primary"
-                         href="http://localhost:3000/auth/facebook/login">
+                         href={url + "/auth/facebook/login"}>
                             { "Use my facebook acccount!"}
                         </Button> 
                         </OverlayTrigger>

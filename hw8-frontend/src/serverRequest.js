@@ -3,10 +3,7 @@
 const fetch = require('isomorphic-fetch');
 
 //URL of the backend server - used to be https://webdev-dummy.herokuapp.com
-//Now it's of my backend that I deployed to heroku
-//const url = "https://besthw7serverever.herokuapp.com"
-//const url = "https://webdev-dummy.herokuapp.com"
-const url = "http://localhost:3000"
+export const url = "https://cmdbook-final-comp431.herokuapp.com" 
 
 /**
 See the provided code for connecting to the dummy server
