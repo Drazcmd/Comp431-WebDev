@@ -156,10 +156,10 @@ export const updateStatus = (newStatus) => {
         return dispError(error.message)
     })
 }
-export const updateProfileData = (fieldValueObjs) => {
+export const updateProfileData = (fieldValueObj) => {
     //Delegate to dataFetching.js for the (currently 2) PUT requests
     //Each tuple is of form {fieldToUpdate: valueToBeUpdatedTo}
-    return updateFields(fieldValueObjs).then(newProfileData => {
+    return updateFields(fieldValueObj).then(newProfileData => {
         //And now we update state based off what the server sends back
         //(note that fetchResponses comes from a Promise.all())
         return {
@@ -167,6 +167,18 @@ export const updateProfileData = (fieldValueObjs) => {
             newProfileData: newProfileData
         }
     }).catch(error => {
+        return dispError(error.message)
+    })
+}
+export const updatePassword = (fieldValueObjs) => {
+    //Almost identical to updateProfileData, except that there isn't
+    //anything we *need* to actually change in the reducer
+    return updateFields(fieldValueObjs).then(newProfileData => {
+        //And now we update state based off what the server sends back
+        //(note that fetchResponses comes from a Promise.all())
+        return dispError("WARNING - you just updated your password! Be careful not to forget it!")
+    })
+    .catch(error => {
         return dispError(error.message)
     })
 }

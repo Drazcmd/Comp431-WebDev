@@ -2,16 +2,22 @@ import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { Row, Button, FormGroup, FormControl,
  ControlLabel, Well } from 'react-bootstrap'
-import { updateProfileData, dispError } from '../../actions'
+import { updateProfileData, updatePassword, dispError } from '../../actions'
 import { validateData } from './profileValidation'
-export const ProfileUpdateSection = ({ profileData, dispatchProfileUpdate }) => {
-    let _email, _zip;
+export const ProfileUpdateSection = ({ 
+    profileData, dispatchProfileUpdate, dispatchPasswordUpdate 
+}) => {
+    let _email, _zip, _password;
     const _dispatchProfileUpdate = () => {
         //(The ternary is to prevent crashing if something weird happended
         //(with the variables
         const newEmail = _email ? _email.value : null
         const newZip = _zip ? _zip.value : null
         dispatchProfileUpdate(newEmail, newZip)
+    }
+    const _dispatchPasswordUpdate = () => {
+        const newPassword = _password ? _password.value : null
+        dispatchPasswordUpdate(newPassword)
     }
     return (
         <Well>
@@ -33,11 +39,13 @@ export const ProfileUpdateSection = ({ profileData, dispatchProfileUpdate }) => 
 
         <form> <FormGroup name="updatePassword" controlId="PasswordUpdate">
         <ControlLabel> 
-            Password: (Currently unimplemented! Password will not change) 
         </ControlLabel>
-        <FormControl name={"updatePassword"} type="text" placeholder="Update Password Here" />
+        <FormControl name={"updatePassword"} type="text" placeholder="Update Password Here" 
+         inputRef={(password) => {_password = password }} />
         </FormGroup> </form>
-        <Button name={"passwordUpdateBtn"}> Coming Soon: Update Password! </Button>
+        <Button name={"passwordUpdateBtn"} bsStyle="danger" onClick = {_dispatchPasswordUpdate} >
+            Update Your Password
+        </Button>
         </Well>
     )
 }
@@ -63,6 +71,12 @@ export default connect(
                 } else {
                     dispatch(dispError(validationResults.errorReason))
                 }
+            },
+            dispatchPasswordUpdate: (newPassword) => {
+                updatePassword([{field: "password", value: newPassword}])
+                .then((returnedAction) => {
+                    dispatch(returnedAction)
+                })
             }
         }
     }
