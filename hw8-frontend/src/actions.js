@@ -138,7 +138,7 @@ export const putComment = (articleId, newCommentText, commentId) => {
 export const editArticle = (articleId, newArticleText) => {
     //note - if oyu put in the optional commentId, it'd update a comment instead
     const payload = {
-        text: newArticleText,
+        text: newArticleText
     }
     return resource('PUT', `articles/${articleId}`, payload)
     .then(res => {

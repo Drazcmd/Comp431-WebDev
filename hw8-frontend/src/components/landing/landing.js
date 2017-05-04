@@ -2,7 +2,8 @@ import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import Registration from './registration'
 import Login from './login'
-import { Grid, Row, Col, Alert, Button, Well} from 'react-bootstrap'
+import { Grid, Row, Col, Alert, Button, Well,
+Tooltip, OverlayTrigger } from 'react-bootstrap'
 import NavBar from '../navigation/navBar'
 import ErrorDisplay from './../notification/errorDisplay'
 import { pingBackend, facebookLoginRedirect } from '../../serverRequest.js'
@@ -15,6 +16,14 @@ export const Landing = ({ switchView }) => {
             switchView(MAIN_PAGE)
         }
     })
+    const tooltip = (
+        <Tooltip id="tooltip">
+            <strong> NOTE: </strong>
+            Once you click this button, it will attempt to redirect to a facebook login/authorization page.
+            It will then autmoatically redirect you back after completing login). 
+        </Tooltip>
+    )
+ 
     return (
         <Grid>
             <Row>
@@ -29,7 +38,13 @@ export const Landing = ({ switchView }) => {
                     </Row>
                     <Row> <Well> 
                         <h4> FACEBOOK LOGIN: </h4>
-                        <Button name={"Facebook Login"} bsStyle="primary" href="http://localhost:3000/auth/facebook/login"> { "Use my facebook acccount!"}  </Button> 
+                        <OverlayTrigger overlay={tooltip}> 
+                        <Button name={"Facebook Login"} bsStyle="primary"
+                         href="http://localhost:3000/auth/facebook/login">
+                            { "Use my facebook acccount!"}
+                        </Button> 
+                        </OverlayTrigger>
+
                     </Well> </Row>
                 </Col>
             </Row>

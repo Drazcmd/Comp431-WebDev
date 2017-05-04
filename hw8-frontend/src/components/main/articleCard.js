@@ -15,12 +15,14 @@ export const ArticleCard = ({
     //(This stuff is just to deal with react-bootstrap form weirdness)
     let newComment;
     let articleText = articleJSON.text;
+    const articleId = articleJSON._id
     const trackTextEdit = ((e) => articleText = e.target.value)
     const _postComment = () => {
         const commentText = newComment.value ? newComment.value : ""
-        postComment(articleJSON._id, commentText)
+        //since this might be a little bit weird
+        postComment(articleId, commentText)
     }
-    const editArticle = (() => {sendArticleEdit(articleJSON._id, articleText)})
+    const editArticle = (() => {sendArticleEdit(articleId, articleText)})
 
     //Not of this is buisness logic - just making stuff nicer looking
     const articleImage = articleJSON.img 
@@ -39,7 +41,7 @@ export const ArticleCard = ({
         >
             <div> {articleImage} </div>
             <div name={"authorAndID"}>
-                ID: {articleJSON._id}.
+                ID: {articleId}.
                 Author: {articleJSON.author}.
                 Written at {articleJSON.date}.
             </div>
@@ -56,7 +58,7 @@ export const ArticleCard = ({
                 disabled={!editable}
             />
             <br />
-            <Button bsSize="small" name={`editArticleBtn${articleJSON._id}`}
+            <Button bsSize="small" name={`editArticleBtn${articleId}`}
                 onClick = { editArticle } disabled={!editable}
             >
             { "Edit Article" }
@@ -64,7 +66,7 @@ export const ArticleCard = ({
         </Panel>
 
         <CommentsList 
-            comments={articleJSON.comments} articleId={articleJSON._id}
+            comments={articleJSON.comments} articleId={articleId}
         />
 
         <FormGroup>
